@@ -92,7 +92,7 @@
           <a href="#success">Success Stories</a>
           <a href="#faq">FAQ</a>
           <a class="nav-link-cta" href="#join">Join Free</a>
-          <a class="button button-primary nav-cta" href="#search">Explore Opportunities</a>
+          <a class="button button-primary nav-cta" href="#opportunities">Explore Opportunities</a>
         </div>
       </nav>
     </header>
@@ -110,7 +110,7 @@
               across dozens of websites.
             </p>
             <div class="hero-actions" aria-label="Primary actions">
-              <a class="button button-primary" href="#search">Explore Opportunities</a>
+              <a class="button button-primary" href="#opportunities">Explore Opportunities</a>
               <a class="button button-secondary" href="#join">Create Free Account</a>
             </div>
             <p class="microcopy">No credit card required. Start searching instantly.</p>
@@ -130,50 +130,37 @@
             </dl>
           </div>
 
-          <aside class="dashboard" aria-label="Opportunity search dashboard preview" id="search">
-            <div class="dashboard-top">
-              <div>
-                <p class="dashboard-label">Opportunity Search</p>
-                <h2>Find your best match</h2>
-              </div>
-              <span class="verified">Verified</span>
-            </div>
-            <form class="search-card" action="#" role="search">
-              <label class="sr-only" for="opportunity-search">Search opportunities</label>
-              <input id="opportunity-search" name="q" type="search" placeholder="Search scholarships, internships, fellowships..." autocomplete="off">
-              <button class="button button-primary" type="submit">Search</button>
-            </form>
-            <div class="filter-row" aria-label="Popular filters">
-              <span>Country</span>
-              <span>Field</span>
-              <span>Deadline</span>
-              <span>Funding Type</span>
-            </div>
-            <article class="opportunity-card">
-              <div>
-                <p class="card-kicker">Fully Funded Scholarship</p>
-                <h3>Global Leaders Graduate Award</h3>
-                <p>Canada • Master's • Business &amp; Policy</p>
-              </div>
-              <span class="deadline">12 days left</span>
-            </article>
-            <article class="opportunity-card">
-              <div>
-                <p class="card-kicker">Paid Internship</p>
-                <h3>Research Internship Program</h3>
-                <p>Germany • Engineering • Summer 2026</p>
-              </div>
-              <span class="saved">Saved</span>
-            </article>
-            <article class="opportunity-card">
-              <div>
-                <p class="card-kicker">Global Fellowship</p>
-                <h3>Future Innovators Fellowship</h3>
-                <p>Remote • Professionals • Mentorship</p>
-              </div>
-              <span class="deadline soft">Open</span>
-            </article>
-          </aside>
+        </div>
+      </section>
+
+      <section class="section-pad live-opportunities" id="opportunities" aria-labelledby="opportunities-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Live Listings</p>
+            <h2 id="opportunities-title">Explore Verified Opportunities</h2>
+            <p>Search scholarships, internships, fellowships, and global programs pulled live from OpportunityNest.</p>
+          </div>
+          <form class="opportunity-controls" id="opportunity-controls" role="search">
+            <label class="sr-only" for="live-search">Search live opportunities</label>
+            <input id="live-search" name="search" type="search" placeholder="Search by title, field, country, funding..." autocomplete="off">
+            <label class="sr-only" for="country-filter">Filter by country</label>
+            <select id="country-filter" name="country">
+              <option value="">All countries</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="UK">UK</option>
+              <option value="Germany">Germany</option>
+            </select>
+            <label class="sr-only" for="type-filter">Filter by type</label>
+            <select id="type-filter" name="type">
+              <option value="">All types</option>
+              <option value="Scholarship">Scholarship</option>
+              <option value="Internship">Internship</option>
+              <option value="Fellowship">Fellowship</option>
+            </select>
+          </form>
+          <div class="status-message" id="opportunity-status" role="status">Loading opportunities...</div>
+          <div class="opportunity-results grid three" id="opportunity-grid" aria-live="polite"></div>
         </div>
       </section>
 
@@ -229,7 +216,7 @@
         </div>
       </section>
 
-      <section class="section-pad" id="opportunities" aria-labelledby="features-title">
+      <section class="section-pad" id="features" aria-labelledby="features-title">
         <div class="container">
           <div class="section-heading">
             <p class="eyebrow">Features</p>
@@ -414,7 +401,7 @@
             <p>Search verified scholarships, internships, jobs, fellowships, and global programs today.</p>
           </div>
           <div class="cta-actions">
-            <a class="button button-primary" href="#search">Explore Opportunities</a>
+            <a class="button button-primary" href="#opportunities">Explore Opportunities</a>
             <a class="button button-secondary" href="#join">Join Free</a>
           </div>
         </div>
@@ -464,7 +451,7 @@
             Early applicants often have the strongest advantage.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#search">Start Exploring Now</a>
+            <a class="button button-primary" href="#opportunities">Start Exploring Now</a>
             <a class="button button-secondary" href="#join">Join Free</a>
           </div>
           <p class="microcopy">Free to start • Updated daily • Built for students and professionals worldwide</p>
@@ -497,6 +484,7 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

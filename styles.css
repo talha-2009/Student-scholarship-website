@@ -47,7 +47,9 @@ svg {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -214,10 +216,11 @@ input {
 
 .hero-grid {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
-  align-items: center;
-  gap: 52px;
+  display: block;
+}
+
+.hero-copy {
+  max-width: 900px;
 }
 
 .eyebrow {
@@ -412,6 +415,113 @@ dd {
   margin: 6px 0 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.live-opportunities {
+  background: white;
+}
+
+.opportunity-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px 180px;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.opportunity-controls input,
+.opportunity-controls select,
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text);
+  padding: 10px 12px;
+}
+
+.status-message {
+  min-height: 26px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.status-message.is-error {
+  color: #b42318;
+}
+
+.opportunity-results {
+  align-items: stretch;
+}
+
+.live-opportunity-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(16, 32, 29, 0.04);
+}
+
+.live-opportunity-card > p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.opportunity-card-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.opportunity-meta {
+  display: grid;
+  gap: 10px;
+  margin: auto 0 0;
+}
+
+.opportunity-meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.opportunity-meta dt,
+.opportunity-meta dd {
+  font-size: 0.9rem;
+}
+
+.opportunity-meta dt {
+  color: var(--text);
+  font-weight: 850;
+}
+
+.opportunity-meta dd {
+  text-align: right;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-weight: 750;
 }
 
 .deadline {
@@ -725,13 +835,123 @@ details p {
   font-size: 0.9rem;
 }
 
+.admin-body {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(37, 99, 235, 0.08)),
+    var(--bg);
+}
+
+.admin-shell {
+  width: min(100% - 32px, 1180px);
+  margin: 0 auto;
+  padding: 42px 0;
+}
+
+.admin-card,
+.admin-panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.admin-card {
+  padding: 24px;
+}
+
+#admin-gate {
+  max-width: 520px;
+  margin: 8vh auto 0;
+}
+
+.admin-heading {
+  margin: 34px 0 22px;
+}
+
+.admin-heading p,
+.admin-top p {
+  color: var(--muted);
+}
+
+.admin-form {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.admin-panel {
+  padding: 26px;
+}
+
+.admin-top,
+.admin-list-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.admin-top h2 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+  gap: 22px;
+}
+
+.opportunity-admin-form {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.opportunity-admin-form .full-span {
+  grid-column: 1 / -1;
+}
+
+.admin-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.admin-list-item p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.button-danger {
+  align-self: start;
+  background: #fee4e2;
+  border-color: #fecdca;
+  color: #b42318;
+}
+
 @media (max-width: 1020px) {
   .hero-grid,
   .solution-grid,
   .benefits-grid,
   .faq-layout,
   .cta-panel,
-  .footer-grid {
+  .footer-grid,
+  .admin-layout {
     grid-template-columns: 1fr;
   }
 
@@ -800,7 +1020,9 @@ details p {
   .grid.four,
   .steps,
   .trust-stats,
-  .benefit-list {
+  .benefit-list,
+  .opportunity-controls,
+  .opportunity-admin-form {
     grid-template-columns: 1fr;
   }
 
@@ -823,8 +1045,16 @@ details p {
   }
 
   .cta-panel,
-  .final-panel {
+  .final-panel,
+  .admin-panel,
+  .admin-card {
     padding: 28px 18px;
+  }
+
+  .admin-top,
+  .admin-list-head,
+  .admin-list-item {
+    flex-direction: column;
   }
 
   .brand {
