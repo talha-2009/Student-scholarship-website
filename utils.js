@@ -331,6 +331,7 @@ window.OpportunityNest = window.OpportunityNest || {};
     const opportunitiesStat = document.querySelector('[data-stat="opportunities"]');
     const internshipsStat = document.querySelector('[data-stat="internships"]');
     const countriesStat = document.querySelector('[data-stat="countries"]');
+    const internshipStatCard = document.getElementById('internship-stat-card');
     
     if (opportunitiesStat) {
       opportunitiesStat.textContent = stats.totalOpportunities.toLocaleString();
@@ -342,6 +343,14 @@ window.OpportunityNest = window.OpportunityNest || {};
     
     if (countriesStat) {
       countriesStat.textContent = stats.totalCountries.toLocaleString();
+    }
+    
+    if (internshipStatCard) {
+      if (stats.totalInternships === 0) {
+        internshipStatCard.style.display = 'none';
+      } else {
+        internshipStatCard.style.display = '';
+      }
     }
   };
 })(window.OpportunityNest);
