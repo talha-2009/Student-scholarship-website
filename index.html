@@ -16,6 +16,9 @@
     >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://opportunitynest.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpportunityNest.com | Find Scholarships, Internships & Global Opportunities">
+    <meta name="twitter:description" content="Search verified scholarships, internships, jobs, fellowships, and global opportunities in one trusted discovery hub.">
     <link rel="canonical" href="https://opportunitynest.com/">
     <link rel="stylesheet" href="styles.css">
     <script type="application/ld+json">
@@ -34,7 +37,7 @@
             "url": "https://opportunitynest.com/",
             "potentialAction": {
               "@type": "SearchAction",
-              "target": "https://opportunitynest.com/opportunities?q={search_term_string}",
+              "target": "https://opportunitynest.com/?q={search_term_string}#opportunities",
               "query-input": "required name=search_term_string"
             }
           },
@@ -113,21 +116,21 @@
             </p>
             <div class="hero-actions" aria-label="Primary actions">
               <a class="button button-primary" href="#opportunities">Explore Opportunities</a>
-              <a class="button button-secondary" href="#join">Create Free Account</a>
+              <a class="button button-secondary" href="scholarships.html">Browse Scholarships</a>
             </div>
-            <p class="microcopy">No credit card required. Start searching instantly.</p>
-            <dl class="hero-stats" aria-label="OpportunityNest trust statistics">
+            <p class="microcopy">Free to browse. No account required.</p>
+            <dl class="hero-stats" aria-label="OpportunityNest focus areas">
               <div>
-                <dt>50,000+</dt>
-                <dd>opportunities discovered</dd>
+                <dt>4</dt>
+                <dd>countries covered</dd>
               </div>
               <div>
-                <dt>10,000+</dt>
-                <dd>active users</dd>
+                <dt>3</dt>
+                <dd>opportunity types</dd>
               </div>
               <div>
-                <dt>24 hrs</dt>
-                <dd>update cycle</dd>
+                <dt>Live</dt>
+                <dd>database listings</dd>
               </div>
             </dl>
           </div>
@@ -160,9 +163,33 @@
               <option value="Internship">Internship</option>
               <option value="Fellowship">Fellowship</option>
             </select>
+            <label class="sr-only" for="sort-filter">Sort results</label>
+            <select id="sort-filter" name="sort">
+              <option value="deadline">Sort by deadline</option>
+              <option value="title">Sort by title</option>
+              <option value="newest">Sort by newest</option>
+            </select>
+            <button class="button button-secondary clear-filters" type="button" id="clear-filters">Clear Filters</button>
           </form>
           <div class="status-message" id="opportunity-status" role="status">Loading opportunities...</div>
           <div class="opportunity-results grid three" id="opportunity-grid" aria-live="polite"></div>
+          <nav class="pagination" id="pagination" aria-label="Opportunity pagination"></nav>
+        </div>
+      </section>
+
+      <section class="section-pad featured-internships" aria-labelledby="featured-internships-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Featured Internships</p>
+            <h2 id="featured-internships-title">Real Programs Worth Exploring</h2>
+            <p>Featured internships are pulled live from the internships database.</p>
+          </div>
+          <div class="opportunity-results grid three" id="featured-internship-grid" aria-live="polite">
+            <p class="empty-state">Loading featured internships...</p>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-secondary" href="internships.html">Browse all internships</a>
+          </div>
         </div>
       </section>
 
@@ -202,7 +229,7 @@
             <p>
               OpportunityNest.com brings global opportunities into one intelligent discovery hub,
               helping users move from scattered information to clear action. Search by goal, filter
-              by eligibility, save what matters, and track deadlines before they pass.
+              by country and type, and apply through official program links.
             </p>
           </div>
           <div class="comparison" aria-label="Before and after comparison">
@@ -212,7 +239,7 @@
             </article>
             <article>
               <span>After</span>
-              <p>Verified listings, smart filters, saved opportunities, timely alerts.</p>
+              <p>Verified listings, smart filters, and direct links to official applications.</p>
             </article>
           </div>
         </div>
@@ -238,8 +265,8 @@
             </article>
             <article class="feature-card">
               <span class="icon" aria-hidden="true">◎</span>
-              <h3>Personalized recommendations</h3>
-              <p>Get opportunities matched to your country, field, level, and career goals.</p>
+              <h3>Category pages</h3>
+              <p>Browse dedicated pages for scholarships, internships, and fellowships with focused filters.</p>
             </article>
             <article class="feature-card">
               <span class="icon" aria-hidden="true">≡</span>
@@ -248,13 +275,13 @@
             </article>
             <article class="feature-card">
               <span class="icon" aria-hidden="true">↗</span>
-              <h3>Email alerts and notifications</h3>
-              <p>Never miss a deadline with alerts for saved searches and matching opportunities.</p>
+              <h3>Official application links</h3>
+              <p>Every listing links directly to the official program website so you can apply with confidence.</p>
             </article>
             <article class="feature-card">
               <span class="icon" aria-hidden="true">★</span>
-              <h3>Save and track opportunities</h3>
-              <p>Build a personal shortlist and monitor deadlines from a simple dashboard.</p>
+              <h3>Detail pages</h3>
+              <p>Read full descriptions, funding details, and deadlines before visiting the official source.</p>
             </article>
           </div>
         </div>
@@ -268,20 +295,20 @@
           </div>
           <dl class="trust-stats">
             <div>
-              <dt>50,000+</dt>
-              <dd>opportunities discovered</dd>
+              <dt>Australia</dt>
+              <dd>scholarships &amp; fellowships</dd>
             </div>
             <div>
-              <dt>10,000+</dt>
-              <dd>active users</dd>
+              <dt>Canada</dt>
+              <dd>scholarships &amp; fellowships</dd>
             </div>
             <div>
-              <dt>120+</dt>
-              <dd>countries covered</dd>
+              <dt>UK</dt>
+              <dd>scholarships &amp; fellowships</dd>
             </div>
             <div>
-              <dt>24 hrs</dt>
-              <dd>regular update cycle</dd>
+              <dt>Germany</dt>
+              <dd>scholarships &amp; fellowships</dd>
             </div>
           </dl>
           <div class="logo-strip" aria-label="Institution categories represented">
@@ -309,7 +336,7 @@
             <article class="story-card">
               <p class="story-tag">Engineering Student • Nigeria</p>
               <h3>Internship secured in Germany</h3>
-              <p>Daniel used saved searches and deadline alerts to apply early and land a paid research internship.</p>
+              <p>Daniel used filters to find paid research internships in Germany and applied early through the official program link.</p>
             </article>
             <article class="story-card">
               <p class="story-tag">Young Professional • Philippines</p>
@@ -336,7 +363,7 @@
               <figcaption>Daniel Okoro <span>Engineering Student • Nigeria</span></figcaption>
             </figure>
             <figure class="quote-card">
-              <blockquote>“The deadline alerts were the reason I applied on time. I found an opportunity I would have completely missed.”</blockquote>
+              <blockquote>“The deadline information helped me apply on time. I found an opportunity I would have completely missed.”</blockquote>
               <figcaption>Maria Santos <span>Early-Career Professional • Philippines</span></figcaption>
             </figure>
             <figure class="quote-card">
@@ -361,8 +388,8 @@
             </article>
             <article>
               <span>2</span>
-              <h3>Filter and save</h3>
-              <p>Narrow results by eligibility, funding, deadline, location, and program category.</p>
+              <h3>Filter and compare</h3>
+              <p>Narrow results by country, type, funding, deadline, and field of study.</p>
             </article>
             <article>
               <span>3</span>
@@ -371,8 +398,8 @@
             </article>
             <article>
               <span>4</span>
-              <h3>Track deadlines</h3>
-              <p>Save opportunities, monitor closing dates, and receive timely alerts.</p>
+              <h3>Confirm on official sites</h3>
+              <p>Always verify deadlines and eligibility on the official program website before applying.</p>
             </article>
           </div>
         </div>
@@ -386,7 +413,7 @@
           </div>
           <ul class="benefit-list">
             <li>Save hours every week finding relevant opportunities</li>
-            <li>Reduce missed deadlines with alerts and tracking</li>
+            <li>Compare funding, level, and field in one place</li>
             <li>Discover global programs from one trusted hub</li>
             <li>Apply earlier and improve your chances</li>
             <li>Find scholarships, internships, jobs, and fellowships faster</li>
@@ -404,7 +431,7 @@
           </div>
           <div class="cta-actions">
             <a class="button button-primary" href="#opportunities">Explore Opportunities</a>
-            <a class="button button-secondary" href="#join">Join Free</a>
+            <a class="button button-secondary" href="internships.html">Browse Internships</a>
           </div>
         </div>
       </section>
@@ -437,8 +464,8 @@
               <p>The platform covers global opportunities across multiple countries, regions, and program categories.</p>
             </details>
             <details>
-              <summary>How do alerts work?</summary>
-              <p>Users can save searches or opportunities and receive alerts for matching listings and upcoming deadlines.</p>
+              <summary>How do I report an incorrect listing?</summary>
+              <p>Use the <a href="contact.html">Contact page</a> to report outdated or incorrect information.</p>
             </details>
           </div>
         </div>
@@ -446,17 +473,17 @@
 
       <section class="final-cta section-pad" id="join" aria-labelledby="final-title">
         <div class="container final-panel">
-          <p class="eyebrow">New Opportunities Added Daily</p>
-          <h2 id="final-title">Don’t Miss Your Next Opportunity</h2>
+          <p class="eyebrow">Explore by Category</p>
+          <h2 id="final-title">Find the Right Opportunity for You</h2>
           <p>
-            New scholarships, internships, jobs, fellowships, and global programs are added daily.
-            Early applicants often have the strongest advantage.
+            Browse scholarships, internships, and fellowships across Australia, Canada, the UK, and Germany.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#opportunities">Start Exploring Now</a>
-            <a class="button button-secondary" href="#join">Join Free</a>
+            <a class="button button-primary" href="scholarships.html">Scholarships</a>
+            <a class="button button-secondary" href="internships.html">Internships</a>
+            <a class="button button-secondary" href="fellowships.html">Fellowships</a>
           </div>
-          <p class="microcopy">Free to start • Updated daily • Built for students and professionals worldwide</p>
+          <p class="microcopy">Free to browse • Updated regularly • Built for students worldwide</p>
         </div>
       </section>
     </main>
@@ -479,6 +506,7 @@
           <a href="contact.html">Contact</a>
           <a href="faq.html">FAQ</a>
           <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
         </nav>
       </div>
       <div class="container copyright">
@@ -487,6 +515,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="utils.js" defer></script>
     <script src="nav.js" defer></script>
     <script src="script.js" defer></script>
   </body>

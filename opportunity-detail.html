@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Privacy Policy | OpportunityNest</title>
-    <meta name="description" content="Read the OpportunityNest privacy policy in clear language.">
+    <title>Opportunity Details | OpportunityNest</title>
+    <meta name="description" content="View scholarship or fellowship details, eligibility, funding, deadline, and official application links.">
     <meta name="theme-color" content="#0f766e">
-    <link rel="canonical" href="https://opportunitynest.com/privacy.html">
-    <meta property="og:title" content="Privacy Policy | OpportunityNest">
-    <meta property="og:description" content="Read the OpportunityNest privacy policy in clear language.">
+    <link rel="canonical" href="https://opportunitynest.com/opportunity-detail.html">
+    <meta property="og:title" content="Opportunity Details | OpportunityNest">
+    <meta property="og:description" content="View opportunity details and apply through the official program website.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://opportunitynest.com/privacy.html">
     <meta name="twitter:card" content="summary">
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -42,40 +41,15 @@
 
     <main id="main">
       <section class="page-hero section-pad">
-        <div class="container narrow">
-          <p class="eyebrow">Privacy</p>
-          <h1>Privacy Policy</h1>
-          <p><strong>Last updated:</strong> 22 June 2026</p>
-
-          <h2>What Information Is Collected</h2>
-          <p>
-            At this time, OpportunityNest only collects information you choose to submit through the
-            contact form, such as your name, email address, and message.
-          </p>
-
-          <h2>How Information Is Used</h2>
-          <p>
-            Contact form information is used only to read and respond to your message. OpportunityNest
-            does not sell your personal information.
-          </p>
-
-          <h2>Third-Party Services</h2>
-          <p>
-            OpportunityNest uses Supabase to store and display opportunity listings, and Vercel to
-            host the website. The contact form uses Formspree to deliver messages. These services
-            may process data according to their own privacy policies.
-          </p>
-
-          <h2>Cookies</h2>
-          <p>
-            OpportunityNest does not use tracking cookies at this time.
-          </p>
-
-          <h2>Privacy Questions</h2>
-          <p>
-            For privacy questions, please use the <a href="contact.html">Contact page</a>.
-            See also our <a href="terms.html">Terms &amp; Conditions</a>.
-          </p>
+        <div class="container">
+          <div class="status-message" id="detail-status" role="status">Loading opportunity details...</div>
+          <article class="internship-detail" id="opportunity-detail">
+            <div class="detail-header">
+              <p class="eyebrow">Opportunity Details</p>
+              <h1>Opportunity Details</h1>
+              <p>Loading the latest information from OpportunityNest.</p>
+            </div>
+          </article>
         </div>
       </section>
     </main>
@@ -105,6 +79,9 @@
         <p>&copy; 2026 OpportunityNest.com. All rights reserved.</p>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="utils.js" defer></script>
     <script src="nav.js" defer></script>
+    <script src="opportunity-detail.js" defer></script>
   </body>
 </html>

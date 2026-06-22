@@ -1,121 +1,56 @@
-const SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
+const ON = window.OpportunityNest;
 
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
 const liveSearch = document.querySelector("#live-search");
 const countryFilter = document.querySelector("#country-filter");
+const sortFilter = document.querySelector("#sort-filter");
+const pagination = document.querySelector("#pagination");
 const pageType = opportunityGrid?.dataset.type || "";
 const emptyMessage = opportunityGrid?.dataset.empty || "No opportunities match your search.";
 
 let opportunities = [];
+let currentPage = 1;
 
-const escapeHtml = (value = "") =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-const normalizeOpportunity = (row) => ({
-  id: row.id,
-  type: row.type || "",
-  funding: row.funding || "",
-  title: row.title || "",
-  country: row.country || "",
-  level: row.level || "",
-  field: row.field || "",
-  deadline: row.deadline || "",
-  description: row.description || "",
-  link: row.link || "#"
-});
-
-const setStatus = (message, isError = false) => {
-  if (!opportunityStatus) return;
-  opportunityStatus.textContent = message;
-  opportunityStatus.classList.toggle("is-error", isError);
-};
+const setStatus = (message, isError = false) => ON.setStatus(opportunityStatus, message, isError);
 
 const renderOpportunities = () => {
   if (!opportunityGrid) return;
 
-  const searchTerm = (liveSearch?.value || "").trim().toLowerCase();
-  const selectedCountry = countryFilter?.value || "";
-
-  const filtered = opportunities.filter((item) => {
-    const haystack = [
-      item.title,
-      item.type,
-      item.funding,
-      item.country,
-      item.level,
-      item.field,
-      item.deadline,
-      item.description
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    const matchesSearch = !searchTerm || haystack.includes(searchTerm);
-    const matchesCountry = !selectedCountry || item.country.toLowerCase() === selectedCountry.toLowerCase();
-
-    return matchesSearch && matchesCountry;
-  });
+  const filtered = ON.filterOpportunities(opportunities, {
+    searchTerm: liveSearch?.value || "",
+    country: countryFilter?.value || ""
+  }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
 
   if (!filtered.length) {
-    opportunityGrid.innerHTML = `<p class="empty-state">${escapeHtml(emptyMessage)}</p>`;
+    opportunityGrid.innerHTML = `<p class="empty-state">${ON.escapeHtml(emptyMessage)}</p>`;
+    ON.renderPagination(pagination, 0, 1, () => {});
     setStatus("No matching opportunities found.");
     return;
   }
 
-  opportunityGrid.innerHTML = filtered
-    .map(
-      (item) => `
-        <article class="live-opportunity-card">
-          <div class="opportunity-card-top">
-            <p class="card-kicker">${escapeHtml(item.type)} - ${escapeHtml(item.country)}</p>
-            <span class="deadline">${escapeHtml(item.deadline || "Open")}</span>
-          </div>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description)}</p>
-          <dl class="opportunity-meta">
-            <div>
-              <dt>Funding</dt>
-              <dd>${escapeHtml(item.funding || "See listing")}</dd>
-            </div>
-            <div>
-              <dt>Level</dt>
-              <dd>${escapeHtml(item.level || "All levels")}</dd>
-            </div>
-            <div>
-              <dt>Field</dt>
-              <dd>${escapeHtml(item.field || "Multiple fields")}</dd>
-            </div>
-          </dl>
-          <a class="button button-secondary" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">View &amp; Apply</a>
-        </article>
-      `
-    )
-    .join("");
+  const { page, pageCount, items } = ON.paginate(filtered, currentPage);
+  currentPage = page;
 
-  setStatus(`${filtered.length} ${pageType.toLowerCase()} listings shown.`);
+  opportunityGrid.innerHTML = items.map(ON.renderOpportunityCard).join("");
+  ON.renderPagination(pagination, pageCount, currentPage, (nextPage) => {
+    currentPage = nextPage;
+    renderOpportunities();
+    opportunityGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  setStatus(`${filtered.length} ${pageType.toLowerCase()} listings found. Showing page ${currentPage} of ${pageCount}.`);
 };
 
 const loadCategoryOpportunities = async () => {
   if (!opportunityGrid) return;
 
-  opportunityGrid.innerHTML = "<p class=\"empty-state\">Loading opportunities...</p>";
+  opportunityGrid.innerHTML = ON.renderLoadingSkeleton(6);
   setStatus("Loading opportunities...");
 
   try {
-    if (!window.supabase) {
-      throw new Error("Supabase client could not be loaded. Check the CDN script tag.");
-    }
-
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-    const { data, error } = await supabaseClient
+    const { data, error } = await ON.getSupabaseClient()
       .from("opportunities")
       .select("id,type,funding,title,country,level,field,deadline,description,link,created_at")
       .eq("type", pageType)
@@ -123,20 +58,37 @@ const loadCategoryOpportunities = async () => {
 
     if (error) throw error;
 
-    opportunities = (data || []).map(normalizeOpportunity);
+    opportunities = (data || []).map(ON.normalizeOpportunity);
     renderOpportunities();
   } catch (error) {
     console.error(`${pageType} opportunities fetch failed:`, error);
-    opportunityGrid.innerHTML =
-      "<p class=\"empty-state\">We could not load opportunities right now. Please check your connection or Supabase public SELECT policy.</p>";
+    opportunityGrid.innerHTML = ON.renderErrorWithRetry(
+      error.message || "We could not load opportunities right now. Please check your connection.",
+      "loadCategoryOpportunities()"
+    );
     setStatus(error.message || "We could not load opportunities right now.", true);
   }
 };
 
-opportunityControls?.addEventListener("input", renderOpportunities);
+const resetAndRender = () => {
+  currentPage = 1;
+  renderOpportunities();
+};
+
+const clearFilters = () => {
+  if (liveSearch) liveSearch.value = "";
+  if (countryFilter) countryFilter.value = "";
+  if (sortFilter) sortFilter.value = "deadline";
+  currentPage = 1;
+  renderOpportunities();
+};
+
+opportunityControls?.addEventListener("input", resetAndRender);
 opportunityControls?.addEventListener("submit", (event) => {
   event.preventDefault();
-  renderOpportunities();
+  resetAndRender();
 });
+
+document.getElementById("clear-filters")?.addEventListener("click", clearFilters);
 
 loadCategoryOpportunities();

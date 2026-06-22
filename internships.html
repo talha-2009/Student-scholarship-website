@@ -4,9 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Internships | OpportunityNest</title>
-    <meta name="description" content="Browse live internship listings from OpportunityNest across Australia, Canada, UK, and Germany.">
+    <meta name="description" content="Browse verified global internship programs from UNICEF, AIESEC, Max Planck, DAAD, and more.">
     <meta name="theme-color" content="#0f766e">
+    <link rel="canonical" href="https://opportunitynest.com/internships.html">
+    <meta property="og:title" content="Internships | OpportunityNest">
+    <meta property="og:description" content="Browse verified global internship programs from UNICEF, AIESEC, Max Planck, DAAD, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://opportunitynest.com/internships.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Internships | OpportunityNest">
     <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Internships | OpportunityNest",
+        "description": "Browse verified global internship programs.",
+        "url": "https://opportunitynest.com/internships.html"
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -38,30 +54,61 @@
       <section class="page-hero section-pad live-opportunities">
         <div class="container">
           <div class="section-heading">
-            <p class="eyebrow">Category</p>
+            <p class="eyebrow">Verified Internships</p>
             <h1>Internships</h1>
-            <p>This page shows internship opportunities only.</p>
+            <p>Browse real internship programs from trusted organizations, research institutions, and global career platforms.</p>
           </div>
-          <form class="opportunity-controls category-controls" id="opportunity-controls" role="search">
+          <form class="opportunity-controls internship-controls" id="internship-controls" role="search">
             <label class="sr-only" for="live-search">Search internships</label>
-            <input id="live-search" name="search" type="search" placeholder="Search internships by title, field, funding..." autocomplete="off">
+            <input id="live-search" name="search" type="search" placeholder="Search by title, organization, location..." autocomplete="off">
             <label class="sr-only" for="country-filter">Filter by country</label>
             <select id="country-filter" name="country">
               <option value="">All</option>
-              <option value="Australia">Australia</option>
-              <option value="Canada">Canada</option>
-              <option value="UK">UK</option>
               <option value="Germany">Germany</option>
+              <option value="Global">Global</option>
+              <option value="Remote">Remote</option>
             </select>
+            <label class="sr-only" for="degree-filter">Filter by degree level</label>
+            <select id="degree-filter" name="degree">
+              <option value="">All degree levels</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Graduate">Graduate</option>
+              <option value="Master's">Master's</option>
+              <option value="PhD">PhD</option>
+              <option value="Recent graduates">Recent graduates</option>
+            </select>
+            <label class="sr-only" for="type-filter">Filter by internship type</label>
+            <select id="type-filter" name="type">
+              <option value="">All internship types</option>
+              <option value="Humanitarian">Humanitarian</option>
+              <option value="Professional">Professional</option>
+              <option value="Research">Research</option>
+              <option value="Industry Research">Industry Research</option>
+            </select>
+            <label class="filter-check">
+              <input id="funded-filter" name="funded" type="checkbox">
+              Fully Funded
+            </label>
+            <label class="filter-check">
+              <input id="remote-filter" name="remote" type="checkbox">
+              Remote
+            </label>
+            <label class="sr-only" for="sort-filter">Sort results</label>
+            <select id="sort-filter" name="sort">
+              <option value="deadline">Sort by deadline</option>
+              <option value="title">Sort by title</option>
+              <option value="newest">Sort by newest</option>
+            </select>
+            <button class="button button-secondary clear-filters" type="button" id="clear-filters">Clear Filters</button>
           </form>
           <div class="status-message" id="opportunity-status" role="status">Loading internships...</div>
           <div
             class="opportunity-results grid three"
-            id="opportunity-grid"
-            data-type="Internship"
+            id="internship-grid"
             data-empty="No internships match your search."
             aria-live="polite"
           ></div>
+          <nav class="pagination" id="pagination" aria-label="Internship pagination"></nav>
         </div>
       </section>
     </main>
@@ -84,6 +131,7 @@
           <a href="contact.html">Contact</a>
           <a href="faq.html">FAQ</a>
           <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
         </nav>
       </div>
       <div class="container copyright">
@@ -91,7 +139,8 @@
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="utils.js" defer></script>
     <script src="nav.js" defer></script>
-    <script src="category.js" defer></script>
+    <script src="internships.js" defer></script>
   </body>
 </html>

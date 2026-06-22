@@ -1,144 +1,198 @@
+const ON = window.OpportunityNest;
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
 const liveSearch = document.querySelector("#live-search");
 const countryFilter = document.querySelector("#country-filter");
 const typeFilter = document.querySelector("#type-filter");
-const SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
+const sortFilter = document.querySelector("#sort-filter");
+const pagination = document.querySelector("#pagination");
+const featuredInternshipGrid = document.querySelector("#featured-internship-grid");
 
 let opportunities = [];
+let internships = [];
+let currentPage = 1;
 
-const escapeHtml = (value = "") =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportunityStatus, message, isError);
 
-const normalizeOpportunity = (row) => ({
-  id: row.id,
-  type: row.type || row.category || "",
-  funding: row.funding || row.funding_type || "",
-  title: row.title || row.name || "",
-  country: row.country || row.location || "",
-  level: row.level || row.study_level || "",
-  field: row.field || row.subject || "",
-  deadline: row.deadline || row.deadline_date || "",
-  description: row.description || row.summary || "",
-  link: row.link || row.url || row.application_link || "#"
-});
-
-const setOpportunityStatus = (message, isError = false) => {
-  if (!opportunityStatus) return;
-  opportunityStatus.textContent = message;
-  opportunityStatus.classList.toggle("is-error", isError);
+const getCombinedDataset = () => {
+  const selectedType = typeFilter?.value || "";
+  if (selectedType === "Internship") {
+    return internships.map(ON.mapInternshipToOpportunity);
+  }
+  if (selectedType) {
+    return opportunities;
+  }
+  return [...opportunities, ...internships.map(ON.mapInternshipToOpportunity)];
 };
 
 const renderOpportunities = () => {
   if (!opportunityGrid) return;
 
-  const searchTerm = (liveSearch?.value || "").trim().toLowerCase();
-  const selectedCountry = countryFilter?.value || "";
-  const selectedType = typeFilter?.value || "";
-
-  const filtered = opportunities.filter((item) => {
-    const haystack = [
-      item.title,
-      item.type,
-      item.funding,
-      item.country,
-      item.level,
-      item.field,
-      item.deadline,
-      item.description
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    const matchesSearch = !searchTerm || haystack.includes(searchTerm);
-    const matchesCountry = !selectedCountry || item.country.toLowerCase() === selectedCountry.toLowerCase();
-    const matchesType = !selectedType || item.type.toLowerCase() === selectedType.toLowerCase();
-
-    return matchesSearch && matchesCountry && matchesType;
-  });
+  const filtered = ON.filterOpportunities(getCombinedDataset(), {
+    searchTerm: liveSearch?.value || "",
+    country: countryFilter?.value || "",
+    type: typeFilter?.value || ""
+  }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
 
   if (!filtered.length) {
-    opportunityGrid.innerHTML = '<p class="empty-state">No opportunities match your search yet. Try clearing a filter.</p>';
+    opportunityGrid.innerHTML = '<p class="empty-state">No opportunities match your search yet. Try clearing a filter or browse category pages.</p>';
+    ON.renderPagination(pagination, 0, 1, () => {});
     setOpportunityStatus("No matching opportunities found.");
     return;
   }
 
-  opportunityGrid.innerHTML = filtered
-    .map(
-      (item) => `
-        <article class="live-opportunity-card">
-          <div class="opportunity-card-top">
-            <p class="card-kicker">${escapeHtml(item.type)} - ${escapeHtml(item.country)}</p>
-            <span class="deadline">${escapeHtml(item.deadline || "Open")}</span>
-          </div>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description)}</p>
-          <dl class="opportunity-meta">
-            <div>
-              <dt>Funding</dt>
-              <dd>${escapeHtml(item.funding || "See listing")}</dd>
-            </div>
-            <div>
-              <dt>Level</dt>
-              <dd>${escapeHtml(item.level || "All levels")}</dd>
-            </div>
-            <div>
-              <dt>Field</dt>
-              <dd>${escapeHtml(item.field || "Multiple fields")}</dd>
-            </div>
-          </dl>
-          <a class="button button-secondary" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">View &amp; Apply</a>
-        </article>
-      `
-    )
-    .join("");
+  const { page, pageCount, items } = ON.paginate(filtered, currentPage);
+  currentPage = page;
 
-  setOpportunityStatus(`${filtered.length} opportunities shown.`);
+  opportunityGrid.innerHTML = items.map(ON.renderOpportunityCard).join("");
+  ON.renderPagination(pagination, pageCount, currentPage, (nextPage) => {
+    currentPage = nextPage;
+    renderOpportunities();
+    opportunityGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  setOpportunityStatus(`${filtered.length} opportunities found. Showing page ${currentPage} of ${pageCount}.`);
 };
 
 const loadOpportunities = async () => {
   if (!opportunityGrid) return;
 
-  opportunityGrid.innerHTML = '<p class="empty-state">Loading opportunities...</p>';
+  opportunityGrid.innerHTML = ON.renderLoadingSkeleton(6);
   setOpportunityStatus("Loading opportunities...");
 
   try {
-    if (!window.supabase) {
-      throw new Error("Supabase client could not be loaded. Check the CDN script tag.");
-    }
-
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-    const { data, error } = await supabaseClient
+    const { data, error } = await ON.getSupabaseClient()
       .from("opportunities")
       .select("id,type,funding,title,country,level,field,deadline,description,link,created_at")
       .order("deadline", { ascending: true });
 
     if (error) throw error;
-
-    opportunities = (data || []).map(normalizeOpportunity);
+    opportunities = (data || []).map(ON.normalizeOpportunity);
     renderOpportunities();
   } catch (error) {
     console.error("Supabase opportunities fetch failed:", error);
-    opportunityGrid.innerHTML =
-      '<p class="empty-state">We could not load opportunities right now. Please check your connection or Supabase public SELECT policy.</p>';
-    setOpportunityStatus(
-      error.message || "We could not load opportunities right now. Please try again soon.",
-      true
+    opportunityGrid.innerHTML = ON.renderErrorWithRetry(
+      error.message || "We could not load opportunities right now. Please check your connection.",
+      "loadOpportunities()"
     );
+    setOpportunityStatus(error.message || "We could not load opportunities right now.", true);
   }
 };
 
-opportunityControls?.addEventListener("input", renderOpportunities);
+const loadInternshipsForHome = async () => {
+  try {
+    const { data, error } = await ON.getSupabaseClient()
+      .from("internships")
+      .select("id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,featured,created_at")
+      .not("official_url", "is", null)
+      .order("deadline", { ascending: true });
+
+    if (error) throw error;
+    internships = data || [];
+    renderOpportunities();
+  } catch (error) {
+    console.error("Home internships fetch failed:", error);
+  }
+};
+
+const renderFeaturedInternships = (items = []) => {
+  if (!featuredInternshipGrid) return;
+
+  if (!items.length) {
+    featuredInternshipGrid.innerHTML = '<p class="empty-state">No featured internships are available yet.</p>';
+    return;
+  }
+
+  featuredInternshipGrid.innerHTML = items
+    .map((item) => {
+      const mapped = ON.mapInternshipToOpportunity(item);
+      return `
+        <article class="live-opportunity-card internship-card">
+          <div class="opportunity-card-top">
+            <div class="internship-brand">
+              <span class="internship-logo" aria-hidden="true">${ON.escapeHtml((item.organization || "ON").slice(0, 2).toUpperCase())}</span>
+              <div>
+                <p class="card-kicker">${ON.escapeHtml(item.organization || "Internship")}</p>
+                <h3>${ON.escapeHtml(item.title || "Internship program")}</h3>
+              </div>
+            </div>
+            <span class="verified">Featured</span>
+          </div>
+          <p>${ON.escapeHtml(item.description || "")}</p>
+          <dl class="opportunity-meta">
+            <div>
+              <dt>Location</dt>
+              <dd>${ON.escapeHtml([item.city, item.country].filter(Boolean).join(", ") || "Global")}</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>${ON.escapeHtml(item.duration || "See official website")}</dd>
+            </div>
+            <div>
+              <dt>Funding</dt>
+              <dd>${ON.escapeHtml(item.funding || "See official website")}</dd>
+            </div>
+          </dl>
+          <div class="card-actions">
+            <a class="button button-primary" href="${ON.escapeHtml(item.official_url || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="internship-detail.html?id=${encodeURIComponent(item.id)}">View Details</a>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+};
+
+const loadFeaturedInternships = async () => {
+  if (!featuredInternshipGrid) return;
+
+  featuredInternshipGrid.innerHTML = ON.renderLoadingSkeleton(3);
+
+  try {
+    const { data, error } = await ON.getSupabaseClient()
+      .from("internships")
+      .select("id,title,organization,country,city,duration,funding,official_url,description,featured")
+      .eq("featured", true)
+      .not("official_url", "is", null)
+      .limit(3);
+
+    if (error) throw error;
+    renderFeaturedInternships(data || []);
+  } catch (error) {
+    console.error("Featured internships fetch failed:", error);
+    featuredInternshipGrid.innerHTML =
+      '<p class="empty-state">We could not load featured internships right now.</p>';
+  }
+};
+
+const resetAndRender = () => {
+  currentPage = 1;
+  renderOpportunities();
+};
+
+const clearFilters = () => {
+  if (liveSearch) liveSearch.value = "";
+  if (countryFilter) countryFilter.value = "";
+  if (typeFilter) typeFilter.value = "";
+  if (sortFilter) sortFilter.value = "deadline";
+  currentPage = 1;
+  renderOpportunities();
+};
+
+opportunityControls?.addEventListener("input", resetAndRender);
 opportunityControls?.addEventListener("submit", (event) => {
   event.preventDefault();
-  renderOpportunities();
+  resetAndRender();
 });
 
+document.getElementById("clear-filters")?.addEventListener("click", clearFilters);
+
+const urlSearch = new URLSearchParams(window.location.search).get("q");
+if (urlSearch && liveSearch) {
+  liveSearch.value = urlSearch;
+}
+
 loadOpportunities();
+loadInternshipsForHome();
+loadFeaturedInternships();

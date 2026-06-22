@@ -54,7 +54,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.45);
+  outline: 3px solid var(--primary);
   outline-offset: 3px;
 }
 
@@ -177,6 +177,7 @@ textarea {
   font-weight: 800;
   line-height: 1.15;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -423,13 +424,34 @@ dd {
 
 .opportunity-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 180px 180px;
+  grid-template-columns: minmax(0, 1fr) repeat(3, minmax(140px, 180px));
   gap: 12px;
   padding: 14px;
   margin-bottom: 18px;
   background: var(--surface-strong);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+}
+
+.error-page {
+  text-align: center;
+}
+
+.error-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.error-links a {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.error-links a:hover {
+  text-decoration: underline;
 }
 
 .opportunity-controls input,
@@ -499,7 +521,39 @@ dd {
 }
 
 .category-controls {
-  grid-template-columns: minmax(0, 1fr) 190px;
+  grid-template-columns: minmax(0, 1fr) 190px 170px auto;
+}
+
+.internship-controls {
+  grid-template-columns: minmax(220px, 1fr) repeat(4, minmax(140px, 170px)) auto auto auto;
+  align-items: center;
+}
+
+.clear-filters {
+  min-height: 46px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+
+.filter-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.filter-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
 }
 
 .status-message {
@@ -532,6 +586,29 @@ dd {
 .live-opportunity-card > p {
   margin: 0;
   color: var(--muted);
+}
+
+.internship-card h3 {
+  margin-top: 2px;
+}
+
+.internship-brand {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.internship-logo {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 900;
 }
 
 .opportunity-card-top {
@@ -569,6 +646,108 @@ dd {
   text-align: right;
 }
 
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.card-actions .button {
+  min-height: 42px;
+  padding: 10px 13px;
+  font-size: 0.92rem;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.pagination-button {
+  min-width: 42px;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pagination-button.is-active,
+.pagination-button:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.featured-internships {
+  background: var(--bg);
+}
+
+.internship-detail {
+  display: grid;
+  gap: 28px;
+  padding: 30px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.breadcrumbs a {
+  color: var(--primary);
+  font-weight: 650;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs span[aria-hidden="true"] {
+  color: var(--line);
+}
+
+.detail-header p {
+  max-width: 780px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 0;
+}
+
+.detail-grid div {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.detail-grid dt {
+  font-size: 0.85rem;
+}
+
+.detail-grid dd {
+  font-size: 0.96rem;
+}
+
 .empty-state {
   grid-column: 1 / -1;
   margin: 0;
@@ -585,9 +764,94 @@ dd {
   color: var(--gold);
 }
 
-.deadline.soft {
-  background: #eef4ff;
-  color: var(--accent);
+.deadline-urgent {
+  background: #fee2e2;
+  color: #dc2626;
+  animation: pulse 2s infinite;
+}
+
+.deadline-soon {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.deadline-expired {
+  background: #f3f4f6;
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.error-state {
+  grid-column: 1 / -1;
+  padding: 32px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.error-message {
+  margin: 0 0 16px;
+  color: #991b1b;
+  font-weight: 750;
+}
+
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-kicker {
+  height: 16px;
+  width: 120px;
+}
+
+.skeleton-deadline {
+  height: 24px;
+  width: 80px;
+  border-radius: 999px;
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 80%;
+  margin: 12px 0;
+}
+
+.skeleton-text {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-text-short {
+  height: 16px;
+  width: 60%;
+}
+
+.skeleton-meta {
+  height: 14px;
+  width: 100%;
+}
+
+.skeleton-button {
+  height: 42px;
+  width: 100%;
 }
 
 .section-heading {
@@ -904,7 +1168,9 @@ details p {
   .grid.three,
   .grid.four,
   .steps,
-  .trust-stats {
+  .trust-stats,
+  .internship-controls,
+  .detail-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -968,7 +1234,9 @@ details p {
   .trust-stats,
   .benefit-list,
   .opportunity-controls,
-  .category-controls {
+  .category-controls,
+  .internship-controls,
+  .detail-grid {
     grid-template-columns: 1fr;
   }
 
@@ -992,12 +1260,33 @@ details p {
 
   .cta-panel,
   .final-panel,
-  .contact-form {
+  .contact-form,
+  .internship-detail {
     padding: 28px 18px;
+  }
+
+  .card-actions .button {
+    width: 100%;
   }
 
   .brand {
     font-size: 0.94rem;
+  }
+
+  .button,
+  .opportunity-controls input,
+  .opportunity-controls select,
+  .filter-check {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .card-actions {
+    gap: 12px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.85rem;
   }
 }
 
