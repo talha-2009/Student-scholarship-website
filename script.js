@@ -193,6 +193,8 @@ if (urlSearch && liveSearch) {
   liveSearch.value = urlSearch;
 }
 
+ON.populateCountryFilter(countryFilter);
+ON.updateStatistics();
 loadOpportunities();
 loadInternshipsForHome();
 loadFeaturedInternships();

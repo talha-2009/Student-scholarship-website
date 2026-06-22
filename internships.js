@@ -228,6 +228,7 @@ internshipControls?.addEventListener("submit", (event) => {
 
 document.getElementById("clear-filters")?.addEventListener("click", clearFilters);
 
+ON.populateCountryFilter(countryFilter);
 if (internshipGrid) {
   loadInternships();
 }

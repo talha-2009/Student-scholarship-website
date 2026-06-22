@@ -231,4 +231,117 @@ window.OpportunityNest = window.OpportunityNest || {};
       </div>
     `;
   };
+
+  ON.fetchUniqueCountries = async () => {
+    try {
+      const client = ON.getSupabaseClient();
+      
+      const [opportunitiesResult, internshipsResult] = await Promise.all([
+        client.from("opportunities").select("country").not("country", "is", null),
+        client.from("internships").select("country").not("country", "is", null)
+      ]);
+
+      const countries = new Set();
+      
+      if (opportunitiesResult.data) {
+        opportunitiesResult.data.forEach(row => {
+          if (row.country && row.country.trim()) {
+            countries.add(row.country.trim());
+          }
+        });
+      }
+      
+      if (internshipsResult.data) {
+        internshipsResult.data.forEach(row => {
+          if (row.country && row.country.trim()) {
+            countries.add(row.country.trim());
+          }
+        });
+      }
+
+      return Array.from(countries).sort();
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+      return [];
+    }
+  };
+
+  ON.populateCountryFilter = async (selectElement) => {
+    if (!selectElement) return;
+    
+    const countries = await ON.fetchUniqueCountries();
+    
+    selectElement.innerHTML = '<option value="">All</option>';
+    
+    countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country;
+      option.textContent = country;
+      selectElement.appendChild(option);
+    });
+  };
+
+  ON.fetchStatistics = async () => {
+    try {
+      const client = ON.getSupabaseClient();
+      
+      const [opportunitiesCount, internshipsCount, opportunitiesCountries, internshipsCountries] = await Promise.all([
+        client.from("opportunities").select("id", { count: "exact", head: true }),
+        client.from("internships").select("id", { count: "exact", head: true }),
+        client.from("opportunities").select("country").not("country", "is", null),
+        client.from("internships").select("country").not("country", "is", null)
+      ]);
+
+      const countries = new Set();
+      
+      if (opportunitiesCountries.data) {
+        opportunitiesCountries.data.forEach(row => {
+          if (row.country && row.country.trim()) {
+            countries.add(row.country.trim());
+          }
+        });
+      }
+      
+      if (internshipsCountries.data) {
+        internshipsCountries.data.forEach(row => {
+          if (row.country && row.country.trim()) {
+            countries.add(row.country.trim());
+          }
+        });
+      }
+
+      return {
+        totalOpportunities: opportunitiesCount.count || 0,
+        totalInternships: internshipsCount.count || 0,
+        totalCountries: countries.size
+      };
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+      return {
+        totalOpportunities: 0,
+        totalInternships: 0,
+        totalCountries: 0
+      };
+    }
+  };
+
+  ON.updateStatistics = async () => {
+    const stats = await ON.fetchStatistics();
+    
+    const opportunitiesStat = document.querySelector('[data-stat="opportunities"]');
+    const internshipsStat = document.querySelector('[data-stat="internships"]');
+    const countriesStat = document.querySelector('[data-stat="countries"]');
+    
+    if (opportunitiesStat) {
+      opportunitiesStat.textContent = stats.totalOpportunities.toLocaleString();
+    }
+    
+    if (internshipsStat) {
+      internshipsStat.textContent = stats.totalInternships.toLocaleString();
+    }
+    
+    if (countriesStat) {
+      countriesStat.textContent = stats.totalCountries.toLocaleString();
+    }
+  };
 })(window.OpportunityNest);
