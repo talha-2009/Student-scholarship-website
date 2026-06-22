@@ -1,11 +1,13 @@
+const SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
+
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
 const liveSearch = document.querySelector("#live-search");
 const countryFilter = document.querySelector("#country-filter");
-const typeFilter = document.querySelector("#type-filter");
-const SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
+const pageType = opportunityGrid?.dataset.type || "";
+const emptyMessage = opportunityGrid?.dataset.empty || "No opportunities match your search.";
 
 let opportunities = [];
 
@@ -19,18 +21,18 @@ const escapeHtml = (value = "") =>
 
 const normalizeOpportunity = (row) => ({
   id: row.id,
-  type: row.type || row.category || "",
-  funding: row.funding || row.funding_type || "",
-  title: row.title || row.name || "",
-  country: row.country || row.location || "",
-  level: row.level || row.study_level || "",
-  field: row.field || row.subject || "",
-  deadline: row.deadline || row.deadline_date || "",
-  description: row.description || row.summary || "",
-  link: row.link || row.url || row.application_link || "#"
+  type: row.type || "",
+  funding: row.funding || "",
+  title: row.title || "",
+  country: row.country || "",
+  level: row.level || "",
+  field: row.field || "",
+  deadline: row.deadline || "",
+  description: row.description || "",
+  link: row.link || "#"
 });
 
-const setOpportunityStatus = (message, isError = false) => {
+const setStatus = (message, isError = false) => {
   if (!opportunityStatus) return;
   opportunityStatus.textContent = message;
   opportunityStatus.classList.toggle("is-error", isError);
@@ -41,7 +43,6 @@ const renderOpportunities = () => {
 
   const searchTerm = (liveSearch?.value || "").trim().toLowerCase();
   const selectedCountry = countryFilter?.value || "";
-  const selectedType = typeFilter?.value || "";
 
   const filtered = opportunities.filter((item) => {
     const haystack = [
@@ -59,14 +60,13 @@ const renderOpportunities = () => {
 
     const matchesSearch = !searchTerm || haystack.includes(searchTerm);
     const matchesCountry = !selectedCountry || item.country.toLowerCase() === selectedCountry.toLowerCase();
-    const matchesType = !selectedType || item.type.toLowerCase() === selectedType.toLowerCase();
 
-    return matchesSearch && matchesCountry && matchesType;
+    return matchesSearch && matchesCountry;
   });
 
   if (!filtered.length) {
-    opportunityGrid.innerHTML = '<p class="empty-state">No opportunities match your search yet. Try clearing a filter.</p>';
-    setOpportunityStatus("No matching opportunities found.");
+    opportunityGrid.innerHTML = `<p class="empty-state">${escapeHtml(emptyMessage)}</p>`;
+    setStatus("No matching opportunities found.");
     return;
   }
 
@@ -100,14 +100,14 @@ const renderOpportunities = () => {
     )
     .join("");
 
-  setOpportunityStatus(`${filtered.length} opportunities shown.`);
+  setStatus(`${filtered.length} ${pageType.toLowerCase()} listings shown.`);
 };
 
-const loadOpportunities = async () => {
+const loadCategoryOpportunities = async () => {
   if (!opportunityGrid) return;
 
-  opportunityGrid.innerHTML = '<p class="empty-state">Loading opportunities...</p>';
-  setOpportunityStatus("Loading opportunities...");
+  opportunityGrid.innerHTML = "<p class=\"empty-state\">Loading opportunities...</p>";
+  setStatus("Loading opportunities...");
 
   try {
     if (!window.supabase) {
@@ -118,6 +118,7 @@ const loadOpportunities = async () => {
     const { data, error } = await supabaseClient
       .from("opportunities")
       .select("id,type,funding,title,country,level,field,deadline,description,link,created_at")
+      .eq("type", pageType)
       .order("deadline", { ascending: true });
 
     if (error) throw error;
@@ -125,13 +126,10 @@ const loadOpportunities = async () => {
     opportunities = (data || []).map(normalizeOpportunity);
     renderOpportunities();
   } catch (error) {
-    console.error("Supabase opportunities fetch failed:", error);
+    console.error(`${pageType} opportunities fetch failed:`, error);
     opportunityGrid.innerHTML =
-      '<p class="empty-state">We could not load opportunities right now. Please check your connection or Supabase public SELECT policy.</p>';
-    setOpportunityStatus(
-      error.message || "We could not load opportunities right now. Please try again soon.",
-      true
-    );
+      "<p class=\"empty-state\">We could not load opportunities right now. Please check your connection or Supabase public SELECT policy.</p>";
+    setStatus(error.message || "We could not load opportunities right now.", true);
   }
 };
 
@@ -141,4 +139,4 @@ opportunityControls?.addEventListener("submit", (event) => {
   renderOpportunities();
 });
 
-loadOpportunities();
+loadCategoryOpportunities();

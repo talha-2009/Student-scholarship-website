@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Internships | OpportunityNest</title>
+    <meta name="description" content="Browse live internship listings from OpportunityNest across Australia, Canada, UK, and Germany.">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" aria-label="Primary navigation">
+      <nav class="nav container">
+        <a class="brand" href="index.html" aria-label="OpportunityNest.com home">
+          <span class="brand-mark" aria-hidden="true">ON</span>
+          <span>OpportunityNest.com</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Toggle navigation</span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="index.html#opportunities">Opportunities</a>
+          <a href="scholarships.html">Scholarships</a>
+          <a href="internships.html">Internships</a>
+          <a href="fellowships.html">Fellowships</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="page-hero section-pad live-opportunities">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Category</p>
+            <h1>Internships</h1>
+            <p>This page shows internship opportunities only.</p>
+          </div>
+          <form class="opportunity-controls category-controls" id="opportunity-controls" role="search">
+            <label class="sr-only" for="live-search">Search internships</label>
+            <input id="live-search" name="search" type="search" placeholder="Search internships by title, field, funding..." autocomplete="off">
+            <label class="sr-only" for="country-filter">Filter by country</label>
+            <select id="country-filter" name="country">
+              <option value="">All</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="UK">UK</option>
+              <option value="Germany">Germany</option>
+            </select>
+          </form>
+          <div class="status-message" id="opportunity-status" role="status">Loading internships...</div>
+          <div
+            class="opportunity-results grid three"
+            id="opportunity-grid"
+            data-type="Internship"
+            data-empty="No internships match your search."
+            aria-live="polite"
+          ></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true">ON</span>
+            <span>OpportunityNest.com</span>
+          </a>
+          <p>The central hub where students discover life-changing opportunities worldwide.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="index.html#opportunities">Opportunities</a>
+          <a href="scholarships.html">Scholarships</a>
+          <a href="internships.html">Internships</a>
+          <a href="fellowships.html">Fellowships</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+      </div>
+      <div class="container copyright">
+        <p>&copy; 2026 OpportunityNest.com. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="nav.js" defer></script>
+    <script src="category.js" defer></script>
+  </body>
+</html>
