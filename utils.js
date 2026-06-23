@@ -353,4 +353,26 @@ window.OpportunityNest = window.OpportunityNest || {};
       }
     }
   };
+
+  ON.generateAIContent = async (opportunityId) => {
+    try {
+      const client = ON.getSupabaseClient();
+      
+      // Call the Edge Function
+      const { data, error } = await client.functions.invoke('generate-ai-content', {
+        body: { opportunityId }
+      });
+
+      if (error) {
+        console.error('Error generating AI content:', error);
+        throw error;
+      }
+
+      console.log('AI content generated successfully:', data);
+      return data;
+    } catch (error) {
+      console.error('Error in generateAIContent:', error);
+      throw error;
+    }
+  };
 })(window.OpportunityNest);
