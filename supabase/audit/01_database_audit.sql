@@ -88,7 +88,8 @@ FROM public.opportunities
 WHERE deadline IS NOT NULL 
   AND deadline != 'Rolling'
   AND deadline != ''
-  AND TRY_CAST(deadline AS date) < CURRENT_DATE
+  AND deadline ~ '^\d{4}-\d{2}-\d{2}$'
+  AND CAST(deadline AS date) < CURRENT_DATE
 ORDER BY deadline DESC;
 
 -- Check for duplicate opportunities (same title, country, type)
@@ -196,7 +197,8 @@ FROM public.internships
 WHERE deadline IS NOT NULL 
   AND deadline != 'Rolling'
   AND deadline != ''
-  AND TRY_CAST(deadline AS date) < CURRENT_DATE
+  AND deadline ~ '^\d{4}-\d{2}-\d{2}$'
+  AND CAST(deadline AS date) < CURRENT_DATE
 ORDER BY deadline DESC;
 
 -- Check for duplicate internships
@@ -259,7 +261,7 @@ SELECT
   'Expired Opportunities' as metric,
   COUNT(*)::text as value
 FROM public.opportunities
-WHERE deadline IS NOT NULL AND deadline != 'Rolling' AND deadline != '' AND TRY_CAST(deadline AS date) < CURRENT_DATE
+WHERE deadline IS NOT NULL AND deadline != 'Rolling' AND deadline != '' AND deadline ~ '^\d{4}-\d{2}-\d{2}$' AND CAST(deadline AS date) < CURRENT_DATE
 UNION ALL
 SELECT 
   'Opportunities Without SEO Content' as metric,
@@ -301,4 +303,4 @@ SELECT
   'Expired Internships' as metric,
   COUNT(*)::text as value
 FROM public.internships
-WHERE deadline IS NOT NULL AND deadline != 'Rolling' AND deadline != '' AND TRY_CAST(deadline AS date) < CURRENT_DATE;
+WHERE deadline IS NOT NULL AND deadline != 'Rolling' AND deadline != '' AND deadline ~ '^\d{4}-\d{2}-\d{2}$' AND CAST(deadline AS date) < CURRENT_DATE;
