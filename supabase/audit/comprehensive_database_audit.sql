@@ -64,18 +64,11 @@ END $$;
 SELECT 
     'TABLE OVERVIEW' as section,
     table_name,
-    column_count,
-    row_count
+    column_count
 FROM (
     SELECT 
         t.table_name,
-        COUNT(c.column_name) as column_count,
-        COALESCE((
-            SELECT n.nspname || '.' || t.table_name || '::bigint'::regclass::bigint
-            FROM pg_class c
-            JOIN pg_namespace n ON n.oid = c.relnamespace
-            WHERE c.relname = t.table_name
-        ), 0) as row_count
+        COUNT(c.column_name) as column_count
     FROM information_schema.tables t
     LEFT JOIN information_schema.columns c ON c.table_name = t.table_name AND c.table_schema = 'public'
     WHERE t.table_schema = 'public'
