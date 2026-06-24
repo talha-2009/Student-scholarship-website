@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OpportunityNest Brand Kit Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #F4F8F7; color: #111827; }
+    .page { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+    h1 { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #6B7280; text-transform: uppercase; margin: 0 0 8px; }
+    h2 { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #9CA3AF; text-transform: uppercase; margin: 0 0 16px; }
+    .brand-title { font-size: 32px; font-weight: 800; color: #0A5A54; margin: 0 0 4px; }
+    .tagline { font-size: 16px; color: #6B7280; margin: 0 0 48px; }
+    section { margin-bottom: 56px; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 32px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .card.dark { background: #0D1816; border-color: #0D1816; }
+    .card.black { background: #111827; border-color: #111827; }
+    .card-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #9CA3AF; text-transform: uppercase; }
+    .card.dark .card-label,
+    .card.black .card-label { color: rgba(255,255,255,0.35); }
+    .card img, .card object { max-width: 100%; height: auto; }
+    .swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+    .swatch { width: 72px; }
+    .swatch-block { height: 72px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.06); }
+    .swatch-hex { font-size: 11px; font-weight: 700; color: #374151; margin: 6px 0 2px; text-align: center; }
+    .swatch-name { font-size: 10px; color: #9CA3AF; text-align: center; }
+    .type-sample { padding: 24px; background: white; border: 1px solid #E5E7EB; border-radius: 12px; }
+    .type-row { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #F3F4F6; }
+    .type-row:last-child { margin: 0; padding: 0; border: 0; }
+    .type-specimen { font-size: 28px; color: #111827; }
+    .type-meta { font-size: 11px; color: #9CA3AF; margin-top: 4px; }
+    @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>Brand Identity</h1>
+  <p class="brand-title">OpportunityNest</p>
+  <p class="tagline">Global opportunities for students &amp; young professionals</p>
+
+  <!-- Logo variations -->
+  <section>
+    <h2>Logo Variations</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <img src="logo-horizontal.svg" alt="Horizontal logo" style="height:52px">
+        <span class="card-label">Horizontal (Light)</span>
+      </div>
+      <div class="card dark">
+        <img src="logo-dark.svg" alt="Dark mode logo" style="height:52px">
+        <span class="card-label">Horizontal (Dark)</span>
+      </div>
+      <div class="card">
+        <img src="logo-stacked.svg" alt="Stacked logo" style="height:120px">
+        <span class="card-label">Stacked (Light)</span>
+      </div>
+      <div class="card">
+        <img src="logo-mono.svg" alt="Monochrome logo" style="height:52px">
+        <span class="card-label">Monochrome</span>
+      </div>
+      <div class="card black">
+        <img src="logo-mono-reversed.svg" alt="Reversed monochrome" style="height:52px">
+        <span class="card-label">Monochrome (Reversed)</span>
+      </div>
+      <div class="card" style="padding:32px">
+        <img src="logo-icon.svg" alt="Icon only" style="height:72px">
+        <span class="card-label">Icon Only</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Favicon -->
+  <section>
+    <h2>Favicon</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <img src="favicon.svg" style="height:64px;width:64px" alt="Favicon 64px">
+        <span class="card-label">64 × 64</span>
+      </div>
+      <div class="card">
+        <img src="favicon.svg" style="height:32px;width:32px" alt="Favicon 32px">
+        <span class="card-label">32 × 32</span>
+      </div>
+      <div class="card">
+        <img src="favicon.svg" style="height:16px;width:16px" alt="Favicon 16px">
+        <span class="card-label">16 × 16</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OG Image -->
+  <section>
+    <h2>Social Sharing Preview (og:image)</h2>
+    <div class="card" style="padding:16px">
+      <img src="og-image.svg" style="width:100%;max-width:800px;border-radius:8px" alt="OG preview">
+      <span class="card-label">1200 × 630 — Export as PNG for og:image</span>
+    </div>
+  </section>
+
+  <!-- Color palette -->
+  <section>
+    <h2>Colour Palette</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-block" style="background:#0A5A54"></div><div class="swatch-hex">#0A5A54</div><div class="swatch-name">Deep Teal</div></div>
+      <div class="swatch"><div class="swatch-block" style="background:#0F766E"></div><div class="swatch-hex">#0F766E</div><div class="swatch-name">Teal</div></div>
+      <div class="swatch"><div class="swatch-block" style="background:#1E3A8A"></div><div class="swatch-hex">#1E3A8A</div><div class="swatch-name">Navy</div></div>
+      <div class="swatch"><div class="swatch-block" style="background:#C49020"></div><div class="swatch-hex">#C49020</div><div class="swatch-name">Gold</div></div>
+      <div class="swatch"><div class="swatch-block" style="background:#111827"></div><div class="swatch-hex">#111827</div><div class="swatch-name">Near-Black</div></div>
+      <div class="swatch"><div class="swatch-block" style="background:#F4F8F7; border:1px solid #E5E7EB"></div><div class="swatch-hex">#F4F8F7</div><div class="swatch-name">Off-White</div></div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section>
+    <h2>Typography</h2>
+    <div class="type-sample">
+      <div class="type-row">
+        <div class="type-specimen" style="font-weight:800;color:#0A5A54">OpportunityNest</div>
+        <div class="type-meta">Inter 800 ExtraBold — Logo wordmark, headlines</div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen" style="font-weight:500;font-size:22px">Find scholarships, internships &amp; global opportunities</div>
+        <div class="type-meta">Inter 500 Medium — Sub-headings, UI labels</div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen" style="font-weight:400;font-size:16px;color:#374151">Discover verified educational and career opportunities worldwide, all in one trusted platform.</div>
+        <div class="type-meta">Inter 400 Regular — Body text, descriptions</div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
