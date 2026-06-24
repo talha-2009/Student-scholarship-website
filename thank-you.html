@@ -3,28 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact | OpportunityNest</title>
-    <meta name="description" content="Contact OpportunityNest for scholarship, internship, fellowship, and student opportunity questions or to report listing issues.">
+    <title>Thank You | OpportunityNest</title>
+    <meta name="description" content="Thank you for contacting OpportunityNest. We have received your message and will review it shortly.">
     <meta name="theme-color" content="#0f766e">
-    <link rel="canonical" href="https://opportunitynest.org/contact.html">
+    <link rel="canonical" href="https://opportunitynest.org/thank-you.html">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <meta property="og:title" content="Contact | OpportunityNest">
-    <meta property="og:description" content="Contact OpportunityNest for scholarship, internship, fellowship, and student opportunity questions or to report listing issues.">
+    <meta property="og:title" content="Thank You | OpportunityNest">
+    <meta property="og:description" content="Thank you for contacting OpportunityNest. We have received your message and will review it shortly.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://opportunitynest.org/contact.html">
+    <meta property="og:url" content="https://opportunitynest.org/thank-you.html">
     <meta property="og:image" content="https://opportunitynest.org/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Contact OpportunityNest">
+    <meta property="og:image:alt" content="Thank You - OpportunityNest">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Contact | OpportunityNest">
-    <meta name="twitter:description" content="Contact OpportunityNest for scholarship, internship, fellowship, and student opportunity questions or to report listing issues.">
+    <meta name="twitter:title" content="Thank You | OpportunityNest">
+    <meta name="twitter:description" content="Thank you for contacting OpportunityNest. We have received your message and will review it shortly.">
     <meta name="twitter:image" content="https://opportunitynest.org/og-image.png">
-    <!-- Google Analytics - Replace G-WKVTVB0X4X with your actual Measurement ID -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -64,42 +64,20 @@
     <main id="main">
       <section class="page-hero section-pad">
         <div class="container narrow">
-          <p class="eyebrow">Contact</p>
-          <h1>Contact OpportunityNest</h1>
-          <p>Have a question or found an issue in a listing? Send a message and we will review it.</p>
-          <form class="contact-form" action="https://formspree.io/f/mgojolnn" method="POST" id="contact-form">
-            <input type="hidden" name="submitted_from" value="OpportunityNest contact page">
-            <input type="hidden" name="form_loaded_at" id="form-loaded-at" value="">
-            <div class="form-field">
-              <label for="contact-name">Full Name</label>
-              <input id="contact-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Your full name" aria-describedby="contact-name-error">
-              <p class="field-error" id="contact-name-error"></p>
+          <div class="success-message">
+            <div class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path fill="currentColor" d="M9.2 16.6 4.9 12.3l-1.4 1.4 5.7 5.7L21 7.6l-1.4-1.4z"></path>
+              </svg>
             </div>
-            <div class="form-field">
-              <label for="contact-email">Email Address</label>
-              <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="120" placeholder="your@email.com" aria-describedby="contact-email-error">
-              <p class="field-error" id="contact-email-error"></p>
+            <p class="eyebrow">Message Sent</p>
+            <h1>Thank You for Contacting Us</h1>
+            <p>We have received your message and will review it shortly. If your message requires a response, we will get back to you as soon as possible.</p>
+            <div class="success-actions">
+              <a class="button button-primary" href="index.html#opportunities">Browse Opportunities</a>
+              <a class="button button-secondary" href="contact.html">Send Another Message</a>
             </div>
-            <div class="form-field">
-              <label for="contact-subject">Subject</label>
-              <input id="contact-subject" name="subject" type="text" required minlength="3" maxlength="120" placeholder="What is this about?" aria-describedby="contact-subject-error">
-              <p class="field-error" id="contact-subject-error"></p>
-            </div>
-            <div class="form-field">
-              <label for="contact-message">Message</label>
-              <textarea id="contact-message" name="message" rows="6" required minlength="10" maxlength="3000" placeholder="Your message..." aria-describedby="contact-message-error"></textarea>
-              <p class="field-error" id="contact-message-error"></p>
-            </div>
-            <label class="contact-honeypot" for="contact-company" aria-hidden="true">
-              Company
-              <input id="contact-company" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
-            </label>
-            <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
-            <button class="button button-primary" type="submit" id="contact-submit">
-              <span class="button-text">Send Message</span>
-              <span class="button-spinner" aria-hidden="true"></span>
-            </button>
-          </form>
+          </div>
         </div>
       </section>
     </main>
@@ -130,7 +108,6 @@
         <p>&copy; 2026 OpportunityNest.org. All rights reserved.</p>
       </div>
     </footer>
-  <script src="/nav.js" defer></script>
-  <script src="/contact.js" defer></script>
+    <script src="/nav.js" defer></script>
   </body>
 </html>
