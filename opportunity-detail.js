@@ -8,9 +8,22 @@ const opportunityId = params.get("id");
 const setStatus = (message, isError = false) => ON.setStatus(detailStatus, message, isError);
 
 const renderDetail = (item) => {
-  const title = `${item.title} | OpportunityNest`;
-  document.title = title;
-  ON.updateMetaDescription(`${item.type} in ${item.country}: ${item.description.slice(0, 140)}...`);
+  const pageTitle = `${item.title} | OpportunityNest`;
+  const metaDesc = `${item.type} in ${item.country}: ${item.description.slice(0, 140)}...`;
+  const pageUrl = `https://opportunitynest.org/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+
+  document.title = pageTitle;
+  ON.updateMetaDescription(metaDesc);
+
+  // Update og:, twitter: tags, and canonical to be specific to this opportunity
+  const setMeta = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+  setMeta('meta[property="og:title"]', "content", pageTitle);
+  setMeta('meta[property="og:description"]', "content", metaDesc);
+  setMeta('meta[property="og:url"]', "content", pageUrl);
+  setMeta('meta[name="twitter:title"]', "content", pageTitle);
+  setMeta('meta[name="twitter:description"]', "content", metaDesc);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute("href", pageUrl);
 
   const urgency = ON.getDeadlineUrgency(item.deadline);
   const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
@@ -18,7 +31,7 @@ const renderDetail = (item) => {
   const categoryName = item.type.toLowerCase();
 
   const schemaType = item.type === "Scholarship" ? "Scholarship" : item.type === "Fellowship" ? "Fellowship" : "EducationalOccupationalCredential";
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": schemaType,
@@ -36,7 +49,8 @@ const renderDetail = (item) => {
       }
     },
     "educationalLevel": item.level,
-    "validThrough": item.deadline
+    "validThrough": item.deadline,
+    "url": pageUrl
   };
 
   const script = document.createElement("script");
