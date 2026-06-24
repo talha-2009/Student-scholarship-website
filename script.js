@@ -18,7 +18,11 @@ const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportun
 const getCombinedDataset = () => {
   const selectedType = typeFilter?.value || "";
   if (selectedType === "Internship") {
-    return internships.map(ON.mapInternshipToOpportunity);
+    // Use internships table data if available, otherwise fall back to opportunities table
+    if (internships.length > 0) {
+      return internships.map(ON.mapInternshipToOpportunity);
+    }
+    return opportunities.filter(o => o.type === "Internship");
   }
   if (selectedType) {
     return opportunities;
@@ -93,6 +97,7 @@ const loadInternshipsForHome = async () => {
     renderOpportunities();
   } catch (error) {
     console.error("Home internships fetch failed:", error);
+    // internships table may not exist — silently fall back to opportunities table
   }
 };
 
