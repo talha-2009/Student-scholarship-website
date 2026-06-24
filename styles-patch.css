@@ -1,0 +1,13 @@
+/*
+ * Paste these additions into styles.css, immediately AFTER the existing
+ * .brand-mark { ... } block (around line 133 in the original file).
+ * Do NOT remove the existing .brand-mark block — just add these below it.
+ */
+
+/* Logo image inside the brand-mark gradient square */
+.brand-mark img {
+  width: 22px;
+  height: 22px;
+  display: block;
+  object-fit: contain;
+}
