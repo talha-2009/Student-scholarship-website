@@ -17,11 +17,12 @@ const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportun
 
 const getCombinedDataset = () => {
   const selectedType = typeFilter?.value || "";
+  
   if (selectedType === "Internship") {
     return internships.map(ON.mapInternshipToOpportunity);
   }
   if (selectedType) {
-    return opportunities;
+    return opportunities.filter(o => o.type === selectedType);
   }
   return [...opportunities, ...internships.map(ON.mapInternshipToOpportunity)];
 };
@@ -29,10 +30,14 @@ const getCombinedDataset = () => {
 const renderOpportunities = () => {
   if (!opportunityGrid) return;
 
-  const filtered = ON.filterOpportunities(getCombinedDataset(), {
+  const dataset = getCombinedDataset();
+  
+  // When a type is selected, dataset already contains only that type from getCombinedDataset
+  // So don't apply additional type filter - only filter by search and country
+  const filtered = ON.filterOpportunities(dataset, {
     searchTerm: liveSearch?.value || "",
     country: countryFilter?.value || "",
-    type: typeFilter?.value || ""
+    type: ""  // Always empty since dataset is pre-filtered by type
   }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
 
   if (!filtered.length) {
