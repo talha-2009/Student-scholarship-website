@@ -708,14 +708,9 @@ dd {
   border-radius: var(--radius);
   padding: 22px;
   box-shadow: 0 10px 30px rgba(16, 32, 29, 0.04);
-  overflow: hidden;
 }
 
 .live-opportunity-card.compact-card {
-  /* Fixed ceiling so all 44 cards stay visually uniform regardless of
-     title length or field text length. Content is short enough by design
-     that this is a safety ceiling, not a typical operating constraint. */
-  max-height: 280px;
   justify-content: space-between;
 }
 
@@ -746,38 +741,27 @@ dd {
 }
 
 .live-opportunity-card.compact-card h3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: 2.8em;
+  display: block;
   line-height: 1.4;
-  margin: 0;
+  margin: 0 0 8px;
   white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
 .compact-overview li {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .card-description-clamp {
-  position: relative;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* Hard backstop for browsers without -webkit-line-clamp support:
-     line-height 1.5 x 3 lines = 4.5em max, so text can never exceed this. */
-  max-height: 4.5em;
+  display: block;
   line-height: 1.5;
+  margin: 0 0 8px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 @supports not (-webkit-line-clamp: 3) {
