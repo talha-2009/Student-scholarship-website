@@ -629,6 +629,9 @@ dd {
   max-height: 2.8em;
   line-height: 1.4;
   margin: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .compact-overview li {
@@ -712,6 +715,16 @@ dd {
   align-items: start;
   justify-content: space-between;
   gap: 14px;
+  flex-wrap: wrap;
+}
+
+.opportunity-card-top > * {
+  min-width: 0;
+}
+
+.internship-brand,
+.internship-brand > div {
+  min-width: 0;
 }
 
 .opportunity-meta {
