@@ -516,6 +516,132 @@ dd {
   resize: vertical;
 }
 
+.contact-form input[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"] {
+  border-color: #b42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+}
+
+.field-error,
+.contact-status {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.field-error {
+  min-height: 1.3em;
+  color: #b42318;
+}
+
+.contact-status {
+  min-height: 1.4em;
+  color: var(--muted);
+}
+
+.contact-status.is-error {
+  color: #b42318;
+}
+
+.contact-status.is-success {
+  color: #166534;
+}
+
+.contact-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form .button {
+  width: fit-content;
+  gap: 10px;
+}
+
+.contact-form .button:disabled {
+  cursor: wait;
+  opacity: 0.82;
+  transform: none;
+}
+
+.button-spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: contact-spin 800ms linear infinite;
+}
+
+.button.is-loading .button-spinner {
+  display: inline-block;
+}
+
+@keyframes contact-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success-message {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(16, 32, 29, 0.04);
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+.success-icon svg {
+  width: 42px;
+  height: 42px;
+}
+
+.success-message h1 {
+  margin-bottom: 1rem;
+  color: var(--primary-dark);
+}
+
+.success-message p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--muted);
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .contact-form .button,
+  .success-actions .button {
+    width: 100%;
+  }
+
+  .success-message {
+    padding: 2rem 1rem;
+  }
+}
+
 .page-faq-list {
   margin-top: 28px;
 }
@@ -1293,17 +1419,28 @@ details p {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 767px) {
+  body {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
   .container {
-    width: min(100% - 24px, var(--max));
+    width: min(100% - 20px, var(--max));
   }
 
   .section-pad {
-    padding: 58px 0;
+    padding: 48px 0;
   }
 
   .hero {
-    padding-top: 62px;
+    padding-top: 56px;
+  }
+
+  .nav {
+    min-height: auto;
+    align-items: center;
+    gap: 16px;
   }
 
   .nav-toggle {
@@ -1312,16 +1449,18 @@ details p {
 
   .nav-menu {
     position: fixed;
-    inset: 72px 12px auto;
+    inset: 64px 10px auto;
     display: none;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 12px;
+    padding: 10px;
     background: white;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    max-width: calc(100% - 20px);
+    width: auto;
   }
 
   .nav-menu.is-open {
@@ -1329,28 +1468,24 @@ details p {
   }
 
   .nav-menu a {
-    padding: 12px;
+    padding: 12px 10px;
   }
 
   .nav-cta {
-    margin-top: 8px;
+    margin-top: 12px;
+  }
+
+  .brand {
+    font-size: 0.95rem;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
   }
 
   .hero-grid {
-    gap: 34px;
-  }
-
-  .hero-stats,
-  .grid.three,
-  .grid.four,
-  .steps,
-  .trust-stats,
-  .benefit-list,
-  .opportunity-controls,
-  .category-controls,
-  .internship-controls,
-  .detail-grid {
-    grid-template-columns: 1fr;
+    gap: 28px;
   }
 
   .hero-actions .button,
@@ -1367,39 +1502,144 @@ details p {
     min-height: 46px;
   }
 
-  .opportunity-card {
-    flex-direction: column;
+  .hero-stats,
+  .grid.three,
+  .grid.four,
+  .steps,
+  .trust-stats,
+  .benefit-list,
+  .opportunity-results.grid.three,
+  .opportunity-controls,
+  .category-controls,
+  .internship-controls,
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 
-  .cta-panel,
-  .final-panel,
-  .contact-form,
-  .internship-detail {
-    padding: 28px 18px;
+  .grid.three,
+  .grid.four,
+  .opportunity-results.grid.three {
+    grid-auto-rows: auto;
+  }
+
+  .opportunity-results {
+    width: 100%;
+  }
+
+  .opportunity-card,
+  .live-opportunity-card {
+    flex-direction: column;
+    width: 100%;
+    padding: 18px;
+  }
+
+  .live-opportunity-card.compact-card {
+    max-height: none;
+    justify-content: flex-start;
+  }
+
+  .opportunity-card-top {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .opportunity-card-top > *,
+  .internship-brand,
+  .internship-brand > div {
+    min-width: 0;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
   }
 
   .card-actions .button {
     width: 100%;
+    margin-top: 0;
   }
 
-  .brand {
-    font-size: 0.94rem;
+  .compact-overview li,
+  .card-overview li {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .live-opportunity-card.compact-card h3 {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    max-height: none;
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .card-actions .button {
+    min-height: 46px;
+    padding: 12px 16px;
   }
 
   .button,
   .opportunity-controls input,
   .opportunity-controls select,
-  .filter-check {
-    min-height: 48px;
-    min-width: 48px;
+  .filter-check,
+  .contact-form input,
+  .contact-form textarea {
+    min-width: auto;
   }
 
-  .card-actions {
+  .filter-check,
+  label,
+  .eyebrow,
+  .card-kicker,
+  .story-tag,
+  .detail-header .eyebrow {
+    font-weight: 800;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 7vw, 3.4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2.4rem);
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .cta-panel,
+  .final-panel,
+  .contact-form,
+  .internship-detail,
+  .page-hero,
+  .opportunity-card,
+  .live-opportunity-card {
+    padding: 18px;
+  }
+
+  .contact-form {
+    padding: 18px;
+  }
+
+  .opportunity-controls,
+  .category-controls,
+  .internship-controls {
     gap: 12px;
   }
 
   .breadcrumbs {
     font-size: 0.85rem;
+  }
+
+  .footer-links {
+    justify-content: start;
   }
 }
 
