@@ -10,25 +10,17 @@ const pagination = document.querySelector("#pagination");
 const featuredInternshipGrid = document.querySelector("#featured-internship-grid");
 
 let opportunities = [];
-let internships = [];
 let currentPage = 1;
 
 const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportunityStatus, message, isError);
 
 const getCombinedDataset = () => {
   const selectedType = typeFilter?.value || "";
-  
-  if (selectedType === "Internship") {
-    // Use internships table data if available, otherwise fall back to opportunities table
-    if (internships.length > 0) {
-      return internships.map(ON.mapInternshipToOpportunity);
-    }
-    return opportunities.filter(o => o.type === "Internship");
-  }
+
   if (selectedType) {
-    return opportunities.filter(o => o.type === selectedType);
+    return opportunities.filter((o) => o.type === selectedType);
   }
-  return [...opportunities, ...internships.map(ON.mapInternshipToOpportunity)];
+  return opportunities;
 };
 
 const renderOpportunities = () => {
@@ -73,7 +65,7 @@ const loadOpportunities = async () => {
   try {
     const { data, error } = await ON.getSupabaseClient()
       .from("opportunities")
-      .select("id,type,funding,title,country,level,field,deadline,description,link,created_at")
+      .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
       .order("deadline", { ascending: true });
 
     if (error) throw error;
@@ -89,23 +81,6 @@ const loadOpportunities = async () => {
   }
 };
 
-const loadInternshipsForHome = async () => {
-  try {
-    const { data, error } = await ON.getSupabaseClient()
-      .from("internships")
-      .select("id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,featured,created_at")
-      .not("official_url", "is", null)
-      .order("deadline", { ascending: true });
-
-    if (error) throw error;
-    internships = data || [];
-    renderOpportunities();
-  } catch (error) {
-    console.error("Home internships fetch failed:", error);
-    // internships table may not exist — silently fall back to opportunities table
-  }
-};
-
 const renderFeaturedInternships = (items = []) => {
   if (!featuredInternshipGrid) return;
 
@@ -116,37 +91,33 @@ const renderFeaturedInternships = (items = []) => {
 
   featuredInternshipGrid.innerHTML = items
     .map((item) => {
-      const mapped = ON.mapInternshipToOpportunity(item);
+      const detailUrl = `opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+      const urgency = ON.getDeadlineUrgency(item);
+      const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
+      const whoCanApply = item.level || "Open to eligible applicants";
+      const fieldLabel = item.field && item.field !== "All Fields" ? item.field : "Multiple Fields";
+
       return `
-        <article class="live-opportunity-card internship-card">
+        <article class="live-opportunity-card compact-card internship-card">
+          ${ON.getCountryLandmark(item.country)}
           <div class="opportunity-card-top">
             <div class="internship-brand">
-              <span class="internship-logo" aria-hidden="true">${ON.escapeHtml((item.organization || "ON").slice(0, 2).toUpperCase())}</span>
+              <span class="internship-logo" aria-hidden="true">${ON.escapeHtml((item.title || "ON").slice(0, 2).toUpperCase())}</span>
               <div>
-                <p class="card-kicker">${ON.escapeHtml(item.organization || "Internship")}</p>
+                <p class="card-kicker">${ON.getCountryFlag(item.country)} ${ON.escapeHtml(item.country || "Global")}</p>
                 <h3>${ON.escapeHtml(item.title || "Internship program")}</h3>
               </div>
             </div>
-            <span class="verified">Featured</span>
+            <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
           </div>
-          <p>${ON.escapeHtml(item.description || "")}</p>
-          <dl class="opportunity-meta">
-            <div>
-              <dt>Location</dt>
-              <dd>${ON.escapeHtml([item.city, item.country].filter(Boolean).join(", ") || "Global")}</dd>
-            </div>
-            <div>
-              <dt>Duration</dt>
-              <dd>${ON.escapeHtml(item.duration || "See official website")}</dd>
-            </div>
-            <div>
-              <dt>Funding</dt>
-              <dd>${ON.escapeHtml(item.funding || "See official website")}</dd>
-            </div>
-          </dl>
+          <ul class="card-overview compact-overview">
+            <li><strong>Field:</strong> ${ON.escapeHtml(fieldLabel)}</li>
+            <li><strong>Who can apply:</strong> ${ON.escapeHtml(whoCanApply)}</li>
+            <li><strong>Funding:</strong> ${ON.escapeHtml(item.funding || "See details")}</li>
+          </ul>
           <div class="card-actions">
-            <a class="button button-primary" href="${ON.escapeHtml(item.official_url || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="internship-detail.html?id=${encodeURIComponent(item.id)}">View Details</a>
+            <a class="button button-secondary" href="${ON.escapeHtml(detailUrl)}">View Details</a>
+            <a class="button button-primary" href="${ON.escapeHtml(item.link || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
           </div>
         </article>
       `;
@@ -161,14 +132,15 @@ const loadFeaturedInternships = async () => {
 
   try {
     const { data, error } = await ON.getSupabaseClient()
-      .from("internships")
-      .select("id,title,organization,country,city,duration,funding,official_url,description,featured")
-      .eq("featured", true)
-      .not("official_url", "is", null)
+      .from("opportunities")
+      .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
+      .eq("type", "Internship")
+      .not("link", "is", null)
+      .order("deadline", { ascending: true, nullsFirst: false })
       .limit(3);
 
     if (error) throw error;
-    renderFeaturedInternships(data || []);
+    renderFeaturedInternships((data || []).map(ON.normalizeOpportunity));
   } catch (error) {
     console.error("Featured internships fetch failed:", error);
     featuredInternshipGrid.innerHTML =
@@ -206,5 +178,4 @@ if (urlSearch && liveSearch) {
 ON.populateCountryFilter(countryFilter);
 ON.updateStatistics();
 loadOpportunities();
-loadInternshipsForHome();
 loadFeaturedInternships();
