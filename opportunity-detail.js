@@ -4,13 +4,17 @@ const detailContainer = document.querySelector("#opportunity-detail");
 const detailStatus = document.querySelector("#detail-status");
 const params = new URLSearchParams(window.location.search);
 const opportunityId = params.get("id");
+const pathParts = window.location.pathname.split("/").filter(Boolean);
+const opportunitySlug = pathParts[0] === "opportunity" && pathParts[1] ? decodeURIComponent(pathParts[1]) : null;
 
 const setStatus = (message, isError = false) => ON.setStatus(detailStatus, message, isError);
 
 const renderDetail = (item) => {
   const pageTitle = `${item.title} | OpportunityNest`;
   const metaDesc = `${item.type} in ${item.country}: ${item.description.slice(0, 140)}...`;
-  const pageUrl = `https://opportunitynest.org/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+  const pageUrl = opportunitySlug
+    ? `https://opportunitynest.org/opportunity/${encodeURIComponent(item.slug)}/`
+    : `https://opportunitynest.org/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
 
   document.title = pageTitle;
   ON.updateMetaDescription(metaDesc);
@@ -123,11 +127,13 @@ const loadOpportunityDetail = async () => {
   setStatus("Loading opportunity details...");
 
   try {
-    const { data, error } = await ON.getSupabaseClient()
-      .from("opportunities")
-      .select("id,type,funding,title,country,level,field,deadline,description,link,created_at")
-      .eq("id", opportunityId)
-      .single();
+    const query = ON.getSupabaseClient().from("opportunities").select("id,type,funding,title,country,level,field,deadline,description,link,created_at,slug");
+    if (opportunitySlug) {
+      query.eq("slug", opportunitySlug);
+    } else {
+      query.eq("id", opportunityId);
+    }
+    const { data, error } = await query.single();
 
     if (error) throw error;
     renderDetail(ON.normalizeOpportunity(data));

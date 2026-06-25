@@ -175,6 +175,30 @@ if (urlSearch && liveSearch) {
   liveSearch.value = urlSearch;
 }
 
+const setSearchPageMeta = () => {
+  const query = new URLSearchParams(window.location.search).get("q");
+  if (!query) return;
+
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
+
+  canonical.href = `${ON.SITE_URL}/`;
+
+  let robots = document.querySelector('meta[name="robots"]');
+  if (!robots) {
+    robots = document.createElement("meta");
+    robots.name = "robots";
+    document.head.appendChild(robots);
+  }
+  robots.content = "noindex,follow";
+};
+
+setSearchPageMeta();
+
 ON.populateCountryFilter(countryFilter);
 ON.updateStatistics();
 loadOpportunities();

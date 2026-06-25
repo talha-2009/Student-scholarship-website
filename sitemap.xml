@@ -21,6 +21,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://opportunitynest.org/competitions.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://opportunitynest.org/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -51,254 +56,386 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=2d6a59d5-c842-4919-b3dc-942b942e57c4</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/country/switzerland/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/canada/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/austria/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/germany/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/global/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/australia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/country/united-kingdom/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/scholarships.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=3f988f89-9d87-47aa-9e5c-5b210bb04df6</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/scholarships/australia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/scholarships/canada/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/scholarships/germany/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/scholarships/united-kingdom/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/internships.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=370fdaf1-0f29-4408-85f3-17a1b1900203</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/internships/austria/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/internships/germany/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/internships/global/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/internships/switzerland/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/fellowships.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=575fa8ad-74e3-4a52-b4e1-1457fd3a8374</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/fellowships/austria/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/fellowships/canada/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/fellowships/germany/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/fellowships/global/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/competitions.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=08beddee-2c2d-47ac-9263-f6f2ac9d6648</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/competitions/switzerland/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/the-geneva-challenge-advancing-development-goals-contest-switzerland/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=9b0b1bcd-004c-4de9-b768-5f8ff07a61fe</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/fulbright-canada-all-disciplines-scholar-award-canada/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=9fe1ef5c-ca63-4630-bca1-f9883df95371</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/fulbright-canada-traditional-student-award-canada/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e6a52ac1-56fa-409c-a73c-aee3cc797dac</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/franz-werfel-fellowship-austria/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e6d990a8-7c89-4ee3-9b98-37df4e94aded</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/richard-plaschka-fellowship-austria/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=ff2f2f36-6391-47d6-8873-9e973566feb4</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/mccall-macbain-scholarship-canada/</loc>
+    <lastmod>2026-06-21T15:25:35.37844+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=492d2b71-0bd0-477f-81ac-340302b40272</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/bmw-group-change-maker-fellowship-germany/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e5d5e071-7528-4ff5-aae3-728dce5036d9</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/imu-simons-research-fellowship-program-for-developing-countries-global/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=9c3abf54-7949-4ce2-a3aa-4318fd204895</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/ssrc-just-tech-fellowship-global/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=a3800d73-5da6-4f0d-a2d3-a4f30b15fcef</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/urban-studies-foundation-international-fellowships-global/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=f5025d9c-aa03-49b3-85de-db7951c2d2bf</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/unido-internship-programme-austria/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=37a6b3ee-d23c-4f87-8685-b1b3aea87868</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/max-planck-research-internship-germany/</loc>
+    <lastmod>2026-06-24T09:35:23.025226+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=f6075e2d-fd02-4c8c-ad4a-c7ba9d50c016</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/max-planck-school-matter-to-life-uro-germany/</loc>
+    <lastmod>2026-06-24T09:35:23.025226+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=1ff24c63-9c36-4971-a9d6-e9f639966fd0</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/rise-germany-internship-germany/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=cc90c347-195e-4e0a-86a8-1ef1674ccb29</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/rise-professional-internship-germany/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=4e87610d-c240-49e7-b300-976b09a7fd9a</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/us-commercial-service-germany-internship-germany/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=46d208e6-8426-4fb5-ac1a-208df791d962</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/aiesec-global-talent-global/</loc>
+    <lastmod>2026-06-24T09:35:23.025226+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=753f3fb5-7c28-4690-b0d3-48fc13a4ca45</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/undp-internship-programme-global/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=31a1d520-c0de-4042-a82f-055e4b5c6d5e</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/unicef-internship-programme-global/</loc>
+    <lastmod>2026-06-24T09:35:23.025226+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=052d3b1b-45fb-4207-ab38-01bbfd480c40</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/united-nations-internship-programme-global/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=c6e51351-89a6-4a01-9340-972666bf2391</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/cern-administrative-student-programme-switzerland/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=2249521a-c47e-4a51-aa9e-54da3bf3cc55</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/cern-technical-student-programme-switzerland/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=ee88a507-144d-4b73-81d7-4e3c69c64f90</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/unctad-internship-programme-switzerland/</loc>
+    <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=5ed3b6ff-9eaf-4eed-88b2-1159b2b78897</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/anu-phd-scholarship-australia/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=a27b5588-6cb8-49d3-83c1-aa65048c7515</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/monash-graduate-scholarship-research-training-program-australia/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=2de08d9f-5ed5-4f33-a17b-c866bf50d8ba</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/university-of-melbourne-graduate-scholarship-australia/</loc>
+    <lastmod>2026-06-21T15:24:12.093455+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=f72b8f11-8cde-412b-ba1c-5a4ecf0bcd90</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/university-of-sydney-international-scholarships-australia/</loc>
+    <lastmod>2026-06-21T15:20:35.649797+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e6ed8f47-e93c-401a-8b15-1fe08acdc86b</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/university-of-western-australia-global-excellence-scholarship-australia/</loc>
+    <lastmod>2026-06-21T15:21:04.046985+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=c8dcfb63-9145-4255-a949-2af3f318bd54</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/pierre-elliott-trudeau-foundation-doctoral-scholarship-canada/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=4495e501-515f-4a9a-bf2c-5f71a2058b61</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/university-of-british-columbia-international-scholars-program-canada/</loc>
+    <lastmod>2026-06-21T15:21:40.029988+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=fabd76ed-4d81-4efc-9b59-685374a96c02</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/university-of-toronto-lester-b-pearson-international-scholarship-canada/</loc>
+    <lastmod>2026-06-21T15:23:05.889865+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=6d277f62-1926-45eb-a194-6086d64aef32</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/daad-epos-development-related-postgraduate-courses-germany/</loc>
+    <lastmod>2026-06-21T15:24:38.191599+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e1fe7b4b-c096-42fa-985d-fa233ac73444</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/daad-helmut-schmidt-programme-public-policy-and-good-governance-germany/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=ee7e8fee-f4ef-4101-90ff-6ef865ae87eb</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/daad-stem-study-scholarship-germany/</loc>
+    <lastmod>2026-06-21T15:22:29.703649+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=fb09fea8-af62-45d5-8c31-b7862b847288</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/daad-study-scholarship-germany/</loc>
+    <lastmod>2026-06-21T15:24:53.536673+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e3e49aa4-916b-4c03-af9b-b23b973eb4b1</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/daad-wise-research-internship-germany/</loc>
+    <lastmod>2026-06-21T15:21:21.935664+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=e5d31443-55b2-4560-bce7-e3c5b4a7371a</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/deutschlandstipendium-germany/</loc>
+    <lastmod>2026-06-21T15:25:12.621024+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://opportunitynest.org/opportunity-detail.html?id=6d803b98-1e14-4c38-8359-e27b824cafea</loc>
-    <lastmod>2026-06-23</lastmod>
+    <loc>https://opportunitynest.org/opportunity/heinrich-bll-foundation-scholarship-germany/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/konrad-adenauer-stiftung-kas-international-scholarship-programme-germany/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/chevening-scholarship-united-kingdom/</loc>
+    <lastmod>2026-06-21T15:23:53.127768+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/great-scholarships-united-kingdom/</loc>
+    <lastmod>2026-06-21T15:20:05.234705+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/marshall-scholarship-united-kingdom/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/rhodes-scholarship-united-kingdom/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opportunitynest.org/opportunity/weidenfeld-hoffmann-scholarships-and-leadership-programme-united-kingdom/</loc>
+    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

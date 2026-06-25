@@ -116,6 +116,23 @@ window.OpportunityNest = window.OpportunityNest || {};
     return supabaseClient;
   };
 
+  ON.cleanSlug = (value = "") => {
+    return String(value)
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  };
+
+  ON.getOpportunityUrl = (item) => {
+    if (item.slug) {
+      return `${ON.SITE_URL}/opportunity/${encodeURIComponent(item.slug)}/`;
+    }
+    return `${ON.SITE_URL}/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+  };
+
   ON.normalizeOpportunity = (row) => ({
     id: row.id,
     type: row.type || "",
@@ -128,7 +145,7 @@ window.OpportunityNest = window.OpportunityNest || {};
     deadline_status: row.deadline_status || "fixed",
     description: row.description || "No description available.",
     link: row.link || "#",
-    slug: row.slug || "",
+    slug: row.slug || ON.cleanSlug(`${row.title || ""} ${row.country || ""}`).slice(0, 95),
     created_at: row.created_at || ""
   });
 
@@ -179,7 +196,7 @@ window.OpportunityNest = window.OpportunityNest || {};
   };
 
   ON.renderOpportunityCard = (item) => {
-    const detailUrl = `opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+    const detailUrl = ON.getOpportunityUrl(item);
     const applyHref = item.link && item.link !== "#" ? item.link : detailUrl;
     const applyTarget = item.link && item.link !== "#" ? ' target="_blank" rel="noopener noreferrer"' : "";
     const urgency = ON.getDeadlineUrgency(item);
