@@ -1,68 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0d2420"/>
-      <stop offset="100%" stop-color="#0d1816"/>
-    </linearGradient>
-    <linearGradient id="pill" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0f766e"/>
-      <stop offset="100%" stop-color="#2563eb"/>
-    </linearGradient>
-    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f766e"/>
-      <stop offset="100%" stop-color="#2563eb"/>
-    </linearGradient>
-  </defs>
-
   <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg)"/>
-
-  <!-- Decorative circles (background texture) -->
-  <circle cx="1050" cy="120" r="280" fill="none" stroke="#0f766e" stroke-width="1" opacity="0.15"/>
-  <circle cx="1050" cy="120" r="200" fill="none" stroke="#0f766e" stroke-width="1" opacity="0.12"/>
-  <circle cx="1050" cy="120" r="120" fill="none" stroke="#0f766e" stroke-width="1" opacity="0.1"/>
-  <circle cx="120" cy="540" r="180" fill="none" stroke="#2563eb" stroke-width="1" opacity="0.1"/>
-
-  <!-- Gradient accent bar at top -->
-  <rect width="1200" height="4" fill="url(#pill)"/>
-
-  <!-- Brand mark icon (large) -->
-  <rect x="80" y="100" width="100" height="100" rx="20" fill="url(#mark)"/>
-  <!-- Nest arcs inside brand mark -->
-  <path d="M96 177 Q130 195 164 177" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6"/>
-  <path d="M89 170 Q130 192 171 170" stroke="white" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <!-- Arrow inside brand mark -->
-  <line x1="130" y1="163" x2="130" y2="135" stroke="white" stroke-width="5" stroke-linecap="round"/>
-  <path d="M115 149 L130 135 L145 149" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Site name -->
-  <text x="200" y="155" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="54" font-weight="800" fill="white" letter-spacing="-1">OpportunityNest</text>
-  <text x="200" y="185" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="#6fb8b0" letter-spacing="1">.org</text>
-
-  <!-- Divider line -->
-  <rect x="80" y="240" width="480" height="2" fill="url(#pill)" opacity="0.4" rx="1"/>
-
-  <!-- Tagline -->
-  <text x="80" y="310" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="44" font-weight="700" fill="white">Find Scholarships, Internships</text>
-  <text x="80" y="365" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="44" font-weight="700" fill="white">&amp; Global Opportunities</text>
-
-  <!-- Sub-tagline -->
-  <text x="80" y="430" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="#8ab8b3">Verified listings · 40+ countries · Free to use</text>
-
-  <!-- Decorative dots (right side) -->
-  <circle cx="920" cy="220" r="8" fill="#0f766e" opacity="0.6"/>
-  <circle cx="960" cy="260" r="5" fill="#2563eb" opacity="0.5"/>
-  <circle cx="890" cy="300" r="6" fill="#0f766e" opacity="0.4"/>
-  <circle cx="1000" cy="200" r="4" fill="#2563eb" opacity="0.6"/>
-  <circle cx="950" cy="180" r="10" fill="#0f766e" opacity="0.3"/>
-
-  <!-- Right-side large icon (decorative) -->
-  <g opacity="0.08">
-    <path d="M800 400 Q1000 540 1200 400" stroke="white" stroke-width="18" stroke-linecap="round" fill="none"/>
-    <line x1="1000" y1="370" x2="1000" y2="220" stroke="white" stroke-width="18" stroke-linecap="round"/>
-    <path d="M940 290 L1000 220 L1060 290" stroke="white" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="1200" height="630" fill="#0A1F1D"/>
+  <!-- Subtle texture: large decorative arcs top-right -->
+  <path d="M780 -60 Q1060 200 1260 60"   stroke="#0A5A54" stroke-width="120" fill="none" opacity="0.18"/>
+  <path d="M820 -40 Q1060 180 1240 80"   stroke="#0A5A54" stroke-width="60"  fill="none" opacity="0.12"/>
+  <!-- Bottom-left accent arc -->
+  <path d="M-60 600 Q200 460 420 620"    stroke="#1E3A8A" stroke-width="80"  fill="none" opacity="0.14"/>
+  <!-- Gold accent bar top -->
+  <rect x="0" y="0" width="6" height="630" fill="#C49020"/>
+  <!-- Large icon mark (centred left block) -->
+  <g transform="translate(80, 170) scale(5.2)">
+    <path d="M4 33 Q24 46 44 33"    stroke="white" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="0.85"/>
+    <path d="M8.5 26.5 Q24 38 39.5 26.5" stroke="white" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.65"/>
+    <path d="M13.5 21 Q24 31 34.5 21" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.45"/>
+    <circle cx="24" cy="13" r="5.5" fill="#C49020"/>
+    <circle cx="22.2" cy="11.4" r="1.8" fill="rgba(255,255,255,0.3)"/>
   </g>
-
-  <!-- Bottom URL -->
-  <text x="80" y="590" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="22" font-weight="600" fill="#4a8f88">opportunitynest.org</text>
+  <!-- Site name -->
+  <text x="370" y="230"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-size="76" font-weight="400" fill="white" opacity="0.92" letter-spacing="-1.5">Opportunity</text>
+  <text x="370" y="316"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-size="76" font-weight="800" fill="#C49020" letter-spacing="-2">Nest</text>
+  <!-- Divider -->
+  <rect x="370" y="338" width="520" height="2" rx="1" fill="#0A5A54" opacity="0.5"/>
+  <!-- Tagline -->
+  <text x="370" y="390"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-size="28" font-weight="400" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">
+    Scholarships · Internships · Fellowships
+  </text>
+  <!-- Sub-tagline -->
+  <text x="370" y="438"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-size="24" font-weight="400" fill="rgba(255,255,255,0.45)">
+    Global opportunities for students &amp; young professionals
+  </text>
+  <!-- URL pill -->
+  <rect x="370" y="490" width="270" height="44" rx="22" fill="#0A5A54" opacity="0.6"/>
+  <text x="505" y="518" text-anchor="middle"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-size="20" font-weight="600" fill="rgba(255,255,255,0.9)">opportunitynest.org</text>
 </svg>
