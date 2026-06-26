@@ -142,8 +142,9 @@ const loadOpportunityDetail = async () => {
     console.error("Opportunity detail fetch failed:", error);
     detailContainer.innerHTML = ON.renderErrorWithRetry(
       error.message || "We could not load this opportunity. Please return to the listings and try again.",
-      "loadOpportunityDetail()"
+      loadOpportunityDetail
     );
+    ON.attachRetryListener(detailContainer, loadOpportunityDetail);
     setStatus(error.message || "We could not load this opportunity.", true);
   }
 };

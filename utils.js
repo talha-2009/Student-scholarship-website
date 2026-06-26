@@ -288,9 +288,22 @@ window.OpportunityNest = window.OpportunityNest || {};
     return `
       <div class="error-state">
         <p class="error-message">${ON.escapeHtml(message)}</p>
-        <button class="button button-primary" onclick="${onRetry}">Try Again</button>
+        <button class="button button-primary" data-retry-action="true">Try Again</button>
       </div>
     `;
+  };
+
+  ON.attachRetryListener = (container, callback) => {
+    if (!container) return;
+    const retryButton = container.querySelector('[data-retry-action="true"]');
+    if (retryButton && typeof callback === "function") {
+      retryButton.removeEventListener("click", retryButton._retryHandler);
+      retryButton._retryHandler = (e) => {
+        e.preventDefault();
+        callback();
+      };
+      retryButton.addEventListener("click", retryButton._retryHandler);
+    }
   };
 
   ON.fetchUniqueCountries = async () => {

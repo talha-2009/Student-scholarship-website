@@ -73,8 +73,9 @@ const loadInternships = async () => {
     console.error("Internships fetch failed:", error);
     internshipGrid.innerHTML = ON.renderErrorWithRetry(
       error.message || "We could not load internships right now. Please check your connection.",
-      "loadInternships()"
+      loadInternships
     );
+    ON.attachRetryListener(internshipGrid, loadInternships);
     setStatus(error.message || "We could not load internships right now.", true);
   }
 };

@@ -75,8 +75,9 @@ const loadOpportunities = async () => {
     console.error("Supabase opportunities fetch failed:", error);
     opportunityGrid.innerHTML = ON.renderErrorWithRetry(
       error.message || "We could not load opportunities right now. Please check your connection.",
-      "loadOpportunities()"
+      loadOpportunities
     );
+    ON.attachRetryListener(opportunityGrid, loadOpportunities);
     setOpportunityStatus(error.message || "We could not load opportunities right now.", true);
   }
 };

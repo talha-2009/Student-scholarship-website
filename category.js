@@ -64,8 +64,9 @@ const loadCategoryOpportunities = async () => {
     console.error(`${pageType} opportunities fetch failed:`, error);
     opportunityGrid.innerHTML = ON.renderErrorWithRetry(
       error.message || "We could not load opportunities right now. Please check your connection.",
-      "loadCategoryOpportunities()"
+      loadCategoryOpportunities
     );
+    ON.attachRetryListener(opportunityGrid, loadCategoryOpportunities);
     setStatus(error.message || "We could not load opportunities right now.", true);
   }
 };

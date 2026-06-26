@@ -115,8 +115,9 @@ const loadInternshipDetail = async () => {
     console.error("Internship detail fetch failed:", error);
     detailContainer.innerHTML = ON.renderErrorWithRetry(
       error.message || "We could not load this internship. Please return to the listings and try again.",
-      "loadInternshipDetail()"
+      loadInternshipDetail
     );
+    ON.attachRetryListener(detailContainer, loadInternshipDetail);
     setStatus(error.message || "We could not load this internship.", true);
   }
 };
