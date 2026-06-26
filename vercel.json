@@ -1,4 +1,13 @@
 {
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/opportunity/:slug/index.html", "destination": "/opportunity/:slug/", "permanent": true },
+    { "source": "/country/:slug/index.html", "destination": "/country/:slug/", "permanent": true },
+    { "source": "/scholarships/:slug/index.html", "destination": "/scholarships/:slug/", "permanent": true },
+    { "source": "/internships/:slug/index.html", "destination": "/internships/:slug/", "permanent": true },
+    { "source": "/fellowships/:slug/index.html", "destination": "/fellowships/:slug/", "permanent": true },
+    { "source": "/competitions/:slug/index.html", "destination": "/competitions/:slug/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/opportunity/:slug/", "destination": "/opportunity-detail.html" },
     { "source": "/opportunity/:slug", "destination": "/opportunity-detail.html" }

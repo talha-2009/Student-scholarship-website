@@ -64,7 +64,7 @@ const renderDetail = (item) => {
 
   detailContainer.innerHTML = `
     <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
-      <a href="/index.html">Home</a>
+      <a href="/">Home</a>
       <span aria-hidden="true">/</span>
       <a href="${categoryPage}">${ON.escapeHtml(item.type)}s</a>
       <span aria-hidden="true">/</span>

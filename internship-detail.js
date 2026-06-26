@@ -50,9 +50,9 @@ const renderDetail = (item) => {
 
   detailContainer.innerHTML = `
     <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <span aria-hidden="true">/</span>
-      <a href="internships.html">Internships</a>
+      <a href="/internships.html">Internships</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">${ON.escapeHtml(item.title)}</span>
     </nav>
@@ -62,7 +62,7 @@ const renderDetail = (item) => {
       <p>${ON.escapeHtml(item.description)}</p>
       <div class="hero-actions">
         <a class="button button-primary" href="${ON.escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-        <a class="button button-secondary" href="internships.html">Browse more internships</a>
+        <a class="button button-secondary" href="/internships.html">Browse more internships</a>
       </div>
     </div>
     <dl class="detail-grid">

@@ -94,14 +94,14 @@ FAQ_TEMPLATES = {
 }
 
 HEADER_NAV = [
-    ("index.html", "Home"),
-    ("scholarships.html", "Scholarships"),
-    ("internships.html", "Internships"),
-    ("fellowships.html", "Fellowships"),
-    ("competitions.html", "Competitions"),
-    ("about.html", "About"),
-    ("contact.html", "Contact"),
-    ("faq.html", "FAQ")
+    ("/", "Home"),
+    ("/scholarships.html", "Scholarships"),
+    ("/internships.html", "Internships"),
+    ("/fellowships.html", "Fellowships"),
+    ("/competitions.html", "Competitions"),
+    ("/about.html", "About"),
+    ("/contact.html", "Contact"),
+    ("/faq.html", "FAQ")
 ]
 
 
@@ -136,7 +136,8 @@ def build_breadcrumbs(items: list[tuple[str, str | None]]) -> str:
     parts = []
     for label, href in items:
         if href:
-            parts.append(f'<a href="{href}">{escape_html(label)}</a>')
+            safe_href = href if href.startswith(("http://", "https://", "/", "#", "mailto:")) else f"/{href.lstrip('./')}"
+            parts.append(f'<a href="{safe_href}">{escape_html(label)}</a>')
         else:
             parts.append(f'<span aria-current="page">{escape_html(label)}</span>')
     return '<nav class="breadcrumbs" aria-label="Breadcrumb navigation">' + ' <span aria-hidden="true">/</span> '.join(parts) + '</nav>'
@@ -153,24 +154,24 @@ def build_footer() -> str:
     return """<footer class="site-footer">
       <div class="container footer-grid">
         <div>
-          <a class="brand" href="index.html">
+          <a class="brand" href="/">
             <span class="brand-mark" aria-hidden="true">ON</span>
             <span>OpportunityNest.org</span>
           </a>
           <p>The central hub where students discover life-changing opportunities worldwide.</p>
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
-          <a href="index.html#opportunities">Opportunities</a>
-          <a href="scholarships.html">Scholarships</a>
-          <a href="internships.html">Internships</a>
-          <a href="fellowships.html">Fellowships</a>
-          <a href="competitions.html">Competitions</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-          <a href="faq.html">FAQ</a>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="disclaimer.html">Disclaimer</a>
+          <a href="/#opportunities">Opportunities</a>
+          <a href="/scholarships.html">Scholarships</a>
+          <a href="/internships.html">Internships</a>
+          <a href="/fellowships.html">Fellowships</a>
+          <a href="/competitions.html">Competitions</a>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/disclaimer.html">Disclaimer</a>
         </nav>
       </div>
       <div class="container copyright">
@@ -190,10 +191,6 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
     <meta name="theme-color" content="#0f766e">
     <link rel="canonical" href="{escape_html(url)}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <meta property="og:title" content="{escape_html(title)}">
     <meta property="og:description" content="{escape_html(description)}">
     <meta property="og:type" content="website">
@@ -220,7 +217,7 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" aria-label="Primary navigation">
       <nav class="nav container">
-        <a class="brand" href="index.html" aria-label="OpportunityNest.org home">
+        <a class="brand" href="/" aria-label="OpportunityNest.org home">
           <span class="brand-mark" aria-hidden="true">ON</span>
           <span>OpportunityNest.org</span>
         </a>
@@ -354,7 +351,7 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
         f"{PAGE_TYPES[category]} on OpportunityNest bring together curated programs from trusted providers across multiple countries. "
         f"Each listing includes a clear deadline, country, eligibility level, and the official application path so you can move from search to application faster."
     )
-    breadcrumbs = build_breadcrumbs([("Home", "index.html"), (PAGE_TYPES[category], None)])
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (PAGE_TYPES[category], None)])
 
     sections = []
     if items:
@@ -413,7 +410,7 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     title = f"{country} Opportunities | OpportunityNest"
     description = f"Discover scholarships, internships, fellowships, and competitions in {country}. Compare deadlines, funding, and eligibility on OpportunityNest."
     path = f"{SITE_URL}/country/{slugify(country)}/"
-    breadcrumbs = build_breadcrumbs([("Home", "index.html"), ("Country", "country/index.html"), (country, None)])
+    breadcrumbs = build_breadcrumbs([("Home", "/"), ("Country", "/#opportunities"), (country, None)])
     country_items = sorted(items, key=lambda item: item.get('deadline') or '', reverse=False)
     sections = []
     sections.append(f"<div class=\"section-heading\"><p class=\"eyebrow\">Country</p><h1>{escape_html(country)} Opportunities</h1><p>Find scholarships, internships, fellowships, and competitions available for {escape_html(country)}. Each opportunity links to the official application source.</p></div>")
@@ -476,7 +473,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
     title = f"{item['title']} | OpportunityNest"
     description = f"Apply for the {item['title']} in {item['country']}. Funding, deadline, eligibility, and application details for this {item['type'].lower()}."
     page_url = f"{SITE_URL}/opportunity/{slugify(item['slug'])}/"
-    breadcrumbs = build_breadcrumbs([("Home", "index.html"), (f"{PAGE_TYPES.get(item['type'], item['type'])}", f"{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html"), (item['title'], None)])
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (f"{PAGE_TYPES.get(item['type'], item['type'])}", f"/{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html"), (item['title'], None)])
     eligibility = []
     if item.get('level'):
         eligibility.append(f"Level: {item['level']}")
@@ -660,7 +657,7 @@ def main():
             url = f"{SITE_URL}/{slugify(PAGE_TYPES[category])}/{slugify(country)}/"
             items_for_page = [item for item in items if item.get('country') == country]
             # Simple country-category page generation
-            breadcrumbs = build_breadcrumbs([("Home", "index.html"), (PAGE_TYPES[category], f"{slugify(PAGE_TYPES[category])}.html"), (country, None)])
+            breadcrumbs = build_breadcrumbs([("Home", "/"), (PAGE_TYPES[category], f"/{slugify(PAGE_TYPES[category])}.html"), (country, None)])
             item_list_schema = build_item_list_schema(items_for_page, url)
             breadcrumb_schema = json.dumps({
                 "@context": "https://schema.org",

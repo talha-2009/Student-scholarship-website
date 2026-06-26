@@ -5,11 +5,11 @@
   const marks = document.querySelectorAll(".brand-mark");
   if (!marks.length) return;
 
-  // All pages are at the repo root, so logo.svg is always a sibling.
+  // Use an absolute asset path so the logo also works on nested generated pages.
   marks.forEach((el) => {
     el.textContent = "";
     const img = document.createElement("img");
-    img.src = "logo.svg";
+    img.src = "/logo.svg";
     img.alt = "";
     img.width = 22;
     img.height = 22;
