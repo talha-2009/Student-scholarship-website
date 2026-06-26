@@ -414,7 +414,6 @@ window.OpportunityNest = window.OpportunityNest || {};
         throw error;
       }
 
-      console.log('AI content generated successfully:', data);
       return data;
     } catch (error) {
       console.error('Error in generateAIContent:', error);
