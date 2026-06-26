@@ -5,16 +5,16 @@ const detailStatus = document.querySelector("#detail-status");
 const params = new URLSearchParams(window.location.search);
 const opportunityId = params.get("id");
 const pathParts = window.location.pathname.split("/").filter(Boolean);
-const opportunitySlug = pathParts[0] === "opportunity" && pathParts[1] ? decodeURIComponent(pathParts[1]) : null;
+const opportunitySlug = pathParts[0] === "opportunity" && pathParts[1]
+  ? ON.cleanSlug(decodeURIComponent(pathParts[1]))
+  : null;
 
 const setStatus = (message, isError = false) => ON.setStatus(detailStatus, message, isError);
 
 const renderDetail = (item) => {
   const pageTitle = `${item.title} | OpportunityNest`;
   const metaDesc = `${item.type} in ${item.country}: ${item.description.slice(0, 140)}...`;
-  const pageUrl = opportunitySlug
-    ? `https://opportunitynest.org/opportunity/${encodeURIComponent(item.slug)}/`
-    : `https://opportunitynest.org/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+  const pageUrl = ON.getOpportunityUrl(item);
 
   document.title = pageTitle;
   ON.updateMetaDescription(metaDesc);
@@ -64,7 +64,7 @@ const renderDetail = (item) => {
 
   detailContainer.innerHTML = `
     <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
-      <a href="index.html">Home</a>
+      <a href="/index.html">Home</a>
       <span aria-hidden="true">/</span>
       <a href="${categoryPage}">${ON.escapeHtml(item.type)}s</a>
       <span aria-hidden="true">/</span>
@@ -110,16 +110,15 @@ const renderDetail = (item) => {
 };
 
 const getCategoryPage = (type) => {
-  if (type === "Scholarship") return "scholarships.html";
-  if (type === "Fellowship") return "fellowships.html";
-  if (type === "Internship") return "internships.html";
-  return "index.html#opportunities";
+  if (type === "Scholarship") return "/scholarships.html";
+  if (type === "Fellowship") return "/fellowships.html";
+  if (type === "Internship") return "/internships.html";
+  return "/index.html#opportunities";
 };
 
 const loadOpportunityDetail = async () => {
-  if (!opportunityId) {
-    detailContainer.innerHTML = '<p class="empty-state">Missing opportunity id. Return to the listings and try again.</p>';
-    setStatus("Missing opportunity id.", true);
+  if (!opportunityId && !opportunitySlug) {
+    window.location.replace("/404.html");
     return;
   }
 
@@ -136,7 +135,19 @@ const loadOpportunityDetail = async () => {
     const { data, error } = await query.single();
 
     if (error) throw error;
-    renderDetail(ON.normalizeOpportunity(data));
+    const item = ON.normalizeOpportunity(data);
+
+    if (!item) {
+      window.location.replace("/404.html");
+      return;
+    }
+
+    const canonicalPath = ON.getOpportunityPath(item);
+    if (window.location.pathname !== canonicalPath) {
+      window.history.replaceState({}, "", canonicalPath);
+    }
+
+    renderDetail(item);
     setStatus("Opportunity details loaded.");
   } catch (error) {
     console.error("Opportunity detail fetch failed:", error);

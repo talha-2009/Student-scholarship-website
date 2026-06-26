@@ -91,7 +91,7 @@ const renderFeaturedInternships = (items = []) => {
 
   featuredInternshipGrid.innerHTML = items
     .map((item) => {
-      const detailUrl = `opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
+      const detailUrl = ON.getOpportunityUrl(item);
       const urgency = ON.getDeadlineUrgency(item);
       const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
       const whoCanApply = item.level || "Open to eligible applicants";

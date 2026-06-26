@@ -58,7 +58,7 @@ const loadCategoryOpportunities = async () => {
 
     if (error) throw error;
 
-    opportunities = (data || []).map(ON.normalizeOpportunity);
+    opportunities = ON.assignOpportunitySlugs((data || []).map(ON.normalizeOpportunity));
     renderOpportunities();
   } catch (error) {
     console.error(`${pageType} opportunities fetch failed:`, error);

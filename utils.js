@@ -117,21 +117,24 @@ window.OpportunityNest = window.OpportunityNest || {};
   };
 
   ON.cleanSlug = (value = "") => {
-    return String(value)
-      .trim()
+    const normalized = String(value)
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
+      .replace(/&/g, " and ")
+      .replace(/[''`]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .replace(/-{2,}/g, "-");
+
+    return normalized || "opportunity";
   };
 
-  ON.getOpportunityUrl = (item) => {
-    if (item.slug) {
-      return `${ON.SITE_URL}/opportunity/${encodeURIComponent(item.slug)}/`;
-    }
-    return `${ON.SITE_URL}/opportunity-detail.html?id=${encodeURIComponent(item.id)}`;
-  };
+  ON.slugify = ON.cleanSlug;
+
+  ON.getOpportunityPath = (item) => `/opportunity/${encodeURIComponent(item.slug || ON.cleanSlug(`${item.title} ${item.country}`))}/`;
+
+  ON.getOpportunityUrl = (item) => `${ON.SITE_URL}${ON.getOpportunityPath(item)}`;
 
   ON.normalizeOpportunity = (row) => ({
     id: row.id,
@@ -147,6 +150,37 @@ window.OpportunityNest = window.OpportunityNest || {};
     link: row.link || "#",
     slug: row.slug || ON.cleanSlug(`${row.title || ""} ${row.country || ""}`).slice(0, 95),
     created_at: row.created_at || ""
+  });
+
+  ON.assignOpportunitySlugs = (items = []) => {
+    const baseCounts = new Map();
+
+    items.forEach((item) => {
+      const base = item.slug || ON.cleanSlug(`${item.title} ${item.country}`);
+      baseCounts.set(base, (baseCounts.get(base) || 0) + 1);
+    });
+
+    return items.map((item) => {
+      const base = item.slug || ON.cleanSlug(`${item.title} ${item.country}`);
+      const slug = baseCounts.get(base) > 1 ? `${base}-${ON.cleanSlug(item.id).slice(0, 8)}` : base;
+      return { ...item, slug };
+    });
+  };
+
+  ON.mapInternshipToOpportunity = (row) => ({
+    id: row.id,
+    type: "Internship",
+    funding: row.funding || "",
+    title: row.title || "Internship program",
+    country: row.country || "Global",
+    level: row.degree_level || "",
+    field: row.internship_type || "",
+    deadline: row.deadline || "",
+    description: row.description || "",
+    link: row.official_url || "#",
+    created_at: row.created_at || "",
+    slug: row.slug || "",
+    isInternship: true
   });
 
   ON.setStatus = (element, message, isError = false) => {

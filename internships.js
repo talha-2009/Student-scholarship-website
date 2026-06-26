@@ -67,7 +67,7 @@ const loadInternships = async () => {
 
     if (error) throw error;
 
-    internships = (data || []).map(ON.normalizeOpportunity);
+    internships = ON.assignOpportunitySlugs((data || []).map(ON.normalizeOpportunity));
     renderInternships();
   } catch (error) {
     console.error("Internships fetch failed:", error);
