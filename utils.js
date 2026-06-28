@@ -442,4 +442,219 @@ window.OpportunityNest = window.OpportunityNest || {};
       throw error;
     }
   };
+  // SEO: Generate optimized title (50-60 characters)
+  ON.generateSEOTitle = (item) => {
+    const type = item.type || "Opportunity";
+    const country = item.country || "";
+    const title = item.title || "";
+    
+    let seoTitle = title;
+    if (country && seoTitle.length + country.length + 10 < 50) {
+      seoTitle += ` | ${type} in ${country}`;
+    } else if (seoTitle.length + type.length + 5 < 55) {
+      seoTitle += ` | ${type}`;
+    }
+    
+    if (seoTitle.length > 60) {
+      seoTitle = seoTitle.substring(0, 57) + "...";
+    }
+    
+    return `${seoTitle} | OpportunityNest`;
+  };
+
+  // SEO: Generate optimized meta description (140-160 characters)
+  ON.generateSEODescription = (item) => {
+    const type = item.type || "Opportunity";
+    const country = item.country || "";
+    const funding = item.funding || "";
+    const description = item.description || "";
+    
+    let metaDesc = "";
+    
+    if (funding && funding.toLowerCase().includes("fund")) {
+      metaDesc = `${type} in ${country}: ${funding}. `;
+    } else {
+      metaDesc = `${type} in ${country}. `;
+    }
+    
+    const remaining = 150 - metaDesc.length;
+    if (remaining > 20 && description) {
+      metaDesc += description.substring(0, remaining - 3) + "...";
+    }
+    
+    return metaDesc.substring(0, 160);
+  };
+
+  // SEO: Generate structured data for opportunity
+  ON.generateStructuredData = (item, pageUrl) => {
+    const schemaType = item.type === "Scholarship" ? "Scholarship" : 
+                       item.type === "Fellowship" ? "Fellowship" : 
+                       item.type === "Internship" ? "Internship" : 
+                       "EducationalOccupationalCredential";
+    
+    const baseSchema = {
+      "@context": "https://schema.org",
+      "@type": schemaType,
+      "name": item.title,
+      "description": item.description,
+      "url": pageUrl,
+      "provider": {
+        "@type": "Organization",
+        "name": item.country
+      },
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": item.country
+        }
+      }
+    };
+
+    if (item.deadline) {
+      baseSchema.validThrough = item.deadline;
+    }
+
+    if (item.level) {
+      baseSchema.educationalLevel = item.level;
+    }
+
+    if (item.funding) {
+      baseSchema.funding = item.funding;
+    }
+
+    return baseSchema;
+  };
+
+  // SEO: Generate breadcrumb schema
+  ON.generateBreadcrumbSchema = (breadcrumbs) => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": breadcrumbs.map((crumb, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": crumb.name,
+        "item": crumb.url
+      }))
+    };
+  };
+
+  // SEO: Render enhanced detail content with structured sections
+  ON.renderDetailContent = (item, urgencyClass, categoryPage, categoryType) => {
+    const country = item.country || "Global";
+    const level = item.level || "All levels";
+    const field = item.field || item.internship_type || "Multiple fields";
+    const funding = item.funding || "See official listing";
+    const deadline = ON.formatDeadline(item.deadline);
+    const organization = item.organization || "";
+    
+    return `
+      <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="${categoryPage}">${ON.escapeHtml(item.type || categoryType)}s</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">${ON.escapeHtml(item.title)}</span>
+      </nav>
+      
+      <div class="detail-header">
+        <div class="detail-badges">
+          <span class="badge badge-type">${ON.escapeHtml(item.type || categoryType)}</span>
+          <span class="badge badge-country">${ON.escapeHtml(country)}</span>
+          ${level && level !== "All levels" ? `<span class="badge badge-level">${ON.escapeHtml(level)}</span>` : ""}
+        </div>
+        <h1>${ON.escapeHtml(item.title)}</h1>
+        <p class="detail-intro">${ON.escapeHtml(item.description)}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
+          <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml((item.type || categoryType).toLowerCase())}s</a>
+        </div>
+      </div>
+
+      <section class="detail-section" aria-labelledby="overview-heading">
+        <h2 id="overview-heading">Overview</h2>
+        <p>${ON.escapeHtml(item.description)}</p>
+        ${organization ? `<p><strong>Organization:</strong> ${ON.escapeHtml(organization)}</p>` : ""}
+      </section>
+
+      <section class="detail-section" aria-labelledby="details-heading">
+        <h2 id="details-heading">Program Details</h2>
+        <dl class="detail-grid">
+          <div>
+            <dt>Country</dt>
+            <dd>${ON.escapeHtml(country)}</dd>
+          </div>
+          <div>
+            <dt>Education Level</dt>
+            <dd>${ON.escapeHtml(level)}</dd>
+          </div>
+          <div>
+            <dt>Field of Study</dt>
+            <dd>${ON.escapeHtml(field)}</dd>
+          </div>
+          <div>
+            <dt>Funding</dt>
+            <dd>${ON.escapeHtml(funding)}</dd>
+          </div>
+          <div>
+            <dt>Application Deadline</dt>
+            <dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="detail-section" aria-labelledby="apply-heading">
+        <h2 id="apply-heading">How to Apply</h2>
+        <p>Visit the official program website to submit your application. Make sure to review all eligibility requirements and prepare necessary documents before the deadline.</p>
+        <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Visit Official Website <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <p class="microcopy">OpportunityNest summarizes public information and sends applicants to the official program website. Always confirm requirements and deadlines before applying.</p>
+      
+      <div id="related-opportunities" aria-live="polite"></div>
+    `;
+  };
+
+  // SEO: Fetch and render related opportunities
+  ON.renderRelatedOpportunities = async (item) => {
+    const relatedContainer = document.getElementById("related-opportunities");
+    if (!relatedContainer) return;
+
+    try {
+      const client = ON.getSupabaseClient();
+      const tableName = item.isInternship ? "internships" : "opportunities";
+      
+      let query = client.from(tableName).select("*").neq("id", item.id).limit(6);
+      
+      if (item.country) {
+        query = query.eq("country", item.country);
+      }
+      
+      const { data, error } = await query;
+      
+      if (error) throw error;
+      
+      const related = (data || []).slice(0, 4);
+      
+      if (related.length === 0) {
+        relatedContainer.innerHTML = "";
+        return;
+      }
+      
+      const normalizedRelated = related.map(r => 
+        item.isInternship ? ON.mapInternshipToOpportunity(r) : ON.normalizeOpportunity(r)
+      );
+      
+      relatedContainer.innerHTML = `
+        <h2>Related Opportunities</h2>
+        <div class="related-grid">
+          ${normalizedRelated.map(r => ON.renderOpportunityCard(r)).join("")}
+        </div>
+      `;
+    } catch (error) {
+      console.error("Error fetching related opportunities:", error);
+      relatedContainer.innerHTML = "";
+    }
+  };
 })(window.OpportunityNest);

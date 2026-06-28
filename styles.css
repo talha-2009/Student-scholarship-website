@@ -1635,3 +1635,91 @@ details p {
     transition: none !important;
   }
 }
+
+/* Detail page badges */
+.detail-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-type {
+  background: linear-gradient(135deg, #0f766e, #0d9488);
+  color: white;
+}
+
+.badge-country {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.badge-level {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* Detail page sections */
+.detail-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.detail-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #0f766e;
+}
+
+.detail-intro {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+
+/* Related opportunities section */
+#related-opportunities {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+#related-opportunities h2 {
+  font-size: 1.5rem;
+  color: #0f766e;
+  margin-bottom: 1.5rem;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .detail-section {
+    padding: 1rem;
+  }
+  
+  .detail-badges {
+    flex-direction: column;
+  }
+  
+  .badge {
+    width: fit-content;
+  }
+}
