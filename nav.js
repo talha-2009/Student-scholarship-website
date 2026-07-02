@@ -9,7 +9,14 @@
   marks.forEach((el) => {
     el.textContent = "";
     const img = document.createElement("img");
-    img.src = "logo.svg";
+    // Resolve logo path relative to the script's location so nested pages load correctly
+    const scriptEl = document.currentScript || document.querySelector('script[src$="nav.js"]');
+    try {
+      const base = scriptEl && scriptEl.src ? scriptEl.src : window.location.href;
+      img.src = new URL('logo.svg', base).href;
+    } catch (e) {
+      img.src = "logo.svg"; // fallback
+    }
     img.alt = "";
     img.width = 22;
     img.height = 22;
