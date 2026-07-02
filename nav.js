@@ -66,3 +66,26 @@ if (navToggle && navMenu) {
     }
   });
 }
+
+// Adjust navigation links for nested pages so anchors point to the site root
+(function normalizeNavLinks() {
+  const anchors = document.querySelectorAll('.nav-menu a, .footer-links a');
+  if (!anchors.length) return;
+
+  // Compute directory depth for current page
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const isFile = parts.length && parts[parts.length - 1].includes('.');
+  const dirParts = isFile ? parts.slice(0, -1) : parts;
+  const depth = dirParts.length;
+  const prefix = '../'.repeat(depth);
+
+  anchors.forEach((a) => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) return;
+    // If href already starts with ../ or ./ leave it
+    if (href.startsWith('..') || href.startsWith('.')) return;
+    // Otherwise prefix it to reach the root
+    a.setAttribute('href', prefix + href);
+  });
+})();
