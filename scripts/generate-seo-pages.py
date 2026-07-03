@@ -189,6 +189,7 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
     <title>{escape_html(title)}</title>
     <meta name="description" content="{escape_html(description)}">
     <meta name="theme-color" content="#0f766e">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182963907868663"     crossorigin="anonymous"></script>
     <link rel="canonical" href="{escape_html(url)}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="{escape_html(title)}">
