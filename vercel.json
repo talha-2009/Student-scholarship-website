@@ -1,6 +1,7 @@
 {
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/exchange-program.html", "destination": "/", "permanent": true },
     { "source": "/opportunity/:slug/index.html", "destination": "/opportunity/:slug/", "permanent": true },
     { "source": "/country/:slug/index.html", "destination": "/country/:slug/", "permanent": true },
     { "source": "/scholarships/:slug/index.html", "destination": "/scholarships/:slug/", "permanent": true },
@@ -22,7 +23,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://rveunrzbeynaizitqanx.supabase.co https://www.googletagmanager.com https://formsubmit.co https://www.google-analytics.com https://www.google.com; frame-ancestors 'none';" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://rveunrzbeynaizitqanx.supabase.co https://www.googletagmanager.com https://formsubmit.co https://www.google-analytics.com https://www.google.com https://pagead2.googlesyndication.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; frame-ancestors 'none';" }
       ]
     }
   ]

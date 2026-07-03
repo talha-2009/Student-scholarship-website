@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { SITE_URL, assignOpportunitySlugs, getOpportunityDetailUrl } = require("./opportunity-slugs");
+const SITE_ROOT = "https://www.opportunitynest.org";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://rveunrzbeynaizitqanx.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -72,14 +73,15 @@ function renderUrl(loc, changefreq, priority, lastmod = "") {
 async function main() {
   const opportunities = assignOpportunitySlugs(await fetchOpportunities());
   const entries = [
-    ...staticPages.map(([pathName, changefreq, priority]) => renderUrl(`${SITE_URL}${pathName}`, changefreq, priority)),
+    ...staticPages.map(([pathName, changefreq, priority]) => renderUrl(`${SITE_ROOT}${pathName}`, changefreq, priority)),
     ...opportunities.map((item) =>
-      renderUrl(`${SITE_URL}${getOpportunityDetailUrl(item)}`, "weekly", "0.8", item.created_at)
+      renderUrl(`${SITE_ROOT}${getOpportunityDetailUrl(item)}`, "weekly", "0.8", item.created_at)
     )
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>\n`;
   fs.writeFileSync(path.join(__dirname, "..", "sitemap.xml"), sitemap);
+  fs.writeFileSync(path.join(__dirname, "..", "sitemap.xml"), sitemap.replace(/https:\/\/opportunitynest\.org/g, SITE_ROOT));
   console.log(`Generated sitemap.xml with ${entries.length} URLs (${opportunities.length} opportunities).`);
 }
 
