@@ -12,8 +12,7 @@
   ],
   "rewrites": [
     { "source": "/opportunity/:slug/", "destination": "/opportunity-detail.html" },
-    { "source": "/opportunity/:slug", "destination": "/opportunity-detail.html" },
-    { "source": "/:category.html", "destination": "/category.html" }
+    { "source": "/opportunity/:slug", "destination": "/opportunity-detail.html" }
   ],
   "headers": [
     {

@@ -49,6 +49,37 @@ const populateTypeFilter = (types = []) => {
   }
 };
 
+const populateCountryFilter = (items = []) => {
+  if (!countryFilter) return;
+  const selectedCountry = countryFilter.value;
+  const countries = [...new Set(items.map((item) => item.country?.trim()).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b));
+
+  countryFilter.innerHTML = '<option value="">All countries</option>';
+  countries.forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country;
+    option.textContent = country;
+    countryFilter.appendChild(option);
+  });
+
+  if (countries.includes(selectedCountry)) countryFilter.value = selectedCountry;
+};
+
+const updateStatistics = (items = []) => {
+  const opportunityStat = document.querySelector('[data-stat="opportunities"]');
+  const internshipStat = document.querySelector('[data-stat="internships"]');
+  const countryStat = document.querySelector('[data-stat="countries"]');
+  const internshipStatCard = document.querySelector("#internship-stat-card");
+  const internshipCount = items.filter((item) => normalizeTypeKey(item.type) === "internship").length;
+  const countryCount = new Set(items.map((item) => item.country?.trim()).filter(Boolean)).size;
+
+  if (opportunityStat) opportunityStat.textContent = items.length.toLocaleString();
+  if (internshipStat) internshipStat.textContent = internshipCount.toLocaleString();
+  if (countryStat) countryStat.textContent = countryCount.toLocaleString();
+  if (internshipStatCard) internshipStatCard.hidden = internshipCount === 0;
+};
+
 const applyTypeFromUrl = (types = []) => {
   if (!typeFilter) return;
 
@@ -134,18 +165,19 @@ const loadOpportunities = async () => {
   setOpportunityStatus("Loading opportunities...");
 
   try {
-    const { data, error } = await ON.getSupabaseClient()
-      .from("opportunities")
-      .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
-      .order("deadline", { ascending: true });
-
-    if (error) throw error;
-    opportunities = (data || []).map(ON.normalizeOpportunity);
+    opportunities = (await ON.fetchOpportunityRows()).map(ON.normalizeOpportunity);
     const types = getUniqueTypes(opportunities);
     populateTypeFilter(types);
+    populateCountryFilter(opportunities);
+    updateStatistics(opportunities);
     applyTypeFromUrl(types);
     renderConditionalTypeNavLinks(types);
     renderOpportunities();
+    renderFeaturedInternships(
+      opportunities
+        .filter((item) => normalizeTypeKey(item.type) === "internship" && item.link && item.link !== "#")
+        .slice(0, 3)
+    );
   } catch (error) {
     console.error("Supabase opportunities fetch failed:", error);
     opportunityGrid.innerHTML = ON.renderErrorWithRetry(
@@ -200,29 +232,6 @@ const renderFeaturedInternships = (items = []) => {
     .join("");
 };
 
-const loadFeaturedInternships = async () => {
-  if (!featuredInternshipGrid) return;
-
-  featuredInternshipGrid.innerHTML = ON.renderLoadingSkeleton(3);
-
-  try {
-    const { data, error } = await ON.getSupabaseClient()
-      .from("opportunities")
-      .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
-      .eq("type", "Internship")
-      .not("link", "is", null)
-      .order("deadline", { ascending: true, nullsFirst: false })
-      .limit(3);
-
-    if (error) throw error;
-    renderFeaturedInternships((data || []).map(ON.normalizeOpportunity));
-  } catch (error) {
-    console.error("Featured internships fetch failed:", error);
-    featuredInternshipGrid.innerHTML =
-      '<p class="empty-state">We could not load featured internships right now.</p>';
-  }
-};
-
 const resetAndRender = () => {
   currentPage = 1;
   renderOpportunities();
@@ -274,7 +283,4 @@ const setSearchPageMeta = () => {
 
 setSearchPageMeta();
 
-ON.populateCountryFilter(countryFilter);
-ON.updateStatistics();
 loadOpportunities();
-loadFeaturedInternships();

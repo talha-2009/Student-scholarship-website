@@ -14,6 +14,18 @@ window.OpportunityNest = window.OpportunityNest || {};
   ON.SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
   ON.SITE_URL = "https://www.opportunitynest.org";
   ON.PAGE_SIZE = 6;
+  ON.OFFICIAL_URL_OVERRIDES = {
+    "https://www.unesco.org/en/prizes/esd": "https://www.unesco.org/en/prizes/education-sustainable-development?hub=72522",
+    "https://www.salzburgglobal.org/get-involved": "https://www.salzburgglobal.org/fellowship/an-introduction",
+    "https://www.kas.de/en/web/begabtenfoerderung-und-kultur/stipendien-und-foerderung": "https://www.kas.de/en/web/begabtenfoerderung-und%20kultur/international-talent-development",
+    "https://www.rosalux.de/en/foundation/rosa-luxemburg-stiftung/scholarships": "https://www.rosalux.de/en/foundation/studienwerk/scholarships",
+    "https://www.studyinjapan.go.jp/en/smap_stopj-applications_mext.html": "https://www.studyinjapan.go.jp/en/planning/scholarships/mext-scholarships/",
+    "https://www.universiteitleiden.nl/en/education/scholarships/leiden-university-excellence-scholarships-lexs": "https://www.student.universiteitleiden.nl/en/scholarships/sea/leiden-university-excellence-scholarship-lexs",
+    "https://usief.org.in/Fellowships/Fulbright-Nehru-Fellowships-for-Indian-Citizens.aspx": "https://www.usief.org.in/fulbright-fellowships/fellowships-for-indian-citizen/fulbright-nehru-masters-fellowships/",
+    "https://ethz.ch/en/studies/master/financials/scholarships/excellence-scholarship.html": "https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html",
+    "https://us.fulbrightonline.org/fulbright-us-student-program/fulbright-program-overview/foreign-language-teaching-assistant-flta": "https://exchanges.state.gov/non-us/program/fulbright-foreign-language-teaching-assistant-flta",
+    "https://www.urbanstudiesfoundation.org/grants-fellowships/": "https://www.urbanstudiesfoundation.org/funding/international-fellowships/"
+  };
 
   let supabaseClient;
 
@@ -116,6 +128,22 @@ window.OpportunityNest = window.OpportunityNest || {};
     return supabaseClient;
   };
 
+  ON.fetchOpportunityRows = async () => {
+    const fields = "id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at";
+    const response = await fetch(`${ON.SUPABASE_URL}/rest/v1/opportunities?select=${fields}&order=deadline.asc`, {
+      headers: {
+        apikey: ON.SUPABASE_PUBLISHABLE_KEY,
+        Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Opportunity request failed with status ${response.status}.`);
+    }
+
+    return response.json();
+  };
+
   ON.cleanSlug = (value = "") => {
     const normalized = String(value)
       .normalize("NFKD")
@@ -147,7 +175,7 @@ window.OpportunityNest = window.OpportunityNest || {};
     deadline: row.deadline || "",
     deadline_status: row.deadline_status || "fixed",
     description: row.description || "No description available.",
-    link: row.link || "#",
+    link: ON.OFFICIAL_URL_OVERRIDES[row.link] || row.link || "#",
     slug: row.slug || ON.cleanSlug(`${row.title || ""} ${row.country || ""}`).slice(0, 95),
     created_at: row.created_at || ""
   });

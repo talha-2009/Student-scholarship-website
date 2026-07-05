@@ -19,17 +19,17 @@
   <!-- Site name -->
   <text x="370" y="230"
         font-family="Inter, ui-sans-serif, system-ui, sans-serif"
-        font-size="76" font-weight="400" fill="white" opacity="0.92" letter-spacing="-1.5">Opportunity</text>
+        font-size="76" font-weight="400" fill="white" opacity="0.92" letter-spacing="0">Opportunity</text>
   <text x="370" y="316"
         font-family="Inter, ui-sans-serif, system-ui, sans-serif"
-        font-size="76" font-weight="800" fill="#C49020" letter-spacing="-2">Nest</text>
+        font-size="76" font-weight="800" fill="#C49020" letter-spacing="0">Nest</text>
   <!-- Divider -->
   <rect x="370" y="338" width="520" height="2" rx="1" fill="#0A5A54" opacity="0.5"/>
   <!-- Tagline -->
   <text x="370" y="390"
         font-family="Inter, ui-sans-serif, system-ui, sans-serif"
         font-size="28" font-weight="400" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">
-    Scholarships · Internships · Fellowships
+    Scholarships &#183; Internships &#183; Fellowships
   </text>
   <!-- Sub-tagline -->
   <text x="370" y="438"
