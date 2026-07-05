@@ -6,7 +6,7 @@ import re
 import urllib.request
 from datetime import datetime
 
-SITE_URL = "https://opportunitynest.org"
+SITE_URL = "https://www.opportunitynest.org"
 SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co/rest/v1/opportunities"
 SUPABASE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD"
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -188,7 +188,9 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{escape_html(title)}</title>
     <meta name="description" content="{escape_html(description)}">
+    <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#0f766e">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182963907868663"     crossorigin="anonymous"></script>
     <link rel="canonical" href="{escape_html(url)}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="{escape_html(title)}">
