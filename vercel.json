@@ -8,7 +8,7 @@
     { "source": "/internships/:slug/index.html", "destination": "/internships/:slug/", "permanent": true },
     { "source": "/fellowships/:slug/index.html", "destination": "/fellowships/:slug/", "permanent": true },
     { "source": "/competitions/:slug/index.html", "destination": "/competitions/:slug/", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.opportunitynest.org" }], "destination": "https://opportunitynest.org/:path*", "permanent": true }
+    { "source": "/:path*", "has": [{ "type": "host", "value": "opportunitynest.org" }], "destination": "https://www.opportunitynest.org/:path*", "permanent": true }
   ],
   "rewrites": [
     { "source": "/opportunity/:slug/", "destination": "/opportunity-detail.html" },
