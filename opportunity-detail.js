@@ -35,8 +35,8 @@ const renderDetail = (item) => {
 
   const structuredData = ON.generateStructuredData(item, pageUrl);
   const breadcrumbSchema = ON.generateBreadcrumbSchema([
-    { name: "Home", url: "https://opportunitynest.org/" },
-    { name: `${item.type}s`, url: `https://opportunitynest.org${categoryPage}` },
+    { name: "Home", url: "https://www.opportunitynest.org/" },
+    { name: `${item.type}s`, url: `https://www.opportunitynest.org${categoryPage}` },
     { name: item.title, url: pageUrl }
   ]);
 

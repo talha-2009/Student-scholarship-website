@@ -1,0 +1,12 @@
+# Development and audit material must not be publicly deployed.
+.agents
+.chrome-console-check
+.chrome-csp-check
+brand-kit
+scripts
+supabase
+
+*.md
+*.sql
+*.zip
+preview.html

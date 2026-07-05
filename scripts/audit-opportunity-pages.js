@@ -3,7 +3,7 @@ const http = require("http");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const SITE_URL = "https://opportunitynest.org";
+const SITE_URL = "https://www.opportunitynest.org";
 const NAV_TARGETS = new Map([
   ["Home", "/"],
   ["Scholarships", "/scholarships.html"],
@@ -18,6 +18,7 @@ const NAV_TARGETS = new Map([
 function getOpportunityPaths() {
   return fs.readdirSync(path.join(ROOT, "opportunity"), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
+    .filter((entry) => fs.existsSync(path.join(ROOT, "opportunity", entry.name, "index.html")))
     .map((entry) => `/opportunity/${entry.name}/`)
     .sort();
 }

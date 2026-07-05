@@ -30,7 +30,7 @@ for path in files:
         as_ = re.findall(r'<a[^>]*>(.*?)</a>', inner, re.S)
         # strip tags
         def strip_tags(s):
-            return re.sub(r'<[^>]+>', '', s).strip()
+            return unescape(re.sub(r'<[^>]+>', '', s)).strip()
         for a in as_:
             visible.append(strip_tags(a))
         last = re.search(r'<span[^>]*aria-current="page"[^>]*>(.*?)</span>', inner, re.S)

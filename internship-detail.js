@@ -30,8 +30,8 @@ const renderDetail = (item) => {
 
   const structuredData = ON.generateStructuredData(item, pageUrl);
   const breadcrumbSchema = ON.generateBreadcrumbSchema([
-    { name: "Home", url: "https://opportunitynest.org/" },
-    { name: "Internships", url: "https://opportunitynest.org/internships.html" },
+    { name: "Home", url: "https://www.opportunitynest.org/" },
+    { name: "Internships", url: "https://www.opportunitynest.org/internships.html" },
     { name: item.title, url: pageUrl }
   ]);
 

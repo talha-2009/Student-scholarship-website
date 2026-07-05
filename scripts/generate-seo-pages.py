@@ -372,7 +372,7 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://opportunitynest.org/"},
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
             {"@type": "ListItem", "position": 2, "name": PAGE_TYPES[category], "item": url}
         ]
     }, indent=2)
@@ -404,7 +404,7 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
       "          </div>\n"
       "        </div>\n"
       "      </section>\n"
-    ) + page_footer("/category.js")
+    ) + page_footer()
     return page
 
 
@@ -428,7 +428,7 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://opportunitynest.org/"},
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
             {"@type": "ListItem", "position": 2, "name": "Country", "item": f"{SITE_URL}/country/"},
             {"@type": "ListItem", "position": 3, "name": country, "item": path}
         ]
@@ -525,7 +525,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://opportunitynest.org/"},
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
             {"@type": "ListItem", "position": 2, "name": PAGE_TYPES.get(item['type'], item['type']), "item": f"{SITE_URL}/{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html"},
             {"@type": "ListItem", "position": 3, "name": item['title'], "item": page_url}
         ]
@@ -665,7 +665,7 @@ def main():
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://opportunitynest.org/"},
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
                     {"@type": "ListItem", "position": 2, "name": PAGE_TYPES[category], "item": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}.html"},
                     {"@type": "ListItem", "position": 3, "name": country, "item": url}
                 ]
@@ -676,7 +676,7 @@ def main():
                 {"q": "Can I browse other countries?", "a": "Yes — use the country navigation links at the bottom of the page to discover similar programs in other regions."}
             ])
             listing_html = '<div class="opportunity-results grid three">' + ''.join(build_opportunity_card(item) for item in items_for_page[:12]) + '</div>'
-            content = page_head(title, description, url, f"{country} {PAGE_TYPES[category]}", additional_head=f"<script type=\"application/ld+json\">{item_list_schema}</script><script type=\"application/ld+json\">{breadcrumb_schema}</script><script type=\"application/ld+json\">{faq}</script>") + f"\n      <section class=\"page-hero section-pad\">\n        <div class=\"container\">{breadcrumbs}\n          <div class=\"section-heading\">\n            <p class=\"eyebrow\">Category</p>\n            <h1>{escape_html(country)} {escape_html(PAGE_TYPES[category])}</h1>\n            <p>Browse verified {category.lower()} listings for {escape_html(country)} with funding and deadline details in one place.</p>\n          </div>\n        </div>\n      </section>\n      <section class=\"section-pad live-opportunities\">\n        <div class=\"container\">\n          {listing_html}\n        </div>\n      </section>\n" + page_footer("/category.js")
+            content = page_head(title, description, url, f"{country} {PAGE_TYPES[category]}", additional_head=f"<script type=\"application/ld+json\">{item_list_schema}</script><script type=\"application/ld+json\">{breadcrumb_schema}</script><script type=\"application/ld+json\">{faq}</script>") + f"\n      <section class=\"page-hero section-pad\">\n        <div class=\"container\">{breadcrumbs}\n          <div class=\"section-heading\">\n            <p class=\"eyebrow\">Category</p>\n            <h1>{escape_html(country)} {escape_html(PAGE_TYPES[category])}</h1>\n            <p>Browse verified {category.lower()} listings for {escape_html(country)} with funding and deadline details in one place.</p>\n          </div>\n        </div>\n      </section>\n      <section class=\"section-pad live-opportunities\">\n        <div class=\"container\">\n          {listing_html}\n        </div>\n      </section>\n" + page_footer()
             write_page(page, content)
 
     # Generate opportunity pages

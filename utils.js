@@ -12,7 +12,7 @@ window.OpportunityNest = window.OpportunityNest || {};
   // Configuration - Replace these with environment variables in production
   ON.SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
   ON.SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
-  ON.SITE_URL = "https://opportunitynest.org";
+  ON.SITE_URL = "https://www.opportunitynest.org";
   ON.PAGE_SIZE = 6;
 
   let supabaseClient;

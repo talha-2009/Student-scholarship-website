@@ -1,4 +1,4 @@
-const SITE_URL = "https://opportunitynest.org";
+const SITE_URL = "https://www.opportunitynest.org";
 
 function slugify(value = "") {
   const normalized = String(value)

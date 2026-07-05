@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://opportunitynest.org/sitemap.xml
+Sitemap: https://www.opportunitynest.org/sitemap.xml
