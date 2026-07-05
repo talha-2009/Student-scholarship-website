@@ -109,9 +109,7 @@
         </button>
         <div class="nav-menu" id="nav-menu">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <div id="dynamic-nav-links"></div>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
@@ -176,9 +174,6 @@
             <label class="sr-only" for="type-filter">Filter by type</label>
             <select id="type-filter" name="type">
               <option value="">All types</option>
-              <option value="Scholarship">Scholarship</option>
-              <option value="Internship">Internship</option>
-              <option value="Fellowship">Fellowship</option>
             </select>
             <label class="sr-only" for="sort-filter">Sort results</label>
             <select id="sort-filter" name="sort">
@@ -531,9 +526,7 @@
         <!-- SEO: Footer navigation with role for landmark navigation -->
         <nav class="footer-links" role="navigation" aria-label="Footer navigation">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <div id="dynamic-footer-links"></div>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
@@ -551,5 +544,6 @@
     <script src="/utils.js"></script>
     <script src="/script.js"></script>
     <script src="/nav.js"></script>
+    <script src="/dynamic-types.js"></script>
   </body>
 </html>

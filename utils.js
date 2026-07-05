@@ -346,6 +346,25 @@ window.OpportunityNest = window.OpportunityNest || {};
     }
   };
 
+  ON.fetchUniqueTypes = async () => {
+    try {
+      const client = ON.getSupabaseClient();
+      const { data } = await client.from("opportunities").select("type").not("type", "is", null);
+
+      const types = new Set();
+      (data || []).forEach((row) => {
+        if (row.type && row.type.trim()) {
+          types.add(row.type.trim());
+        }
+      });
+
+      return Array.from(types).sort();
+    } catch (error) {
+      console.error("Error fetching types:", error);
+      return [];
+    }
+  };
+
   ON.populateCountryFilter = async (selectElement) => {
     if (!selectElement) return;
     
@@ -357,6 +376,21 @@ window.OpportunityNest = window.OpportunityNest || {};
       const option = document.createElement("option");
       option.value = country;
       option.textContent = country;
+      selectElement.appendChild(option);
+    });
+  };
+
+  ON.populateTypeFilter = async (selectElement) => {
+    if (!selectElement) return;
+    
+    const types = await ON.fetchUniqueTypes();
+    
+    selectElement.innerHTML = '<option value="">All types</option>';
+    
+    types.forEach(type => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
       selectElement.appendChild(option);
     });
   };

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Opportunities | OpportunityNest</title>
+    <meta name="description" content="Browse verified opportunities on OpportunityNest.">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="canonical" href="https://opportunitynest.org/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Opportunities | OpportunityNest">
+    <meta property="og:description" content="Browse verified opportunities on OpportunityNest.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://opportunitynest.org/">
+    <meta property="og:image" content="https://opportunitynest.org/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Opportunities | OpportunityNest">
+    <meta name="twitter:description" content="Browse verified opportunities on OpportunityNest.">
+    <meta name="twitter:image" content="https://opportunitynest.org/og-image.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WKVTVB0X4X');
+    </script>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" role="banner" aria-label="Primary navigation">
+      <nav class="nav container" role="navigation" aria-label="Main site navigation">
+        <a class="brand" href="/" aria-label="OpportunityNest.org home">
+          <span class="brand-mark" aria-hidden="true">ON</span>
+          <span>OpportunityNest.org</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Toggle navigation</span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="/#opportunities">Opportunities</a>
+          <div id="dynamic-nav-links"></div>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/faq.html">FAQ</a>
+          <a class="button button-primary nav-cta" href="#opportunities">Explore Opportunities</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" role="main">
+      <section class="section-pad">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Category</p>
+            <h1 id="category-title">Loading...</h1>
+            <p id="category-description">Loading opportunities...</p>
+          </div>
+          <form class="opportunity-controls" id="opportunity-controls" role="search">
+            <label class="sr-only" for="live-search">Search opportunities</label>
+            <input id="live-search" name="search" type="search" placeholder="Search by title, field, country, funding..." autocomplete="off">
+            <label class="sr-only" for="country-filter">Filter by country</label>
+            <select id="country-filter" name="country">
+              <option value="">All countries</option>
+            </select>
+            <button class="button button-secondary clear-filters" type="button" id="clear-filters">Clear Filters</button>
+          </form>
+          <div class="status-message" id="opportunity-status" role="status">Loading opportunities...</div>
+          <div class="opportunity-results grid three" id="opportunity-grid" aria-live="polite"></div>
+          <nav class="pagination" id="pagination" aria-label="Opportunity pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">ON</span>
+            <span>OpportunityNest.org</span>
+          </a>
+          <p>The central hub where students discover life-changing opportunities worldwide.</p>
+        </div>
+        <nav class="footer-links" role="navigation" aria-label="Footer navigation">
+          <a href="/#opportunities">Opportunities</a>
+          <a href="/scholarships.html">Scholarships</a>
+          <a href="/internships.html">Internships</a>
+          <a href="/fellowships.html">Fellowships</a>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
+      </div>
+      <div class="container copyright">
+        <p>&copy; 2026 OpportunityNest.org. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="/utils.js"></script>
+    <script src="/nav.js"></script>
+    <script>
+      // Dynamic category page logic
+      const ON = window.OpportunityNest;
+      
+      // Extract type from URL path
+      const pathParts = window.location.pathname.split('/').filter(p => p);
+      const fileName = pathParts[pathParts.length - 1] || 'index.html';
+      const typeFromUrl = fileName.replace('.html', '').replace(/-/g, ' ');
+      
+      // Capitalize first letter of each word
+      const formatType = (str) => {
+        return str.replace(/\b\w/g, l => l.toUpperCase());
+      };
+      
+      const categoryType = formatType(typeFromUrl);
+      
+      // Update page metadata
+      document.title = `${categoryType} | OpportunityNest`;
+      document.querySelector('meta[name="description"]').setAttribute('content', `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`);
+      document.querySelector('meta[property="og:title"]').setAttribute('content', `${categoryType} | OpportunityNest`);
+      document.querySelector('meta[property="og:description"]').setAttribute('content', `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`);
+      document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${categoryType} | OpportunityNest`);
+      document.querySelector('meta[name="twitter:description"]').setAttribute('content', `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`);
+      document.querySelector('link[rel="canonical"]').setAttribute('href', `https://opportunitynest.org/${fileName}`);
+      
+      // Update heading
+      document.getElementById('category-title').textContent = categoryType;
+      document.getElementById('category-description').textContent = `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`;
+      
+      // Load opportunities for this category
+      const opportunityGrid = document.querySelector("#opportunity-grid");
+      const opportunityStatus = document.querySelector("#opportunity-status");
+      const opportunityControls = document.querySelector("#opportunity-controls");
+      const liveSearch = document.querySelector("#live-search");
+      const countryFilter = document.querySelector("#country-filter");
+      const pagination = document.querySelector("#pagination");
+      
+      let opportunities = [];
+      let currentPage = 1;
+      
+      const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportunityStatus, message, isError);
+      
+      const renderOpportunities = () => {
+        if (!opportunityGrid) return;
+        
+        const searchTerm = liveSearch?.value || "";
+        const country = countryFilter?.value || "";
+        
+        const filtered = ON.filterOpportunities(opportunities, {
+          searchTerm,
+          country,
+          type: ""
+        }).sort((a, b) => ON.compareOpportunities(a, b, "deadline"));
+        
+        if (!filtered.length) {
+          opportunityGrid.innerHTML = '<p class="empty-state">No opportunities match your search yet. Try clearing a filter or browse category pages.</p>';
+          ON.renderPagination(pagination, 0, 1, () => {});
+          setOpportunityStatus("No matching opportunities found.");
+          return;
+        }
+        
+        const { page, pageCount, items } = ON.paginate(filtered, currentPage);
+        currentPage = page;
+        
+        opportunityGrid.innerHTML = items.map(ON.renderOpportunityCard).join("");
+        ON.renderPagination(pagination, pageCount, currentPage, (nextPage) => {
+          currentPage = nextPage;
+          renderOpportunities();
+          opportunityGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        
+        setOpportunityStatus(`${filtered.length} opportunities found. Showing page ${currentPage} of ${pageCount}.`);
+      };
+      
+      const loadOpportunities = async () => {
+        if (!opportunityGrid) return;
+        
+        opportunityGrid.innerHTML = ON.renderLoadingSkeleton(6);
+        setOpportunityStatus("Loading opportunities...");
+        
+        try {
+          const { data, error } = await ON.getSupabaseClient()
+            .from("opportunities")
+            .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
+            .eq("type", categoryType)
+            .order("deadline", { ascending: true });
+          
+          if (error) throw error;
+          opportunities = (data || []).map(ON.normalizeOpportunity);
+          renderOpportunities();
+        } catch (error) {
+          console.error("Supabase opportunities fetch failed:", error);
+          opportunityGrid.innerHTML = ON.renderErrorWithRetry(
+            error.message || "We could not load opportunities right now. Please check your connection.",
+            "loadOpportunities()"
+          );
+          setOpportunityStatus(error.message || "We could not load opportunities right now.", true);
+        }
+      };
+      
+      const resetAndRender = () => {
+        currentPage = 1;
+        renderOpportunities();
+      };
+      
+      const clearFilters = () => {
+        if (liveSearch) liveSearch.value = "";
+        if (countryFilter) countryFilter.value = "";
+        currentPage = 1;
+        renderOpportunities();
+      };
+      
+      opportunityControls?.addEventListener("input", resetAndRender);
+      opportunityControls?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        resetAndRender();
+      });
+      
+      document.getElementById("clear-filters")?.addEventListener("click", clearFilters);
+      
+      // Initialize
+      ON.populateCountryFilter(countryFilter);
+      loadOpportunities();
+    </script>
+    <script src="/dynamic-types.js"></script>
+  </body>
+</html>
