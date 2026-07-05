@@ -351,14 +351,18 @@ window.OpportunityNest = window.OpportunityNest || {};
       const client = ON.getSupabaseClient();
       const { data } = await client.from("opportunities").select("type").not("type", "is", null);
 
-      const types = new Set();
+      const types = new Map();
       (data || []).forEach((row) => {
         if (row.type && row.type.trim()) {
-          types.add(row.type.trim());
+          const type = row.type.trim();
+          const key = type.toLowerCase();
+          if (!types.has(key)) {
+            types.set(key, type);
+          }
         }
       });
 
-      return Array.from(types).sort();
+      return Array.from(types.values()).sort((a, b) => a.localeCompare(b));
     } catch (error) {
       console.error("Error fetching types:", error);
       return [];

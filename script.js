@@ -8,17 +8,88 @@ const typeFilter = document.querySelector("#type-filter");
 const sortFilter = document.querySelector("#sort-filter");
 const pagination = document.querySelector("#pagination");
 const featuredInternshipGrid = document.querySelector("#featured-internship-grid");
+const headerNavMenu = document.querySelector("#nav-menu");
 
 let opportunities = [];
 let currentPage = 1;
 
 const setOpportunityStatus = (message, isError = false) => ON.setStatus(opportunityStatus, message, isError);
 
+const normalizeTypeKey = (type = "") => type.trim().toLowerCase();
+
+const getUniqueTypes = (items = []) => {
+  const types = new Map();
+  items.forEach((item) => {
+    const type = item.type?.trim();
+    if (!type) return;
+    const key = normalizeTypeKey(type);
+    if (!types.has(key)) {
+      types.set(key, type);
+    }
+  });
+  return Array.from(types.values()).sort((a, b) => a.localeCompare(b));
+};
+
+const populateTypeFilter = (types = []) => {
+  if (!typeFilter) return;
+
+  const selectedType = typeFilter.value;
+  typeFilter.innerHTML = '<option value="">All types</option>';
+
+  types.forEach((type) => {
+    const option = document.createElement("option");
+    option.value = type;
+    option.textContent = type;
+    typeFilter.appendChild(option);
+  });
+
+  if (selectedType && types.some((type) => normalizeTypeKey(type) === normalizeTypeKey(selectedType))) {
+    const matchingType = types.find((type) => normalizeTypeKey(type) === normalizeTypeKey(selectedType));
+    typeFilter.value = matchingType;
+  }
+};
+
+const applyTypeFromUrl = (types = []) => {
+  if (!typeFilter) return;
+
+  const urlType = new URLSearchParams(window.location.search).get("type");
+  if (!urlType) return;
+
+  const matchingType = types.find((type) => normalizeTypeKey(type) === normalizeTypeKey(urlType));
+  if (matchingType) {
+    typeFilter.value = matchingType;
+  }
+};
+
+const renderConditionalTypeNavLinks = (types = []) => {
+  if (!headerNavMenu) return;
+
+  headerNavMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
+
+  const links = [
+    { type: "Competition", label: "Competitions" },
+    { type: "Youth Program", label: "Youth Programs" }
+  ];
+  const insertBefore = headerNavMenu.querySelector('a[href="/about.html"]') || headerNavMenu.querySelector(".nav-cta");
+
+  links.forEach(({ type, label }) => {
+    const matchingType = types.find((itemType) => normalizeTypeKey(itemType) === normalizeTypeKey(type));
+    if (!matchingType) return;
+
+    const link = document.createElement("a");
+    link.href = `/?type=${encodeURIComponent(matchingType)}#opportunities`;
+    link.textContent = label;
+    link.dataset.dynamicTypeLink = "true";
+
+    headerNavMenu.insertBefore(link, insertBefore);
+  });
+};
+
 const getCombinedDataset = () => {
   const selectedType = typeFilter?.value || "";
 
   if (selectedType) {
-    return opportunities.filter((o) => o.type === selectedType);
+    return opportunities.filter((o) => normalizeTypeKey(o.type) === normalizeTypeKey(selectedType));
   }
   return opportunities;
 };
@@ -70,6 +141,10 @@ const loadOpportunities = async () => {
 
     if (error) throw error;
     opportunities = (data || []).map(ON.normalizeOpportunity);
+    const types = getUniqueTypes(opportunities);
+    populateTypeFilter(types);
+    applyTypeFromUrl(types);
+    renderConditionalTypeNavLinks(types);
     renderOpportunities();
   } catch (error) {
     console.error("Supabase opportunities fetch failed:", error);
