@@ -11,8 +11,8 @@
     const img = document.createElement("img");
     img.src = "/logo.svg";
     img.alt = "";
-    img.width = 22;
-    img.height = 22;
+    img.width = 38;
+    img.height = 38;
     img.setAttribute("aria-hidden", "true");
     img.setAttribute("decoding", "async");
     el.appendChild(img);

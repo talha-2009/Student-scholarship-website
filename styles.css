@@ -141,6 +141,10 @@ textarea {
   font-weight: 650;
 }
 
+.nav-menu a {
+  white-space: nowrap;
+}
+
 .nav-menu a:hover {
   color: var(--text);
 }
@@ -171,6 +175,7 @@ textarea {
   align-items: center;
   justify-content: center;
   min-height: 46px;
+  min-width: 160px;
   padding: 12px 18px;
   border: 1px solid transparent;
   border-radius: var(--radius);
