@@ -171,7 +171,6 @@ const loadOpportunities = async () => {
     populateCountryFilter(opportunities);
     updateStatistics(opportunities);
     applyTypeFromUrl(types);
-    renderConditionalTypeNavLinks(types);
     renderOpportunities();
     renderFeaturedInternships(
       opportunities

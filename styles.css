@@ -135,7 +135,7 @@ textarea {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 18px;
   color: var(--muted);
   font-size: 0.94rem;
   font-weight: 650;
