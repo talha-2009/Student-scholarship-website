@@ -24,6 +24,7 @@ const renderDetail = (item) => {
   setMeta('meta[property="og:title"]', "content", pageTitle);
   setMeta('meta[property="og:description"]', "content", metaDesc);
   setMeta('meta[property="og:url"]', "content", pageUrl);
+  setMeta('meta[property="og:image:alt"]', "content", ON.generateImageAlt(item));
   setMeta('meta[name="twitter:title"]', "content", pageTitle);
   setMeta('meta[name="twitter:description"]', "content", metaDesc);
   const canonical = document.querySelector('link[rel="canonical"]');

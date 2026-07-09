@@ -1,1 +1,7 @@
 .vercel
+.qoder/
+.vercel-tmp/
+.deployed-*
+.seo-test.js
+.fetch-seo-data.js
+.seo-verify.js
