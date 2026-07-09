@@ -508,47 +508,129 @@ window.OpportunityNest = window.OpportunityNest || {};
       throw error;
     }
   };
-  // SEO: Generate optimized title (50-60 characters)
-  ON.generateSEOTitle = (item) => {
-    const type = item.type || "Opportunity";
-    const country = item.country || "";
-    const title = item.title || "";
-    
-    let seoTitle = title;
-    if (country && seoTitle.length + country.length + 10 < 50) {
-      seoTitle += ` | ${type} in ${country}`;
-    } else if (seoTitle.length + type.length + 5 < 55) {
-      seoTitle += ` | ${type}`;
+  // SEO helpers: extract a search-friendly primary keyword from the opportunity title.
+  ON.extractPrimaryKeyword = (item) => {
+    const title = String(item.title || "").trim();
+    if (!title) return "Opportunity";
+
+    // Match the first recognized opportunity-type phrase in the title.
+    const typePatterns = [
+      /^(.+?\s(?:scholarship|scholarships))/i,
+      /^(.+?\s(?:fellowship|fellowships))/i,
+      /^(.+?\s(?:internship|internships))/i,
+      /^(.+?\s(?:programme|program|programs))/i,
+      /^(.+?\s(?:grant|grants|award|awards))/i,
+      /^(.+?\s(?:competition|competitions|challenge|challenges))/i
+    ];
+
+    for (const pattern of typePatterns) {
+      const match = title.match(pattern);
+      if (match) {
+        return match[1]
+          .replace(/\s*(?:20\d\d|202[5-9])\s*$/i, "")
+          .replace(/[\s.,;:!?]+$/, "")
+          .trim();
+      }
     }
-    
-    if (seoTitle.length > 60) {
-      seoTitle = seoTitle.substring(0, 57) + "...";
-    }
-    
-    return `${seoTitle} | OpportunityNest`;
+
+    // Fallback: strip years, parentheticals, and trailing country/eligibility clauses.
+    return title
+      .replace(/\s*(?:20\d\d|202[5-9])\s*/g, "")
+      .replace(/\s*\([^)]*\)\s*$/g, "")
+      .replace(/\s*[–—-]\s*.*$/, "")
+      .replace(/\s*\|.*$/, "")
+      .replace(/\s+in\s+[^,]+(?:,.*)?$/i, "")
+      .replace(/\s+for\s+.*$/i, "")
+      .replace(/[\s.,;:!?]+$/, "")
+      .trim() || title;
   };
 
-  // SEO: Generate optimized meta description (140-160 characters)
-  ON.generateSEODescription = (item) => {
+  ON.countWords = (text = "") => String(text).trim().split(/\s+/).filter(Boolean).length;
+
+  ON.fitWordCount = (text = "", min = 120, max = 180) => {
+    const words = String(text).trim().split(/\s+/).filter(Boolean);
+    if (words.length <= max) return text;
+
+    let cut = words.slice(0, max);
+    while (cut.length > min && /[.,;:!?]$/.test(cut[cut.length - 1])) {
+      cut.pop();
+    }
+    return cut.join(" ").replace(/[.,;:!?]+$/, "") + ".";
+  };
+
+  // SEO: Generate optimized title using the primary keyword near the beginning.
+  // Format: [Primary Keyword] | Fully Funded [Opportunity Type] 2026 | OpportunityNest
+  ON.generateSEOTitle = (item) => {
+    const keyword = ON.extractPrimaryKeyword(item);
     const type = item.type || "Opportunity";
-    const country = item.country || "";
-    const funding = item.funding || "";
-    const description = item.description || "";
-    
-    let metaDesc = "";
-    
-    if (funding && funding.toLowerCase().includes("fund")) {
-      metaDesc = `${type} in ${country}: ${funding}. `;
-    } else {
-      metaDesc = `${type} in ${country}. `;
+    const year = new Date().getFullYear();
+    return `${keyword} | Fully Funded ${type} ${year} | OpportunityNest`;
+  };
+
+  // SEO: Generate optimized meta description (150-160 characters) containing the keyword once.
+  ON.generateSEODescription = (item) => {
+    const keyword = ON.extractPrimaryKeyword(item);
+    const type = (item.type || "opportunity").toLowerCase();
+    const country = item.country || "Global";
+    const funding = item.funding || "Full funding";
+    const deadline = ON.formatDeadline(item);
+
+    const keywordLower = keyword.toLowerCase();
+    const typeFragment = keywordLower.includes(type) ? "" : ` ${type}`;
+    let desc = `Apply for the ${keyword}${typeFragment} in ${country}. ${funding}. Deadline: ${deadline}. Explore details and apply via OpportunityNest.`;
+
+    if (desc.length > 160) {
+      desc = desc.slice(0, 157).trim().replace(/[.,;:!?]+$/, "") + "...";
     }
-    
-    const remaining = 150 - metaDesc.length;
-    if (remaining > 20 && description) {
-      metaDesc += description.substring(0, remaining - 3) + "...";
-    }
-    
-    return metaDesc.substring(0, 160);
+    return desc;
+  };
+
+  // SEO: Generate an opening paragraph (120-180 words) with the keyword in the first 50 words.
+  ON.generateDetailIntro = (item) => {
+    const keyword = ON.extractPrimaryKeyword(item);
+    const type = (item.type || "opportunity").toLowerCase();
+    const country = item.country || "Global";
+    const level = item.level || "eligible";
+    const field = item.field || "various fields";
+    const funding = item.funding || "comprehensive support";
+    const deadline = ON.formatDeadline(item);
+
+    const sentences = [
+      `The ${keyword} is a competitive ${type} open to ${level} applicants from ${country} and around the world.`,
+      `Designed for talented students and early-career professionals pursuing excellence in ${field}, this program provides ${funding} to help recipients fully dedicate themselves to their studies, research, or professional development without financial distraction.`,
+      `Selected participants join a diverse cohort of ambitious individuals and gain access to academic resources, mentorship, networking events, and career support throughout the program duration.`,
+      `Whether you are looking to advance your education, build international experience, or develop specialized skills, this opportunity offers a structured pathway to reach your goals while collaborating with leading experts in your chosen area.`,
+      `The application deadline is ${deadline}, and candidates are encouraged to review all eligibility requirements carefully and submit their materials through the official program website well before the closing date.`,
+      `OpportunityNest monitors each listing to bring you verified deadlines, funding details, and direct application links so you can apply with confidence.`
+    ];
+
+    return ON.fitWordCount(sentences.join(" "), 120, 180);
+  };
+
+  // SEO: Generate an H2 heading that contains a natural variation of the primary keyword.
+  ON.generateDetailH2 = (item) => {
+    const keyword = ON.extractPrimaryKeyword(item);
+    const variations = [
+      `${keyword} Benefits and Eligibility`,
+      `Why Apply for the ${keyword}`,
+      `${keyword} Application Essentials`,
+      `What to Know About the ${keyword}`,
+      `${keyword} Funding and Timeline`
+    ];
+    const index = Math.abs((item.title || "").length) % variations.length;
+    return variations[index];
+  };
+
+  // SEO: Generate a single FAQ item using the keyword naturally.
+  ON.generateDetailFAQ = (item) => {
+    const keyword = ON.extractPrimaryKeyword(item);
+    const type = (item.type || "opportunity").toLowerCase();
+    const keywordLower = keyword.toLowerCase();
+    const typeFragment = keywordLower.includes(type) ? "" : ` ${type}`;
+    return {
+      question: `Who is eligible for the ${keyword}?`,
+      answer: `The ${keyword}${typeFragment} is open to ${item.level || "eligible"} applicants interested in ${item.field || "various fields"}. Candidates should review the official eligibility criteria, prepare the required documents, and submit their application before the ${ON.formatDeadline(item)} deadline through the official program website.`
+    };
   };
 
   // SEO: Generate structured data for opportunity
@@ -606,15 +688,37 @@ window.OpportunityNest = window.OpportunityNest || {};
     };
   };
 
+  // SEO: Generate FAQPage schema for the detail page
+  ON.generateFAQSchema = (item) => {
+    const faq = ON.generateDetailFAQ(item);
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }
+      ]
+    };
+  };
+
   // SEO: Render enhanced detail content with structured sections
   ON.renderDetailContent = (item, urgencyClass, categoryPage, categoryType) => {
     const country = item.country || "Global";
     const level = item.level || "All levels";
     const field = item.field || item.internship_type || "Multiple fields";
     const funding = item.funding || "See official listing";
-    const deadline = ON.formatDeadline(item.deadline);
+    const deadline = ON.formatDeadline(item);
     const organization = item.organization || "";
-    
+    const intro = ON.generateDetailIntro(item);
+    const keywordH2 = ON.generateDetailH2(item);
+    const faq = ON.generateDetailFAQ(item);
+
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
         <a href="/">Home</a>
@@ -623,7 +727,7 @@ window.OpportunityNest = window.OpportunityNest || {};
         <span aria-hidden="true">/</span>
         <span aria-current="page">${ON.escapeHtml(item.title)}</span>
       </nav>
-      
+
       <div class="detail-header">
         <div class="detail-badges">
           <span class="badge badge-type">${ON.escapeHtml(item.type || categoryType)}</span>
@@ -631,7 +735,7 @@ window.OpportunityNest = window.OpportunityNest || {};
           ${level && level !== "All levels" ? `<span class="badge badge-level">${ON.escapeHtml(level)}</span>` : ""}
         </div>
         <h1>${ON.escapeHtml(item.title)}</h1>
-        <p class="detail-intro">${ON.escapeHtml(item.description)}</p>
+        <p class="detail-intro">${ON.escapeHtml(intro)}</p>
         <div class="hero-actions">
           <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
           <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml((item.type || categoryType).toLowerCase())}s</a>
@@ -639,7 +743,7 @@ window.OpportunityNest = window.OpportunityNest || {};
       </div>
 
       <section class="detail-section" aria-labelledby="overview-heading">
-        <h2 id="overview-heading">Overview</h2>
+        <h2 id="overview-heading">${ON.escapeHtml(keywordH2)}</h2>
         <p>${ON.escapeHtml(item.description)}</p>
         ${organization ? `<p><strong>Organization:</strong> ${ON.escapeHtml(organization)}</p>` : ""}
       </section>
@@ -670,6 +774,16 @@ window.OpportunityNest = window.OpportunityNest || {};
         </dl>
       </section>
 
+      <section class="detail-section" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>${ON.escapeHtml(faq.question)}</summary>
+            <p>${ON.escapeHtml(faq.answer)}</p>
+          </details>
+        </div>
+      </section>
+
       <section class="detail-section" aria-labelledby="apply-heading">
         <h2 id="apply-heading">How to Apply</h2>
         <p>Visit the official program website to submit your application. Make sure to review all eligibility requirements and prepare necessary documents before the deadline.</p>
@@ -677,7 +791,7 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <p class="microcopy">OpportunityNest summarizes public information and sends applicants to the official program website. Always confirm requirements and deadlines before applying.</p>
-      
+
       <div id="related-opportunities" aria-live="polite"></div>
     `;
   };

@@ -50,6 +50,12 @@ const renderDetail = (item) => {
   breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
   document.head.appendChild(breadcrumbScript);
 
+  const faqSchema = ON.generateFAQSchema(item);
+  const faqScript = document.createElement("script");
+  faqScript.type = "application/ld+json";
+  faqScript.textContent = JSON.stringify(faqSchema);
+  document.head.appendChild(faqScript);
+
   detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, categoryPage, item.type);
   
   // Load related opportunities
