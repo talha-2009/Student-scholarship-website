@@ -53,6 +53,17 @@ const renderDetail = (item) => {
   document.head.appendChild(faqScript);
 
   detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, "/internships.html", "internship");
+
+  // Inject AdSense ad after main content (before related opportunities)
+  const relatedDiv = document.getElementById('related-opportunities');
+  if (relatedDiv) {
+    const adEl = document.createElement('div');
+    adEl.className = 'ad-container';
+    adEl.setAttribute('aria-label', 'Advertisement');
+    adEl.innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4182963907868663" data-ad-slot="3000000002" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+    relatedDiv.parentNode.insertBefore(adEl, relatedDiv);
+    if (window.adsbygoogle) { ON.pushAd('.ad-container ins.adsbygoogle'); }
+  }
   
   // Load related opportunities
   ON.renderRelatedOpportunities(item);

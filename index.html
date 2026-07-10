@@ -165,6 +165,16 @@
         </div>
       </section>
 
+      <!-- AdSense: responsive ad below hero -->
+      <div class="ad-container ad-container--hero" aria-label="Advertisement">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4182963907868663"
+             data-ad-slot="1000000001"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+
       <section class="section-pad live-opportunities" id="opportunities" aria-labelledby="opportunities-title">
         <div class="container">
           <!-- SEO: Added contextual internal links to section description -->
@@ -522,6 +532,16 @@
       </section>
     </main>
 
+    <!-- AdSense: responsive ad above footer -->
+    <div class="ad-container ad-container--footer" aria-label="Advertisement">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4182963907868663"
+           data-ad-slot="1000000002"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
     <!-- SEO: Footer with contentinfo role for landmark navigation -->
     <footer class="site-footer" role="contentinfo">
       <div class="container footer-grid">
@@ -554,5 +574,12 @@
     <script src="/utils.js" defer></script>
     <script src="/script.js" defer></script>
     <script src="/nav.js"></script>
+    <script>
+      // Initialize manual AdSense ad units
+      if (window.adsbygoogle) {
+        ON.pushAd('.ad-container--hero ins.adsbygoogle');
+        ON.pushAd('.ad-container--footer ins.adsbygoogle');
+      }
+    </script>
   </body>
 </html>

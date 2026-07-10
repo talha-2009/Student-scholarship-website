@@ -151,6 +151,28 @@ window.OpportunityNest = window.OpportunityNest || {};
     return html.join("\n");
   };
 
+  // AdSense: Safe ad initialization — prevents duplicate pushes
+  ON.pushAd = (selector) => {
+    try {
+      const el = document.querySelector(selector);
+      if (el && !el.dataset.pushed) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        el.dataset.pushed = "true";
+      }
+    } catch (e) { /* AdSense may throw on empty slots — safe to ignore */ }
+  };
+
+  // AdSense: Generate a responsive ad unit HTML string
+  ON.renderAdUnit = (slot) => `
+    <div class="ad-container" aria-label="Advertisement">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4182963907868663"
+           data-ad-slot="${slot || ''}"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>`;
+
   ON.DEADLINE_STATUS_LABELS = {
     rolling: "Rolling / Ongoing",
     varies: "Varies by Institution",
