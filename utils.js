@@ -698,6 +698,22 @@ window.OpportunityNest = window.OpportunityNest || {};
         { question: `Is this scholarship fully funded?`, answer: `Yes, it covers full tuition and fees, a monthly living stipend, summer funding, and travel to the final interview stage.` }
       ],
       imageAlt: (keyword) => `${keyword} official scholarship banner`
+    },
+    {
+      id: "franz-werfel-fellowship",
+      test: (title) => /Franz\s+Werfel/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Franz Werfel Fellowship", item),
+      titleDescriptor: "Austria",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded residency at the University of Vienna for German-language writers, scholars, and translators. Explore eligibility and deadlines.`,
+      intro: (keyword, item) => `The ${keyword} is a prestigious fully funded residency fellowship hosted by the University of Vienna's Franz Werfel Centre for German-language and literary studies. Open to established and emerging writers, translators, and scholars working in or on German-language literature, the fellowship provides a dedicated period of focused research, writing, or translation in Vienna. Fellows receive a monthly stipend, accommodation support, and access to the university's library and academic networks. The programme honours the legacy of Franz Werfel, the Austrian novelist and playwright known for his commitment to intellectual freedom and humanitarian values. Applicants should demonstrate a strong body of work in German-language literary scholarship, creative writing, or translation, along with a clear project proposal for their time in Vienna. The fellowship is highly competitive and attracts candidates from across Europe and beyond.`,
+      h2: (keyword) => `Eligibility for This Austrian Literary Fellowship`,
+      faqs: (keyword) => [
+        { question: `What is the ${keyword}?`, answer: `The ${keyword} is a fully funded residency at the University of Vienna supporting writers, translators, and scholars working in German-language literature and literary studies.` },
+        { question: `Who can apply for this fellowship?`, answer: `Established and emerging writers, translators, and academics with a strong record in German-language literary work and a clear project proposal for their residency period.` },
+        { question: `Is this fellowship fully funded?`, answer: `Yes, it covers a monthly stipend, accommodation support, and access to the University of Vienna's library and academic resources.` }
+      ],
+      imageAlt: (keyword) => `${keyword} official fellowship banner`
     }
   ];
 
@@ -1038,6 +1054,33 @@ window.OpportunityNest = window.OpportunityNest || {};
         <div class="faq-list">
           ${faqHtml}
         </div>
+      </section>
+
+      <section class="detail-section" aria-labelledby="documents-heading">
+        <h2 id="documents-heading">Required Documents</h2>
+        <p>Most applications for ${ON.escapeHtml(item.type || categoryType).toLowerCase()} opportunities require the following documents. Check the official programme website for the exact list, as requirements vary by provider.</p>
+        <ul>
+          <li><strong>Valid passport or national ID</strong> — ensure it remains valid for the full programme duration</li>
+          <li><strong>Curriculum Vitae (CV) or resume</strong> — highlight relevant academic, professional, and volunteer experience</li>
+          <li><strong>Academic transcripts and certificates</strong> — from all post-secondary institutions attended</li>
+          <li><strong>Motivation letter or statement of purpose</strong> — tailored to this specific programme, explaining your goals and fit</li>
+          <li><strong>Letters of recommendation</strong> — typically two or three, from professors or professional supervisors</li>
+          <li><strong>Proof of language proficiency</strong> — such as TOEFL, IELTS, or equivalent, if the programme is taught in a language other than your native tongue</li>
+          <li><strong>Research proposal or project outline</strong> — required for research-focused fellowships and competitions</li>
+          <li><strong>Passport-sized photographs</strong> — following the specifications stated in the application guidelines</li>
+        </ul>
+      </section>
+
+      <section class="detail-section" aria-labelledby="mistakes-heading">
+        <h2 id="mistakes-heading">Common Application Mistakes to Avoid</h2>
+        <p>Applying for competitive opportunities requires attention to detail. Avoid these frequent errors to strengthen your candidacy:</p>
+        <ol>
+          <li><strong>Missing the deadline</strong> — submit your application at least 48 hours before the stated cutoff to account for technical issues or time-zone differences.</li>
+          <li><strong>Submitting incomplete forms</strong> — double-check that every required field is filled and all supporting documents are uploaded before clicking submit.</li>
+          <li><strong>Writing a generic motivation letter</strong> — tailor your statement to this specific programme. Mention why you chose it, how it aligns with your goals, and what unique perspective you bring.</li>
+          <li><strong>Ignoring eligibility criteria</strong> — carefully review nationality, age, degree level, and field-of-study requirements before investing time in an application you may not qualify for.</li>
+          <li><strong>Skipping reference preparation</strong> — give your recommenders at least three to four weeks' notice and share your CV and motivation letter so they can write informed, specific references.</li>
+        </ol>
       </section>
 
       <section class="detail-section" aria-labelledby="apply-heading">
