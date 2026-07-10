@@ -1,15 +1,10 @@
 /**
  * Shared helpers for OpportunityNest — Supabase client, formatting, rendering, pagination.
- * 
- * SECURITY NOTE: For production, replace the hardcoded values below with environment variables:
- * - Use Vercel Environment Variables or similar
- * - Never commit real keys to version control
- * - The current values are placeholders - replace with your actual Supabase credentials
  */
 window.OpportunityNest = window.OpportunityNest || {};
 
 (function (ON) {
-  // Configuration - Replace these with environment variables in production
+  // Configuration
   ON.SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
   ON.SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
   ON.SITE_URL = "https://www.opportunitynest.org";
@@ -73,6 +68,88 @@ window.OpportunityNest = window.OpportunityNest || {};
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+
+  // Convert markdown-style descriptions to safe structured HTML.
+  ON.renderMarkdown = (text = "") => {
+    if (!text || !String(text).trim()) return "";
+    const raw = String(text);
+
+    // Split into blocks separated by blank lines.
+    const blocks = raw.split(/\n{2,}/);
+    const html = [];
+    let inList = false;
+    let listType = "";
+
+    const inlineFormat = (line) => {
+      return line
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
+        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    };
+
+    for (const block of blocks) {
+      const trimmed = block.trim();
+      if (!trimmed) continue;
+
+      // Check for headings.
+      const h2Match = trimmed.match(/^##\s+(.+)$/m);
+      if (h2Match && trimmed.split("\n").length === 1) {
+        if (inList) { html.push(listType === "ul" ? "</ul>" : "</ol>"); inList = false; }
+        html.push(`<h3>${inlineFormat(ON.escapeHtml(h2Match[1]))}</h3>`);
+        continue;
+      }
+
+      const h3Match = trimmed.match(/^###\s+(.+)$/m);
+      if (h3Match && trimmed.split("\n").length === 1) {
+        if (inList) { html.push(listType === "ul" ? "</ul>" : "</ol>"); inList = false; }
+        html.push(`<h4>${inlineFormat(ON.escapeHtml(h3Match[1]))}</h4>`);
+        continue;
+      }
+
+      // Check for list blocks.
+      const lines = trimmed.split("\n");
+      const isUnordered = lines.every(l => /^[-*]\s+/.test(l.trim()) || !l.trim());
+      const isOrdered = lines.every(l => /^\d+\.\s+/.test(l.trim()) || !l.trim());
+
+      if (isUnordered && lines.some(l => /^[-*]\s+/.test(l.trim()))) {
+        if (inList && listType !== "ul") { html.push("</ol>"); }
+        if (!inList) { html.push("<ul>"); inList = true; listType = "ul"; }
+        lines.forEach(l => {
+          const m = l.trim().match(/^[-*]\s+(.+)$/);
+          if (m) html.push(`<li>${inlineFormat(ON.escapeHtml(m[1]))}</li>`);
+        });
+        continue;
+      }
+
+      if (isOrdered && lines.some(l => /^\d+\.\s+/.test(l.trim()))) {
+        if (inList && listType !== "ol") { html.push("</ul>"); }
+        if (!inList) { html.push("<ol>"); inList = true; listType = "ol"; }
+        lines.forEach(l => {
+          const m = l.trim().match(/^\d+\.\s+(.+)$/);
+          if (m) html.push(`<li>${inlineFormat(ON.escapeHtml(m[1]))}</li>`);
+        });
+        continue;
+      }
+
+      // Close any open list.
+      if (inList) { html.push(listType === "ul" ? "</ul>" : "</ol>"); inList = false; }
+
+      // Regular paragraph — may contain inline headings.
+      const paragraphLines = lines.map(l => {
+        const t = l.trim();
+        if (!t) return "";
+        return inlineFormat(ON.escapeHtml(t));
+      }).filter(Boolean).join("<br>");
+
+      if (paragraphLines) {
+        html.push(`<p>${paragraphLines}</p>`);
+      }
+    }
+
+    if (inList) { html.push(listType === "ul" ? "</ul>" : "</ol>"); }
+
+    return html.join("\n");
+  };
 
   ON.DEADLINE_STATUS_LABELS = {
     rolling: "Rolling / Ongoing",
@@ -265,14 +342,18 @@ window.OpportunityNest = window.OpportunityNest || {};
     const applyTarget = item.link && item.link !== "#" ? ' target="_blank" rel="noopener noreferrer"' : "";
     const urgency = ON.getDeadlineUrgency(item);
     const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
+    const isExpired = urgency === "expired";
+    const expiredBadge = isExpired ? '<span class="badge badge-expired" aria-label="This opportunity has expired">Expired</span>' : "";
     const whoCanApply = item.level || "Open to eligible applicants";
     const fieldLabel = item.field && item.field !== "All Fields" ? item.field : "Multiple Fields";
+    const cardClass = isExpired ? "live-opportunity-card compact-card card-expired" : "live-opportunity-card compact-card";
 
     return `
-      <article class="live-opportunity-card compact-card">
+      <article class="${cardClass}">
         ${ON.getCountryLandmark(item.country)}
         <div class="opportunity-card-top">
           <p class="card-kicker">${ON.escapeHtml(item.type)} - ${ON.getCountryFlag(item.country)} ${ON.escapeHtml(item.country)}</p>
+          ${expiredBadge}
           <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
         </div>
         <h3>${ON.escapeHtml(item.title)}</h3>
@@ -489,27 +570,6 @@ window.OpportunityNest = window.OpportunityNest || {};
     }
   };
 
-  ON.generateAIContent = async (opportunityId) => {
-    try {
-      const client = ON.getSupabaseClient();
-      
-      // Call the Edge Function
-      const { data, error } = await client.functions.invoke('generate-ai-content', {
-        body: { opportunityId }
-      });
-
-      if (error) {
-        console.error('Error generating AI content:', error);
-        throw error;
-      }
-
-      console.log('AI content generated successfully:', data);
-      return data;
-    } catch (error) {
-      console.error('Error in generateAIContent:', error);
-      throw error;
-    }
-  };
   // SEO: append the current year to a base keyword when the title does not already include a year.
   ON.resolveKeywordYear = (baseKeyword, item) => {
     const title = String(item.title || "");
@@ -888,6 +948,10 @@ window.OpportunityNest = window.OpportunityNest || {};
         <p>${ON.escapeHtml(faq.answer)}</p>
       </details>
     `).join("");
+    const isExpired = urgencyClass.includes("deadline-expired");
+    const expiredBanner = isExpired
+      ? '<div class="expired-notice" role="alert"><strong>This opportunity has expired.</strong> The deadline has passed. Please check the official website for updated dates or future intakes.</div>'
+      : "";
 
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
@@ -897,6 +961,8 @@ window.OpportunityNest = window.OpportunityNest || {};
         <span aria-hidden="true">/</span>
         <span aria-current="page">${ON.escapeHtml(item.title)}</span>
       </nav>
+
+      ${expiredBanner}
 
       <div class="detail-header">
         <div class="detail-badges">
@@ -915,7 +981,7 @@ window.OpportunityNest = window.OpportunityNest || {};
 
       <section class="detail-section" aria-labelledby="overview-heading">
         <h2 id="overview-heading">${ON.escapeHtml(keywordH2)}</h2>
-        <p>${ON.escapeHtml(item.description)}</p>
+        <div class="detail-description">${ON.renderMarkdown(item.description)}</div>
         ${organization ? `<p><strong>Organization:</strong> ${ON.escapeHtml(organization)}</p>` : ""}
       </section>
 

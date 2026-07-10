@@ -1686,6 +1686,32 @@ details p {
   color: #1e40af;
 }
 
+.badge-expired {
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+.card-expired {
+  opacity: 0.75;
+}
+
+.card-expired h3 {
+  text-decoration: line-through;
+  text-decoration-color: #9ca3af;
+}
+
+.expired-notice {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 /* Detail page sections */
 .detail-section {
   margin: 2rem 0;
@@ -1706,6 +1732,47 @@ details p {
   line-height: 1.75;
   color: #374151;
   margin-bottom: 1.5rem;
+}
+
+/* Rendered markdown description */
+.detail-description {
+  line-height: 1.75;
+  color: #374151;
+}
+
+.detail-description h3 {
+  font-size: 1.15rem;
+  color: #111827;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.detail-description h4 {
+  font-size: 1.05rem;
+  color: #1f2937;
+  margin: 1.25rem 0 0.4rem;
+}
+
+.detail-description p {
+  margin: 0.75rem 0;
+}
+
+.detail-description ul,
+.detail-description ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.detail-description li {
+  margin: 0.35rem 0;
+}
+
+.detail-description a {
+  color: #0f766e;
+  text-decoration: underline;
+}
+
+.detail-description a:hover {
+  color: #0d6560;
 }
 
 /* Related opportunities section */

@@ -34,11 +34,8 @@
     <meta name="twitter:title" content="Opportunity Details | OpportunityNest">
     <meta name="twitter:description" content="View opportunity details and apply through the official program website.">
     <meta name="twitter:image" content="https://www.opportunitynest.org/og-image.png">
-    <!-- Google Analytics - Replace G-WKVTVB0X4X with your actual Measurement ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-WKVTVB0X4X');
     </script>
@@ -66,7 +63,7 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" aria-label="Primary navigation">
+    <header class="site-header" role="banner" aria-label="Primary navigation">
       <nav class="nav container">
         <a class="brand" href="/" aria-label="OpportunityNest.org home">
           <span class="brand-mark" aria-hidden="true">ON</span>
@@ -83,6 +80,8 @@
           <a href="/scholarships.html">Scholarships</a>
           <a href="/internships.html">Internships</a>
           <a href="/fellowships.html">Fellowships</a>
+          <a href="/competitions.html">Competitions</a>
+          <a href="/?type=Youth+Program#opportunities">Youth Programs</a>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
@@ -90,7 +89,7 @@
       </nav>
     </header>
 
-    <main id="main">
+    <main id="main" role="main">
       <section class="page-hero section-pad">
         <div class="container">
           <div class="status-message" id="detail-status" role="status">Loading opportunity details...</div>
@@ -105,7 +104,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="/">

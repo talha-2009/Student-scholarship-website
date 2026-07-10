@@ -33,11 +33,8 @@
     <meta name="twitter:title" content="FAQ | OpportunityNest">
     <meta name="twitter:description" content="Frequently asked questions about OpportunityNest scholarships, internships, and fellowships.">
     <meta name="twitter:image" content="https://www.opportunitynest.org/og-image.png">
-    <!-- Google Analytics - Replace G-WKVTVB0X4X with your actual Measurement ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-WKVTVB0X4X');
     </script>
@@ -54,8 +51,38 @@
           },
           {
             "@type": "Question",
+            "name": "Is OpportunityNest affiliated with any government or university?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. OpportunityNest is independent. Applicants apply directly through each program's official website." }
+          },
+          {
+            "@type": "Question",
             "name": "Is it free to use OpportunityNest?",
             "acceptedAnswer": { "@type": "Answer", "text": "Yes. Browsing and searching OpportunityNest is completely free." }
+          },
+          {
+            "@type": "Question",
+            "name": "How often is the scholarship data updated?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Listings are reviewed periodically. Users should confirm deadlines on the official link before applying." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I apply for a scholarship I find here?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Each listing has a \"View & Apply\" link to the official page. OpportunityNest does not process applications." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why don't I see scholarships for my country?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The site features opportunities from multiple countries. New countries are added as listings become available." }
+          },
+          {
+            "@type": "Question",
+            "name": "I found an error in a listing - what do I do?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Please report it through the Contact page on OpportunityNest.org." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you guarantee I will get the scholarship if I apply?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. OpportunityNest only provides information. Decisions are made by the scholarship provider or university." }
           }
         ]
       }
@@ -63,7 +90,7 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" aria-label="Primary navigation">
+    <header class="site-header" role="banner" aria-label="Primary navigation">
       <nav class="nav container">
         <a class="brand" href="/" aria-label="OpportunityNest.org home">
           <span class="brand-mark" aria-hidden="true">ON</span>
@@ -80,6 +107,8 @@
           <a href="/scholarships.html">Scholarships</a>
           <a href="/internships.html">Internships</a>
           <a href="/fellowships.html">Fellowships</a>
+          <a href="/competitions.html">Competitions</a>
+          <a href="/?type=Youth+Program#opportunities">Youth Programs</a>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
@@ -87,7 +116,7 @@
       </nav>
     </header>
 
-    <main id="main">
+    <main id="main" role="main">
       <section class="page-hero section-pad">
         <div class="container narrow">
           <p class="eyebrow">Help</p>
@@ -130,7 +159,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
       <div class="container footer-grid">
         <div>
           <a class="brand" href="/">

@@ -26,7 +26,7 @@ const renderDetail = (item) => {
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) canonical.setAttribute("href", pageUrl);
 
-  const urgency = ON.getDeadlineUrgency(item.deadline);
+  const urgency = ON.getDeadlineUrgency(item);
   const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
 
   const structuredData = ON.generateStructuredData(item, pageUrl);

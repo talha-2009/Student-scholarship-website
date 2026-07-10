@@ -161,11 +161,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/scholarships.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/scholarships/australia/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -231,11 +226,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/internships.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/internships/austria/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -254,11 +244,6 @@
     <loc>https://www.opportunitynest.org/internships/switzerland/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/fellowships.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.opportunitynest.org/fellowships/austria/</loc>

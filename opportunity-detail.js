@@ -30,7 +30,7 @@ const renderDetail = (item) => {
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) canonical.setAttribute("href", pageUrl);
 
-  const urgency = ON.getDeadlineUrgency(item.deadline);
+  const urgency = ON.getDeadlineUrgency(item);
   const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";
   const categoryPage = getCategoryPage(item.type);
 
@@ -80,7 +80,7 @@ const loadOpportunityDetail = async () => {
   setStatus("Loading opportunity details...");
 
   try {
-    const query = ON.getSupabaseClient().from("opportunities").select("id,type,funding,title,country,level,field,deadline,description,link,created_at,slug");
+    const query = ON.getSupabaseClient().from("opportunities").select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,created_at,slug");
     if (opportunitySlug) {
       query.eq("slug", opportunitySlug);
     } else {
