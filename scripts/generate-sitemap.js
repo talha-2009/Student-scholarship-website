@@ -42,7 +42,7 @@ const staticPages = [
 ];
 
 async function fetchOpportunities() {
-  const url = `${SUPABASE_URL}/rest/v1/opportunities?select=id,title,country,slug,created_at&order=created_at.desc`;
+  const url = `${SUPABASE_URL}/rest/v1/opportunities?select=id,title,country,slug,created_at,deadline,deadline_status&order=created_at.desc`;
   const response = await fetch(url, {
     headers: {
       apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -54,7 +54,12 @@ async function fetchOpportunities() {
     throw new Error(`Supabase request failed: ${response.status} ${await response.text()}`);
   }
 
-  return response.json();
+  const rows = await response.json();
+  return rows.filter((item) => {
+    if (item.deadline_status && item.deadline_status !== "fixed") return true;
+    if (!item.deadline || !/^\d{4}-\d{2}-\d{2}$/.test(item.deadline)) return true;
+    return item.deadline >= new Date().toISOString().slice(0, 10);
+  });
 }
 
 function xmlEscape(value) {

@@ -61,16 +61,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/country/rotating-global/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/country/switzerland/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/country/south-africa/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -116,12 +106,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/country/australia/</loc>
+    <loc>https://www.opportunitynest.org/country/switzerland/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/country/global-eu-consortium/</loc>
+    <loc>https://www.opportunitynest.org/country/australia/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -151,16 +141,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/country/global-commonwealth-nations/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/country/global-eu-partner-countries/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/scholarships/australia/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -182,11 +162,6 @@
   </url>
   <url>
     <loc>https://www.opportunitynest.org/scholarships/global/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/scholarships/global-eu-consortium/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -241,6 +216,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.opportunitynest.org/internships/india/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.opportunitynest.org/internships/switzerland/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -291,28 +271,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/competitions.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/competitions/global/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/competitions/rotating-global/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/competitions/switzerland/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.opportunitynest.org/opportunity/global-undergraduate-awards/</loc>
     <lastmod>2026-07-05T06:35:13.740459+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/opportunity/international-chemistry-olympiad/</loc>
+    <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -325,18 +296,6 @@
   <url>
     <loc>https://www.opportunitynest.org/opportunity/unesco-japan-prize-esd/</loc>
     <lastmod>2026-07-05T06:35:13.740459+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/opportunity/international-chemistry-olympiad/</loc>
-    <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/opportunity/the-geneva-challenge-advancing-development-goals-contest-switzerland/</loc>
-    <lastmod>2026-06-23T09:03:23.271874+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -521,12 +480,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/opportunity/daad-wise-research-internship-germany/</loc>
-    <lastmod>2026-06-21T15:21:21.935664+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/opportunity/max-planck-research-internship-germany/</loc>
     <lastmod>2026-06-24T09:35:23.025226+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -601,6 +554,12 @@
   <url>
     <loc>https://www.opportunitynest.org/opportunity/united-nations-internship-programme-global/</loc>
     <lastmod>2026-06-22T13:16:05.30423+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/opportunity/daad-wise-research-internship-germany/</loc>
+    <lastmod>2026-06-21T15:21:21.935664+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -749,6 +708,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.opportunitynest.org/opportunity/erasmus-mundus-joint-master/</loc>
+    <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.opportunitynest.org/opportunity/jjwbgsp-scholarship/</loc>
     <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -757,12 +722,6 @@
   <url>
     <loc>https://www.opportunitynest.org/opportunity/mastercard-foundation-scholars-program-global/</loc>
     <lastmod>2026-06-26T07:27:52.168846+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.opportunitynest.org/opportunity/erasmus-mundus-joint-master/</loc>
-    <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -899,14 +858,84 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.opportunitynest.org/opportunity/erasmus-plus-youth-exchange/</loc>
+    <lastmod>2026-07-05T06:34:13.437826+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.opportunitynest.org/opportunity/commonwealth-global-youth-ambassador/</loc>
     <lastmod>2026-07-05T06:36:54.223488+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/opportunity/erasmus-plus-youth-exchange/</loc>
-    <lastmod>2026-07-05T06:34:13.437826+00:00</lastmod>
+    <loc>https://www.opportunitynest.org/scholarships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/internships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/fellowships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/grants/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/exchange-programs/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/scholarships/usa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/scholarships/uk/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/scholarships/italy/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/scholarships/turkey/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/fully-funded-scholarships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/partially-funded-scholarships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/undergraduate-scholarships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/masters-scholarships/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/phd-scholarships/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

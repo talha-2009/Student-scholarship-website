@@ -99,10 +99,14 @@ const loadOpportunityDetail = async () => {
     }
     const { data, error } = await query.single();
 
+    if (error && error.code === "PGRST116") {
+      window.location.replace("/404.html");
+      return;
+    }
     if (error) throw error;
     const item = ON.normalizeOpportunity(data);
 
-    if (!item) {
+    if (!item || ON.getDeadlineUrgency(item) === "expired") {
       window.location.replace("/404.html");
       return;
     }

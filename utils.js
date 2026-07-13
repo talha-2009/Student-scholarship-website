@@ -217,6 +217,8 @@ window.OpportunityNest = window.OpportunityNest || {};
     return "normal";
   };
 
+  ON.isActiveOpportunity = (item) => ON.getDeadlineUrgency(item) !== "expired";
+
   ON.getSupabaseClient = () => {
     if (!window.supabase) {
       throw new Error("Supabase client could not be loaded. Check the CDN script tag.");
@@ -240,7 +242,8 @@ window.OpportunityNest = window.OpportunityNest || {};
       throw new Error(`Opportunity request failed with status ${response.status}.`);
     }
 
-    return response.json();
+    const rows = await response.json();
+    return rows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
   };
 
   ON.cleanSlug = (value = "") => {

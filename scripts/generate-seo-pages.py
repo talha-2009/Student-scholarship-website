@@ -32,6 +32,237 @@ PAGE_TYPES = {
     "Competition": "Competitions"
 }
 
+LANDING_PAGE_DEFINITIONS = [
+    {
+        "path": "scholarships",
+        "label": "Scholarships",
+        "h1": "Scholarships for International Students",
+        "facet": "category",
+        "match": {"type": "Scholarship"},
+        "audience": "undergraduate, master's, doctoral, and other eligible applicants comparing academic funding",
+        "benefits": "tuition support, living-cost assistance, mentoring, research access, and international study experience",
+        "eligibility": "degree level, nationality or residence rules, academic record, language evidence, and provider-specific conditions",
+        "process": "shortlist realistic awards, confirm the official deadline, prepare transcripts and references, and submit through the provider",
+        "tips": "prioritize programs that fit your level and field, verify every requirement early, and keep a reusable document checklist"
+    },
+    {
+        "path": "internships",
+        "label": "Internships",
+        "h1": "International Internships",
+        "facet": "category",
+        "match": {"type": "Internship"},
+        "audience": "students, recent graduates, and early-career applicants seeking practical experience",
+        "benefits": "workplace exposure, professional references, technical practice, cross-cultural experience, and clearer career direction",
+        "eligibility": "enrolment or graduation status, field of study, work authorization, language ability, and availability dates",
+        "process": "review the role scope, tailor a concise CV, prepare evidence of relevant skills, and apply on the employer's official site",
+        "tips": "compare paid and unpaid terms carefully, check location requirements, and explain how your experience fits the role"
+    },
+    {
+        "path": "fellowships",
+        "label": "Fellowships",
+        "h1": "International Fellowships",
+        "facet": "category",
+        "match": {"type": "Fellowship"},
+        "audience": "researchers, professionals, graduate students, and emerging leaders seeking focused development",
+        "benefits": "funded research time, mentorship, specialist networks, leadership development, and access to host institutions",
+        "eligibility": "career stage, research or professional focus, geographic eligibility, proposed outcomes, and recommendation requirements",
+        "process": "study the fellowship mission, shape a specific proposal, identify strong referees, and follow the official submission sequence",
+        "tips": "show a clear public or professional impact, use evidence rather than broad claims, and leave time for referee coordination"
+    },
+    {
+        "path": "grants",
+        "label": "Research Grants",
+        "h1": "International Research Grants",
+        "facet": "category",
+        "match": {"type": "Research Grant"},
+        "audience": "doctoral candidates, postdoctoral researchers, faculty members, and independent specialists",
+        "benefits": "research costs, travel, fieldwork, equipment, publication support, and collaboration with established institutions",
+        "eligibility": "research stage, institutional affiliation, eligible costs, geographic scope, methodology, and project timetable",
+        "process": "confirm the grant remit, develop a costed work plan, secure institutional approvals, and submit the required proposal package",
+        "tips": "make the research question precise, connect every cost to an activity, and write outcomes that reviewers can evaluate"
+    },
+    {
+        "path": "exchange-programs",
+        "label": "Exchange Programs",
+        "h1": "International Exchange Programs",
+        "facet": "category",
+        "match": {"type": "Exchange Program"},
+        "audience": "students and young professionals looking for structured academic or cultural exchange",
+        "benefits": "international study, language practice, intercultural learning, academic credit, and durable global connections",
+        "eligibility": "current enrolment, age or study level, home-institution approval, language preparation, and destination requirements",
+        "process": "check nomination rules, discuss credit recognition, prepare travel documents, and apply through the named official channel",
+        "tips": "plan for visas and insurance early, compare what funding covers, and confirm how the exchange fits your academic plan"
+    },
+    {
+        "path": "scholarships/germany",
+        "label": "Scholarships in Germany",
+        "h1": "Scholarships in Germany",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "Germany"},
+        "audience": "international students considering German universities, research institutes, and public scholarship foundations",
+        "benefits": "access to strong research environments, low-cost public education, monthly support, and international academic networks",
+        "eligibility": "academic merit, program admission, language level, development goals, and the rules of each German funder",
+        "process": "identify the correct degree and intake, check DAAD or provider instructions, prepare certified records, and apply officially",
+        "tips": "distinguish university admission from scholarship admission, verify German-language expectations, and budget for uncovered costs"
+    },
+    {
+        "path": "scholarships/canada",
+        "label": "Scholarships in Canada",
+        "h1": "Scholarships in Canada",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "Canada"},
+        "audience": "international applicants exploring undergraduate, graduate, and research study across Canadian institutions",
+        "benefits": "tuition awards, research supervision, multicultural campuses, professional networks, and post-study career exposure",
+        "eligibility": "admission status, academic performance, leadership evidence, research fit, citizenship rules, and institutional nomination",
+        "process": "compare university and external awards, confirm nomination steps, prepare academic evidence, and meet the earliest deadline",
+        "tips": "review provincial and university costs separately, contact potential research supervisors appropriately, and track time zones"
+    },
+    {
+        "path": "scholarships/japan",
+        "label": "Scholarships in Japan",
+        "h1": "Scholarships in Japan",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "Japan"},
+        "audience": "students interested in Japanese universities, technology, research, language, and regional academic experience",
+        "benefits": "tuition support, monthly stipends, research placements, language learning, and access to advanced academic facilities",
+        "eligibility": "nationality, age, academic level, health, language readiness, embassy or university nomination, and study plans",
+        "process": "choose the correct MEXT or institutional route, read the annual guidelines, prepare examinations if required, and apply officially",
+        "tips": "use the newest application guidelines, confirm whether embassy and university routes differ, and prepare a focused study plan"
+    },
+    {
+        "path": "scholarships/usa",
+        "label": "Scholarships in the USA",
+        "h1": "Scholarships in the USA",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "United States"},
+        "audience": "international students comparing American undergraduate, graduate, professional, and research opportunities",
+        "benefits": "broad program choice, specialist facilities, alumni networks, assistantships, and merit- or need-based financial support",
+        "eligibility": "admission requirements, academic results, testing, financial documentation, leadership, and award-specific nationality rules",
+        "process": "build a balanced institution list, separate admission and funding deadlines, prepare essays and references, and apply officially",
+        "tips": "calculate the full cost of attendance, look for renewable funding terms, and avoid relying on a single highly competitive award"
+    },
+    {
+        "path": "scholarships/uk",
+        "label": "Scholarships in the UK",
+        "h1": "Scholarships in the UK",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "United Kingdom"},
+        "audience": "international students targeting British undergraduate, master's, doctoral, and leadership programs",
+        "benefits": "globally recognized qualifications, concentrated master's programs, leadership networks, and tuition or living-cost support",
+        "eligibility": "academic achievement, course admission, nationality, work or leadership experience, English ability, and return commitments",
+        "process": "choose eligible courses, check scholarship and university timelines, develop evidence-based essays, and submit through official portals",
+        "tips": "read regional eligibility carefully, explain long-term impact concretely, and plan for costs not covered by partial awards"
+    },
+    {
+        "path": "scholarships/italy",
+        "label": "Scholarships in Italy",
+        "h1": "Scholarships in Italy",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "Italy"},
+        "audience": "international students researching Italian universities, regional awards, and government-supported study",
+        "benefits": "tuition reductions, regional assistance, cultural and language experience, and access to European academic networks",
+        "eligibility": "program admission, income or merit criteria, nationality, document legalization, language, and regional residence rules",
+        "process": "identify the university and region, check official calls, prepare translated financial and academic records, and apply directly",
+        "tips": "watch regional deadlines, verify document legalization requirements, and distinguish admission, visa, and funding procedures"
+    },
+    {
+        "path": "scholarships/turkey",
+        "label": "Scholarships in Turkey",
+        "h1": "Scholarships in Turkey",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "Turkey"},
+        "audience": "international applicants considering Turkish universities and government-funded degree programs",
+        "benefits": "tuition coverage, accommodation or stipends, language preparation, diverse degree options, and regional cultural experience",
+        "eligibility": "nationality, age, previous qualification, academic performance, program level, and annual government criteria",
+        "process": "review the current official call, select suitable programs, prepare accurate records and motivation, and submit in the portal",
+        "tips": "use only the official application system, confirm age limits for your level, and keep scans and translations ready before opening day"
+    },
+    {
+        "path": "scholarships/china",
+        "label": "Scholarships in China",
+        "h1": "Scholarships in China",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "China"},
+        "audience": "international students interested in Chinese universities, research programs, and government scholarship routes",
+        "benefits": "tuition support, campus accommodation, stipends, language study, and access to large research and industry ecosystems",
+        "eligibility": "degree level, nationality, health, academic background, language, pre-admission documents, and scholarship category",
+        "process": "choose eligible institutions, confirm agency numbers and nomination rules, prepare notarized documents, and apply officially",
+        "tips": "check whether university and CSC submissions are both required, verify program language, and avoid unauthorized application agents"
+    },
+    {
+        "path": "scholarships/south-korea",
+        "label": "Scholarships in South Korea",
+        "h1": "Scholarships in South Korea",
+        "facet": "country",
+        "match": {"type": "Scholarship", "country": "South Korea"},
+        "audience": "international students seeking Korean government or university funding for degree study and research",
+        "benefits": "tuition, stipends, language training, travel support, high-quality research facilities, and international campus experience",
+        "eligibility": "nationality, age, degree history, grades, health, language preparation, and embassy- or university-track conditions",
+        "process": "select the appropriate GKS or university route, follow the annual notice, prepare certified records, and submit to the named office",
+        "tips": "do not apply through conflicting tracks, study institution quotas, and allow time for apostilles and recommendation letters"
+    },
+    {
+        "path": "fully-funded-scholarships",
+        "label": "Fully Funded Scholarships",
+        "h1": "Fully Funded Scholarships",
+        "facet": "funding",
+        "match": {"type": "Scholarship", "funding": "Fully Funded"},
+        "audience": "students who need comprehensive support for tuition and major study-related costs",
+        "benefits": "full tuition and, depending on the provider, stipends, travel, insurance, accommodation, or research expenses",
+        "eligibility": "strong academic preparation, program fit, nationality or destination rules, leadership, and complete supporting evidence",
+        "process": "verify what fully funded means for each award, compare covered costs, prepare competitive documents, and apply officially",
+        "tips": "read the funding breakdown rather than relying on the label, budget for exclusions, and apply to several well-matched programs"
+    },
+    {
+        "path": "partially-funded-scholarships",
+        "label": "Partially Funded Scholarships",
+        "h1": "Partially Funded Scholarships",
+        "facet": "funding",
+        "match": {"type": "Scholarship", "funding": "Partially Funded"},
+        "audience": "students combining merit awards with savings, sponsorship, assistantships, or other financial support",
+        "benefits": "reduced tuition, fee waivers, one-time grants, living allowances, or targeted support for specific study expenses",
+        "eligibility": "academic merit, course admission, financial circumstances where relevant, nationality, and award-specific conditions",
+        "process": "calculate the remaining funding gap, confirm whether awards can be combined, prepare evidence, and submit through the provider",
+        "tips": "compare net cost after the award, check renewal conditions, and secure a realistic plan for expenses the scholarship excludes"
+    },
+    {
+        "path": "undergraduate-scholarships",
+        "label": "Undergraduate Scholarships",
+        "h1": "Undergraduate Scholarships",
+        "facet": "level",
+        "match": {"type": "Scholarship", "level": "undergraduate"},
+        "audience": "school leavers and current bachelor's students seeking first-degree financial support",
+        "benefits": "tuition awards, living support, mentoring, campus opportunities, and reduced financial pressure during a first degree",
+        "eligibility": "secondary-school results, admission, age or graduation year, extracurricular evidence, language, and nationality",
+        "process": "research admission and scholarship requirements together, prepare school records and essays, and meet the earliest deadline",
+        "tips": "start before your final school year ends, ask for references early, and compare renewable awards across the full degree duration"
+    },
+    {
+        "path": "masters-scholarships",
+        "label": "Master's Scholarships",
+        "h1": "Master's Scholarships",
+        "facet": "level",
+        "match": {"type": "Scholarship", "level": "masters"},
+        "audience": "graduates seeking taught or research master's funding at universities worldwide",
+        "benefits": "advanced specialization, tuition support, professional networks, research access, and accelerated career development",
+        "eligibility": "a relevant bachelor's degree, grades, program admission, work or research experience, language, and nationality rules",
+        "process": "define your academic goal, shortlist suitable courses and awards, tailor your statement, and coordinate references and transcripts",
+        "tips": "explain why the specific program matters, connect prior experience to future outcomes, and distinguish scholarship from admission dates"
+    },
+    {
+        "path": "phd-scholarships",
+        "label": "PhD Scholarships",
+        "h1": "PhD Scholarships",
+        "facet": "level",
+        "match": {"type": "Scholarship", "level": "phd"},
+        "audience": "prospective doctoral researchers looking for funded study, supervision, and research environments",
+        "benefits": "tuition coverage, stipends, research costs, conference access, expert supervision, and long-term academic networks",
+        "eligibility": "graduate preparation, research fit, proposal quality, supervisor availability, publications where relevant, and language",
+        "process": "refine a viable research question, identify appropriate supervisors, prepare a proposal and references, and follow official instructions",
+        "tips": "contact supervisors with a focused message, align the proposal with available expertise, and verify stipend duration and conditions"
+    }
+]
+
 FAQ_TEMPLATES = {
     "Scholarship": [
         {
@@ -107,9 +338,9 @@ FAQ_TEMPLATES = {
 
 HEADER_NAV = [
     ("/", "Home"),
-    ("/scholarships.html", "Scholarships"),
-    ("/internships.html", "Internships"),
-    ("/fellowships.html", "Fellowships"),
+    ("/scholarships/", "Scholarships"),
+    ("/internships/", "Internships"),
+    ("/fellowships/", "Fellowships"),
     ("/competitions.html", "Competitions"),
     ("/about.html", "About"),
     ("/contact.html", "Contact"),
@@ -141,7 +372,19 @@ def fetch_opportunities() -> list[dict]:
         "Accept": "application/json"
     })
     with urllib.request.urlopen(request, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
+        rows = json.loads(response.read().decode("utf-8"))
+    today = datetime.utcnow().date().isoformat()
+    return [row for row in rows if is_active_opportunity(row, today)]
+
+
+def is_active_opportunity(item: dict, today: str) -> bool:
+    status = (item.get("deadline_status") or "fixed").strip()
+    deadline = (item.get("deadline") or "").strip()
+    if status != "fixed":
+        return True
+    if not re.match(r"^\d{4}-\d{2}-\d{2}$", deadline):
+        return True
+    return deadline >= today
 
 
 def build_breadcrumbs(items: list[tuple[str, str | None]]) -> str:
@@ -174,9 +417,9 @@ def build_footer() -> str:
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <a href="/scholarships/">Scholarships</a>
+          <a href="/internships/">Internships</a>
+          <a href="/fellowships/">Fellowships</a>
           <a href="/competitions.html">Competitions</a>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
@@ -361,6 +604,238 @@ def build_faq_schema(faqs: list[dict]) -> str:
             for faq in faqs
         ]
     }, indent=2)
+
+
+def matches_landing_page(item: dict, definition: dict) -> bool:
+    match = definition["match"]
+    if match.get("type") and item.get("type") != match["type"]:
+        return False
+    if match.get("country") and item.get("country") != match["country"]:
+        return False
+    if match.get("funding") and item.get("funding") != match["funding"]:
+        return False
+    if match.get("level"):
+        level = (item.get("level") or "").lower()
+        level_match = match["level"]
+        if level_match == "undergraduate" and not any(term in level for term in ("undergraduate", "bachelor")):
+            return False
+        if level_match == "masters" and "master" not in level:
+            return False
+        if level_match == "phd" and "phd" not in level:
+            return False
+    return True
+
+
+def build_landing_copy(definition: dict, item_count: int) -> list[tuple[str, str]]:
+    label = definition["label"]
+    audience = definition["audience"]
+    benefits = definition["benefits"]
+    eligibility = definition["eligibility"]
+    process = definition["process"]
+    tips = definition["tips"]
+    availability = (
+        f"This collection currently contains {item_count} matching opportunities from the OpportunityNest database."
+        if item_count
+        else "No matching opportunity is active in the OpportunityNest database today, but this guide remains useful while the next verified call is being added."
+    )
+
+    sections = [
+        (
+            f"Understanding {label}",
+            f"{label} can make an international education or career plan more achievable when the program fits the applicant rather than merely sounding attractive. "
+            f"This page is designed for {audience}. {availability} Each listing is connected to an official provider page and presents the country, funding position, "
+            f"study or career level, field, and deadline in a consistent format. That structure helps applicants compare realistic options without opening dozens of "
+            f"unrelated search results or relying on copied announcements whose dates may no longer be current."
+        ),
+        (
+            "What applicants can gain",
+            f"The practical value of these opportunities may include {benefits}. The exact package always depends on the provider, and a prominent funding label should "
+            f"never replace a careful reading of the award terms. Applicants should check whether tuition, travel, insurance, accommodation, research expenses, or family "
+            f"costs are included. OpportunityNest keeps these details visible beside each listing so that students can compare the likely value of an award and decide "
+            f"which official pages deserve a deeper review."
+        ),
+        (
+            "Who should apply",
+            f"A strong candidate normally matches the published eligibility before investing time in an application. Important checks include {eligibility}. Requirements "
+            f"can change between annual calls, even when a program name stays the same, so the official source remains authoritative. Read both the eligibility section "
+            f"and any exclusions, then confirm that your qualification dates, location, experience, and proposed start period fit. A well-matched application is usually "
+            f"more competitive than a generic submission sent to every available program."
+        ),
+        (
+            "A reliable application process",
+            f"A sensible workflow is to {process}. Create a calendar that records the deadline in the provider's time zone and works backward through references, document "
+            f"certification, language tests, essays, and institutional nominations. Save the final eligibility page and application instructions for your records. Where "
+            f"admission and funding use separate systems, complete both processes and do not assume one submission automatically covers the other. Never pay an unofficial "
+            f"agent for a form that the provider makes available directly."
+        ),
+        (
+            "How to improve your shortlist",
+            f"For a more focused search, {tips}. Compare the purpose of each program with your own academic or professional direction, then rank options by fit, funding, "
+            f"deadline, and preparation time. Keep a base CV and document folder, but tailor motivation statements to the selection criteria of each provider. Clear "
+            f"examples of achievement, responsibility, research, or community contribution are stronger than broad claims. Always proofread names, dates, degree titles, "
+            f"and uploaded files before the final submission."
+        ),
+        (
+            "How OpportunityNest helps",
+            f"OpportunityNest organizes {label.lower()} into searchable, related collections so applicants can move between category, country, funding, degree-level, and "
+            f"individual opportunity pages without losing context. Use the links below to broaden or narrow your search, and return to an opportunity page when you need "
+            f"its specific deadline and official application route. Listings are a discovery aid, not a substitute for provider rules. Confirm the latest details on the "
+            f"official website before applying, especially when a deadline, funding amount, or eligibility condition affects your decision."
+        )
+    ]
+
+    word_count = sum(len(re.findall(r"\b[\w'-]+\b", text)) for _, text in sections)
+    if not 300 <= word_count <= 600:
+        raise ValueError(f"Landing copy for {definition['path']} has {word_count} words; expected 300-600.")
+    return sections
+
+
+def build_landing_faqs(definition: dict, item_count: int) -> list[dict]:
+    label = definition["label"]
+    return [
+        {
+            "q": f"How many {label.lower()} are currently listed?",
+            "a": f"OpportunityNest currently shows {item_count} matching listings on this page. The count changes when verified opportunities are added or archived."
+        },
+        {
+            "q": f"How are {label.lower()} selected for this page?",
+            "a": "Listings are filtered from the OpportunityNest database using the page's category, country, funding, or degree-level criteria."
+        },
+        {
+            "q": "Where should I submit my application?",
+            "a": "Use the official application link on the relevant opportunity page and follow the provider's current instructions."
+        },
+        {
+            "q": "How should I confirm a deadline or funding package?",
+            "a": "Treat the official provider page as authoritative because deadlines, eligibility, and funding terms can change between application cycles."
+        }
+    ]
+
+
+def build_landing_page(definition: dict, items: list[dict], definitions: list[dict]) -> str:
+    page_url = f"{SITE_URL}/{definition['path']}/"
+    title = f"{definition['h1']} | OpportunityNest"
+    description = (
+        f"Explore {definition['label'].lower()} with verified deadlines, eligibility, funding details, "
+        "and direct links to official application pages."
+    )
+    copy_sections = build_landing_copy(definition, len(items))
+    faqs = build_landing_faqs(definition, len(items))
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (definition["label"], None)])
+    related = [entry for entry in definitions if entry["path"] != definition["path"]]
+    related_links = "".join(
+        f'<li><a href="/{entry["path"]}/">{escape_html(entry["label"])}</a></li>'
+        for entry in related
+    )
+    faq_html = "".join(
+        f'<details><summary>{escape_html(faq["q"])}</summary><p>{escape_html(faq["a"])}</p></details>'
+        for faq in faqs
+    )
+    listing_html = (
+        '<div class="opportunity-results grid three">' + "".join(build_opportunity_card(item) for item in items) + "</div>"
+        if items
+        else (
+            '<div class="empty-state"><p>No matching opportunities are active right now.</p>'
+            '<p>Explore the related collections below or check again after the next database update.</p></div>'
+        )
+    )
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": definition["label"], "item": page_url}
+        ]
+    }
+    item_list_schema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "url": page_url,
+        "numberOfItems": len(items),
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": index,
+                "url": f"{SITE_URL}/opportunity/{slugify(item['slug'])}/",
+                "name": item["title"]
+            }
+            for index, item in enumerate(items, 1)
+        ]
+    }
+    collection_schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": definition["label"],
+        "description": description,
+        "url": page_url,
+        "mainEntity": item_list_schema
+    }
+    site_schema = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": f"{SITE_URL}/#organization",
+                "name": "OpportunityNest.org",
+                "url": f"{SITE_URL}/"
+            },
+            {
+                "@type": "WebSite",
+                "@id": f"{SITE_URL}/#website",
+                "name": "OpportunityNest.org",
+                "url": f"{SITE_URL}/",
+                "publisher": {"@id": f"{SITE_URL}/#organization"},
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": f"{SITE_URL}/?q={{search_term_string}}#opportunities",
+                    "query-input": "required name=search_term_string"
+                }
+            }
+        ]
+    }
+    additional_head = "".join(
+        f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>'
+        for schema in (breadcrumb_schema, item_list_schema, collection_schema, site_schema, json.loads(build_faq_schema(faqs)))
+    )
+
+    return page_head(
+        title,
+        description,
+        page_url,
+        definition["label"],
+        additional_head=additional_head
+    ) + (
+        "\n      <section class=\"page-hero section-pad\">\n"
+        f"        <div class=\"container\">{breadcrumbs}\n"
+        "          <div class=\"section-heading\">\n"
+        f"            <p class=\"eyebrow\">{escape_html(definition['facet'].title())} guide</p>\n"
+        f"            <h1>{escape_html(definition['h1'])}</h1>\n"
+        f"            <p>{escape_html(copy_sections[0][1])}</p>\n"
+        "          </div>\n"
+        f"          <div class=\"opportunity-status\"><p>{len(items)} matching listings.</p></div>\n"
+        "        </div>\n"
+        "      </section>\n"
+        "      <section class=\"section-pad\">\n"
+        "        <div class=\"container\">\n"
+        f"          {''.join(f'<section class=\"final-panel\"><h2>{escape_html(heading)}</h2><p>{escape_html(text)}</p></section>' for heading, text in copy_sections[1:])}\n"
+        "          <section class=\"final-panel\">\n"
+        f"            <h2>Current {escape_html(definition['label'].lower())}</h2>\n"
+        f"            {listing_html}\n"
+        "          </section>\n"
+        "          <section class=\"faq-list\" aria-labelledby=\"landing-faq-title\">\n"
+        "            <div class=\"section-heading\">\n"
+        "              <p class=\"eyebrow\">Questions</p>\n"
+        "              <h2 id=\"landing-faq-title\">Frequently asked questions</h2>\n"
+        "            </div>\n"
+        f"            {faq_html}\n"
+        "          </section>\n"
+        "          <nav class=\"related-links\" aria-label=\"Related opportunity collections\">\n"
+        "            <p><strong>Explore related pages:</strong></p>\n"
+        f"            <ul>{related_links}</ul>\n"
+        "          </nav>\n"
+        "        </div>\n"
+        "      </section>\n"
+    ) + page_footer()
 
 
 def write_page(path: pathlib.Path, content: str):
@@ -627,7 +1102,11 @@ def build_page_url(path: str) -> str:
 
 def build_sitemap(entries: list[dict]) -> str:
     lines = ["<?xml version=\"1.0\" encoding=\"UTF-8\"?>", '<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">']
+    seen_urls = set()
     for entry in entries:
+        if entry["loc"] in seen_urls:
+            continue
+        seen_urls.add(entry["loc"])
         lines.append("  <url>")
         lines.append(f"    <loc>{escape_html(entry['loc'])}</loc>")
         if entry.get('lastmod'):
@@ -716,6 +1195,14 @@ def main():
         content = build_opportunity_page(item, related, previous_item, next_item)
         write_page(path, content)
 
+    # Generate reusable clean-URL SEO landing pages after legacy pages so matching
+    # country routes receive the richer canonical implementation.
+    for definition in LANDING_PAGE_DEFINITIONS:
+        landing_items = [item for item in opportunities if matches_landing_page(item, definition)]
+        landing_items.sort(key=lambda item: (item.get("deadline") or "9999", item.get("title") or ""))
+        landing_path = ROOT / definition["path"] / "index.html"
+        write_page(landing_path, build_landing_page(definition, landing_items, LANDING_PAGE_DEFINITIONS))
+
     # Generate sitemap
     sitemap_entries = [
         {"loc": f"{SITE_URL}/", "changefreq": "daily", "priority": 1.0},
@@ -739,6 +1226,12 @@ def main():
     for item in opportunities:
         if item.get('slug'):
             sitemap_entries.append({"loc": f"{SITE_URL}/opportunity/{slugify(item['slug'])}/", "lastmod": (item.get('created_at') or datetime.utcnow().date().isoformat()), "changefreq": "weekly", "priority": 0.8})
+    for definition in LANDING_PAGE_DEFINITIONS:
+        sitemap_entries.append({
+            "loc": f"{SITE_URL}/{definition['path']}/",
+            "changefreq": "weekly",
+            "priority": 0.9 if definition["facet"] == "category" else 0.8
+        })
     sitemap = build_sitemap(sitemap_entries)
     write_page(ROOT / "sitemap.xml", sitemap)
 

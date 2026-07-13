@@ -1,0 +1,433 @@
+{
+  "currentDate": "2026-07-13",
+  "totalScanned": 100,
+  "totalExpiredDeleted": 0,
+  "totalActiveRemaining": 99,
+  "skippedManualReview": [
+    {
+      "id": "8bb8601f-91a9-4e38-ac6f-c90d02779247",
+      "title": "Joint Japan World Bank Graduate Scholarship Program",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "ee841fb3-566d-4e43-a9e4-bcebc485e883",
+      "title": "Global Youth Ambassador Programme (Commonwealth)",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "978eff89-98a4-4455-b237-29a1d392dc3f",
+      "title": "Boren Awards for International Study",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "15aec52f-5627-4537-8898-0fb3c4a905ea",
+      "title": "Fulbright-Nehru Master's Fellowship",
+      "country": "India",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "b69df5ad-c0af-4768-88d5-8671919c1f10",
+      "title": "Salzburg Global Seminar Fellowship",
+      "country": "Austria",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "3157fcc1-7782-4fbf-845f-0b261a11f64c",
+      "title": "Harvard Model United Nations (HMUN)",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "86964054-7a88-4480-902e-3c961eb89123",
+      "title": "UNESCO Associate Expert Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "91722938-2954-400e-a31d-d03c6e9af8cd",
+      "title": "Erasmus Mundus Joint Master Degrees",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "17f7cc23-722e-4d95-9e6a-0e70f3014b5f",
+      "title": "International Chemistry Olympiad (IChO)",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "89cd7422-0f01-452a-862e-dcdd5bcc2510",
+      "title": "Rotary Peace Fellowship",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "1c04919a-b787-40ca-9cf8-aad6cee7d12a",
+      "title": "Clinton Global Initiative University (CGI U)",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "b20dd14a-f7c1-479d-a393-68c4c72ed909",
+      "title": "WHO Internship Programme",
+      "country": "Switzerland",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "3e106416-1dd7-411e-99be-c35efe8793b1",
+      "title": "Amnesty International Human Rights Internship",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "676dd4bf-d31f-4827-ab1a-25d39d373b66",
+      "title": "Peace Corps Volunteer Program",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "7a721e75-fd17-4d86-808a-bd0b96575a3e",
+      "title": "Stanford Data Science Summer Institute",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "6105821e-0fa8-48de-9742-e65088051552",
+      "title": "AIESEC Global Volunteer",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "a08c9d97-b98c-4174-822e-2a52cf997d8e",
+      "title": "Global Undergraduate Awards",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "6cfc0387-5635-4cd4-89ff-793eb5db7ad9",
+      "title": "Duke of Edinburgh International Award",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "fdf74452-9ca7-49b3-a45d-b2754b0cb3e8",
+      "title": "Harvard WorldMUN",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "17657f58-66d3-4c1d-93ac-5d127856133c",
+      "title": "UNESCO-Japan Prize on Education for Sustainable Development",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "c8c1ea1b-ea78-460d-94ff-64adcfb55871",
+      "title": "Cambridge Summer School Programme",
+      "country": "United Kingdom",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "d3423783-fac0-4b88-b6e1-f383eb7c052c",
+      "title": "Fulbright Foreign Language Teaching Assistant Program",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "09c4cd4d-75a9-48a2-8113-cb30645c273b",
+      "title": "World Economic Forum Global Shapers Community",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "56861334-2b72-47cc-8a9c-f389b1fb95ce",
+      "title": "National Geographic Explorer Grant",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "3047208a-6702-4d35-b1ac-cc166ce55415",
+      "title": "Erasmus+ Youth Exchange",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "0c67c4dd-60f2-468b-bf68-c69ad11c5bf6",
+      "title": "UN Volunteers Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "65b10d76-1a87-4487-9bb4-5704d7b80e8a",
+      "title": "Global Undergraduate Exchange Program (Global UGRAD)",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "2284d31f-be6e-4ca0-8a11-4b63cd643d09",
+      "title": "Google Software Engineering Internship",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "79b08472-0710-4a42-8fcd-64f86877e7cf",
+      "title": "Harvard Pre-College Summer Program",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "fd49c011-9ddf-43ff-941e-e745ca2c14c2",
+      "title": "MIT Research Science Institute (RSI)",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "9efcea16-afac-4954-a847-f1214448b51a",
+      "title": "TED Fellows Program",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "7d08bae0-65e5-45d6-9bea-63f48839137d",
+      "title": "Microsoft Explore Internship Program",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "7f042e8b-56c0-4401-9485-85ba34d7e736",
+      "title": "MEXT Japanese Government Scholarship",
+      "country": "Japan",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "ebae1f84-3bc3-4138-94f0-868e337ee1c3",
+      "title": "Asian Institute of Technology Scholarship",
+      "country": "Thailand",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "7f8e0553-3ff4-4d18-b3d3-7b518ed18135",
+      "title": "Teagasc Walsh Scholars Programme",
+      "country": "Ireland",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "625db0f6-e4f3-49a9-b4ba-391e6ff3b158",
+      "title": "Mastercard Foundation Scholars Program",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "3ae7dbaf-9d32-4097-a6ef-8adeb89a3450",
+      "title": "Commonwealth PhD Scholarship (Least Developed Countries and Fragile States)",
+      "country": "United Kingdom",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "d42d5ed1-9ad4-4469-91de-883f4407d278",
+      "title": "IAESTE Internship Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "d0a91f6b-ddbb-4680-a858-cce3b31d7d1e",
+      "title": "Yenching Scholarship (Yenching Academy of Peking University)",
+      "country": "China",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "930b9e03-62ed-4461-ab5a-01943c839f3c",
+      "title": "Hubert H. Humphrey Fellowship Program",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "7638bf30-3ef2-443b-b339-72753989ca5d",
+      "title": "Global Korea Scholarship (GKS)",
+      "country": "South Korea",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "e496f7bd-7766-4f10-8b77-1f2f56b162ba",
+      "title": "Fulbright Foreign Student Program",
+      "country": "United States",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "a07af1d3-f1af-494c-a20b-1b0394e59f4a",
+      "title": "Max Planck Research Internship",
+      "country": "Germany",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "c0ee6ded-1e12-4e93-aa88-98cf483ee35e",
+      "title": "AIESEC Global Talent",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "400ef36e-0247-4001-bad6-a9f586092932",
+      "title": "Max Planck School Matter to Life URO",
+      "country": "Germany",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "f42d9dfe-4380-403d-96b4-a3455a912aaa",
+      "title": "UNICEF Internship Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "5ed3b6ff-9eaf-4eed-88b2-1159b2b78897",
+      "title": "CERN Administrative Student Programme",
+      "country": "Switzerland",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "a27b5588-6cb8-49d3-83c1-aa65048c7515",
+      "title": "CERN Technical Student Programme",
+      "country": "Switzerland",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "2249521a-c47e-4a51-aa9e-54da3bf3cc55",
+      "title": "UNCTAD Internship Programme",
+      "country": "Switzerland",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "4e87610d-c240-49e7-b300-976b09a7fd9a",
+      "title": "Urban Studies Foundation International Fellowships",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "31a1d520-c0de-4042-a82f-055e4b5c6d5e",
+      "title": "BMW Group Change Maker Fellowship",
+      "country": "Germany",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "1ff24c63-9c36-4971-a9d6-e9f639966fd0",
+      "title": "UNIDO Internship Programme",
+      "country": "Austria",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "753f3fb5-7c28-4690-b0d3-48fc13a4ca45",
+      "title": "UNDP Internship Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "cc90c347-195e-4e0a-86a8-1ef1674ccb29",
+      "title": "U.S. Commercial Service Germany Internship",
+      "country": "Germany",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "46d208e6-8426-4fb5-ac1a-208df791d962",
+      "title": "United Nations Internship Programme",
+      "country": "Global",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "9c3abf54-7949-4ce2-a3aa-4318fd204895",
+      "title": "Deutschlandstipendium",
+      "country": "Germany",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "9b0b1bcd-004c-4de9-b768-5f8ff07a61fe",
+      "title": "University of British Columbia International Scholars Program",
+      "country": "Canada",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "575fa8ad-74e3-4a52-b4e1-1457fd3a8374",
+      "title": "University of Western Australia Global Excellence Scholarship",
+      "country": "Australia",
+      "deadline": null,
+      "reason": "missing deadline"
+    },
+    {
+      "id": "3f988f89-9d87-47aa-9e5c-5b210bb04df6",
+      "title": "GREAT Scholarships",
+      "country": "United Kingdom",
+      "deadline": null,
+      "reason": "missing deadline"
+    }
+  ],
+  "deletedOpportunities": [],
+  "removedGeneratedPages": [],
+  "errors": [
+    {
+      "message": "Set SUPABASE_SERVICE_ROLE_KEY before running cleanup so expired rows can be deleted safely."
+    }
+  ],
+  "regeneration": {
+    "ok": true,
+    "command": "py scripts/generate-seo-pages.py",
+    "stdout": "Wrote scholarships.html\r\nWrote internships.html\r\nWrote fellowships.html\r\nWrote competitions.html\r\nWrote country\\global\\index.html\r\nWrote country\\south-africa\\index.html\r\nWrote country\\united-states\\index.html\r\nWrote country\\canada\\index.html\r\nWrote country\\austria\\index.html\r\nWrote country\\china\\index.html\r\nWrote country\\germany\\index.html\r\nWrote country\\india\\index.html\r\nWrote country\\ireland\\index.html\r\nWrote country\\singapore\\index.html\r\nWrote country\\switzerland\\index.html\r\nWrote country\\australia\\index.html\r\nWrote country\\japan\\index.html\r\nWrote country\\netherlands\\index.html\r\nWrote country\\south-korea\\index.html\r\nWrote country\\thailand\\index.html\r\nWrote country\\united-kingdom\\index.html\r\nWrote scholarships\\australia\\index.html\r\nWrote scholarships\\canada\\index.html\r\nWrote scholarships\\china\\index.html\r\nWrote scholarships\\germany\\index.html\r\nWrote scholarships\\global\\index.html\r\nWrote scholarships\\japan\\index.html\r\nWrote scholarships\\netherlands\\index.html\r\nWrote scholarships\\south-korea\\index.html\r\nWrote scholarships\\switzerland\\index.html\r\nWrote scholarships\\thailand\\index.html\r\nWrote scholarships\\united-kingdom\\index.html\r\nWrote scholarships\\united-states\\index.html\r\nWrote internships\\austria\\index.html\r\nWrote internships\\germany\\index.html\r\nWrote internships\\global\\index.html\r\nWrote internships\\india\\index.html\r\nWrote internships\\switzerland\\index.html\r\nWrote fellowships\\austria\\index.html\r\nWrote fellowships\\canada\\index.html\r\nWrote fellowships\\china\\index.html\r\nWrote fellowships\\germany\\index.html\r\nWrote fellowships\\global\\index.html\r\nWrote fellowships\\india\\index.html\r\nWrote fellowships\\ireland\\index.html\r\nWrote fellowships\\singapore\\index.html\r\nWrote fellowships\\united-states\\index.html\r\nWrote competitions\\global\\index.html\r\nWrote opportunity\\global-undergraduate-awards\\index.html\r\nWrote opportunity\\international-chemistry-olympiad\\index.html\r\nWrote opportunity\\james-dyson-award\\index.html\r\nWrote opportunity\\unesco-japan-prize-esd\\index.html\r\nWrote opportunity\\harvard-worldmun\\index.html\r\nWrote opportunity\\one-young-world-leading-scholarship\\index.html\r\nWrote opportunity\\clinton-global-initiative-university\\index.html\r\nWrote opportunity\\harvard-model-united-nations\\index.html\r\nWrote opportunity\\fulbright-canada-all-disciplines-scholar-award-canada\\index.html\r\nWrote opportunity\\fulbright-canada-traditional-student-award-canada\\index.html\r\nWrote opportunity\\killam-fellowships-program\\index.html\r\nWrote opportunity\\fulbright-flta-program\\index.html\r\nWrote opportunity\\fulbright-foreign-student-program-united-states\\index.html\r\nWrote opportunity\\global-ugrad-exchange-program\\index.html\r\nWrote opportunity\\yseali-academic-fellows-program\\index.html\r\nWrote opportunity\\franz-werfel-fellowship-austria\\index.html\r\nWrote opportunity\\richard-plaschka-fellowship-austria\\index.html\r\nWrote opportunity\\salzburg-global-seminar-fellowship\\index.html\r\nWrote opportunity\\mccall-macbain-scholarship-canada\\index.html\r\nWrote opportunity\\schwarzman-scholars-program-china\\index.html\r\nWrote opportunity\\bmw-group-change-maker-fellowship-germany\\index.html\r\nWrote opportunity\\daad-research-grants-for-doctoral-candidates-and-young-academics-germany\\index.html\r\nWrote opportunity\\imu-simons-research-fellowship-program-for-developing-countries-global\\index.html\r\nWrote opportunity\\rotary-peace-fellowship\\index.html\r\nWrote opportunity\\ted-fellows-program\\index.html\r\nWrote opportunity\\unesco-associate-expert-programme\\index.html\r\nWrote opportunity\\urban-studies-foundation-international-fellowships-global\\index.html\r\nWrote opportunity\\wef-global-shapers-community\\index.html\r\nWrote opportunity\\fulbright-nehru-masters-fellowship\\index.html\r\nWrote opportunity\\teagasc-walsh-scholars-programme-ireland\\index.html\r\nWrote opportunity\\astar-research-attachment-programme-arap-singapore\\index.html\r\nWrote opportunity\\hubert-h-humphrey-fellowship-program-united-states\\index.html\r\nWrote opportunity\\knight-hennessy-scholars-program-united-states\\index.html\r\nWrote opportunity\\unido-internship-programme-austria\\index.html\r\nWrote opportunity\\max-planck-research-internship-germany\\index.html\r\nWrote opportunity\\max-planck-school-matter-to-life-uro-germany\\index.html\r\nWrote opportunity\\rise-germany-internship-germany\\index.html\r\nWrote opportunity\\rise-professional-internship-germany\\index.html\r\nWrote opportunity\\us-commercial-service-germany-internship-germany\\index.html\r\nWrote opportunity\\aiesec-global-talent-global\\index.html\r\nWrote opportunity\\amnesty-international-human-rights-internship\\index.html\r\nWrote opportunity\\google-software-engineering-internship\\index.html\r\nWrote opportunity\\iaeste-internship-programme-global\\index.html\r\nWrote opportunity\\microsoft-explore-internship-program\\index.html\r\nWrote opportunity\\undp-internship-programme-global\\index.html\r\nWrote opportunity\\unicef-internship-programme-global\\index.html\r\nWrote opportunity\\united-nations-internship-programme-global\\index.html\r\nWrote opportunity\\daad-wise-research-internship-germany\\index.html\r\nWrote opportunity\\cern-administrative-student-programme-switzerland\\index.html\r\nWrote opportunity\\cern-technical-student-programme-switzerland\\index.html\r\nWrote opportunity\\unctad-internship-programme-switzerland\\index.html\r\nWrote opportunity\\who-internship-programme\\index.html\r\nWrote opportunity\\daad-binational-doctoral-grant\\index.html\r\nWrote opportunity\\national-geographic-explorer-grant\\index.html\r\nWrote opportunity\\anu-phd-scholarship-australia\\index.html\r\nWrote opportunity\\monash-graduate-scholarship-research-training-program-australia\\index.html\r\nWrote opportunity\\university-of-melbourne-graduate-scholarship-australia\\index.html\r\nWrote opportunity\\university-of-sydney-international-scholarships-australia\\index.html\r\nWrote opportunity\\university-of-western-australia-global-excellence-scholarship-australia\\index.html\r\nWrote opportunity\\pierre-elliott-trudeau-foundation-doctoral-scholarship-canada\\index.html\r\nWrote opportunity\\university-of-british-columbia-international-scholars-program-canada\\index.html\r\nWrote opportunity\\university-of-toronto-lester-b-pearson-international-scholarship-canada\\index.html\r\nWrote opportunity\\uestc-chinese-government-scholarship-china\\index.html\r\nWrote opportunity\\yenching-scholarship-yenching-academy-of-peking-university-china\\index.html\r\nWrote opportunity\\daad-epos-development-related-postgraduate-courses-germany\\index.html\r\nWrote opportunity\\daad-helmut-schmidt-programme-public-policy-and-good-governance-germany\\index.html\r\nWrote opportunity\\daad-stem-study-scholarship-germany\\index.html\r\nWrote opportunity\\daad-study-scholarship-germany\\index.html\r\nWrote opportunity\\deutschlandstipendium-germany\\index.html\r\nWrote opportunity\\heinrich-bll-foundation-scholarship-germany\\index.html\r\nWrote opportunity\\konrad-adenauer-stiftung-kas-international-scholarship-programme-germany\\index.html\r\nWrote opportunity\\rosa-luxemburg-stiftung-scholarship-germany\\index.html\r\nWrote opportunity\\erasmus-mundus-joint-master\\index.html\r\nWrote opportunity\\jjwbgsp-scholarship\\index.html\r\nWrote opportunity\\mastercard-foundation-scholars-program-global\\index.html\r\nWrote opportunity\\mext-japanese-government-scholarship-japan\\index.html\r\nWrote opportunity\\leiden-university-excellence-scholarship-netherlands\\index.html\r\nWrote opportunity\\global-korea-scholarship-gks-south-korea\\index.html\r\nWrote opportunity\\eth-zurich-excellence-scholarship-and-opportunity-programme-switzerland\\index.html\r\nWrote opportunity\\asian-institute-of-technology-scholarship-thailand\\index.html\r\nWrote opportunity\\chevening-scholarship-united-kingdom\\index.html\r\nWrote opportunity\\commonwealth-phd-scholarship-least-developed-countries-united-kingdom\\index.html\r\nWrote opportunity\\ellison-undergraduate-scholars-program-united-kingdom\\index.html\r\nWrote opportunity\\great-scholarships-united-kingdom\\index.html\r\nWrote opportunity\\gates-cambridge-scholarship\\index.html\r\nWrote opportunity\\marshall-scholarship-united-kingdom\\index.html\r\nWrote opportunity\\rhodes-scholarship-united-kingdom\\index.html\r\nWrote opportunity\\weidenfeld-hoffmann-scholarships-and-leadership-programme-united-kingdom\\index.html\r\nWrote opportunity\\boren-awards-international-study\\index.html\r\nWrote opportunity\\cambridge-summer-school-programme\\index.html\r\nWrote opportunity\\harvard-pre-college-summer-program\\index.html\r\nWrote opportunity\\mit-research-science-institute\\index.html\r\nWrote opportunity\\stanford-data-science-summer-institute\\index.html\r\nWrote opportunity\\aiesec-global-volunteer\\index.html\r\nWrote opportunity\\peace-corps-volunteer-program\\index.html\r\nWrote opportunity\\un-volunteers-programme\\index.html\r\nWrote opportunity\\duke-of-edinburgh-international-award\\index.html\r\nWrote opportunity\\erasmus-plus-youth-exchange\\index.html\r\nWrote opportunity\\commonwealth-global-youth-ambassador\\index.html\r\nWrote scholarships\\index.html\r\nWrote internships\\index.html\r\nWrote fellowships\\index.html\r\nWrote grants\\index.html\r\nWrote exchange-programs\\index.html\r\nWrote scholarships\\germany\\index.html\r\nWrote scholarships\\canada\\index.html\r\nWrote scholarships\\japan\\index.html\r\nWrote scholarships\\usa\\index.html\r\nWrote scholarships\\uk\\index.html\r\nWrote scholarships\\italy\\index.html\r\nWrote scholarships\\turkey\\index.html\r\nWrote scholarships\\china\\index.html\r\nWrote scholarships\\south-korea\\index.html\r\nWrote fully-funded-scholarships\\index.html\r\nWrote partially-funded-scholarships\\index.html\r\nWrote undergraduate-scholarships\\index.html\r\nWrote masters-scholarships\\index.html\r\nWrote phd-scholarships\\index.html\r\nWrote sitemap.xml\r\nGenerated SEO pages and sitemap."
+  }
+}
