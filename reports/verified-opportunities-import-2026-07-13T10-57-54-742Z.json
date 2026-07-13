@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-07-13T10:57:54.740Z",
+  "totalOpportunitiesVerified": 3,
+  "totalOpportunitiesSuccessfullyAdded": 0,
+  "countriesCovered": [],
+  "opportunityTypesCovered": [],
+  "skipped": [
+    {
+      "title": "OECD Internship Programme",
+      "reason": "seo_description must be 145-165 characters, got 134"
+    },
+    {
+      "title": "FAO Internship Programme",
+      "reason": "seo_description must be 145-165 characters, got 131"
+    },
+    {
+      "title": "World Food Programme Internship Programme",
+      "reason": "seo_description must be 145-165 characters, got 136"
+    }
+  ],
+  "linkChecks": [],
+  "dryRunCandidates": 0
+}

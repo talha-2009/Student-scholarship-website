@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-07-13T10:58:48.803Z",
+  "totalOpportunitiesVerified": 3,
+  "totalOpportunitiesSuccessfullyAdded": 0,
+  "countriesCovered": [
+    "Global"
+  ],
+  "opportunityTypesCovered": [
+    "Internship"
+  ],
+  "skipped": [
+    {
+      "title": "OECD Internship Programme",
+      "reason": "broken official link or source (403/403)"
+    }
+  ],
+  "linkChecks": [
+    {
+      "url": "https://www.oecd.org/en/about/careers/internships.html",
+      "ok": false,
+      "status": 403,
+      "finalUrl": "https://www.oecd.org/en/about/careers/internships.html"
+    },
+    {
+      "url": "https://www.oecd.org/en/about/careers/internships.html",
+      "ok": false,
+      "status": 403,
+      "finalUrl": "https://www.oecd.org/en/about/careers/internships.html"
+    },
+    {
+      "url": "https://www.fao.org/employment/young-talent-programme/internship-programme/en",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "https://www.fao.org/employment/young-talent-programme/internship-programme/en"
+    },
+    {
+      "url": "https://www.fao.org/employment/young-talent-programme/internship-programme/en",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "https://www.fao.org/employment/young-talent-programme/internship-programme/en"
+    },
+    {
+      "url": "https://www.wfp.org/careers/contract-types",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "https://www.wfp.org/careers/contract-types"
+    },
+    {
+      "url": "https://www.wfp.org/careers/contract-types",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "https://www.wfp.org/careers/contract-types"
+    }
+  ],
+  "dryRunCandidates": 2
+}
