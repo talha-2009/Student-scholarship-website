@@ -64,10 +64,10 @@ if (navToggle && navMenu) {
 // Load the Chatling chatbot widget on every page (idempotent).
 (function initChatling() {
   if (window.chtlConfig && window.chtlConfig.chatbotId) return; // already loaded
-  window.chtlConfig = { chatbotId: "9241558149" };
+  window.chtlConfig = { chatbotId: "5432956922" };
   var s = document.createElement("script");
   s.async = true;
-  s.setAttribute("data-id", "9241558149");
+  s.setAttribute("data-id", "5432956922");
   s.id = "chtl-script";
   s.type = "text/javascript";
   s.src = "https://chatling.ai/js/embed.js";
