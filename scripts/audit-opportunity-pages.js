@@ -6,9 +6,9 @@ const ROOT = path.join(__dirname, "..");
 const SITE_URL = "https://www.opportunitynest.org";
 const NAV_TARGETS = new Map([
   ["Home", "/"],
-  ["Scholarships", "/scholarships.html"],
-  ["Internships", "/internships.html"],
-  ["Fellowships", "/fellowships.html"],
+  ["Scholarships", "/scholarships/"],
+  ["Internships", "/internships/"],
+  ["Fellowships", "/fellowships/"],
   ["Competitions", "/competitions.html"],
   ["About", "/about.html"],
   ["Contact", "/contact.html"],

@@ -365,15 +365,35 @@ def escape_html(value: str) -> str:
 
 
 def fetch_opportunities() -> list[dict]:
-    query = "?select=id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at"
-    request = urllib.request.Request(f"{SUPABASE_URL}{query}", headers={
-        "apikey": SUPABASE_KEY,
-        "Authorization": f"Bearer {SUPABASE_KEY}",
-        "Accept": "application/json"
-    })
-    with urllib.request.urlopen(request, timeout=30) as response:
-        rows = json.loads(response.read().decode("utf-8"))
+    local_path = ROOT / "data" / "verified-opportunities-2026.json"
+    local_rows = json.loads(local_path.read_text(encoding="utf-8")) if local_path.exists() else []
+    rows = []
+    try:
+        query = "?select=*"
+        request = urllib.request.Request(f"{SUPABASE_URL}{query}", headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+            "Accept": "application/json"
+        })
+        with urllib.request.urlopen(request, timeout=30) as response:
+            rows = json.loads(response.read().decode("utf-8"))
+    except Exception as error:
+        if not local_rows:
+            raise
+        print(f"Supabase fetch failed; using local verified dataset only: {error}")
+
+    if local_rows:
+        by_slug = {row.get("slug"): row for row in rows if row.get("slug")}
+        for local in local_rows:
+            slug = local.get("slug")
+            if slug and slug in by_slug:
+                by_slug[slug].update({key: value for key, value in local.items() if value not in (None, "", [])})
+            else:
+                rows.append(local)
     today = datetime.utcnow().date().isoformat()
+    for index, row in enumerate(rows):
+        row.setdefault("id", row.get("slug") or f"verified-{index + 1}")
+        row.setdefault("created_at", row.get("verified_at") or datetime.utcnow().isoformat())
     return [row for row in rows if is_active_opportunity(row, today)]
 
 
@@ -457,6 +477,11 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
     <meta name="description" content="{escape_html(description)}">
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#0f766e">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>
+    <link rel="preload" href="/styles.css" as="style">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4182963907868663"     crossorigin="anonymous"></script>
     <link rel="canonical" href="{escape_html(url)}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -970,6 +995,122 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     return page
 
 
+def paragraphs_html(text: str) -> str:
+    parts = [part.strip() for part in re.split(r"\n\s*\n", text or "") if part.strip()]
+    return "".join(f"<p>{escape_html(part)}</p>" for part in parts)
+
+
+def detail_panel(title: str, body: str) -> str:
+    if not body:
+        return ""
+    return f'<section class="final-panel"><h2>{escape_html(title)}</h2>{paragraphs_html(body)}</section>'
+
+
+def detail_list_panel(title: str, items: list[str]) -> str:
+    clean_items = [item for item in items if item]
+    if not clean_items:
+        return ""
+    return (
+        f'<section class="final-panel"><h2>{escape_html(title)}</h2><ul class="benefit-list">'
+        + "".join(f"<li>{escape_html(item)}</li>" for item in clean_items)
+        + "</ul></section>"
+    )
+
+
+def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
+    title = item["title"]
+    deadline = format_deadline(item)
+    host = item.get("host_organization") or item.get("country") or "the official provider"
+    level = item.get("level") or "eligible applicants"
+    field = item.get("field") or "the listed study or professional fields"
+    return [
+        {
+            "q": f"Who should consider applying for {title}?",
+            "a": f"This opportunity is most relevant for {level} applicants with a credible connection to {field}. Applicants should still read the official eligibility rules before preparing documents."
+        },
+        {
+            "q": f"What does {title} provide?",
+            "a": f"The listed funding or support is: {benefits}. The official provider page has the final wording on covered and excluded costs."
+        },
+        {
+            "q": f"When is the deadline for {title}?",
+            "a": f"The deadline status shown by OpportunityNest is {deadline}. Because dates can change, confirm the current closing date on the official application page before submitting."
+        },
+        {
+            "q": "Where should I submit the application?",
+            "a": f"Submit through the official link maintained by {host}. OpportunityNest is a discovery and guidance resource, not the application portal."
+        },
+        {
+            "q": "How can I make my application stronger?",
+            "a": "Match every claim to the selection criteria, prepare documents early, tailor your motivation statement to the provider, and avoid submitting generic essays or incomplete evidence."
+        }
+    ]
+
+
+def opportunity_guidance(item: dict, benefits: str) -> list[tuple[str, str]]:
+    title = item["title"]
+    type_label = (item.get("type") or "opportunity").lower()
+    country = item.get("country") or "the listed destination"
+    host = item.get("host_organization") or "the official provider"
+    deadline = format_deadline(item)
+    level = item.get("level") or "eligible applicants"
+    field = item.get("field") or "the relevant fields"
+    return [
+        (
+            "Why this opportunity matters",
+            f"{title} is worth serious attention because it connects applicants with a verified {type_label} route rather than an unverified social-media lead. For students and early-career applicants, the main value is not only the headline benefit; it is the chance to compare eligibility, timing, documents, and official instructions before investing time in a full application. The listing is especially useful for applicants considering {country} or programs connected to {field}."
+        ),
+        (
+            "Why students should apply",
+            f"Students should apply when the program matches their academic level, timing, and long-term direction. A strong application will usually show why {host} is a good fit, how the applicant's background connects to the program, and what practical outcome the applicant expects after selection. Do not apply only because the opportunity is popular; apply because your profile can answer the provider's criteria with evidence."
+        ),
+        (
+            "Eligibility explained",
+            f"The published level for this listing is {level}. Treat that as a starting point, then read the official eligibility page for nationality rules, degree timing, language evidence, age limits, institutional nomination requirements, and exclusions. Many rejections happen before review because an applicant misses one basic rule, so check eligibility before writing essays or requesting references."
+        ),
+        (
+            "Financial coverage explained",
+            f"OpportunityNest records the funding position as: {benefits}. Applicants should check whether this means full tuition, a stipend, travel, insurance, accommodation, research support, or only a partial award. If any cost is not clearly covered, create a realistic budget before applying so the award does not become financially difficult after selection."
+        ),
+        (
+            "Application timeline",
+            f"The current deadline status is {deadline}. Work backward from the official deadline and leave time for transcripts, references, proposal drafts, language documents, passport or visa records, and portal issues. For rolling or variable deadlines, apply early because places, supervisors, or interview slots may close before a broad cycle appears finished."
+        ),
+        (
+            "Mistakes to avoid",
+            "Avoid copying a generic motivation letter, uploading unclear scans, ignoring word limits, missing the provider's time zone, or relying on unofficial application agents. Do not treat OpportunityNest as the final authority for a deadline or eligibility condition; use this page to prepare, then verify the final instruction on the official provider website."
+        ),
+        (
+            "Tips for increasing your chances",
+            "Build a short evidence map before applying: one column for each selection criterion and one column for your proof. Use specific examples, measurable achievements, relevant coursework or projects, and clear future plans. Ask referees early and give them the program purpose, deadline, and your draft goals so their letters support the same story as your application."
+        ),
+        (
+            "Deadline reminder",
+            f"Before you submit, reopen the official application page for {title}, confirm that the deadline still reads {deadline} or matches the active call, and save a copy of the submitted confirmation. If the provider has not announced a fixed deadline, check the page regularly and prepare documents in advance."
+        )
+    ]
+
+
+def fallback_who_should_apply(item: dict) -> str:
+    level = item.get("level") or "the applicant group named by the provider"
+    field = item.get("field") or "the relevant academic or professional area"
+    country = item.get("country") or "the listed destination or global program scope"
+    return (
+        f"Applicants should consider this opportunity if they match the provider's stated level of {level}, have a relevant connection to {field}, "
+        f"and can realistically meet the rules for {country}. This section is a preparation guide only; the official provider page remains the final source "
+        "for nationality, age, degree, language, nomination, residence, and exclusion rules."
+    )
+
+
+def fallback_selection_criteria(item: dict) -> str:
+    host = item.get("host_organization") or "the provider"
+    return (
+        f"Selection criteria are determined by {host}. In general, applicants should expect reviewers to look for eligibility fit, academic or professional relevance, "
+        "clear motivation, complete documents, realistic timing, and evidence that the applicant understands the purpose of the program. Where the official page lists "
+        "specific criteria, use those criteria as the structure for your essays, CV, recommendations, and supporting evidence."
+    )
+
+
 def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
     title = f"{item['title']} | OpportunityNest"
     description = f"Apply for the {item['title']} in {item['country']}. Funding, deadline, eligibility, and application details for this {item['type'].lower()}."
@@ -1094,6 +1235,154 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "      </section>\n"
     ) + page_footer()
     return page
+
+
+def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
+    page_title = item.get("seo_title") or f"{item['title']} | OpportunityNest"
+    meta_description = item.get("seo_description") or (
+        f"Apply for {item['title']} with verified deadline, eligibility, funding, documents, and official application guidance."
+    )
+    page_url = f"{SITE_URL}/opportunity/{slugify(item['slug'])}/"
+    category_label = PAGE_TYPES.get(item["type"], item["type"])
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (category_label, f"/{slugify(category_label)}.html"), (item["title"], None)])
+    benefits = item.get("funding") or "Funding information is provided on the official listing page."
+    host = item.get("host_organization") or item.get("country") or "Official provider"
+    duration = item.get("duration") or "See official listing"
+    updated_at = (item.get("verified_at") or item.get("created_at") or datetime.utcnow().isoformat()).split("T")[0]
+    verification_source = item.get("verification_source") or item.get("link")
+    faqs = opportunity_faqs(item, benefits)
+    faq_html = "".join(
+        f'<details><summary>{escape_html(faq["q"])}</summary><p>{escape_html(faq["a"])}</p></details>'
+        for faq in faqs
+    )
+    guide_sections = "".join(
+        f'<section class="final-panel"><h2>{escape_html(heading)}</h2><p>{escape_html(text)}</p></section>'
+        for heading, text in opportunity_guidance(item, benefits)
+    )
+    quick_facts = [
+        f"Host organization: {host}",
+        f"Country or region: {item.get('country') or 'Global'}",
+        f"Opportunity type: {item.get('type') or 'Opportunity'}",
+        f"Field: {item.get('field') or 'Multiple fields'}",
+        f"Level: {item.get('level') or 'Open to eligible applicants'}",
+        f"Duration: {duration}",
+        f"Funding: {benefits}",
+        f"Deadline: {format_deadline(item)}",
+    ]
+    related_html = (
+        '<div class="opportunity-results grid three">'
+        + "".join(build_opportunity_card(rel) for rel in related_items[:4])
+        + "</div>"
+        if related_items
+        else "<p>Explore similar landing pages for opportunities in the same country or category.</p>"
+    )
+    prevnext_html = ""
+    if previous_item or next_item:
+        prevnext_html = '<div class="card-actions">'
+        if previous_item:
+            prevnext_html += f'<a class="button button-secondary" href="{SITE_URL}/opportunity/{slugify(previous_item["slug"])}/">Previous: {escape_html(previous_item["title"])}</a>'
+        if next_item:
+            prevnext_html += f'<a class="button button-secondary" href="{SITE_URL}/opportunity/{slugify(next_item["slug"])}/">Next: {escape_html(next_item["title"])}</a>'
+        prevnext_html += "</div>"
+    same_country_html = "".join(
+        f'<li><a href="/country/{slugify(country)}/">More opportunities in {escape_html(country)}</a></li>'
+        for country in {item.get("country")} if country
+    )
+    same_category_html = f'<li><a href="/{slugify(category_label)}/">More {escape_html(category_label.lower())}</a></li>'
+    item_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalProgram" if item["type"] != "Competition" else "Course",
+        "name": item["title"],
+        "description": item.get("description") or meta_description,
+        "url": page_url,
+        "provider": {"@type": "Organization", "name": host},
+        "educationalCredentialAwarded": item["type"],
+        "learningResourceType": item["type"],
+        "timeRequired": item.get("deadline") or "Varies"
+    }, indent=2)
+    article_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": item["title"],
+        "description": meta_description,
+        "url": page_url,
+        "datePublished": item.get("created_at") or datetime.utcnow().isoformat(),
+        "dateModified": updated_at,
+        "author": {"@type": "Organization", "name": "OpportunityNest"}
+    }, indent=2)
+    breadcrumb_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": category_label, "item": f"{SITE_URL}/{slugify(category_label)}.html"},
+            {"@type": "ListItem", "position": 3, "name": item["title"], "item": page_url}
+        ]
+    }, indent=2)
+    faq_schema = build_faq_schema(faqs)
+    return page_head(
+        page_title,
+        meta_description,
+        page_url,
+        item["title"],
+        additional_head=f'<script type="application/ld+json">{item_schema}</script><script type="application/ld+json">{article_schema}</script><script type="application/ld+json">{breadcrumb_schema}</script><script type="application/ld+json">{faq_schema}</script>'
+    ) + (
+        "\n      <section class=\"page-hero section-pad\">\n"
+        f"        <div class=\"container\">{breadcrumbs}\n"
+        "          <div class=\"detail-header\">\n"
+        f"            <p class=\"eyebrow\">{escape_html(item['type'])} - {escape_html(item['country'])}</p>\n"
+        f"            <h1>{escape_html(item['title'])}</h1>\n"
+        f"            {paragraphs_html(item.get('description') or meta_description)}\n"
+        "            <div class=\"hero-actions\">\n"
+        f"              <a class=\"button button-primary\" href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">View &amp; Apply <span aria-hidden=\"true\">↗</span></a>\n"
+        f"              <a class=\"button button-secondary\" href=\"{SITE_URL}/{slugify(category_label)}.html\">Back to {escape_html(category_label)}</a>\n"
+        "            </div>\n"
+        f"            <p class=\"review-note\">Last reviewed: {escape_html(updated_at)}. Details are summarized from the official provider source.</p>\n"
+        "          </div>\n"
+        "        </div>\n"
+        "      </section>\n"
+        "      <section class=\"section-pad\">\n"
+        "        <div class=\"container internship-detail\">\n"
+        "          <div class=\"detail-grid\">\n"
+        f"            <div><dt>Host</dt><dd>{escape_html(host)}</dd></div>\n"
+        f"            <div><dt>Country</dt><dd>{escape_html(item.get('country') or 'Global')}</dd></div>\n"
+        f"            <div><dt>Field</dt><dd>{escape_html(item.get('field') or 'Multiple fields')}</dd></div>\n"
+        f"            <div><dt>Level</dt><dd>{escape_html(item.get('level') or 'Open to eligible applicants')}</dd></div>\n"
+        f"            <div><dt>Funding</dt><dd>{escape_html(benefits)}</dd></div>\n"
+        f"            <div><dt>Deadline</dt><dd>{escape_html(format_deadline(item))}</dd></div>\n"
+        "          </div>\n"
+        f"          {detail_list_panel('Overview', quick_facts)}\n"
+        f"          {detail_panel('About the opportunity', item.get('description') or meta_description)}\n"
+        f"          {guide_sections}\n"
+        f"          {detail_panel('Who should apply', item.get('eligibility_criteria') or fallback_who_should_apply(item))}\n"
+        f"          {detail_panel('Benefits explained', item.get('benefits') or benefits)}\n"
+        f"          {detail_panel('Required documents', item.get('required_documents') or '')}\n"
+        f"          {detail_panel('Application process', item.get('application_process') or '')}\n"
+        f"          {detail_panel('Selection criteria', item.get('selection_criteria') or fallback_selection_criteria(item))}\n"
+        f"          {detail_panel('Important notes', item.get('important_notes') or '')}\n"
+        "          <section class=\"faq-list\" aria-labelledby=\"opportunity-faq-title\">\n"
+        "            <div class=\"section-heading\"><p class=\"eyebrow\">Applicant questions</p><h2 id=\"opportunity-faq-title\">Frequently asked questions</h2></div>\n"
+        f"            {faq_html}\n"
+        "          </section>\n"
+        "          <div class=\"final-panel\">\n"
+        "            <h2>Official application link</h2>\n"
+        f"            <p>Use the provider page for the final application form, eligibility rules, deadline, and any country-specific instructions.</p><p><a href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">Open the official application page</a></p>\n"
+        f"            <p>Verification source: <a href=\"{escape_html(verification_source)}\" target=\"_blank\" rel=\"noopener noreferrer\">official source</a>.</p>\n"
+        "          </div>\n"
+        "          <div class=\"final-panel\">\n"
+        "            <h2>Summary</h2>\n"
+        f"            <p>{escape_html(item['title'])} is a verified {escape_html(item['type'].lower())} listing for applicants interested in {escape_html(item.get('field') or 'relevant fields')}. Review the quick facts, confirm your eligibility, prepare the required documents, and apply through the official link before the published deadline.</p>\n"
+        "          </div>\n"
+        "          <div class=\"final-panel\"><h2>Share this opportunity</h2><div class=\"card-actions\">\n"
+        f"            <a class=\"button button-secondary\" href=\"https://twitter.com/intent/tweet?text={escape_html(item['title'])}+-+{escape_html(page_url)}\" target=\"_blank\" rel=\"noopener noreferrer\">Share on Twitter</a>\n"
+        f"            <a class=\"button button-secondary\" href=\"mailto:?subject={escape_html(item['title'])}&body={escape_html(page_url)}\">Email link</a>\n"
+        "          </div></div>\n"
+        f"          {prevnext_html}\n"
+        f"          <div class=\"final-panel\"><h2>Related opportunities</h2>{related_html}</div>\n"
+        f"          <div class=\"final-panel\"><h2>Related guides and collections</h2><ul>{same_country_html}{same_category_html}</ul></div>\n"
+        "        </div>\n"
+        "      </section>\n"
+    ) + page_footer()
 
 
 def build_page_url(path: str) -> str:

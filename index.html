@@ -37,6 +37,11 @@
     <meta name="twitter:title" content="OpportunityNest.org | Find Scholarships, Internships & Global Opportunities">
     <meta name="twitter:description" content="Find verified scholarships, internships, and global opportunities in one trusted platform. Search, save, track, and apply faster with OpportunityNest today.">
     <meta name="twitter:image" content="https://www.opportunitynest.org/og-image.png">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>
+    <link rel="preload" href="/styles.css" as="style">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="canonical" href="https://www.opportunitynest.org/">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
@@ -663,13 +668,14 @@
 
     <script src="/utils.js" defer></script>
     <script src="/script.js" defer></script>
-    <script src="/nav.js"></script>
+    <script src="/nav.js" defer></script>
     <script>
-      // Initialize manual AdSense ad units
-      if (window.adsbygoogle) {
-        ON.pushAd('.ad-container--hero ins.adsbygoogle');
-        ON.pushAd('.ad-container--footer ins.adsbygoogle');
-      }
+      window.addEventListener('load', function () {
+        if (window.adsbygoogle && window.OpportunityNest) {
+          window.OpportunityNest.pushAd('.ad-container--hero ins.adsbygoogle');
+          window.OpportunityNest.pushAd('.ad-container--footer ins.adsbygoogle');
+        }
+      });
     </script>
   </body>
 </html>

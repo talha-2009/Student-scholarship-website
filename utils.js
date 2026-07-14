@@ -231,6 +231,21 @@ window.OpportunityNest = window.OpportunityNest || {};
 
   ON.fetchOpportunityRows = async () => {
     const fields = "id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at";
+    const cacheKey = `opportunitynest:opportunities:${fields}`;
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Date.now() - parsed.savedAt < 10 * 60 * 1000 && Array.isArray(parsed.rows)) {
+          return parsed.rows;
+        }
+      }
+    } catch (error) {
+      try {
+        sessionStorage.removeItem(cacheKey);
+      } catch (_) {}
+    }
+
     const response = await fetch(`${ON.SUPABASE_URL}/rest/v1/opportunities?select=${fields}&order=deadline.asc`, {
       headers: {
         apikey: ON.SUPABASE_PUBLISHABLE_KEY,
@@ -243,7 +258,13 @@ window.OpportunityNest = window.OpportunityNest || {};
     }
 
     const rows = await response.json();
-    return rows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
+    const activeRows = rows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
+    try {
+      sessionStorage.setItem(cacheKey, JSON.stringify({ savedAt: Date.now(), rows: activeRows }));
+    } catch (error) {
+      // Storage can be unavailable in private modes; fetching still works.
+    }
+    return activeRows;
   };
 
   ON.cleanSlug = (value = "") => {

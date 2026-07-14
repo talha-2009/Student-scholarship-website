@@ -165,7 +165,7 @@ const loadOpportunities = async () => {
   setOpportunityStatus("Loading opportunities...");
 
   try {
-    opportunities = (await ON.fetchOpportunityRows()).map(ON.normalizeOpportunity);
+    opportunities = await ON.fetchOpportunityRows();
     const types = getUniqueTypes(opportunities);
     populateTypeFilter(types);
     populateCountryFilter(opportunities);
@@ -245,7 +245,11 @@ const clearFilters = () => {
   renderOpportunities();
 };
 
-opportunityControls?.addEventListener("input", resetAndRender);
+let filterFrame = 0;
+opportunityControls?.addEventListener("input", () => {
+  window.cancelAnimationFrame(filterFrame);
+  filterFrame = window.requestAnimationFrame(resetAndRender);
+});
 opportunityControls?.addEventListener("submit", (event) => {
   event.preventDefault();
   resetAndRender();
