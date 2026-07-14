@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chatling Diagnostic Test</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; background: #f5f5f5; }
+    .test-section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    h2 { margin-top: 0; }
+    iframe { border: 1px solid #ccc; border-radius: 8px; }
+    .status { padding: 10px; border-radius: 4px; margin: 10px 0; font-weight: bold; }
+    .pass { background: #d4edda; color: #155724; }
+    .fail { background: #f8d7da; color: #721c24; }
+    #log { font-family: monospace; font-size: 13px; white-space: pre-wrap; max-height: 400px; overflow-y: auto; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Chatling Diagnostic Test Page</h1>
+  <p>This page tests the Chatling iframe in isolation.</p>
+
+  <div class="test-section">
+    <h2>Test 1: Direct iframe (no CSP interference from nav.js)</h2>
+    <div id="test1-status"></div>
+    <iframe id="test-iframe" src="https://embed.chatling.ai/ag/9241558149" 
+            width="400" height="500" allow="microphone" allowfullscreen></iframe>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Chatling embed.js (standard installation)</h2>
+    <div id="chtl-test"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Diagnostic Log</h2>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    const log = (msg) => {
+      const el = document.getElementById('log');
+      const time = new Date().toLocaleTimeString();
+      el.textContent += `[${time}] ${msg}\n`;
+    };
+
+    // Monitor iframe
+    const iframe = document.getElementById('test-iframe');
+    
+    iframe.addEventListener('load', () => {
+      log('✅ Iframe loaded successfully');
+      document.getElementById('test1-status').innerHTML = '<div class="status pass">PASS: Iframe loaded without being blocked</div>';
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        log('Iframe title: ' + doc.title);
+        log('Iframe body length: ' + doc.body.innerHTML.length);
+      } catch(e) {
+        log('⚠️ Cannot access iframe content (cross-origin): ' + e.message);
+        log('This is expected for cross-origin iframes - the iframe loaded but we cannot inspect its content');
+      }
+    });
+
+    iframe.addEventListener('error', (e) => {
+      log('❌ Iframe error: ' + e.message);
+      document.getElementById('test1-status').innerHTML = '<div class="status fail">FAIL: Iframe failed to load</div>';
+    });
+
+    // Monitor CSP violations
+    document.addEventListener('securitypolicyviolation', (e) => {
+      log('🚫 CSP VIOLATION: ' + e.violatedDirective + ' blocked ' + e.blockedURI);
+      log('   Full: ' + JSON.stringify({
+        violatedDirective: e.violatedDirective,
+        blockedURI: e.blockedURI,
+        originalPolicy: e.originalPolicy,
+        effectiveDirective: e.effectiveDirective
+      }));
+    });
+
+    // Check CSP
+    const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+    log('Meta CSP: ' + (cspMeta ? cspMeta.content : 'NONE'));
+
+    // Fetch and check response headers
+    fetch(window.location.href).then(r => {
+      const csp = r.headers.get('content-security-policy');
+      const xfo = r.headers.get('x-frame-options');
+      log('HTTP CSP header: ' + (csp ? csp.substring(0, 200) + '...' : 'NONE'));
+      log('X-Frame-Options: ' + xfo);
+      
+      const frameSrc = csp?.match(/frame-src[^;]+/)?.[0];
+      log('frame-src directive: ' + (frameSrc || 'NOT FOUND'));
+      log('Includes chatling.ai: ' + (frameSrc?.includes('chatling.ai') || false));
+    });
+
+    // Load Chatling embed
+    log('Loading Chatling embed.js...');
+    window.chtlConfig = { chatbotId: "9241558149" };
+    var s = document.createElement("script");
+    s.async = true;
+    s.setAttribute("data-id", "9241558149");
+    s.id = "chtl-script-test";
+    s.type = "text/javascript";
+    s.src = "https://chatling.ai/js/embed.js";
+    s.onload = () => log('✅ embed.js loaded successfully');
+    s.onerror = (e) => log('❌ embed.js failed to load');
+    document.body.appendChild(s);
+
+    // Check after 5 seconds
+    setTimeout(() => {
+      const chtlIframe = document.getElementById('chtl-chat-iframe');
+      if (chtlIframe) {
+        log('✅ Chatling iframe found: ' + chtlIframe.src);
+        log('   Display: ' + chtlIframe.style.display);
+        log('   Visibility: ' + chtlIframe.style.visibility);
+        log('   zIndex: ' + chtlIframe.style.zIndex);
+      } else {
+        log('❌ Chatling iframe NOT found after 5s');
+      }
+      
+      const iconContainer = document.getElementById('chtl-chat-icon-container');
+      if (iconContainer) {
+        log('✅ Chat icon container found');
+      } else {
+        log('❌ Chat icon container NOT found');
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
