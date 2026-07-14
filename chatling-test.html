@@ -3,6 +3,196 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chatling Diagnostic - No CSP</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; background: #f8f9fa; color: #333; }
+    h1 { color: #1a1a2e; }
+    .notice { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+    .test-section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #dee2e6; }
+    .test-section h2 { margin-top: 0; color: #1a1a2e; font-size: 18px; }
+    iframe { border: 2px solid #dee2e6; border-radius: 8px; display: block; margin: 10px 0; }
+    .result { padding: 12px 16px; border-radius: 6px; margin: 10px 0; font-weight: 600; font-size: 15px; }
+    .pass { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .fail { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    #log { font-family: 'SF Mono', 'Consolas', monospace; font-size: 13px; white-space: pre-wrap; max-height: 500px; overflow-y: auto; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; line-height: 1.6; }
+    .summary { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 8px; padding: 20px; margin-top: 20px; }
+    .summary.fail-summary { background: #ffebee; border-color: #f44336; }
+  </style>
+</head>
+<body>
+  <h1>Chatling Diagnostic Test</h1>
+  <div class="notice">
+    <strong>This page has NO CSP headers, NO X-Frame-Options, NO Permissions-Policy.</strong><br>
+    If the iframe loads here but not on the main site, the issue is CSP.<br>
+    If it still shows "blocked", the issue is on Chatling's side.
+  </div>
+
+  <div class="test-section">
+    <h2>Test 1: Direct iframe to embed.chatling.ai/ag/9241558149</h2>
+    <div id="test1-result" class="info result">Loading...</div>
+    <iframe id="direct-iframe" src="https://embed.chatling.ai/ag/9241558149" 
+            width="400" height="500" allow="microphone" allowfullscreen></iframe>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Chatling embed.js (standard installation)</h2>
+    <div id="test2-result" class="info result">Loading embed.js...</div>
+  </div>
+
+  <div class="test-section">
+    <h2>Diagnostic Log</h2>
+    <div id="log"></div>
+  </div>
+
+  <div id="summary"></div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    const log = (msg, type) => {
+      const time = new Date().toLocaleTimeString();
+      const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warn' ? '⚠️' : 'ℹ️';
+      logEl.textContent += `[${time}] ${prefix} ${msg}\n`;
+    };
+
+    let directIframeLoaded = false;
+    let embedScriptLoaded = false;
+    let chatlingWidgetWorking = false;
+
+    // ── Test 1: Direct iframe ──
+    const directIframe = document.getElementById('direct-iframe');
+    
+    directIframe.addEventListener('load', () => {
+      directIframeLoaded = true;
+      log('Direct iframe loaded successfully', 'success');
+      document.getElementById('test1-result').className = 'result pass';
+      document.getElementById('test1-result').textContent = '✅ PASS: Iframe loaded without being blocked';
+      
+      try {
+        const doc = directIframe.contentDocument || directIframe.contentWindow.document;
+        log('Iframe title: ' + doc.title, 'info');
+        log('Iframe body length: ' + doc.body.innerHTML.length + ' chars', 'info');
+        
+        if (doc.body.innerHTML.length < 100) {
+          log('Iframe body is very small - might be an error page', 'warn');
+        }
+      } catch(e) {
+        log('Cannot access iframe content (cross-origin, expected): ' + e.message, 'info');
+      }
+    });
+
+    directIframe.addEventListener('error', () => {
+      log('Direct iframe failed to load', 'error');
+      document.getElementById('test1-result').className = 'result fail';
+      document.getElementById('test1-result').textContent = '❌ FAIL: Iframe failed to load';
+    });
+
+    // ── Monitor CSP violations (should be none on this page) ──
+    document.addEventListener('securitypolicyviolation', (e) => {
+      log('CSP VIOLATION: ' + e.violatedDirective + ' blocked ' + e.blockedURI, 'error');
+      log('Full policy: ' + e.originalPolicy, 'error');
+    });
+
+    // ── Check headers ──
+    fetch(window.location.href).then(r => {
+      const csp = r.headers.get('content-security-policy');
+      const xfo = r.headers.get('x-frame-options');
+      const pp = r.headers.get('permissions-policy');
+      log('HTTP CSP header: ' + (csp || 'NONE (expected)'), csp ? 'warn' : 'success');
+      log('X-Frame-Options: ' + (xfo || 'NONE (expected)'), xfo ? 'warn' : 'success');
+      log('Permissions-Policy: ' + (pp || 'NONE (expected)'), pp ? 'warn' : 'success');
+    });
+
+    // ── Test 2: Chatling embed.js ──
+    log('Loading Chatling embed.js...', 'info');
+    window.chtlConfig = { chatbotId: "9241558149" };
+    var s = document.createElement("script");
+    s.async = true;
+    s.setAttribute("data-id", "9241558149");
+    s.id = "chtl-script";
+    s.type = "text/javascript";
+    s.src = "https://chatling.ai/js/embed.js";
+    s.onload = () => {
+      embedScriptLoaded = true;
+      log('embed.js loaded successfully', 'success');
+    };
+    s.onerror = () => {
+      log('embed.js FAILED to load', 'error');
+      document.getElementById('test2-result').className = 'result fail';
+      document.getElementById('test2-result').textContent = '❌ FAIL: embed.js failed to load';
+    };
+    document.body.appendChild(s);
+
+    // ── Check after 5 seconds ──
+    setTimeout(() => {
+      log('--- 5-second check ---', 'info');
+      
+      // Check Chatling iframe
+      const chtlIframe = document.getElementById('chtl-chat-iframe');
+      if (chtlIframe) {
+        log('Chatling iframe found: ' + chtlIframe.src, 'success');
+        log('  Display: ' + (chtlIframe.style.display || 'not set'), 'info');
+        log('  Visibility: ' + (chtlIframe.style.visibility || 'not set'), 'info');
+        log('  zIndex: ' + (chtlIframe.style.zIndex || 'not set'), 'info');
+        log('  Width: ' + chtlIframe.offsetWidth + 'px, Height: ' + chtlIframe.offsetHeight + 'px', 'info');
+        
+        if (chtlIframe.offsetWidth > 0 && chtlIframe.offsetHeight > 0) {
+          chatlingWidgetWorking = true;
+        }
+      } else {
+        log('Chatling iframe NOT found', 'error');
+      }
+      
+      // Check chat icon
+      const chatIcon = document.getElementById('chtl-chat-icon-container');
+      if (chatIcon) {
+        log('Chat icon container found', 'success');
+      } else {
+        log('Chat icon container NOT found', 'warn');
+      }
+
+      // ── Summary ──
+      const summaryEl = document.getElementById('summary');
+      let summaryHTML = '<h2>Diagnostic Summary</h2>';
+      
+      if (directIframeLoaded) {
+        summaryHTML += '<p><strong>Direct iframe:</strong> ✅ Loads fine</p>';
+      } else {
+        summaryHTML += '<p><strong>Direct iframe:</strong> ❌ BLOCKED</p>';
+      }
+      
+      if (chatlingWidgetWorking) {
+        summaryHTML += '<p><strong>Chatling widget:</strong> ✅ Working</p>';
+      } else {
+        summaryHTML += '<p><strong>Chatling widget:</strong> ❌ Not working</p>';
+      }
+      
+      if (directIframeLoaded && chatlingWidgetWorking) {
+        summaryEl.className = 'summary';
+        summaryHTML += '<p><strong>CONCLUSION:</strong> The Chatling widget works WITHOUT CSP headers. The issue is the CSP on the main site. A hard-refresh (Ctrl+Shift+R) of the main site may fix it.</p>';
+      } else if (directIframeLoaded && !chatlingWidgetWorking) {
+        summaryEl.className = 'summary';
+        summaryHTML += '<p><strong>CONCLUSION:</strong> The direct iframe loads, but the Chatling widget doesn\'t fully initialize. The embed.js might have an issue.</p>';
+      } else if (!directIframeLoaded) {
+        summaryEl.className = 'summary fail-summary';
+        summaryHTML += '<p><strong>CONCLUSION:</strong> The iframe is blocked even WITHOUT CSP headers. This means the issue is on <strong>Chatling\'s side</strong>, not our CSP. You need to check your Chatling dashboard settings:</p>';
+        summaryHTML += '<ul><li>Ensure the chatbot is PUBLISHED (not just in draft)</li>';
+        summaryHTML += '<li>Check Allowed Domains includes opportunitynest.org</li>';
+        summaryHTML += '<li>Check Widget Settings > Deployment is enabled</li></ul>';
+      }
+      
+      summaryEl.innerHTML = summaryHTML;
+      log('--- Diagnostic complete ---', 'info');
+    }, 5000);
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chatling Diagnostic Test</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; background: #f5f5f5; }
