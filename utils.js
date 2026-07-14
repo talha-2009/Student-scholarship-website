@@ -2,6 +2,7 @@
  * Shared helpers for OpportunityNest — Supabase client, formatting, rendering, pagination.
  */
 window.OpportunityNest = window.OpportunityNest || {};
+window.ON = window.OpportunityNest;
 
 (function (ON) {
   // Configuration

@@ -1,4 +1,4 @@
-const ON = window.OpportunityNest;
+const ON = window.ON || window.OpportunityNest;
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
