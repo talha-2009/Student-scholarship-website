@@ -537,6 +537,12 @@ def page_footer(file_script: str = "") -> str:
     return f"""    </main>
     {build_footer()}
     {script_html}  <script src="/nav.js" defer></script>
+    <script>
+      window.chtlConfig = {{
+        chatbotId: "9241558149"
+      }};
+    </script>
+    <script async data-id="9241558149" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
   </body>
 </html>"""
 
