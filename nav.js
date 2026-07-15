@@ -358,3 +358,161 @@ if (navToggle && navMenu) {
     }
   });
 }
+
+// ─── Footer SEO: enhance footer with additional internal links ────────────────
+(function enhanceFooter() {
+  const footerNav = document.querySelector(".footer-links");
+  if (!footerNav) return;
+
+  // Only add extra links if they are not already present
+  if (footerNav.querySelector("[data-seo-enhanced]")) return;
+
+  const extraLinks = [
+    { href: "/fully-funded-scholarships/", text: "Fully Funded" },
+    { href: "/masters-scholarships/", text: "Master's Scholarships" },
+    { href: "/phd-scholarships/", text: "PhD Scholarships" },
+    { href: "/undergraduate-scholarships/", text: "Undergraduate" },
+    { href: "/country/united-kingdom/", text: "Study in UK" },
+    { href: "/country/germany/", text: "Study in Germany" },
+    { href: "/country/united-states/", text: "Study in US" },
+    { href: "/country/canada/", text: "Study in Canada" },
+    { href: "/country/australia/", text: "Study in Australia" },
+    { href: "/blog/", text: "Blog" }
+  ];
+
+  extraLinks.forEach(function(link) {
+    // Don't duplicate if already present
+    if (footerNav.querySelector('a[href="' + link.href + '"]')) return;
+    var a = document.createElement("a");
+    a.href = link.href;
+    a.textContent = link.text;
+    a.setAttribute("data-seo-enhanced", "1");
+    footerNav.appendChild(a);
+  });
+})();
+
+// ── Resources Mega Dropdown injection ─────────────────────────────────────
+(function injectMegaDropdown() {
+  var navMenu = document.querySelector("#nav-menu");
+  if (!navMenu) return;
+  // Skip if already injected
+  if (navMenu.querySelector(".nav-resources")) return;
+
+  // Find the Blog link or About link to insert before
+  var blogLink = navMenu.querySelector('a[href="/blog/"]');
+  var aboutLink = navMenu.querySelector('a[href="/about.html"]');
+  var insertBefore = blogLink ? blogLink.nextElementSibling : (aboutLink || null);
+
+  var html = '<div class="nav-resources" role="navigation" aria-label="Resources">' +
+    '<button class="nav-link-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="chevron" aria-hidden="true"></span></button>' +
+    '<div class="mega-bridge" aria-hidden="true"></div>' +
+    '<div class="mega-dropdown" role="menu" aria-label="Resources menu">' +
+    '<div class="mega-grid">' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\u270E</span> Application Guides</div><ul class="mega-links">' +
+    '<li><a href="/guides/how-to-write-sop.html" role="menuitem">How to Write an SOP</a></li>' +
+    '<li><a href="/guides/sop-examples.html" role="menuitem">SOP Examples</a></li>' +
+    '<li><a href="/guides/personal-statement.html" role="menuitem">Personal Statement</a></li>' +
+    '<li><a href="/guides/motivation-letter.html" role="menuitem">Motivation Letter</a></li>' +
+    '<li><a href="/guides/cover-letter.html" role="menuitem">Cover Letter Guide</a></li>' +
+    '<li><a href="/guides/cv-writing.html" role="menuitem">CV Writing Guide</a></li>' +
+    '<li><a href="/guides/ats-resume.html" role="menuitem">ATS Resume Guide</a></li>' +
+    '<li><a href="/guides/resume-templates.html" role="menuitem">Resume Templates</a></li>' +
+    '<li><a href="/guides/recommendation-letter.html" role="menuitem">Recommendation Letter</a></li>' +
+    '<li><a href="/guides/email-professors.html" role="menuitem">Email Professors</a></li>' +
+    '<li><a href="/guides/application-checklist.html" role="menuitem">Application Checklist</a></li></ul></div>' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\uD83C\uDF93</span> Scholarship Guides</div><ul class="mega-links">' +
+    '<li><a href="/blog/top-fully-funded-scholarships.html" role="menuitem">Fully Funded Scholarships</a></li>' +
+    '<li><a href="/guides/scholarships-without-ielts.html" role="menuitem">Without IELTS</a></li>' +
+    '<li><a href="/guides/undergraduate-scholarships.html" role="menuitem">Undergraduate</a></li>' +
+    '<li><a href="/guides/masters-scholarships.html" role="menuitem">Masters Scholarships</a></li>' +
+    '<li><a href="/guides/phd-scholarships.html" role="menuitem">PhD Scholarships</a></li>' +
+    '<li><a href="/guides/government-scholarships.html" role="menuitem">Government Scholarships</a></li>' +
+    '<li><a href="/guides/university-scholarships.html" role="menuitem">University Scholarships</a></li>' +
+    '<li><a href="/blog/how-to-ace-scholarship-interview.html" role="menuitem">Interview Tips</a></li>' +
+    '<li><a href="/blog/how-to-write-winning-scholarship-essay.html" role="menuitem">Essay Guide</a></li>' +
+    '<li><a href="/guides/scholarship-deadlines.html" role="menuitem">Deadlines Calendar</a></li></ul></div>' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\uD83D\uDCBC</span> Internship Guides</div><ul class="mega-links">' +
+    '<li><a href="/guides/how-to-get-internship.html" role="menuitem">How to Get an Internship</a></li>' +
+    '<li><a href="/guides/internship-application.html" role="menuitem">Application Guide</a></li>' +
+    '<li><a href="/guides/internship-cover-letter.html" role="menuitem">Internship Cover Letter</a></li>' +
+    '<li><a href="/guides/internship-resume.html" role="menuitem">Internship Resume</a></li>' +
+    '<li><a href="/guides/internship-interview.html" role="menuitem">Interview Questions</a></li>' +
+    '<li><a href="/guides/remote-internships.html" role="menuitem">Remote Internships</a></li>' +
+    '<li><a href="/guides/paid-internships.html" role="menuitem">Paid Internships</a></li>' +
+    '<li><a href="/guides/summer-internships.html" role="menuitem">Summer Internships</a></li></ul>' +
+    '<div class="mega-col-title" style="margin-top:16px"><span class="mega-icon" aria-hidden="true">\uD83C\uDF10</span> Study Abroad</div><ul class="mega-links">' +
+    '<li><a href="/guides/study-in-usa.html" role="menuitem">Study in USA</a></li>' +
+    '<li><a href="/guides/study-in-canada.html" role="menuitem">Study in Canada</a></li>' +
+    '<li><a href="/guides/study-in-uk.html" role="menuitem">Study in UK</a></li>' +
+    '<li><a href="/guides/study-in-germany.html" role="menuitem">Study in Germany</a></li>' +
+    '<li><a href="/guides/study-in-australia.html" role="menuitem">Study in Australia</a></li></ul></div>' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\uD83C\uDF0F</span> Study Abroad</div><ul class="mega-links">' +
+    '<li><a href="/guides/study-in-japan.html" role="menuitem">Study in Japan</a></li>' +
+    '<li><a href="/guides/study-in-south-korea.html" role="menuitem">Study in South Korea</a></li>' +
+    '<li><a href="/guides/study-in-italy.html" role="menuitem">Study in Italy</a></li>' +
+    '<li><a href="/guides/student-visa.html" role="menuitem">Student Visa Guide</a></li>' +
+    '<li><a href="/guides/university-admissions.html" role="menuitem">University Admissions</a></li></ul>' +
+    '<div class="mega-col-title" style="margin-top:16px"><span class="mega-icon" aria-hidden="true">\uD83D\uDCDA</span> Career Resources</div><ul class="mega-links">' +
+    '<li><a href="/guides/career-planning.html" role="menuitem">Career Planning</a></li>' +
+    '<li><a href="/guides/linkedin-profile.html" role="menuitem">LinkedIn Optimization</a></li>' +
+    '<li><a href="/guides/networking.html" role="menuitem">Networking Guide</a></li>' +
+    '<li><a href="/guides/online-certifications.html" role="menuitem">Online Certifications</a></li>' +
+    '<li><a href="/guides/best-skills.html" role="menuitem">Best Skills for Students</a></li></ul></div>' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\uD83D\uDCAC</span> English Tests</div><ul class="mega-links">' +
+    '<li><a href="/guides/ielts-guide.html" role="menuitem">IELTS Guide</a></li>' +
+    '<li><a href="/guides/toefl-guide.html" role="menuitem">TOEFL Guide</a></li>' +
+    '<li><a href="/guides/gre-guide.html" role="menuitem">GRE Guide</a></li>' +
+    '<li><a href="/guides/gmat-guide.html" role="menuitem">GMAT Guide</a></li>' +
+    '<li><a href="/guides/sat-guide.html" role="menuitem">SAT Guide</a></li>' +
+    '<li><a href="/guides/act-guide.html" role="menuitem">ACT Guide</a></li>' +
+    '<li><a href="/guides/duolingo-english-test.html" role="menuitem">Duolingo English Test</a></li></ul></div>' +
+    '<div class="mega-col"><div class="mega-col-title"><span class="mega-icon" aria-hidden="true">\uD83D\uDCB0</span> Funding</div><ul class="mega-links">' +
+    '<li><a href="/fellowships.html" role="menuitem">Fellowships</a></li>' +
+    '<li><a href="/guides/grants.html" role="menuitem">Grants</a></li>' +
+    '<li><a href="/guides/exchange-programs.html" role="menuitem">Exchange Programs</a></li>' +
+    '<li><a href="/guides/conferences.html" role="menuitem">Conferences</a></li>' +
+    '<li><a href="/competitions.html" role="menuitem">Competitions</a></li>' +
+    '<li><a href="/?type=Youth+Program#opportunities" role="menuitem">Youth Programs</a></li>' +
+    '<li><a href="/guides/volunteer-programs.html" role="menuitem">Volunteer Programs</a></li>' +
+    '<li><a href="/guides/research-opportunities.html" role="menuitem">Research Opportunities</a></li></ul></div>' +
+    '</div></div></div>';
+
+  var wrapper = document.createElement("div");
+  wrapper.innerHTML = html;
+  var el = wrapper.firstElementChild;
+  navMenu.insertBefore(el, insertBefore);
+
+  // ── Mega dropdown interaction ──
+  var trigger = el.querySelector(".nav-link-trigger");
+  var dropdown = el.querySelector(".mega-dropdown");
+  if (!trigger || !dropdown) return;
+
+  var closeTimeout;
+
+  function openMega() {
+    clearTimeout(closeTimeout);
+    el.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMega() {
+    el.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  function scheduleClose() {
+    closeTimeout = setTimeout(closeMega, 200);
+  }
+
+  el.addEventListener("mouseenter", function() { clearTimeout(closeTimeout); openMega(); });
+  el.addEventListener("mouseleave", scheduleClose);
+  trigger.addEventListener("click", function(e) { e.preventDefault(); el.classList.contains("is-open") ? closeMega() : openMega(); });
+  trigger.addEventListener("keydown", function(e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.classList.contains("is-open") ? closeMega() : openMega(); } if (e.key === "Escape") closeMega(); });
+
+  // Close on click outside
+  document.addEventListener("click", function(e) { if (!el.contains(e.target)) closeMega(); });
+
+  // Close dropdown when mobile nav closes
+  var origClose = window.closeNav;
+  window.closeNav = function() { closeMega(); if (typeof origClose === "function") origClose(); };
+})();
