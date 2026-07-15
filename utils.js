@@ -879,12 +879,35 @@ window.OpportunityNest = window.OpportunityNest || {};
     const type = (item.type || "opportunity").toLowerCase();
     const keywordLower = keyword.toLowerCase();
     const typeFragment = keywordLower.includes(type) ? "" : ` ${type}`;
-    const answer = `The ${keyword}${typeFragment} is open to ${item.level || "eligible"} applicants interested in ${item.field || "various fields"}. Candidates should review the official eligibility criteria, prepare the required documents, and submit their application before the ${ON.formatDeadline(item)} deadline through the official program website.`;
-    return [
-      { question: `Who is eligible for the ${keyword}?`, answer },
-      { question: `What does the ${keyword} offer?`, answer: `The ${keyword}${typeFragment} provides selected participants with funding, professional development, and access to academic or institutional resources aligned with their field.` },
-      { question: `How can I apply for the ${keyword}?`, answer: `You can apply through the official program website. Make sure to check the eligibility requirements, prepare all required documents, and submit before the stated deadline.` }
+    const country = item.country || "the host country";
+    const level = item.level || "eligible";
+    const field = item.field || "various fields";
+    const funding = item.funding || "financial support";
+    const deadline = ON.formatDeadline(item);
+    const isFullyFunded = /fully\s*fund/i.test(funding);
+
+    const eligibilityAnswer = `The ${keyword}${typeFragment} is open to ${level} applicants with an interest in ${field}. Eligibility typically depends on your nationality, academic background, and the specific requirements set by the programme. Review the official criteria carefully — some programmes restrict by country of origin, age, or degree field, while others are open to all nationalities and disciplines.`;
+
+    const fundingAnswer = isFullyFunded
+      ? `Yes, the ${keyword}${typeFragment} is fully funded. This typically covers tuition fees, a living stipend, health insurance, and travel costs. The exact components may vary by year and recipient, so check the official programme page for the current funding breakdown.`
+      : `The ${keyword}${typeFragment} provides ${funding}. The specific financial support depends on the programme structure — some cover tuition only, while others include living allowances, travel grants, or research funding. Check the official listing for the full details of what is included.`;
+
+    const applyAnswer = `You can apply through the official programme website. The deadline is ${deadline}. Before applying, confirm your eligibility, prepare your motivation letter and CV, and arrange your references early. Most successful applicants start preparing at least 6–8 weeks before the deadline.`;
+
+    const competitivenessAnswer = `The ${keyword}${typeFragment} is competitive, as it attracts strong applicants from ${country} and internationally. To strengthen your application, focus on demonstrating clear goals, relevant experience in ${field}, and a well-prepared motivation letter that explains why this specific programme is the right fit for you.`;
+
+    const afterAnswer = `After selection, recipients typically receive an official offer letter with programme details, start dates, and any pre-arrival requirements such as visa applications, accommodation arrangements, or orientation materials. The programme team will guide you through the next steps.`;
+
+    // Select 4 most useful FAQs based on opportunity attributes
+    const allFaqs = [
+      { question: `Who is eligible for the ${keyword}?`, answer: eligibilityAnswer },
+      { question: `What does the ${keyword} cover financially?`, answer: fundingAnswer },
+      { question: `How do I apply for the ${keyword}?`, answer: applyAnswer },
+      { question: `How competitive is this ${type}?`, answer: competitivenessAnswer },
+      { question: `What happens after I am selected?`, answer: afterAnswer }
     ];
+
+    return allFaqs.slice(0, 4);
   };
 
   // SEO: Generate structured data for opportunity
@@ -967,6 +990,92 @@ window.OpportunityNest = window.OpportunityNest || {};
     return `${keyword} official program banner`;
   };
 
+  // Generate dynamic "Who Should Apply" section based on opportunity attributes
+  ON.generateWhoShouldApply = (item) => {
+    const type = (item.type || "opportunity").toLowerCase();
+    const level = item.level || "";
+    const country = item.country || "Global";
+    const field = item.field || "various fields";
+    const funding = item.funding || "";
+    const isFullyFunded = /fully\s*fund/i.test(funding);
+    const parts = [];
+
+    if (level.match(/PhD|Doctoral/i)) {
+      parts.push(`This ${type} is ideal for researchers and doctoral candidates who have completed a master's degree and want to pursue original research in ${field}.`);
+    } else if (level.match(/Master/i)) {
+      parts.push(`This ${type} suits graduates who want to deepen their expertise in ${field} through advanced study at the master's level.`);
+    } else if (level.match(/Undergraduate|Bachelor/i)) {
+      parts.push(`This ${type} is designed for undergraduate students in ${field} who want to gain academic and professional experience early in their careers.`);
+    } else if (level.match(/Postdoc/i)) {
+      parts.push(`This ${type} targets postdoctoral scholars and early-career academics seeking dedicated research time in ${field}.`);
+    } else {
+      parts.push(`This ${type} is open to motivated individuals with a strong interest in ${field}.`);
+    }
+
+    if (isFullyFunded) {
+      parts.push(`Because this programme is fully funded, it is especially valuable for candidates who need financial support to study or work in ${country} — including those from low- and middle-income backgrounds.`);
+    }
+
+    if (country !== "Global" && country !== "Not specified") {
+      parts.push(`If you are an international applicant considering ${country}, this programme offers a structured entry point with institutional support.`);
+    }
+
+    return parts.join(" ");
+  };
+
+  // Generate dynamic "Funding Explained" section
+  ON.generateFundingExplained = (item) => {
+    const funding = item.funding || "";
+    const type = (item.type || "opportunity").toLowerCase();
+
+    if (/fully\s*fund/i.test(funding)) {
+      return `This ${type} covers the full cost of participation. For most recipients, this means tuition fees, a living stipend, health insurance, and travel costs are all included. The exact breakdown varies by programme — some cover accommodation directly, while others provide a monthly allowance that you manage yourself. Check the official programme page for the specific funding components, as they differ between recipients and may change from year to year.`;
+    }
+    if (/partial/i.test(funding)) {
+      return `This ${type} provides partial funding toward your costs. Depending on the programme, this may cover a percentage of tuition fees, a one-time grant, or a monthly contribution toward living expenses. You will likely need to secure additional funding for the remaining costs through personal savings, other scholarships, or university financial aid.`;
+    }
+    if (/unpaid|volunteer/i.test(funding)) {
+      return `This ${type} does not include a salary or stipend. However, unpaid positions at international organisations often provide other benefits: professional networking, mentorship, hands-on experience, and a strong credential for your CV. Some host organisations may offer travel reimbursements or help with visa costs — check the official listing for details.`;
+    }
+    if (/stipend|monthly/i.test(funding)) {
+      return `Recipients of this ${type} receive a regular stipend to cover living expenses during the programme. The amount is designed to cover basic costs such as accommodation, food, and local transport in the host country. Additional benefits like health insurance, travel allowances, or research grants may also be included depending on the programme structure.`;
+    }
+    return `Funding for this ${type} varies by recipient and year. The official programme website provides the most current details on what is covered, payment schedules, and any conditions attached to the financial support. Review the funding section carefully before applying so you understand exactly what is included.`;
+  };
+
+  // Generate dynamic "Selection Process" section
+  ON.generateSelectionProcess = (item) => {
+    const type = (item.type || "opportunity").toLowerCase();
+    const level = item.level || "";
+    const processes = [];
+
+    if (level.match(/PhD|Doctoral|Postdoc|Research/i)) {
+      processes.push("Research proposal evaluation");
+      processes.push("Academic references (typically two or three)");
+      processes.push("Interview with the selection committee (often by video call for international candidates)");
+    } else if (level.match(/Master/i)) {
+      processes.push("Academic transcript review");
+      processes.push("Motivation letter or statement of purpose");
+      processes.push("At least one reference from a professor or academic supervisor");
+      processes.push("Interview (in person or online)");
+    } else if (type === "internship") {
+      processes.push("CV and cover letter screening");
+      processes.push("Competency-based interview (often two rounds)");
+      processes.push("Possible written test or case study");
+    } else if (type === "competition") {
+      processes.push("Written submission or project proposal");
+      processes.push("Jury review and shortlisting");
+      processes.push("Final presentation or pitch (for finalists)");
+    } else {
+      processes.push("Application form and supporting documents review");
+      processes.push("Motivation letter assessment");
+      processes.push("Interview with the selection panel");
+    }
+
+    const listHtml = processes.map((p, i) => `<li><strong>Stage ${i + 1}:</strong> ${ON.escapeHtml(p)}</li>`).join("");
+    return `<p>While the exact process depends on the programme, competitive ${type}s at this level typically involve the following stages:</p><ol>${listHtml}</ol><p>Start preparing for each stage well before the deadline. For interviews, practise articulating your goals and how this ${type} fits your trajectory.</p>`;
+  };
+
   // SEO: Render enhanced detail content with structured sections
   ON.renderDetailContent = (item, urgencyClass, categoryPage, categoryType) => {
     const country = item.country || "Global";
@@ -980,6 +1089,10 @@ window.OpportunityNest = window.OpportunityNest || {};
     const keywordH2 = ON.generateDetailH2(item);
     const faqs = ON.generateDetailFAQs(item);
     const imageAlt = ON.generateImageAlt(item);
+    const typeLabel = (item.type || categoryType).toLowerCase();
+    const whoApply = ON.generateWhoShouldApply(item);
+    const fundingExplained = ON.generateFundingExplained(item);
+    const selectionProcess = ON.generateSelectionProcess(item);
     const logoHtml = item.logo_url
       ? `<img class="detail-logo" src="${ON.escapeHtml(item.logo_url)}" alt="${ON.escapeHtml(imageAlt)}" loading="lazy" width="120" height="120">`
       : "";
@@ -993,6 +1106,38 @@ window.OpportunityNest = window.OpportunityNest || {};
     const expiredBanner = isExpired
       ? '<div class="expired-notice" role="alert"><strong>This opportunity has expired.</strong> The deadline has passed. Please check the official website for updated dates or future intakes.</div>'
       : "";
+
+    // Dynamic document list based on type/level
+    const docs = [];
+    docs.push("<li><strong>Valid passport or national ID</strong> — must remain valid for the full programme duration</li>");
+    docs.push("<li><strong>Curriculum Vitae (CV)</strong> — highlight academic, professional, and volunteer experience relevant to this programme</li>");
+    docs.push("<li><strong>Academic transcripts</strong> — from all post-secondary institutions attended</li>");
+    docs.push("<li><strong>Motivation letter or statement of purpose</strong> — explain why this specific programme, how it aligns with your goals, and what you bring</li>");
+    if (level.match(/PhD|Doctoral|Postdoc|Research|Master/i) || typeLabel === "fellowship") {
+      docs.push("<li><strong>Research proposal</strong> — required for research-focused programmes; outline your topic, methodology, and expected outcomes</li>");
+    }
+    docs.push("<li><strong>Letters of recommendation</strong> — typically two or three; give your recommenders at least 3–4 weeks' notice</li>");
+    if (country !== "Global" && country !== "Not specified") {
+      docs.push("<li><strong>Proof of language proficiency</strong> — TOEFL, IELTS, or equivalent if the programme is not in your native language</li>");
+    }
+    if (typeLabel === "internship") {
+      docs.push("<li><strong>Portfolio or work samples</strong> — if applicable to your field (design, writing, engineering, etc.)</li>");
+    }
+    const docsHtml = docs.join("");
+
+    // Dynamic mistakes based on type
+    const mistakes = [];
+    mistakes.push("<li><strong>Submitting too close to the deadline</strong> — technical issues and time-zone differences cause last-minute failures. Aim to submit at least 48 hours early.</li>");
+    if (typeLabel === "scholarship" || typeLabel === "fellowship") {
+      mistakes.push("<li><strong>Writing a generic motivation letter</strong> — selection committees read hundreds of applications. Mention the specific programme by name, reference its unique features, and connect them to your background.</li>");
+      mistakes.push("<li><strong>Not addressing the selection criteria</strong> — most programmes list what they evaluate. Structure your letter and CV to address each criterion directly.</li>");
+    }
+    if (typeLabel === "internship") {
+      mistakes.push("<li><strong>Applying without researching the organisation</strong> — interviewers expect you to understand their mission, recent projects, and how your skills contribute.</li>");
+    }
+    mistakes.push("<li><strong>Ignoring eligibility requirements</strong> — nationality, age, degree level, and field restrictions are non-negotiable. Verify before investing time.</li>");
+    mistakes.push("<li><strong>Asking for references at the last minute</strong> — give recommenders 3–4 weeks and share your CV and motivation letter so they write specific, strong references.</li>");
+    const mistakesHtml = mistakes.join("");
 
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
@@ -1016,7 +1161,7 @@ window.OpportunityNest = window.OpportunityNest || {};
         <p class="detail-intro">${ON.escapeHtml(intro)}</p>
         <div class="hero-actions">
           <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-          <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml((item.type || categoryType).toLowerCase())}s</a>
+          <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml(typeLabel)}s</a>
         </div>
       </div>
 
@@ -1027,29 +1172,29 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <section class="detail-section" aria-labelledby="details-heading">
-        <h2 id="details-heading">Program Details</h2>
+        <h2 id="details-heading">Program Details at a Glance</h2>
         <dl class="detail-grid">
-          <div>
-            <dt>Country</dt>
-            <dd>${ON.escapeHtml(country)}</dd>
-          </div>
-          <div>
-            <dt>Education Level</dt>
-            <dd>${ON.escapeHtml(level)}</dd>
-          </div>
-          <div>
-            <dt>Field of Study</dt>
-            <dd>${ON.escapeHtml(field)}</dd>
-          </div>
-          <div>
-            <dt>Funding</dt>
-            <dd>${ON.escapeHtml(funding)}</dd>
-          </div>
-          <div>
-            <dt>Application Deadline</dt>
-            <dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd>
-          </div>
+          <div><dt>Country</dt><dd>${ON.escapeHtml(country)}</dd></div>
+          <div><dt>Education Level</dt><dd>${ON.escapeHtml(level)}</dd></div>
+          <div><dt>Field of Study</dt><dd>${ON.escapeHtml(field)}</dd></div>
+          <div><dt>Funding</dt><dd>${ON.escapeHtml(funding)}</dd></div>
+          <div><dt>Application Deadline</dt><dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd></div>
         </dl>
+      </section>
+
+      <section class="detail-section" aria-labelledby="who-heading">
+        <h2 id="who-heading">Who Should Apply</h2>
+        <p>${ON.escapeHtml(whoApply)}</p>
+      </section>
+
+      <section class="detail-section" aria-labelledby="funding-heading">
+        <h2 id="funding-heading">Funding Explained</h2>
+        <p>${ON.escapeHtml(fundingExplained)}</p>
+      </section>
+
+      <section class="detail-section" aria-labelledby="selection-heading">
+        <h2 id="selection-heading">What the Selection Process Typically Involves</h2>
+        ${selectionProcess}
       </section>
 
       <section class="detail-section" aria-labelledby="faq-heading">
@@ -1060,40 +1205,38 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <section class="detail-section" aria-labelledby="documents-heading">
-        <h2 id="documents-heading">Required Documents</h2>
-        <p>Most applications for ${ON.escapeHtml(item.type || categoryType).toLowerCase()} opportunities require the following documents. Check the official programme website for the exact list, as requirements vary by provider.</p>
-        <ul>
-          <li><strong>Valid passport or national ID</strong> — ensure it remains valid for the full programme duration</li>
-          <li><strong>Curriculum Vitae (CV) or resume</strong> — highlight relevant academic, professional, and volunteer experience</li>
-          <li><strong>Academic transcripts and certificates</strong> — from all post-secondary institutions attended</li>
-          <li><strong>Motivation letter or statement of purpose</strong> — tailored to this specific programme, explaining your goals and fit</li>
-          <li><strong>Letters of recommendation</strong> — typically two or three, from professors or professional supervisors</li>
-          <li><strong>Proof of language proficiency</strong> — such as TOEFL, IELTS, or equivalent, if the programme is taught in a language other than your native tongue</li>
-          <li><strong>Research proposal or project outline</strong> — required for research-focused fellowships and competitions</li>
-          <li><strong>Passport-sized photographs</strong> — following the specifications stated in the application guidelines</li>
-        </ul>
+        <h2 id="documents-heading">Documents You Will Likely Need</h2>
+        <p>Prepare these documents before starting your application. Requirements vary by programme, so always check the official website for the exact list.</p>
+        <ul>${docsHtml}</ul>
       </section>
 
       <section class="detail-section" aria-labelledby="mistakes-heading">
-        <h2 id="mistakes-heading">Common Application Mistakes to Avoid</h2>
-        <p>Applying for competitive opportunities requires attention to detail. Avoid these frequent errors to strengthen your candidacy:</p>
-        <ol>
-          <li><strong>Missing the deadline</strong> — submit your application at least 48 hours before the stated cutoff to account for technical issues or time-zone differences.</li>
-          <li><strong>Submitting incomplete forms</strong> — double-check that every required field is filled and all supporting documents are uploaded before clicking submit.</li>
-          <li><strong>Writing a generic motivation letter</strong> — tailor your statement to this specific programme. Mention why you chose it, how it aligns with your goals, and what unique perspective you bring.</li>
-          <li><strong>Ignoring eligibility criteria</strong> — carefully review nationality, age, degree level, and field-of-study requirements before investing time in an application you may not qualify for.</li>
-          <li><strong>Skipping reference preparation</strong> — give your recommenders at least three to four weeks' notice and share your CV and motivation letter so they can write informed, specific references.</li>
-        </ol>
+        <h2 id="mistakes-heading">Common Mistakes to Avoid</h2>
+        <p>Competitive ${ON.escapeHtml(typeLabel)}s attract strong candidates. These mistakes are easy to avoid but frequently cost applicants their chance:</p>
+        <ol>${mistakesHtml}</ol>
+      </section>
+
+      <section class="detail-section" aria-labelledby="timeline-heading">
+        <h2 id="timeline-heading">Application Timeline</h2>
+        <p>The deadline for this ${ON.escapeHtml(typeLabel)} is <strong>${ON.escapeHtml(deadline)}</strong>. Here is a suggested preparation timeline:</p>
+        <ul>
+          <li><strong>8–10 weeks before:</strong> Read the full eligibility criteria and programme description. Confirm you qualify before investing time.</li>
+          <li><strong>6–8 weeks before:</strong> Contact your referees and share your CV and draft motivation letter with them.</li>
+          <li><strong>4–6 weeks before:</strong> Write your motivation letter, research proposal, or other essays. Get feedback from mentors or peers.</li>
+          <li><strong>2–3 weeks before:</strong> Gather transcripts, certificates, language test scores, and any other required documents.</li>
+          <li><strong>1 week before:</strong> Complete the online application form. Review every field. Upload all documents.</li>
+          <li><strong>48 hours before:</strong> Submit your application. Do not wait until the final day — technical issues and time-zone differences cause missed deadlines every year.</li>
+        </ul>
       </section>
 
       <section class="detail-section" aria-labelledby="apply-heading">
         <h2 id="apply-heading">How to Apply</h2>
-        <p>Visit the official program website to submit your application. Make sure to review all eligibility requirements and prepare necessary documents before the deadline.</p>
+        <p>Applications are submitted through the official programme website. Review all eligibility requirements, prepare your documents, and submit well before the deadline.</p>
         <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Visit Official Website <span aria-hidden="true">↗</span></a>
       </section>
 
-      <p class="microcopy">OpportunityNest summarizes public information and sends applicants to the official program website. Always confirm requirements and deadlines before applying.</p>
-      ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Information may change — verify on the official website.</p>` : ''}
+      <p class="microcopy">OpportunityNest summarizes public information and directs applicants to the official programme website. Always verify requirements and deadlines before applying.</p>
+      ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Details may change — confirm on the official website.</p>` : ''}
 
       <div id="related-opportunities" aria-live="polite"></div>
     `;
