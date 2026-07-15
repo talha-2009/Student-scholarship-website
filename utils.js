@@ -1002,7 +1002,14 @@ window.OpportunityNest = window.OpportunityNest || {};
 
     const keywordLower = keyword.toLowerCase();
     const typeFragment = keywordLower.includes(type) ? "" : ` ${type}`;
-    let desc = `Apply for the ${keyword}${typeFragment} in ${country}. ${funding}. Deadline: ${deadline}. Explore details and apply via OpportunityNest.`;
+    const descVariants = [
+      `Apply for the ${keyword}${typeFragment} in ${country}. ${funding}. Deadline: ${deadline}. Explore details and apply via OpportunityNest.`,
+      `${keyword}${typeFragment} — ${country}. ${funding}. Deadline ${deadline}. Find full eligibility, funding details, and application steps on OpportunityNest.`,
+      `Discover the ${keyword}${typeFragment} in ${country}. ${funding}, deadline ${deadline}. Read the full guide and apply through the official source.`,
+      `${keyword}: ${funding} ${typeFragment} in ${country}. Application deadline ${deadline}. Check eligibility, required documents, and tips on OpportunityNest.`,
+      `Looking for the ${keyword}${typeFragment}? Based in ${country}, ${funding}, deadline ${deadline}. OpportunityNest has the full breakdown.`
+    ];
+    let desc = ON.pickVariant(descVariants, item);
 
     if (desc.length > 160) {
       desc = desc.slice(0, 157).trim().replace(/[.,;:!?]+$/, "") + "...";
@@ -1018,7 +1025,17 @@ window.OpportunityNest = window.OpportunityNest || {};
       return `${keyword}${override.h1Suffix}`;
     }
     if (override) return keyword;
-    return `${keyword} (Fully Funded)`;
+    const h1SuffixVariants = [" (Fully Funded)", " — Full Guide & Application", " — Eligibility, Funding & How to Apply", " (Application Guide)", " — Details, Deadline & Requirements"];
+    const h1Suffix = ON.pickVariant(h1SuffixVariants, item);
+    return `${keyword}${h1Suffix}`;
+  };
+
+  // Pick a variant from an array based on a stable hash of the item title
+  ON.pickVariant = (variants, item) => {
+    const str = item.title || item.id || "default";
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash |= 0; }
+    return variants[Math.abs(hash) % variants.length];
   };
 
   // SEO: Generate an opening paragraph (120-180 words) with the keyword in the first 50 words.
@@ -1034,17 +1051,23 @@ window.OpportunityNest = window.OpportunityNest || {};
     const field = item.field || "various fields";
     const funding = item.funding || "comprehensive support";
     const deadline = ON.formatDeadline(item);
+    const org = item.organization || "";
+    const orgMention = org ? ` Offered by ${org},` : "";
 
-    const sentences = [
-      `The ${keyword} is a ${type} based in ${country}, open to ${level} candidates with an interest in ${field}.`,
-      `This programme offers ${funding}, enabling selected participants to focus fully on their studies, research, or professional development without financial pressure.`,
-      `Successful applicants join a cohort of driven individuals from around the world and gain access to academic mentors, networking events, and career-building resources throughout the programme.`,
-      `Whether your goal is to advance your education, gain international experience, or build specialised skills, this opportunity provides a structured path toward that objective.`,
-      `The application deadline is ${deadline}. Review all eligibility criteria carefully and submit your materials through the official programme website well before the closing date.`,
-      `OpportunityNest keeps this listing updated so you can apply with accurate deadline and funding information.`
+    const introVariants = [
+      // Variant 1: Direct and practical
+      `The ${keyword} is a ${type} based in ${country}, open to ${level} candidates with an interest in ${field}.${orgMention} This programme offers ${funding}, enabling selected participants to focus fully on their studies, research, or professional development without financial pressure. Successful applicants join a cohort of driven individuals from around the world and gain access to academic mentors, networking events, and career-building resources throughout the programme. Whether your goal is to advance your education, gain international experience, or build specialised skills, this opportunity provides a structured path toward that objective. The application deadline is ${deadline}. Review all eligibility criteria carefully and submit your materials through the official programme website well before the closing date. OpportunityNest keeps this listing updated so you can apply with accurate deadline and funding information.`,
+      // Variant 2: Aspirational and career-focused
+      `If you are looking to take a significant step in your academic or professional journey, the ${keyword} deserves your attention. This ${type} in ${country} welcomes ${level} applicants working in ${field} and provides ${funding} to help participants make the most of the experience.${orgMention} Past participants have described the programme as transformative — not just for the funding, but for the mentorship, peer network, and exposure to new perspectives that come with it. The deadline is ${deadline}, and applications are submitted through the official programme website. OpportunityNest recommends starting your preparation early: review the eligibility criteria, gather your documents, and draft your motivation letter well before the closing date. This listing is kept up to date so you always have the latest information at hand.`,
+      // Variant 3: Problem-solution framing
+      `Finding a ${type} that combines strong funding, clear eligibility, and a reputable host institution is not easy — the ${keyword} checks all three. Based in ${country} and aimed at ${level} candidates in ${field}, this programme provides ${funding} alongside access to a global network of scholars, professionals, and alumni.${orgMention} The application deadline is ${deadline}. What makes this opportunity stand out is its combination of financial support and structured development: participants do not just receive funding, they gain mentorship, training, and long-term career connections. If you meet the eligibility criteria, we recommend preparing your application at least six to eight weeks in advance. OpportunityNest monitors this listing for updates to deadlines and requirements.`,
+      // Variant 4: Comparative context
+      `Among the many ${type}s available to ${level} candidates in ${field}, the ${keyword} is notable for its scope, funding, and institutional backing. Hosted in ${country}, the programme offers ${funding} and attracts applicants from diverse academic and professional backgrounds.${orgMention} The selection process is competitive, but well-prepared candidates with a clear motivation letter and strong references have a realistic chance of success. The deadline is ${deadline}. Before applying, confirm that you meet all eligibility requirements — nationality restrictions, degree level, and field-specific criteria can vary. OpportunityNest provides this summary to help you decide whether to invest time in your application, and links directly to the official programme page for submission.`,
+      // Variant 5: Action-oriented
+      `The ${keyword} is currently accepting applications from ${level} candidates interested in ${field}. This ${type}, based in ${country}, provides ${funding} and is designed for individuals who want to combine academic rigour with real-world impact.${orgMention} The deadline is ${deadline}, and all applications go through the official programme website — OpportunityNest does not process applications but keeps this listing current so you can apply with confidence. Successful participants typically describe the experience as a turning point: the funding removes financial barriers, while the programme structure — including mentorship, workshops, and peer collaboration — builds skills that last well beyond the programme itself. If this matches your goals, start preparing your documents now.`
     ];
 
-    return ON.fitWordCount(sentences.join(" "), 120, 180);
+    return ON.fitWordCount(ON.pickVariant(introVariants, item), 120, 180);
   };
 
   // SEO: Generate an H2 heading that contains a natural variation of the primary keyword.
@@ -1078,19 +1101,46 @@ window.OpportunityNest = window.OpportunityNest || {};
     const deadline = ON.formatDeadline(item);
     const isFullyFunded = /fully\s*fund/i.test(funding);
 
-    const eligibilityAnswer = `The ${keyword}${typeFragment} is open to ${level} applicants with an interest in ${field}. Eligibility typically depends on your nationality, academic background, and the specific requirements set by the programme. Review the official criteria carefully — some programmes restrict by country of origin, age, or degree field, while others are open to all nationalities and disciplines.`;
+    const eligibilityAnswers = [
+      `The ${keyword}${typeFragment} is open to ${level} applicants with an interest in ${field}. Eligibility typically depends on your nationality, academic background, and the specific requirements set by the programme. Review the official criteria carefully — some programmes restrict by country of origin, age, or degree field, while others are open to all nationalities and disciplines.`,
+      `Eligibility for the ${keyword}${typeFragment} depends on several factors: your nationality, current education level, and field of study. The programme welcomes ${level} candidates in ${field}, but specific restrictions may apply. Always check the official eligibility page before investing time in an application.`,
+      `The ${keyword}${typeFragment} accepts applications from ${level} candidates working in ${field}. Nationality requirements vary — some programmes are open globally, while others target specific regions or countries. Read the full criteria on the official website to confirm you qualify.`
+    ];
+    const eligibilityAnswer = ON.pickVariant(eligibilityAnswers, { title: (item.title || "") + "_faq1" });
 
-    const fundingAnswer = isFullyFunded
-      ? `Yes, the ${keyword}${typeFragment} is fully funded. This typically covers tuition fees, a living stipend, health insurance, and travel costs. The exact components may vary by year and recipient, so check the official programme page for the current funding breakdown.`
-      : `The ${keyword}${typeFragment} provides ${funding}. The specific financial support depends on the programme structure — some cover tuition only, while others include living allowances, travel grants, or research funding. Check the official listing for the full details of what is included.`;
+    const fundingAnswers = isFullyFunded ? [
+      `Yes, the ${keyword}${typeFragment} is fully funded. This typically covers tuition fees, a living stipend, health insurance, and travel costs. The exact components may vary by year and recipient, so check the official programme page for the current funding breakdown.`,
+      `The ${keyword}${typeFragment} provides full funding that covers tuition, living expenses, health insurance, and international travel. The specific amounts and payment schedule are published on the official website and may be adjusted each cycle.`,
+      `Yes, this is a fully funded programme. Selected participants receive a comprehensive package including tuition waivers, a monthly stipend, and travel support. Funding details can change between years, so verify the current structure on the official page.`
+    ] : [
+      `The ${keyword}${typeFragment} provides ${funding}. The specific financial support depends on the programme structure — some cover tuition only, while others include living allowances, travel grants, or research funding. Check the official listing for the full details of what is included.`,
+      `Funding for the ${keyword}${typeFragment} is ${funding}. The exact amount and coverage depend on the programme and your status. Review the funding section on the official website for a detailed breakdown of what is included.`,
+      `The ${keyword}${typeFragment} offers ${funding}. What this covers varies — it may include partial tuition, a monthly stipend, or a one-time grant. Confirm the details on the official programme page before applying.`
+    ];
+    const fundingAnswer = ON.pickVariant(fundingAnswers, { title: (item.title || "") + "_faq2" });
 
-    const applyAnswer = `You can apply through the official programme website. The deadline is ${deadline}. Before applying, confirm your eligibility, prepare your motivation letter and CV, and arrange your references early. Most successful applicants start preparing at least 6–8 weeks before the deadline.`;
+    const applyAnswers = [
+      `You can apply through the official programme website. The deadline is ${deadline}. Before applying, confirm your eligibility, prepare your motivation letter and CV, and arrange your references early. Most successful applicants start preparing at least 6–8 weeks before the deadline.`,
+      `Applications are submitted via the official programme portal. The deadline is ${deadline}. Start by checking your eligibility, then gather your documents — transcripts, references, and motivation letter — well in advance. Early preparation gives you time to refine each component.`,
+      `To apply, visit the official programme website and follow the application instructions. The closing date is ${deadline}. Give yourself at least six weeks to prepare: draft your motivation letter, request references, and collect your academic documents before the final submission.`
+    ];
+    const applyAnswer = ON.pickVariant(applyAnswers, { title: (item.title || "") + "_faq3" });
 
-    const competitivenessAnswer = `The ${keyword}${typeFragment} is competitive, as it attracts strong applicants from ${country} and internationally. To strengthen your application, focus on demonstrating clear goals, relevant experience in ${field}, and a well-prepared motivation letter that explains why this specific programme is the right fit for you.`;
+    const competitivenessAnswers = [
+      `The ${keyword}${typeFragment} is competitive, as it attracts strong applicants from ${country} and internationally. To strengthen your application, focus on demonstrating clear goals, relevant experience in ${field}, and a well-prepared motivation letter that explains why this specific programme is the right fit for you.`,
+      `Competition for the ${keyword}${typeFragment} is significant — it draws applications from ${country} and beyond. What separates successful candidates is specificity: a motivation letter that names the programme's unique features, connects them to your background, and shows a realistic plan for what comes next.`,
+      `This ${type} receives strong applications from ${country} and around the world. To stand out, invest time in your motivation letter, secure references from people who know your work well, and demonstrate a clear connection between your experience in ${field} and the programme's objectives.`
+    ];
+    const competitivenessAnswer = ON.pickVariant(competitivenessAnswers, { title: (item.title || "") + "_faq4" });
 
-    const afterAnswer = `After selection, recipients typically receive an official offer letter with programme details, start dates, and any pre-arrival requirements such as visa applications, accommodation arrangements, or orientation materials. The programme team will guide you through the next steps.`;
+    const afterAnswers = [
+      `After selection, recipients typically receive an official offer letter with programme details, start dates, and any pre-arrival requirements such as visa applications, accommodation arrangements, or orientation materials. The programme team will guide you through the next steps.`,
+      `Once selected, you will receive a formal acceptance with details about start dates, pre-arrival requirements, and any documentation you need to prepare — such as visa applications, health checks, or housing forms. The programme coordinators will walk you through each step.`,
+      `After a successful application, the programme team contacts you with an offer letter outlining your start date, funding details, and any pre-departure steps. This typically includes visa applications, accommodation arrangements, and an orientation schedule.`
+    ];
+    const afterAnswer = ON.pickVariant(afterAnswers, { title: (item.title || "") + "_faq5" });
 
-    // Select 4 most useful FAQs based on opportunity attributes
+    // Select 4 most useful FAQs — vary which one is dropped based on the item
     const allFaqs = [
       { question: `Who is eligible for the ${keyword}?`, answer: eligibilityAnswer },
       { question: `What does the ${keyword} cover financially?`, answer: fundingAnswer },
@@ -1099,7 +1149,11 @@ window.OpportunityNest = window.OpportunityNest || {};
       { question: `What happens after I am selected?`, answer: afterAnswer }
     ];
 
-    return allFaqs.slice(0, 4);
+    // Drop a different FAQ based on the item's title hash so pages vary
+    const dropIndex = Math.abs(ON.pickVariant([0, 1, 2, 3, 4], item)) % allFaqs.length;
+    const selectedFaqs = allFaqs.filter((_, i) => i !== dropIndex);
+
+    return selectedFaqs;
   };
 
   // SEO: Generate structured data for opportunity
@@ -1190,27 +1244,66 @@ window.OpportunityNest = window.OpportunityNest || {};
     const field = item.field || "various fields";
     const funding = item.funding || "";
     const isFullyFunded = /fully\s*fund/i.test(funding);
-    const parts = [];
 
-    if (level.match(/PhD|Doctoral/i)) {
-      parts.push(`This ${type} is ideal for researchers and doctoral candidates who have completed a master's degree and want to pursue original research in ${field}.`);
-    } else if (level.match(/Master/i)) {
-      parts.push(`This ${type} suits graduates who want to deepen their expertise in ${field} through advanced study at the master's level.`);
-    } else if (level.match(/Undergraduate|Bachelor/i)) {
-      parts.push(`This ${type} is designed for undergraduate students in ${field} who want to gain academic and professional experience early in their careers.`);
-    } else if (level.match(/Postdoc/i)) {
-      parts.push(`This ${type} targets postdoctoral scholars and early-career academics seeking dedicated research time in ${field}.`);
-    } else {
-      parts.push(`This ${type} is open to motivated individuals with a strong interest in ${field}.`);
-    }
+    const levelVariants = {
+      phd: [
+        `This ${type} is ideal for researchers and doctoral candidates who have completed a master's degree and want to pursue original research in ${field}.`,
+        `Doctoral candidates and early-career researchers working in ${field} will find this programme especially well-suited to their goals.`,
+        `If you are a PhD candidate with a strong research background in ${field}, this programme offers the time, resources, and mentorship to complete a significant contribution to the field.`,
+        `Designed for doctoral-level researchers, this ${type} supports scholars who are ready to undertake ambitious, original work in ${field}.`,
+        `This opportunity targets PhD candidates who have a clear research plan in ${field} and want institutional support to carry it out at a high level.`
+      ],
+      master: [
+        `This ${type} suits graduates who want to deepen their expertise in ${field} through advanced study at the master's level.`,
+        `Master's graduates looking to specialise further in ${field} will find this programme a strong fit for their academic and career goals.`,
+        `If you hold a bachelor's degree and want to build advanced knowledge in ${field}, this ${type} provides the structure and funding to do so.`,
+        `This programme is designed for early-career graduates who see ${field} as central to their professional development and want rigorous training at the master's level.`,
+        `Recent graduates with a passion for ${field} are the primary audience — this ${type} gives you the academic foundation and credentials to advance.`
+      ],
+      undergrad: [
+        `This ${type} is designed for undergraduate students in ${field} who want to gain academic and professional experience early in their careers.`,
+        `If you are currently studying at the undergraduate level in ${field}, this programme offers a valuable opportunity to build skills and connections before graduation.`,
+        `Undergraduates in ${field} who are looking for hands-on experience, mentorship, and a competitive edge on their CV should consider this opportunity.`,
+        `This ${type} welcomes bachelor's students who want to test their interest in ${field} through a structured, supported programme.`,
+        `Students in the early years of their undergraduate degree in ${field} can benefit from the exposure and experience this programme provides.`
+      ],
+      postdoc: [
+        `This ${type} targets postdoctoral scholars and early-career academics seeking dedicated research time in ${field}.`,
+        `Postdoctoral researchers in ${field} who need protected time and institutional resources will find this programme well-aligned with their career stage.`,
+        `If you have recently completed your PhD and are building your research profile in ${field}, this fellowship provides the space and support to publish, network, and develop your ideas.`,
+        `This opportunity is aimed at postdoctoral scholars who want to deepen their expertise in ${field} while contributing to an active research community.`,
+        `Early-career academics in ${field} who are transitioning from doctoral study to independent research are the ideal candidates for this ${type}.`
+      ],
+      general: [
+        `This ${type} is open to motivated individuals with a strong interest in ${field}.`,
+        `Anyone with a genuine commitment to ${field} and a clear sense of what they want to gain from this experience should consider applying.`,
+        `This programme welcomes applicants from diverse backgrounds who share a common interest in ${field} and a drive to make the most of the opportunity.`,
+        `Whether you are a student, early-career professional, or career-changer, this ${type} is relevant if ${field} is central to your goals.`,
+        `The programme is open to a broad range of applicants — what matters most is a clear motivation and a realistic plan for how you will use the experience.`
+      ]
+    };
 
-    if (isFullyFunded) {
-      parts.push(`Because this programme is fully funded, it is especially valuable for candidates who need financial support to study or work in ${country} — including those from low- and middle-income backgrounds.`);
-    }
+    const levelKey = level.match(/PhD|Doctoral/i) ? "phd" : level.match(/Master/i) ? "master" : level.match(/Undergraduate|Bachelor/i) ? "undergrad" : level.match(/Postdoc/i) ? "postdoc" : "general";
+    const parts = [ON.pickVariant(levelVariants[levelKey], item)];
 
-    if (country !== "Global" && country !== "Not specified") {
-      parts.push(`If you are an international applicant considering ${country}, this programme offers a structured entry point with institutional support.`);
-    }
+    const fundingVariants = [
+      `Because this programme is fully funded, it is especially valuable for candidates who need financial support to study or work in ${country} — including those from low- and middle-income backgrounds.`,
+      `Full funding means you can focus entirely on the programme without worrying about tuition, living costs, or travel — a significant advantage for international participants.`,
+      `The fully funded nature of this ${type} removes the financial barriers that often prevent talented candidates from applying to programmes in ${country}.`,
+      `With full funding covering tuition, living expenses, and travel, this opportunity is accessible to candidates regardless of their personal financial situation.`,
+      `Fully funded programmes like this one are rare and competitive — if you qualify, the financial support allows you to commit fully to your studies or research in ${country}.`
+    ];
+
+    const intlVariants = [
+      `If you are an international applicant considering ${country}, this programme offers a structured entry point with institutional support.`,
+      `International candidates looking at ${country} should note that this programme is designed to accommodate participants from diverse national and educational backgrounds.`,
+      `For applicants from outside ${country}, this ${type} provides the kind of institutional framework that makes an international transition manageable.`,
+      `If you are applying from abroad, this programme has a track record of supporting international participants through arrival, orientation, and integration.`,
+      `${country} is an increasingly popular destination for international students and professionals — this programme makes the process easier with dedicated support structures.`
+    ];
+
+    if (isFullyFunded) { parts.push(ON.pickVariant(fundingVariants, { title: (item.title || "") + "_fund" })); }
+    if (country !== "Global" && country !== "Not specified") { parts.push(ON.pickVariant(intlVariants, { title: (item.title || "") + "_intl" })); }
 
     return parts.join(" ");
   };
@@ -1221,51 +1314,115 @@ window.OpportunityNest = window.OpportunityNest || {};
     const type = (item.type || "opportunity").toLowerCase();
 
     if (/fully\s*fund/i.test(funding)) {
-      return `This ${type} covers the full cost of participation. For most recipients, this means tuition fees, a living stipend, health insurance, and travel costs are all included. The exact breakdown varies by programme — some cover accommodation directly, while others provide a monthly allowance that you manage yourself. Check the official programme page for the specific funding components, as they differ between recipients and may change from year to year.`;
+      const variants = [
+        `This ${type} covers the full cost of participation. For most recipients, this means tuition fees, a living stipend, health insurance, and travel costs are all included. The exact breakdown varies by programme — some cover accommodation directly, while others provide a monthly allowance that you manage yourself. Check the official programme page for the specific funding components, as they differ between recipients and may change from year to year.`,
+        `Recipients of this fully funded ${type} do not pay tuition and receive a living stipend that covers accommodation, food, and day-to-day expenses in the host country. Health insurance and round-trip travel are typically included as well. The specific amounts and payment schedules are published on the official programme website and may be adjusted annually.`,
+        `Full funding means the programme takes care of the major costs: tuition, a monthly stipend, health coverage, and international travel. You will not need to find separate housing funding or worry about insurance premiums. The exact stipend amount depends on the host city and cost of living, so review the funding breakdown on the official page.`,
+        `This programme removes the financial barrier entirely. Selected participants receive a comprehensive package that includes tuition waivers, a monthly living allowance, health insurance, and a travel grant. Some programmes also provide settling-in allowances, book grants, or conference attendance funding. The official listing has the most current details on what is covered.`,
+        `As a fully funded opportunity, this ${type} provides everything you need to focus on your work: no tuition fees, a regular stipend for living costs, comprehensive health insurance, and travel support. Additional benefits — such as research budgets, family allowances, or conference funding — may also be available depending on the programme. Always check the official source for the latest funding structure.`
+      ];
+      return ON.pickVariant(variants, item);
     }
     if (/partial/i.test(funding)) {
-      return `This ${type} provides partial funding toward your costs. Depending on the programme, this may cover a percentage of tuition fees, a one-time grant, or a monthly contribution toward living expenses. You will likely need to secure additional funding for the remaining costs through personal savings, other scholarships, or university financial aid.`;
+      const variants = [
+        `This ${type} provides partial funding toward your costs. Depending on the programme, this may cover a percentage of tuition fees, a one-time grant, or a monthly contribution toward living expenses. You will likely need to secure additional funding for the remaining costs through personal savings, other scholarships, or university financial aid.`,
+        `Partial funding means the programme contributes to — but does not fully cover — your expenses. Common structures include a tuition discount, a fixed-term stipend, or a one-off relocation grant. Plan ahead by identifying other funding sources to bridge the gap.`,
+        `The financial support for this ${type} covers part of the overall cost. Some recipients use it to offset tuition while covering living expenses themselves; others combine it with external scholarships or part-time work where permitted. The official website lists the exact funding components and amounts.`,
+        `This programme offers a meaningful but incomplete funding package. You can expect support for certain costs — often tuition or a monthly stipend — but should budget for expenses that fall outside the award. Many recipients successfully combine this with university bursaries, government loans, or crowdfunding.`,
+        `Partial funding provides a financial foundation but requires you to plan for the rest. The programme typically covers one or two major cost categories — check the official listing to understand exactly which expenses are included and which you will need to fund independently.`
+      ];
+      return ON.pickVariant(variants, item);
     }
     if (/unpaid|volunteer/i.test(funding)) {
-      return `This ${type} does not include a salary or stipend. However, unpaid positions at international organisations often provide other benefits: professional networking, mentorship, hands-on experience, and a strong credential for your CV. Some host organisations may offer travel reimbursements or help with visa costs — check the official listing for details.`;
+      const variants = [
+        `This ${type} does not include a salary or stipend. However, unpaid positions at international organisations often provide other benefits: professional networking, mentorship, hands-on experience, and a strong credential for your CV. Some host organisations may offer travel reimbursements or help with visa costs — check the official listing for details.`,
+        `While this opportunity is unpaid, the professional value can be substantial. Participants gain direct experience at a recognised organisation, build an international network, and develop skills that are difficult to acquire elsewhere. Some programmes assist with accommodation or visa costs even when they do not provide a salary.`,
+        `This is an unpaid position, but the non-financial returns are significant: mentorship, real-world project experience, and a credential that opens doors in your field. Check whether the host organisation offers any logistical support such as housing assistance, travel reimbursement, or a certificate of completion.`,
+        `No stipend or salary is provided for this ${type}. That said, many participants find the experience worthwhile for the professional connections, skill development, and career clarity it delivers. Some hosts may cover specific costs like local transport or provide a shared workspace.`,
+        `This unpaid opportunity is best suited for those who can self-fund or have external support. The value lies in the experience itself: working alongside professionals, building your portfolio, and gaining a recognised name on your CV. Review the official listing for any ancillary support the host may offer.`
+      ];
+      return ON.pickVariant(variants, item);
     }
     if (/stipend|monthly/i.test(funding)) {
-      return `Recipients of this ${type} receive a regular stipend to cover living expenses during the programme. The amount is designed to cover basic costs such as accommodation, food, and local transport in the host country. Additional benefits like health insurance, travel allowances, or research grants may also be included depending on the programme structure.`;
+      const variants = [
+        `Recipients of this ${type} receive a regular stipend to cover living expenses during the programme. The amount is designed to cover basic costs such as accommodation, food, and local transport in the host country. Additional benefits like health insurance, travel allowances, or research grants may also be included depending on the programme structure.`,
+        `A monthly stipend is provided to help you cover day-to-day living costs while you participate in this programme. The exact amount varies by host location and is calibrated to local cost-of-living estimates. Some programmes also include health insurance or a separate travel budget on top of the stipend.`,
+        `This programme pays a periodic stipend rather than a salary. It is intended to cover essentials — rent, meals, transport — during your time on the programme. Depending on the host city, the stipend may be modest, so budgeting carefully is advisable. Check the official page for the current rate and any supplementary benefits.`,
+        `The stipend for this ${type} is structured to support participants through the programme duration without financial distraction. It covers basic living costs in the host country. Additional support — such as health coverage, research funds, or conference travel — may be available depending on the specific programme terms.`,
+        `Participants receive a monthly living allowance that covers accommodation, food, and local transport. The stipend amount is set annually and may be adjusted based on the host city. Review the official funding details to understand exactly what is included and whether additional costs need separate planning.`
+      ];
+      return ON.pickVariant(variants, item);
     }
-    return `Funding for this ${type} varies by recipient and year. The official programme website provides the most current details on what is covered, payment schedules, and any conditions attached to the financial support. Review the funding section carefully before applying so you understand exactly what is included.`;
+    const fallbackVariants = [
+      `Funding for this ${type} varies by recipient and year. The official programme website provides the most current details on what is covered, payment schedules, and any conditions attached to the financial support. Review the funding section carefully before applying so you understand exactly what is included.`,
+      `The financial structure of this ${type} depends on several factors including your status, the host institution, and the programme year. Visit the official website for the latest funding information and do not rely on summaries from previous years, as amounts and conditions can change.`,
+      `Funding details for this programme are published on the official website and may differ depending on your eligibility category. Before investing time in an application, confirm what financial support is available and whether it meets your needs.`,
+      `The programme's funding model is described on the official page. It may include tuition support, a living allowance, or other benefits depending on your level and status. Always check the most recent information rather than assumptions from past cycles.`,
+      `This ${type} offers financial support, but the specifics depend on the programme year and your circumstances. The official website is the authoritative source for current funding details — review it carefully before applying.`
+    ];
+    return ON.pickVariant(fallbackVariants, item);
   };
 
   // Generate dynamic "Selection Process" section
   ON.generateSelectionProcess = (item) => {
     const type = (item.type || "opportunity").toLowerCase();
     const level = item.level || "";
-    const processes = [];
 
-    if (level.match(/PhD|Doctoral|Postdoc|Research/i)) {
-      processes.push("Research proposal evaluation");
-      processes.push("Academic references (typically two or three)");
-      processes.push("Interview with the selection committee (often by video call for international candidates)");
-    } else if (level.match(/Master/i)) {
-      processes.push("Academic transcript review");
-      processes.push("Motivation letter or statement of purpose");
-      processes.push("At least one reference from a professor or academic supervisor");
-      processes.push("Interview (in person or online)");
-    } else if (type === "internship") {
-      processes.push("CV and cover letter screening");
-      processes.push("Competency-based interview (often two rounds)");
-      processes.push("Possible written test or case study");
-    } else if (type === "competition") {
-      processes.push("Written submission or project proposal");
-      processes.push("Jury review and shortlisting");
-      processes.push("Final presentation or pitch (for finalists)");
-    } else {
-      processes.push("Application form and supporting documents review");
-      processes.push("Motivation letter assessment");
-      processes.push("Interview with the selection panel");
-    }
+    const processSets = {
+      research: [
+        ["Research proposal evaluation — your topic, methodology, and expected outcomes are assessed for originality and feasibility", "Academic references (typically two or three) from professors or supervisors who can speak to your research ability", "Interview with the selection committee (often by video call for international candidates)"],
+        ["Review of your research proposal and academic record", "Assessment of your publications, conference presentations, or prior research output", "Panel interview to discuss your research interests and fit with the programme"],
+        ["Initial screening of your academic CV and research proposal", "Evaluation of your references and any supporting materials", "In-depth interview where you present your research plan and answer committee questions"]
+      ],
+      master: [
+        ["Academic transcript review — your grades, institution, and degree classification are assessed", "Motivation letter or statement of purpose explaining your goals and fit with the programme", "At least one reference from a professor or academic supervisor", "Interview (in person or online) to discuss your background and ambitions"],
+        ["Evaluation of your academic record and degree relevance", "Review of your personal statement and any essays or writing samples", "Reference checks with your academic referees", "Selection interview — some programmes include a group activity or presentation"],
+        ["Academic merit screening based on your transcripts and degree classification", "Assessment of your motivation letter, CV, and extracurricular involvement", "Reference verification from your academic supervisors", "Final interview round, which may include a short presentation or case study"]
+      ],
+      internship: [
+        ["CV and cover letter screening — recruiters look for relevant coursework, projects, and motivation", "Competency-based interview (often two rounds) focusing on problem-solving and teamwork", "Possible written test or case study relevant to the role"],
+        ["Application review focusing on your academic background and any relevant experience", "Behavioural interview assessing your communication skills and adaptability", "Technical assessment or task depending on the department"],
+        ["Initial screening of your resume and cover letter", "Structured interview with one or two rounds", "Practical exercise or written assignment to test your skills in the role area"]
+      ],
+      competition: [
+        ["Written submission or project proposal outlining your idea, approach, or solution", "Jury review and shortlisting based on innovation, feasibility, and impact", "Final presentation or pitch (for finalists) in front of a panel of judges"],
+        ["Submission of your entry according to the competition brief and format requirements", "Expert review by a judging panel that scores entries against published criteria", "Shortlist announcement and final round — often involving a live presentation or demo"],
+        ["Open call for entries with a detailed proposal or portfolio submission", "Multi-stage judging process with scores from independent experts", "Finalist stage including a presentation, interview, or public showcase of your work"]
+      ],
+      general: [
+        ["Application form and supporting documents review — your CV, transcripts, and motivation letter are assessed", "Motivation letter assessment focusing on your goals, fit, and what you bring to the programme", "Interview with the selection panel to discuss your application in more depth"],
+        ["Initial eligibility check and document verification", "Qualitative review of your personal statement and references", "Selection interview — in person or virtual — to assess your motivation and suitability"],
+        ["Screening of your application against the published criteria", "Evaluation of your experience, references, and written statements", "Final interview or assessment day where you meet the selection committee"]
+      ]
+    };
 
+    let setKey;
+    if (level.match(/PhD|Doctoral|Postdoc|Research/i)) { setKey = "research"; }
+    else if (level.match(/Master/i)) { setKey = "master"; }
+    else if (type === "internship") { setKey = "internship"; }
+    else if (type === "competition") { setKey = "competition"; }
+    else { setKey = "general"; }
+
+    const processes = ON.pickVariant(processSets[setKey], item);
     const listHtml = processes.map((p, i) => `<li><strong>Stage ${i + 1}:</strong> ${ON.escapeHtml(p)}</li>`).join("");
-    return `<p>While the exact process depends on the programme, competitive ${type}s at this level typically involve the following stages:</p><ol>${listHtml}</ol><p>Start preparing for each stage well before the deadline. For interviews, practise articulating your goals and how this ${type} fits your trajectory.</p>`;
+
+    const introVariants = [
+      `While the exact process depends on the programme, competitive ${type}s at this level typically involve the following stages:`,
+      `Most programmes of this type use a multi-stage selection process. Here is what you can generally expect:`,
+      `The selection process for this ${type} usually follows a structured sequence designed to assess both your qualifications and your fit:`,
+      `Successful candidates typically progress through several evaluation stages. Here is an overview of what the process involves:`,
+      `Selection for this ${type} is competitive and multi-layered. The typical stages include:`
+    ];
+
+    const outroVariants = [
+      `Start preparing for each stage well before the deadline. For interviews, practise articulating your goals and how this ${type} fits your trajectory.`,
+      `Begin your preparation early. If there is an interview stage, rehearse explaining your motivation clearly and connecting your background to the programme's objectives.`,
+      `Do not wait until the shortlist stage to think about interviews. Prepare your narrative now: why this programme, what you bring, and where you want to go next.`,
+      `Each stage is designed to filter for commitment and fit. Treat every component — from the application form to the interview — as an opportunity to demonstrate your seriousness.`,
+      `Preparation is the difference between a strong and a weak application. Start with the documents, move to the interview, and make sure every stage tells a consistent story about your goals.`
+    ];
+
+    return `<p>${ON.pickVariant(introVariants, item)}</p><ol>${listHtml}</ol><p>${ON.pickVariant(outroVariants, { title: (item.title || "") + "_outro" })}</p>`;
   };
 
   // SEO: Render enhanced detail content with structured sections
@@ -1331,6 +1488,63 @@ window.OpportunityNest = window.OpportunityNest || {};
     mistakes.push("<li><strong>Asking for references at the last minute</strong> — give recommenders 3–4 weeks and share your CV and motivation letter so they write specific, strong references.</li>");
     const mistakesHtml = mistakes.join("");
 
+    // Variant section headings so each page feels distinct
+    const docsHeadingVariants = ["Documents You Will Likely Need", "Application Checklist", "Required Documents and Materials", "What You Need to Prepare", "Documents and Requirements"];
+    const docsHeading = ON.pickVariant(docsHeadingVariants, item);
+    const docsIntroVariants = [
+      "Prepare these documents before starting your application. Requirements vary by programme, so always check the official website for the exact list.",
+      "Gather these materials early. Having everything ready before you start writing gives you a significant advantage.",
+      "Most programmes require a similar set of documents. Start collecting them now so you are not scrambling near the deadline.",
+      "This is a practical checklist of what you will likely need. Confirm the exact requirements on the official programme page.",
+      "Before you begin the application, make sure you have these documents prepared and up to date."
+    ];
+    const docsIntro = ON.pickVariant(docsIntroVariants, item);
+
+    const mistakesHeadingVariants = ["Common Mistakes to Avoid", "Application Pitfalls Worth Avoiding", "Where Applicants Go Wrong", "Errors That Cost Candidates Their Chance", "Mistakes That Eliminate Strong Applications"];
+    const mistakesHeading = ON.pickVariant(mistakesHeadingVariants, item);
+    const mistakesIntroVariants = [
+      `Competitive ${ON.escapeHtml(typeLabel)}s attract strong candidates. These mistakes are easy to avoid but frequently cost applicants their chance:`,
+      `Even well-qualified candidates lose out when they make these preventable errors. Review each one before submitting:`,
+      `The difference between a successful and unsuccessful application often comes down to avoiding these common traps:`,
+      `Selection committees see these mistakes repeatedly. Avoiding them puts you ahead of many applicants:`,
+      `Do not let a careless error undermine a strong application. Check each of these before you submit:`
+    ];
+    const mistakesIntro = ON.pickVariant(mistakesIntroVariants, item);
+
+    const timelineHeadingVariants = ["Application Timeline", "When to Start Preparing", "Suggested Preparation Schedule", "Your Countdown to Submission", "Planning Your Application"];
+    const timelineHeading = ON.pickVariant(timelineHeadingVariants, item);
+    const timelineIntroVariants = [
+      `The deadline for this ${ON.escapeHtml(typeLabel)} is <strong>${ON.escapeHtml(deadline)}</strong>. Here is a suggested preparation timeline:`,
+      `With the deadline of <strong>${ON.escapeHtml(deadline)}</strong> approaching, here is a week-by-week guide to stay on track:`,
+      `This ${ON.escapeHtml(typeLabel)} closes on <strong>${ON.escapeHtml(deadline)}</strong>. Use this timeline to pace your preparation:`,
+      `Mark <strong>${ON.escapeHtml(deadline)}</strong> on your calendar. Then work backwards using this schedule:`,
+      `The closing date is <strong>${ON.escapeHtml(deadline)}</strong>. Here is how to structure your preparation so nothing is left to the last minute:`
+    ];
+    const timelineIntro = ON.pickVariant(timelineIntroVariants, item);
+
+    const applyHeadingVariants = ["How to Apply", "Application Process", "Next Steps", "Where and How to Submit", "Submitting Your Application"];
+    const applyHeading = ON.pickVariant(applyHeadingVariants, item);
+    const applyIntroVariants = [
+      "Applications are submitted through the official programme website. Review all eligibility requirements, prepare your documents, and submit well before the deadline.",
+      "To apply, visit the official programme portal. Confirm your eligibility, gather your documents, and submit your application before the closing date.",
+      "All applications go through the official programme website. Start by reading the full eligibility criteria, then prepare your materials and submit early.",
+      "The application is hosted on the official programme page. Review the requirements, prepare your documents, and aim to submit at least a few days before the deadline.",
+      "Visit the official programme website to begin your application. Check the eligibility criteria, prepare your supporting documents, and submit well in advance of the deadline."
+    ];
+    const applyIntro = ON.pickVariant(applyIntroVariants, item);
+
+    // Variant headings for remaining sections
+    const whoHeadingVariants = ["Who Should Apply", "Ideal Candidates for This Programme", "Who This Opportunity Is For", "Eligibility and Target Audience", "Is This Programme Right for You?"];
+    const whoHeading = ON.pickVariant(whoHeadingVariants, item);
+    const fundingHeadingVariants = ["Funding Explained", "What the Funding Covers", "Financial Support Details", "Understanding the Funding Package", "Scholarship and Funding Breakdown"];
+    const fundingHeading = ON.pickVariant(fundingHeadingVariants, item);
+    const selectionHeadingVariants = ["What the Selection Process Typically Involves", "How Candidates Are Selected", "Selection Criteria and Stages", "The Evaluation Process", "What to Expect During Selection"];
+    const selectionHeading = ON.pickVariant(selectionHeadingVariants, item);
+    const faqHeadingVariants = ["Frequently Asked Questions", "Common Questions Answered", "Your Questions About This Programme", "Key Questions and Answers", "Answers to Popular Questions"];
+    const faqHeading = ON.pickVariant(faqHeadingVariants, item);
+    const detailsHeadingVariants = ["Program Details at a Glance", "Key Information", "Opportunity Overview", "Quick Facts and Details", "Essential Programme Information"];
+    const detailsHeading = ON.pickVariant(detailsHeadingVariants, item);
+
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
         <a href="/">Home</a>
@@ -1365,7 +1579,7 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <section class="detail-section" aria-labelledby="details-heading">
-        <h2 id="details-heading">Program Details at a Glance</h2>
+        <h2 id="details-heading">${ON.escapeHtml(detailsHeading)}</h2>
         <dl class="detail-grid">
           <div><dt>Country</dt><dd>${ON.escapeHtml(country)}</dd></div>
           <div><dt>Education Level</dt><dd>${ON.escapeHtml(level)}</dd></div>
@@ -1376,42 +1590,42 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <section class="detail-section" aria-labelledby="who-heading">
-        <h2 id="who-heading">Who Should Apply</h2>
+        <h2 id="who-heading">${ON.escapeHtml(whoHeading)}</h2>
         <p>${ON.escapeHtml(whoApply)}</p>
       </section>
 
       <section class="detail-section" aria-labelledby="funding-heading">
-        <h2 id="funding-heading">Funding Explained</h2>
+        <h2 id="funding-heading">${ON.escapeHtml(fundingHeading)}</h2>
         <p>${ON.escapeHtml(fundingExplained)}</p>
       </section>
 
       <section class="detail-section" aria-labelledby="selection-heading">
-        <h2 id="selection-heading">What the Selection Process Typically Involves</h2>
+        <h2 id="selection-heading">${ON.escapeHtml(selectionHeading)}</h2>
         ${selectionProcess}
       </section>
 
       <section class="detail-section" aria-labelledby="faq-heading">
-        <h2 id="faq-heading">Frequently Asked Questions</h2>
+        <h2 id="faq-heading">${ON.escapeHtml(faqHeading)}</h2>
         <div class="faq-list">
           ${faqHtml}
         </div>
       </section>
 
       <section class="detail-section" aria-labelledby="documents-heading">
-        <h2 id="documents-heading">Documents You Will Likely Need</h2>
-        <p>Prepare these documents before starting your application. Requirements vary by programme, so always check the official website for the exact list.</p>
+        <h2 id="documents-heading">${ON.escapeHtml(docsHeading)}</h2>
+        <p>${ON.escapeHtml(docsIntro)}</p>
         <ul>${docsHtml}</ul>
       </section>
 
       <section class="detail-section" aria-labelledby="mistakes-heading">
-        <h2 id="mistakes-heading">Common Mistakes to Avoid</h2>
-        <p>Competitive ${ON.escapeHtml(typeLabel)}s attract strong candidates. These mistakes are easy to avoid but frequently cost applicants their chance:</p>
+        <h2 id="mistakes-heading">${ON.escapeHtml(mistakesHeading)}</h2>
+        <p>${mistakesIntro}</p>
         <ol>${mistakesHtml}</ol>
       </section>
 
       <section class="detail-section" aria-labelledby="timeline-heading">
-        <h2 id="timeline-heading">Application Timeline</h2>
-        <p>The deadline for this ${ON.escapeHtml(typeLabel)} is <strong>${ON.escapeHtml(deadline)}</strong>. Here is a suggested preparation timeline:</p>
+        <h2 id="timeline-heading">${ON.escapeHtml(timelineHeading)}</h2>
+        <p>${timelineIntro}</p>
         <ul>
           <li><strong>8–10 weeks before:</strong> Read the full eligibility criteria and programme description. Confirm you qualify before investing time.</li>
           <li><strong>6–8 weeks before:</strong> Contact your referees and share your CV and draft motivation letter with them.</li>
@@ -1423,8 +1637,8 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <section class="detail-section" aria-labelledby="apply-heading">
-        <h2 id="apply-heading">How to Apply</h2>
-        <p>Applications are submitted through the official programme website. Review all eligibility requirements, prepare your documents, and submit well before the deadline.</p>
+        <h2 id="apply-heading">${ON.escapeHtml(applyHeading)}</h2>
+        <p>${applyIntro}</p>
         <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Visit Official Website <span aria-hidden="true">↗</span></a>
       </section>
 
