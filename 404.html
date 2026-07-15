@@ -81,16 +81,26 @@
         <div class="container narrow error-page">
           <p class="eyebrow">404</p>
           <h1>Page Not Found</h1>
-          <p>The page you are looking for may have moved, expired, or never existed. Try one of the links below.</p>
+          <p>The page you are looking for may have moved, expired, or never existed. Try searching for an opportunity or browse by category.</p>
+          <form class="opportunity-controls" role="search" action="/" method="get" style="margin:1.5rem 0">
+            <label class="sr-only" for="error-search">Search opportunities</label>
+            <input id="error-search" name="q" type="search" placeholder="Search scholarships, internships, fellowships..." style="width:100%;max-width:480px">
+            <button class="button button-primary" type="submit">Search</button>
+          </form>
           <div class="hero-actions">
             <a class="button button-primary" href="/">Go to Home</a>
-            <a class="button button-secondary" href="/#opportunities">Browse Opportunities</a>
+            <a class="button button-secondary" href="/#opportunities">Browse All Opportunities</a>
           </div>
-          <nav class="error-links" aria-label="Helpful links">
+          <nav class="error-links" aria-label="Helpful links" style="margin-top:2rem">
+            <h2 style="font-size:1.1rem;margin-bottom:0.75rem">Popular pages</h2>
             <a href="/scholarships.html">Scholarships</a>
             <a href="/internships.html">Internships</a>
             <a href="/fellowships.html">Fellowships</a>
-            <a href="/contact.html">Contact</a>
+            <a href="/competitions.html">Competitions</a>
+            <a href="/country/united-kingdom/">UK Opportunities</a>
+            <a href="/country/germany/">Germany Opportunities</a>
+            <a href="/country/united-states/">US Opportunities</a>
+            <a href="/contact.html">Contact Us</a>
           </nav>
         </div>
       </section>

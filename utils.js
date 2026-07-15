@@ -717,6 +717,198 @@ window.OpportunityNest = window.OpportunityNest || {};
         { question: `Is this fellowship fully funded?`, answer: `Yes, it covers a monthly stipend, accommodation support, and access to the University of Vienna's library and academic resources.` }
       ],
       imageAlt: (keyword) => `${keyword} official fellowship banner`
+    },
+    {
+      id: "gates-cambridge",
+      test: (title) => /Gates\s+Cambridge/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Gates Cambridge Scholarship", item),
+      titleDescriptor: "UK Master's Award",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — Cambridge University's flagship fully funded award for outstanding international postgraduates. Explore eligibility and deadlines.`,
+      intro: (keyword, item) => `The ${keyword} is one of the most prestigious international graduate awards, funding up to 40 outstanding students from outside the UK each year to pursue a full-time postgraduate degree at the University of Cambridge. Founded in 2001 by the Bill and Melinda Gates Foundation, the scholarship covers full university fees, a generous living stipend, round-trip airfare, and additional funding for academic conferences and family allowances. Scholars are selected not only for academic excellence but for their leadership potential, commitment to improving the lives of others, and ability to think critically across disciplines. If you are a high-achieving student with a record of meaningful impact and a clear vision for how a Cambridge education will amplify your contribution to society, this scholarship offers an unmatched combination of financial support, intellectual community, and lifelong network.`,
+      h2: (keyword) => `Why This Cambridge Award Stands Out`,
+      faqs: (keyword) => [
+        { question: `What does the ${keyword} cover?`, answer: `Full university fees, a living stipend of approximately £20,000 per year, round-trip airfare, and additional funding for academic development and family allowances.` },
+        { question: `Who is eligible?`, answer: `Outstanding students from any country outside the UK who are applying to a full-time postgraduate degree at the University of Cambridge.` },
+        { question: `How competitive is this scholarship?`, answer: `Extremely competitive — around 40 scholarships are awarded annually from thousands of applications worldwide. Selection weighs academic merit, leadership, and commitment to social impact equally.` }
+      ],
+      imageAlt: (keyword) => `${keyword} University of Cambridge banner`
+    },
+    {
+      id: "erasmus-mundus",
+      test: (title) => /Erasmus\s+Mundus/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Erasmus Mundus Joint Master Degrees", item),
+      titleDescriptor: "EU Programme",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — EU-funded fully funded master's programmes at top European universities. Explore eligible fields, scholarships, and deadlines.`,
+      intro: (keyword, item) => `The ${keyword} (EMJMD) are prestigious, integrated, international study programmes jointly delivered by consortia of higher education institutions across Europe and beyond. Each programme lasts one to two years and awards a joint or multiple degree. The European Union funds full scholarships for outstanding students worldwide, covering participation costs, a monthly living allowance of €1,400, travel expenses, and insurance. With over 150 programmes spanning fields from renewable energy to human rights, public health to data science, EMJMD offers a unique opportunity to study in at least two different countries, gain intercultural competence, and build a pan-European professional network. If you are a bachelor's graduate seeking a truly international master's experience with full financial support, this is one of the most comprehensive funded programmes available.`,
+      h2: (keyword) => `What Makes This EU Programme Unique`,
+      faqs: (keyword) => [
+        { question: `How much funding does the ${keyword} provide?`, answer: `Full scholarships cover tuition, a €1,400 monthly allowance, travel costs, and insurance for the entire programme duration (1–2 years).` },
+        { question: `Can I choose which countries to study in?`, answer: `Each EMJMD programme has a fixed mobility pattern — you study at a minimum of two different European universities as part of the consortium. You cannot pick individual institutions, but each programme publishes its exact mobility path.` },
+        { question: `Who can apply?`, answer: `Graduates with a bachelor's degree from any country worldwide. Specific programmes may require relevant academic backgrounds, language proficiency, or professional experience.` }
+      ],
+      imageAlt: (keyword) => `${keyword} European universities banner`
+    },
+    {
+      id: "mext-scholarship",
+      test: (title) => /MEXT\s+Japanese/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("MEXT Japanese Government Scholarship", item),
+      titleDescriptor: "Japan Scholarship",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — Japan's flagship fully funded government award for international students. Explore eligibility, benefits, and application routes.`,
+      intro: (keyword, item) => `The ${keyword} is the Japanese government's flagship programme for international students, offering full funding for undergraduate, master's, doctoral, and research students to study at Japanese universities. Established in 1954, the scholarship reflects Japan's commitment to global education and cultural exchange. Recipients receive full tuition coverage, a monthly stipend (approximately ¥143,000–148,000 depending on level), round-trip airfare, and a preparatory Japanese language course if needed. The programme is available through two routes: embassy recommendation (applied through your local Japanese embassy) or university recommendation (nominated by a Japanese institution). If you are drawn to Japanese academic culture, eager to learn the language, and committed to building bridges between your home country and Japan, MEXT provides one of the most generous and long-standing government scholarship programmes in the world.`,
+      h2: (keyword) => `Benefits of Studying in Japan on MEXT`,
+      faqs: (keyword) => [
+        { question: `What does the ${keyword} cover?`, answer: `Full tuition, a monthly stipend of ¥143,000–148,000, round-trip airfare, and a Japanese language preparatory course if required.` },
+        { question: `What are the two application routes?`, answer: `Embassy recommendation (apply through your local Japanese embassy or consulate) and university recommendation (a Japanese university nominates you directly).` },
+        { question: `Do I need to speak Japanese?`, answer: `Not initially. Many MEXT scholarships include a 1–2 year Japanese language preparatory course before your degree begins. Some programmes at the graduate level are available in English.` }
+      ],
+      imageAlt: (keyword) => `${keyword} Japan study banner`
+    },
+    {
+      id: "knight-hennessy",
+      test: (title) => /Knight\s*[-–]?\s*Hennessy/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Knight-Hennessy Scholars Program", item),
+      titleDescriptor: "Stanford Award",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — Stanford's flagship fully funded graduate scholarship with leadership development. Explore eligibility and how to apply.`,
+      intro: (keyword, item) => `The ${keyword} is Stanford University's most ambitious graduate fellowship, funding up to 100 outstanding students each year to pursue any graduate degree at Stanford. Founded by Phil Knight and John Hennessy, the programme covers full tuition and fees, a living stipend, travel allowance, and additional academic expenses for up to three years. Beyond financial support, Knight-Hennessy provides a transformative leadership development programme including immersive workshops, global trips, one-on-one coaching, and a diverse community of scholars across all seven Stanford schools. Selection weighs academic excellence, leadership experience, civic contribution, and personal character through a multi-stage process including written essays and a two-day immersive assessment weekend. If you are an ambitious graduate student with a track record of meaningful impact and a vision for addressing the world's most pressing challenges, this programme offers an unparalleled combination of funding, community, and leadership training at one of the world's leading universities.`,
+      h2: (keyword) => `Why This Stanford Programme Is Unique`,
+      faqs: (keyword) => [
+        { question: `What does the ${keyword} fund?`, answer: `Full tuition and fees for any Stanford graduate programme, plus a living stipend, travel allowance, and academic expenses for up to three years.` },
+        { question: `Can I apply to any Stanford school?`, answer: `Yes — Knight-Hennessy Scholars can pursue any graduate degree across all seven Stanford schools: Business, Education, Engineering, Humanities & Sciences, Law, Medicine, and Earth Sustainability.` },
+        { question: `How is the selection process structured?`, answer: `A holistic review of academic records, leadership experience, essays, and references, followed by an immersive assessment weekend for finalists that includes group activities, interviews, and presentations.` }
+      ],
+      imageAlt: (keyword) => `${keyword} Stanford University banner`
+    },
+    {
+      id: "mastercard-foundation",
+      test: (title) => /Mastercard\s+Foundation\s+Scholars/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Mastercard Foundation Scholars Program", item),
+      titleDescriptor: "Global Scholarship",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded university education for young leaders from Africa. Explore partner universities, eligibility, and benefits.`,
+      intro: (keyword, item) => `The ${keyword} is one of the largest scholarship programmes in the world, providing comprehensive funding for academically talented yet economically disadvantaged young people from Africa to access and complete university education. The programme partners with over 20 universities across Africa and select institutions worldwide, covering full tuition, accommodation, books, a living stipend, travel, and psychosocial support throughout your studies. Scholars also receive leadership development, mentoring, and access to a global network of over 20,000 alumni committed to giving back to their communities. The programme specifically targets students who would otherwise be unable to afford university — combining financial access with the tools, networks, and values needed to become transformational leaders. If you are a young African student with strong academic potential, financial need, and a genuine commitment to community impact, this programme offers a life-changing educational pathway.`,
+      h2: (keyword) => `How This Programme Supports African Leaders`,
+      faqs: (keyword) => [
+        { question: `Who can apply for the ${keyword}?`, answer: `Young people from Africa who are academically talented, financially disadvantaged, and committed to giving back to their communities. Specific eligibility varies by partner university.` },
+        { question: `What expenses does the scholarship cover?`, answer: `Full tuition, accommodation, books, a living stipend, travel costs, and psychosocial support throughout your studies. Some partners also provide laptops and health insurance.` },
+        { question: `Which universities participate?`, answer: `Over 20 partner institutions across Africa and globally, including universities in Ghana, Kenya, South Africa, Rwanda, Uganda, Canada, and the United States. Check the official website for the current partner list.` }
+      ],
+      imageAlt: (keyword) => `${keyword} African scholars banner`
+    },
+    {
+      id: "who-internship",
+      test: (title) => /WHO\s+Internship/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("WHO Internship Programme", item),
+      titleDescriptor: "UN Internship",
+      h1Suffix: "",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — gain hands-on experience at the World Health Organization. Explore eligibility, stipend details, and application steps.`,
+      intro: (keyword, item) => `The ${keyword} offers students and recent graduates the chance to work alongside WHO professionals at headquarters, regional, or country offices worldwide. Internships typically last six weeks to six months and cover areas such as public health, epidemiology, health policy, communications, data science, and programme management. Interns receive a monthly stipend to cover living expenses and, depending on the duty station, may also receive travel support. The programme provides direct exposure to global health operations, policy development, and emergency response — experience that is invaluable for careers in international public health. WHO welcomes applicants from diverse academic backgrounds including medicine, nursing, public health, economics, social sciences, and statistics. If you are passionate about global health and want to contribute to the organisation leading the world's health response, this internship offers a meaningful entry point.`,
+      h2: (keyword) => `Why This WHO Experience Matters`,
+      faqs: (keyword) => [
+        { question: `Is the ${keyword} paid?`, answer: `Yes, WHO interns receive a monthly living stipend. Some duty stations may also provide travel support, though this varies by location and funding availability.` },
+        { question: `How long does the internship last?`, answer: `Between six weeks and six months, depending on the specific opportunity and the needs of the host department.` },
+        { question: `Who can apply?`, answer: `Students enrolled in a relevant degree programme or recent graduates (within six months) in fields such as public health, medicine, social sciences, statistics, communications, or health policy.` }
+      ],
+      imageAlt: (keyword) => `${keyword} World Health Organization banner`
+    },
+    {
+      id: "rotary-peace",
+      test: (title) => /Rotary\s+Peace\s+Fellowship/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Rotary Peace Fellowship", item),
+      titleDescriptor: "Peace Studies",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded master's or career-development fellowship in peace and conflict studies at top universities worldwide.`,
+      intro: (keyword, item) => `The ${keyword} is one of the most prestigious fully funded fellowships in peace and conflict studies, supporting up to 130 fellows each year to study at one of six Rotary Peace Centres located at leading universities across Japan, Sweden, England, Australia, Thailand, and the United States. Fellows pursue either a master's degree in peace and conflict studies or a career-development fellowship for experienced professionals. The programme covers tuition, fees, room and board, round-trip transportation, and internship expenses. Rotary Peace Fellows join a global network of over 1,600 alumni working in diplomacy, humanitarian aid, policy, and peacebuilding worldwide. If you are committed to advancing peace and have the academic background and professional drive to make an impact, this fellowship provides world-class education and a lifelong community of practice.`,
+      h2: (keyword) => `What Sets This Peace Fellowship Apart`,
+      faqs: (keyword) => [
+        { question: `Where can I study with the ${keyword}?`, answer: `At one of six Rotary Peace Centres: University of Queensland (Australia), Uppsala University (Sweden), University of Bradford (UK), International Christian University (Japan), Chulalongkorn University (Thailand), or Duke University/UNC (USA).` },
+        { question: `What does the fellowship cover?`, answer: `Full tuition, fees, room and board, round-trip transportation, and internship expenses for the duration of the programme.` },
+        { question: `Do I need professional experience?`, answer: `For the master's degree track, relevant professional experience is recommended but not always required. The career-development fellowship requires a minimum of five years of relevant professional experience.` }
+      ],
+      imageAlt: (keyword) => `${keyword} peace studies banner`
+    },
+    {
+      id: "google-swe-internship",
+      test: (title) => /Google\s+Software\s+Engineering\s+Internship/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Google Software Engineering Internship", item),
+      titleDescriptor: "Tech Internship",
+      h1Suffix: "",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — a competitive paid internship at Google for computer science students. Explore eligibility, stipend, and application tips.`,
+      intro: (keyword, item) => `The ${keyword} is one of the most sought-after technical internships in the world, placing undergraduate, master's, and PhD students inside Google's engineering teams for a 12-week summer placement. Interns work on real projects alongside full-time engineers, receive a competitive salary and housing stipend, and gain exposure to Google's engineering culture, tools, and scale. The programme is open to students studying computer science, software engineering, or a closely related technical field at an accredited university. Selection is highly competitive and based on coding ability, problem-solving skills, and demonstrated interest in technology. The application process typically involves online assessments followed by technical interviews. If you are a CS student with strong programming fundamentals and a passion for building at scale, this internship provides an unmatched launchpad for a career in software engineering.`,
+      h2: (keyword) => `How to Prepare for This Google Internship`,
+      faqs: (keyword) => [
+        { question: `How long is the ${keyword}?`, answer: `The internship runs for approximately 12 weeks during the summer, with start dates varying by office location.` },
+        { question: `What is the selection process?`, answer: `An online application with coding assessments, followed by one or two technical interviews focused on data structures, algorithms, and problem-solving.` },
+        { question: `Who can apply?`, answer: `Students enrolled in a bachelor's, master's, or PhD programme in computer science, software engineering, or a related technical field at an accredited university.` }
+      ],
+      imageAlt: (keyword) => `${keyword} Google engineering banner`
+    },
+    {
+      id: "eth-zurich-excellence",
+      test: (title) => /ETH\s+Zurich\s+Excellence/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("ETH Zurich Excellence Scholarship", item),
+      titleDescriptor: "Swiss Scholarship",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded master's scholarship at one of the world's top technical universities in Switzerland. Explore eligibility and benefits.`,
+      intro: (keyword, item) => `The ${keyword} (ESOP) supports outstanding master's students at ETH Zurich, one of the world's leading technical universities. Each year, a small number of top-performing students receive a scholarship covering full living and study expenses plus a tuition fee waiver for the duration of the master's programme. Scholars are selected based on exceptional academic performance, strong letters of recommendation, and a compelling motivation letter. The programme also pairs scholars with a faculty mentor who provides academic guidance throughout their studies. ETH Zurich is consistently ranked among the top 10 universities globally for engineering, computer science, and natural sciences. If you are a high-achieving student seeking a rigorous technical education in Switzerland with full financial support, ESOP offers a rare combination of academic excellence and institutional prestige.`,
+      h2: (keyword) => `Why Study at ETH Zurich`,
+      faqs: (keyword) => [
+        { question: `What does the ${keyword} cover?`, answer: `A living and study expenses stipend plus a full tuition fee waiver for the entire master's programme duration.` },
+        { question: `How are scholars selected?`, answer: `Based on exceptional academic performance (top 10% of your cohort), strong recommendation letters, and a compelling motivation letter. Shortlisted candidates may be interviewed.` },
+        { question: `Do I need to speak German?`, answer: `Most master's programmes at ETH Zurich are taught in English, though some require German proficiency. Check the specific programme requirements on the ETH website.` }
+      ],
+      imageAlt: (keyword) => `${keyword} ETH Zurich banner`
+    },
+    {
+      id: "world-bank-scholarship",
+      test: (title) => /Joint\s+Japan\s+World\s+Bank/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("Joint Japan World Bank Graduate Scholarship", item),
+      titleDescriptor: "Development Scholarship",
+      h1Suffix: " (Fully Funded)",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded master's scholarships for students from developing countries at top universities worldwide.`,
+      intro: (keyword, item) => `The ${keyword} (JJ/WBGSP) is a fully funded programme that enables outstanding students from developing countries to pursue a master's degree at one of the programme's partner universities worldwide. The scholarship covers full tuition, a monthly living stipend, round-trip airfare, health insurance, and a travel allowance. In return, scholars commit to returning to their home country after graduation to apply their skills in development-related work. The programme prioritises fields directly relevant to international development, including economics, public health, education, agriculture, environment, and urban planning. If you are from a developing country, have a strong academic record, and are committed to contributing to your country's development, this scholarship provides a world-class education with a clear purpose.`,
+      h2: (keyword) => `Who Should Apply for This Development Scholarship`,
+      faqs: (keyword) => [
+        { question: `Who is eligible for the ${keyword}?`, answer: `Nationals of developing countries who have been admitted to a designated master's programme at a JJ/WBGSP partner university and have relevant professional development experience.` },
+        { question: `What expenses does the scholarship cover?`, answer: `Full tuition, monthly living stipend, round-trip airfare, health insurance, and a travel allowance for the duration of the master's programme.` },
+        { question: `Is there a return requirement?`, answer: `Yes, scholars are required to return to their home country after completing their studies and apply their knowledge to development-related work.` }
+      ],
+      imageAlt: (keyword) => `${keyword} World Bank development banner`
+    },
+    {
+      id: "national-geographic-explorer",
+      test: (title) => /National\s+Geographic\s+Explorer/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("National Geographic Explorer Grant", item),
+      titleDescriptor: "Research Grant",
+      h1Suffix: "",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — competitive research funding for explorers working in conservation, science, education, and storytelling. Explore eligibility and deadlines.`,
+      intro: (keyword, item) => `The ${keyword} programme funds bold individuals and teams working to conserve, explore, and illuminate the world through research, storytelling, and innovation. Grants range from $10,000 to $100,000 and support projects in conservation, scientific research, archaeology, education, photography, filmmaking, and technology. The programme is open to researchers, educators, journalists, photographers, and changemakers from any country. Applicants must propose a project with clear objectives, measurable outcomes, and alignment with National Geographic's mission. Selection is competitive and based on the project's potential impact, innovation, and the applicant's track record. If you have a compelling project idea that advances exploration or conservation, this grant provides both funding and membership in a global community of National Geographic Explorers.`,
+      h2: (keyword) => `What Types of Projects This Grant Supports`,
+      faqs: (keyword) => [
+        { question: `How much funding does the ${keyword} provide?`, answer: `Grants range from $10,000 to $100,000 depending on the scope, duration, and impact potential of the proposed project.` },
+        { question: `Who can apply?`, answer: `Researchers, educators, journalists, photographers, filmmakers, and innovators from any country with a project aligned to National Geographic's mission of conservation, exploration, and education.` },
+        { question: `What makes a strong application?`, answer: `A clear project plan with measurable outcomes, demonstrated alignment with National Geographic's priorities, relevant experience, and a realistic budget and timeline.` }
+      ],
+      imageAlt: (keyword) => `${keyword} exploration and conservation banner`
+    },
+    {
+      id: "ted-fellows",
+      test: (title) => /TED\s+Fellows/i.test(title),
+      keyword: (item) => ON.resolveKeywordYear("TED Fellows Program", item),
+      titleDescriptor: "Global Fellowship",
+      h1Suffix: "",
+      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fellowship for exceptional innovators and changemakers worldwide. Explore benefits, eligibility, and how to apply.`,
+      intro: (keyword, item) => `The ${keyword} identifies and supports extraordinary individuals from every field and region who are creating meaningful change in their communities and beyond. Each year, a new cohort of Fellows is selected from hundreds of nominations across more than 100 countries. Fellows receive a transformative package including a fully funded trip to the TED Conference, professional development workshops, media training, mentorship from the TED community, and a cash grant to support their projects. The fellowship is not limited to any specific field — past Fellows include scientists, artists, entrepreneurs, activists, journalists, and engineers. What unites them is bold thinking, tangible impact, and the potential to scale their work with TED's platform. If you are an exceptional individual working on an ambitious project with global relevance, this fellowship offers visibility, resources, and a network that can accelerate your impact.`,
+      h2: (keyword) => `What Makes This Fellowship Different`,
+      faqs: (keyword) => [
+        { question: `What do TED Fellows receive?`, answer: `A funded trip to the TED Conference, professional development, media training, mentorship, a cash grant, and lifelong access to the TED community.` },
+        { question: `Do I need to work in a specific field?`, answer: `No — TED Fellows come from every field: science, art, technology, activism, journalism, medicine, engineering, and more. The common thread is bold ideas and measurable impact.` },
+        { question: `How are Fellows selected?`, answer: `Through a nomination and application process reviewed by the TED community. Selection weighs the ambition of the project, the applicant's track record, and the potential for global impact.` }
+      ],
+      imageAlt: (keyword) => `${keyword} innovation and ideas banner`
     }
   ];
 
@@ -1163,6 +1355,7 @@ window.OpportunityNest = window.OpportunityNest || {};
           <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
           <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml(typeLabel)}s</a>
         </div>
+        <p class="microcopy" style="margin-top:1rem">Listing verified by the OpportunityNest editorial team. Deadline and eligibility cross-referenced with the <a href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer" style="color:inherit">official programme page</a>. Always confirm details before applying.</p>
       </div>
 
       <section class="detail-section" aria-labelledby="overview-heading">
