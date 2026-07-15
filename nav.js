@@ -77,7 +77,8 @@ if (navToggle && navMenu) {
     { href: "/country/germany/", text: "Study in Germany" },
     { href: "/country/united-states/", text: "Study in US" },
     { href: "/country/canada/", text: "Study in Canada" },
-    { href: "/country/australia/", text: "Study in Australia" }
+    { href: "/country/australia/", text: "Study in Australia" },
+    { href: "/blog/", text: "Blog" }
   ];
 
   extraLinks.forEach(function(link) {
