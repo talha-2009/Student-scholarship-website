@@ -59,3 +59,34 @@ if (navToggle && navMenu) {
     }
   });
 }
+
+// ─── Footer SEO: enhance footer with additional internal links ────────────────
+(function enhanceFooter() {
+  const footerNav = document.querySelector(".footer-links");
+  if (!footerNav) return;
+
+  // Only add extra links if they are not already present
+  if (footerNav.querySelector("[data-seo-enhanced]")) return;
+
+  const extraLinks = [
+    { href: "/fully-funded-scholarships/", text: "Fully Funded" },
+    { href: "/masters-scholarships/", text: "Master's Scholarships" },
+    { href: "/phd-scholarships/", text: "PhD Scholarships" },
+    { href: "/undergraduate-scholarships/", text: "Undergraduate" },
+    { href: "/country/united-kingdom/", text: "Study in UK" },
+    { href: "/country/germany/", text: "Study in Germany" },
+    { href: "/country/united-states/", text: "Study in US" },
+    { href: "/country/canada/", text: "Study in Canada" },
+    { href: "/country/australia/", text: "Study in Australia" }
+  ];
+
+  extraLinks.forEach(function(link) {
+    // Don't duplicate if already present
+    if (footerNav.querySelector('a[href="' + link.href + '"]')) return;
+    var a = document.createElement("a");
+    a.href = link.href;
+    a.textContent = link.text;
+    a.setAttribute("data-seo-enhanced", "1");
+    footerNav.appendChild(a);
+  });
+})();

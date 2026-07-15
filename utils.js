@@ -1425,6 +1425,90 @@ window.OpportunityNest = window.OpportunityNest || {};
     return `<p>${ON.pickVariant(introVariants, item)}</p><ol>${listHtml}</ol><p>${ON.pickVariant(outroVariants, { title: (item.title || "") + "_outro" })}</p>`;
   };
 
+  // SEO: Render "Continue Exploring" section with rich internal links
+  ON.renderDetailExploreSection = (item, country, typeLabel, level, field) => {
+    const countrySlug = ON.getCountrySlug(country);
+    const countryLink = countrySlug ? `<a href="/country/${countrySlug}/">${ON.escapeHtml(country)}</a>` : "";
+    const categoryLinks = {
+      scholarship: '<a href="/scholarships.html">scholarships</a>',
+      internship: '<a href="/internships.html">internships</a>',
+      fellowship: '<a href="/fellowships.html">fellowships</a>'
+    };
+    const catLink = categoryLinks[typeLabel] || '<a href="/#opportunities">opportunities</a>';
+
+    // Build country-specific links
+    const countryGuides = [];
+    if (countrySlug && country !== "Global" && country !== "Not specified") {
+      countryGuides.push(`<a href="/country/${countrySlug}/">Studying in ${ON.escapeHtml(country)}: universities, fees &amp; visas</a>`);
+    }
+    // Always suggest top destinations
+    const topDestinations = [
+      { slug: "united-kingdom", name: "United Kingdom" },
+      { slug: "germany", name: "Germany" },
+      { slug: "united-states", name: "United States" },
+      { slug: "canada", name: "Canada" },
+      { slug: "australia", name: "Australia" }
+    ];
+    const otherDestinations = topDestinations
+      .filter(d => d.name !== country)
+      .slice(0, 3)
+      .map(d => `<a href="/country/${d.slug}/">${d.name}</a>`);
+
+    // Build category-specific links
+    const categoryPages = [
+      { url: "/fully-funded-scholarships/", label: "Fully funded scholarships" },
+      { url: "/masters-scholarships/", label: "Master's scholarships" },
+      { url: "/phd-scholarships/", label: "PhD scholarships" },
+      { url: "/undergraduate-scholarships/", label: "Undergraduate scholarships" }
+    ];
+    const relevantCategoryPages = categoryPages.slice(0, 3);
+
+    return `
+      <section class="detail-section" aria-labelledby="explore-heading">
+        <h2 id="explore-heading">Continue Exploring</h2>
+        <p>Looking for more options? Here are related pages to help you find the right programme:</p>
+        <div class="explore-links">
+          <div class="explore-group">
+            <h3>Same Country &amp; Region</h3>
+            <ul>
+              ${countryLink ? `<li>${countryLink} — all programmes in ${ON.escapeHtml(country)}</li>` : ""}
+              <li>Explore opportunities in ${otherDestinations.join(", ")}</li>
+            </ul>
+          </div>
+          <div class="explore-group">
+            <h3>Same Category</h3>
+            <ul>
+              <li>Browse all ${catLink} on OpportunityNest</li>
+              ${relevantCategoryPages.map(p => `<li><a href="${p.url}">${p.label}</a></li>`).join("")}
+            </ul>
+          </div>
+          <div class="explore-group">
+            <h3>Popular Destinations</h3>
+            <ul>
+              <li><a href="/scholarships/united-kingdom/">Scholarships in the UK</a> — Chevening, Gates Cambridge, Rhodes &amp; more</li>
+              <li><a href="/scholarships/germany/">Scholarships in Germany</a> — DAAD, Deutschlandstipendium &amp; more</li>
+              <li><a href="/internships.html">International internships</a> — UN, CERN, Google &amp; more</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    `;
+  };
+
+  // Helper: get country slug from country name
+  ON.getCountrySlug = (country) => {
+    const map = {
+      "Australia": "australia", "Austria": "austria", "Canada": "canada",
+      "China": "china", "Germany": "germany", "India": "india",
+      "Ireland": "ireland", "Japan": "japan", "Netherlands": "netherlands",
+      "Singapore": "singapore", "South Africa": "south-africa",
+      "South Korea": "south-korea", "Switzerland": "switzerland",
+      "Thailand": "thailand", "United Kingdom": "united-kingdom",
+      "United States": "united-states", "Global": "global"
+    };
+    return map[country] || null;
+  };
+
   // SEO: Render enhanced detail content with structured sections
   ON.renderDetailContent = (item, urgencyClass, categoryPage, categoryType) => {
     const country = item.country || "Global";
@@ -1645,11 +1729,13 @@ window.OpportunityNest = window.OpportunityNest || {};
       <p class="microcopy">OpportunityNest summarizes public information and directs applicants to the official programme website. Always verify requirements and deadlines before applying.</p>
       ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Details may change — confirm on the official website.</p>` : ''}
 
+      ${ON.renderDetailExploreSection(item, country, typeLabel, level, field)}
+
       <div id="related-opportunities" aria-live="polite"></div>
     `;
   };
 
-  // SEO: Fetch and render related opportunities
+  // SEO: Fetch and render related opportunities with multi-step fallback
   ON.renderRelatedOpportunities = async (item) => {
     const relatedContainer = document.getElementById("related-opportunities");
     if (!relatedContainer) return;
@@ -1657,37 +1743,55 @@ window.OpportunityNest = window.OpportunityNest || {};
     try {
       const client = ON.getSupabaseClient();
       const tableName = item.isInternship ? "internships" : "opportunities";
-      
-      let query = client.from(tableName).select("*").neq("id", item.id).limit(6);
-      
-      if (item.country) {
-        query = query.eq("country", item.country);
+      const normalize = r => item.isInternship ? ON.mapInternshipToOpportunity(r) : ON.normalizeOpportunity(r);
+      let related = [];
+
+      // Step 1: Try same country + same type
+      if (item.country && item.type) {
+        const { data, error } = await client.from(tableName).select("*").neq("id", item.id).eq("country", item.country).eq("type", item.type).limit(6);
+        if (!error && data && data.length > 0) { related = data; }
       }
-      
-      const { data, error } = await query;
-      
-      if (error) throw error;
-      
-      const related = (data || []).slice(0, 4);
-      
+
+      // Step 2: Fallback — same country, any type
+      if (related.length === 0 && item.country) {
+        const { data, error } = await client.from(tableName).select("*").neq("id", item.id).eq("country", item.country).limit(6);
+        if (!error && data && data.length > 0) { related = data; }
+      }
+
+      // Step 3: Fallback — same type, any country
+      if (related.length === 0 && item.type) {
+        const { data, error } = await client.from(tableName).select("*").neq("id", item.id).eq("type", item.type).limit(6);
+        if (!error && data && data.length > 0) { related = data; }
+      }
+
+      // Step 4: Fallback — any 4 recent opportunities
       if (related.length === 0) {
+        const { data, error } = await client.from(tableName).select("*").neq("id", item.id).order("created_at", { ascending: false }).limit(4);
+        if (!error && data && data.length > 0) { related = data; }
+      }
+
+      const sliced = related.slice(0, 4);
+      if (sliced.length === 0) {
         relatedContainer.innerHTML = "";
         return;
       }
-      
-      const normalizedRelated = related.map(r => 
-        item.isInternship ? ON.mapInternshipToOpportunity(r) : ON.normalizeOpportunity(r)
-      );
-      
+
+      const normalizedRelated = sliced.map(normalize);
+      const countrySlug = ON.getCountrySlug(item.country || "");
+      const categoryPage = item.type === "Scholarship" ? "/scholarships.html" : item.type === "Fellowship" ? "/fellowships.html" : item.type === "Internship" ? "/internships.html" : "/#opportunities";
+
       relatedContainer.innerHTML = `
         <h2>Related Opportunities</h2>
         <div class="related-grid">
           ${normalizedRelated.map(r => ON.renderOpportunityCard(r)).join("")}
         </div>
+        <p style="margin-top:1rem">
+          Browse more <a href="${categoryPage}">${ON.escapeHtml((item.type || 'opportunity').toLowerCase())}s</a>${countrySlug && item.country !== 'Global' ? ` | <a href="/country/${countrySlug}/">Opportunities in ${ON.escapeHtml(item.country)}</a>` : ''} | <a href="/scholarships.html">All scholarships</a> | <a href="/internships.html">All internships</a>
+        </p>
       `;
     } catch (error) {
       console.error("Error fetching related opportunities:", error);
-      relatedContainer.innerHTML = "";
+      relatedContainer.innerHTML = `<h2>Related Opportunities</h2><p>Explore more: <a href="/scholarships.html">Scholarships</a> | <a href="/internships.html">Internships</a> | <a href="/fellowships.html">Fellowships</a></p>`;
     }
   };
 })(window.OpportunityNest);

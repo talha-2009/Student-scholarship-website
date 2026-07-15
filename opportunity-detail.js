@@ -24,11 +24,14 @@ const renderDetail = (item) => {
   setMeta('meta[property="og:title"]', "content", pageTitle);
   setMeta('meta[property="og:description"]', "content", metaDesc);
   setMeta('meta[property="og:url"]', "content", pageUrl);
+  setMeta('meta[property="og:type"]', "content", "article");
   setMeta('meta[property="og:image:alt"]', "content", ON.generateImageAlt(item));
   setMeta('meta[name="twitter:title"]', "content", pageTitle);
   setMeta('meta[name="twitter:description"]', "content", metaDesc);
+  // Update canonical — use the clean canonical path, not query-string URLs
+  const canonicalUrl = ON.getOpportunityUrl(item);
   const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.setAttribute("href", pageUrl);
+  if (canonical) canonical.setAttribute("href", canonicalUrl);
 
   const urgency = ON.getDeadlineUrgency(item);
   const urgencyClass = urgency !== "none" ? ` deadline-${urgency}` : "";

@@ -19,13 +19,12 @@
     <title>Opportunity Details | OpportunityNest</title>
     <meta name="description" content="View scholarship or fellowship details, eligibility, funding, deadline, and official application links.">
     <meta name="theme-color" content="#0f766e">
-    <link rel="canonical" href="https://www.opportunitynest.org/">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Opportunity Details | OpportunityNest">
     <meta property="og:description" content="View opportunity details and apply through the official program website.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.opportunitynest.org/opportunity-detail.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="">
     <meta property="og:image" content="https://www.opportunitynest.org/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -34,6 +33,15 @@
     <meta name="twitter:title" content="Opportunity Details | OpportunityNest">
     <meta name="twitter:description" content="View opportunity details and apply through the official program website.">
     <meta name="twitter:image" content="https://www.opportunitynest.org/og-image.png">
+    <script>
+      // Set canonical and OG URL immediately from current location to avoid wrong canonical
+      (function(){
+        var u = window.location.href;
+        document.write('<link rel="canonical" href="' + u + '">');
+        var ogUrl = document.querySelector('meta[property="og:url"]');
+        if(ogUrl) ogUrl.setAttribute('content', u);
+      })();
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
     <script>
       gtag('js', new Date());
@@ -54,8 +62,7 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "Opportunity Details",
-            "item": "https://www.opportunitynest.org/opportunity-detail.html"
+            "name": "Opportunity Details"
           }
         ]
       }
