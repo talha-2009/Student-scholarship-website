@@ -81,7 +81,7 @@ const getCategoryPage = (type) => {
   if (type === "Scholarship") return "/scholarships.html";
   if (type === "Fellowship") return "/fellowships.html";
   if (type === "Internship") return "/internships.html";
-  return "/index.html#opportunities";
+  return "/#opportunities";
 };
 
 const loadOpportunityDetail = async () => {
