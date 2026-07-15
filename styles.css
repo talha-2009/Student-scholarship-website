@@ -95,12 +95,18 @@ textarea {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: rgba(247, 251, 249, 0.88);
   border-bottom: 1px solid rgba(219, 232, 228, 0.9);
   backdrop-filter: blur(18px);
+}
+
+body {
+  padding-top: 72px;
 }
 
 .nav {
@@ -2056,5 +2062,173 @@ details p {
 
   .mega-dropdown {
     padding: 12px;
+  }
+}
+
+/* Header mega menu fix: keep all desktop dropdowns floating above the page. */
+@media (min-width: 901px) {
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+  }
+
+  .mega-item,
+  .nav-resources {
+    position: static;
+  }
+
+  .mega-trigger,
+  .nav-resources > .nav-link-trigger {
+    display: inline-flex;
+    align-items: center;
+    min-height: 72px;
+  }
+
+  .mega-menu,
+  .mega-dropdown {
+    position: fixed !important;
+    top: 72px !important;
+    left: 50% !important;
+    width: min(1200px, calc(100vw - 32px)) !important;
+    max-height: calc(100vh - 92px);
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(219, 232, 228, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 26px 70px rgba(16, 32, 29, 0.18), 0 8px 24px rgba(16, 32, 29, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(10px) !important;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+    z-index: 1001;
+  }
+
+  .mega-item:hover > .mega-menu,
+  .mega-item:focus-within > .mega-menu,
+  .mega-item.is-open > .mega-menu,
+  .nav-resources:hover > .mega-dropdown,
+  .nav-resources:focus-within > .mega-dropdown,
+  .nav-resources.is-open > .mega-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  .mega-column,
+  .mega-col {
+    min-width: 0;
+  }
+
+  .mega-dropdown > .mega-grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 24px;
+  }
+
+  .mega-column h3,
+  .mega-col-title {
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    color: var(--primary-dark);
+    font-size: 0.82rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .mega-column ul,
+  .mega-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mega-column li,
+  .mega-links li {
+    margin: 0;
+  }
+
+  .mega-column a,
+  .mega-links a {
+    display: block;
+    padding: 6px 8px;
+    margin: 0 -8px;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .mega-column a:hover,
+  .mega-column a:focus-visible,
+  .mega-links a:hover,
+  .mega-links a:focus-visible {
+    background: var(--surface-strong);
+    color: var(--text);
+  }
+
+  .mega-bridge {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+  }
+
+  .mega-menu,
+  .mega-dropdown {
+    position: static !important;
+    left: auto !important;
+    width: 100% !important;
+    max-height: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 0 12px;
+    margin: 0;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    background: var(--surface-strong);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none !important;
+    transition: max-height 220ms ease, padding 220ms ease;
+  }
+
+  .mega-item.is-open > .mega-menu,
+  .nav-resources.is-open > .mega-dropdown {
+    max-height: 2200px;
+    padding: 14px 12px;
+  }
+
+  .nav-resources > .nav-link-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 10px;
+  }
+
+  .mega-dropdown > .mega-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }

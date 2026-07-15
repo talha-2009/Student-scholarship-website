@@ -201,6 +201,29 @@ const megaMenuData = {
         ["Global Conferences", "/global-conferences/"]
       ]
     }
+  ],
+  Blog: [
+    {
+      title: "Scholarship Advice",
+      icon: "Guide",
+      links: [
+        ["Fully Funded Scholarships", "/blog/top-fully-funded-scholarships.html"],
+        ["Scholarship Interview Tips", "/blog/how-to-ace-scholarship-interview.html"],
+        ["Winning Scholarship Essays", "/blog/how-to-write-winning-scholarship-essay.html"],
+        ["Scholarships Without IELTS", "/guides/scholarships-without-ielts.html"]
+      ]
+    },
+    {
+      title: "Application Help",
+      icon: "Tips",
+      links: [
+        ["Statement of Purpose", "/guides/how-to-write-sop.html"],
+        ["Personal Statement", "/guides/personal-statement.html"],
+        ["Motivation Letter", "/guides/motivation-letter.html"],
+        ["CV Writing", "/guides/cv-writing.html"],
+        ["Application Checklist", "/guides/application-checklist.html"]
+      ]
+    }
   ]
 };
 
@@ -298,7 +321,9 @@ const enhanceMegaNavigation = () => {
   });
 };
 
-// enhanceMegaNavigation(); // Disabled - mega dropdown structure is now hardcoded in HTML
+if (navMenu && !navMenu.querySelector(".mega-item")) {
+  enhanceMegaNavigation();
+}
 
 // Mobile mega menu accordion functionality
 const setupMobileMegaMenus = () => {
@@ -347,6 +372,13 @@ if (navToggle && navMenu) {
   });
 
   navMenu.addEventListener("click", (event) => {
+    if (
+      window.matchMedia("(max-width: 900px)").matches &&
+      event.target instanceof HTMLAnchorElement &&
+      event.target.classList.contains("mega-trigger")
+    ) {
+      return;
+    }
     if (event.target instanceof HTMLAnchorElement) {
       closeNav();
     }
@@ -404,7 +436,7 @@ if (navToggle && navMenu) {
   var insertBefore = blogLink ? blogLink.nextElementSibling : (aboutLink || null);
 
   var html = '<div class="nav-resources" role="navigation" aria-label="Resources">' +
-    '<button class="nav-link-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="chevron" aria-hidden="true"></span></button>' +
+    '<button class="nav-link-trigger" aria-expanded="false" aria-haspopup="true">Resource Center <span class="chevron" aria-hidden="true"></span></button>' +
     '<div class="mega-bridge" aria-hidden="true"></div>' +
     '<div class="mega-dropdown" role="menu" aria-label="Resources menu">' +
     '<div class="mega-grid">' +
