@@ -844,12 +844,12 @@ window.OpportunityNest = window.OpportunityNest || {};
     const deadline = ON.formatDeadline(item);
 
     const sentences = [
-      `The ${keyword} is a competitive ${type} open to ${level} applicants from ${country} and around the world.`,
-      `Designed for talented students and early-career professionals pursuing excellence in ${field}, this program provides ${funding} to help recipients fully dedicate themselves to their studies, research, or professional development without financial distraction.`,
-      `Selected participants join a diverse cohort of ambitious individuals and gain access to academic resources, mentorship, networking events, and career support throughout the program duration.`,
-      `Whether you are looking to advance your education, build international experience, or develop specialized skills, this opportunity offers a structured pathway to reach your goals while collaborating with leading experts in your chosen area.`,
-      `The application deadline is ${deadline}, and candidates are encouraged to review all eligibility requirements carefully and submit their materials through the official program website well before the closing date.`,
-      `OpportunityNest monitors each listing to bring you verified deadlines, funding details, and direct application links so you can apply with confidence.`
+      `The ${keyword} is a ${type} based in ${country}, open to ${level} candidates with an interest in ${field}.`,
+      `This programme offers ${funding}, enabling selected participants to focus fully on their studies, research, or professional development without financial pressure.`,
+      `Successful applicants join a cohort of driven individuals from around the world and gain access to academic mentors, networking events, and career-building resources throughout the programme.`,
+      `Whether your goal is to advance your education, gain international experience, or build specialised skills, this opportunity provides a structured path toward that objective.`,
+      `The application deadline is ${deadline}. Review all eligibility criteria carefully and submit your materials through the official programme website well before the closing date.`,
+      `OpportunityNest keeps this listing updated so you can apply with accurate deadline and funding information.`
     ];
 
     return ON.fitWordCount(sentences.join(" "), 120, 180);
@@ -1093,6 +1093,7 @@ window.OpportunityNest = window.OpportunityNest || {};
       </section>
 
       <p class="microcopy">OpportunityNest summarizes public information and sends applicants to the official program website. Always confirm requirements and deadlines before applying.</p>
+      ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Information may change — verify on the official website.</p>` : ''}
 
       <div id="related-opportunities" aria-live="polite"></div>
     `;
