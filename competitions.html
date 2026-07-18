@@ -51,7 +51,7 @@
   "@context": "https://schema.org",
   "@type": "ItemList",
   "url": "https://www.opportunitynest.org/competitions.html",
-  "numberOfItems": 4,
+  "numberOfItems": 5,
   "itemListElement": [
     {
       "@type": "ListItem",
@@ -72,6 +72,11 @@
       "@type": "ListItem",
       "position": 4,
       "url": "https://www.opportunitynest.org/opportunity/unesco-japan-prize-esd/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "url": "https://www.opportunitynest.org/opportunity/the-geneva-challenge-advancing-development-goals-contest-switzerland/"
     }
   ]
 }</script><script type="application/ld+json">{
@@ -157,81 +162,49 @@
             <h1>Competitions</h1>
             <p>Competitions on OpportunityNest bring together curated programs from trusted providers across multiple countries. Each listing includes a clear deadline, country, eligibility level, and the official application path so you can move from search to application faster.</p>
           </div>
-          <div class="opportunity-status"><p>4 listings available.</p></div>
+          <div class="opportunity-status" id="opportunity-status"><p>Loading competitions...</p></div>
         </div>
       </section>
       <section class="section-pad live-opportunities">
         <div class="container">
-          <div class="related-links"><p><strong>Top country pages:</strong></p><ul><li><a href="/competitions/global/">Global Competition</a></li></ul></div>
-          <div class="opportunity-results grid three"><article class="live-opportunity-card compact-card">
-      
-      <div class="opportunity-card-top">
-        <p class="card-kicker">Competition - 🌍 Global</p>
-        <span class="deadline">Varies by provider</span>
-      </div>
-      <h3>Global Undergraduate Awards</h3>
-      <ul class="card-overview compact-overview">
-        <li><strong>Field:</strong> Multidisciplinary</li>
-        <li><strong>Level:</strong> Undergraduate</li>
-        <li><strong>Funding:</strong> Unpaid</li>
-      </ul>
-      <div class="card-actions">
-        <a class="button button-secondary" href="https://www.opportunitynest.org/opportunity/global-undergraduate-awards/">View Details</a>
-        <a class="button button-primary" href="https://www.undergraduateawards.com/" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-      </div>
-    </article><article class="live-opportunity-card compact-card">
-      
-      <div class="opportunity-card-top">
-        <p class="card-kicker">Competition - 🌍 Global</p>
-        <span class="deadline">Varies by provider</span>
-      </div>
-      <h3>International Chemistry Olympiad (IChO)</h3>
-      <ul class="card-overview compact-overview">
-        <li><strong>Field:</strong> Chemistry</li>
-        <li><strong>Level:</strong> High School</li>
-        <li><strong>Funding:</strong> Partially Funded</li>
-      </ul>
-      <div class="card-actions">
-        <a class="button button-secondary" href="https://www.opportunitynest.org/opportunity/international-chemistry-olympiad/">View Details</a>
-        <a class="button button-primary" href="https://icho-official.org/" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-      </div>
-    </article><article class="live-opportunity-card compact-card">
-      
-      <div class="opportunity-card-top">
-        <p class="card-kicker">Competition - 🌍 Global</p>
-        <span class="deadline">15 Jul 2026</span>
-      </div>
-      <h3>James Dyson Award</h3>
-      <ul class="card-overview compact-overview">
-        <li><strong>Field:</strong> Engineering, Design</li>
-        <li><strong>Level:</strong> Undergraduate/Graduate</li>
-        <li><strong>Funding:</strong> Unpaid</li>
-      </ul>
-      <div class="card-actions">
-        <a class="button button-secondary" href="https://www.opportunitynest.org/opportunity/james-dyson-award/">View Details</a>
-        <a class="button button-primary" href="https://www.jamesdysonaward.org/en-US/" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-      </div>
-    </article><article class="live-opportunity-card compact-card">
-      
-      <div class="opportunity-card-top">
-        <p class="card-kicker">Competition - 🌍 Global</p>
-        <span class="deadline">Varies by provider</span>
-      </div>
-      <h3>UNESCO-Japan Prize on Education for Sustainable Development</h3>
-      <ul class="card-overview compact-overview">
-        <li><strong>Field:</strong> Education, Sustainability</li>
-        <li><strong>Level:</strong> Open to All</li>
-        <li><strong>Funding:</strong> Unpaid</li>
-      </ul>
-      <div class="card-actions">
-        <a class="button button-secondary" href="https://www.opportunitynest.org/opportunity/unesco-japan-prize-esd/">View Details</a>
-        <a class="button button-primary" href="https://www.unesco.org/en/prizes/education-sustainable-development?hub=72522" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
-      </div>
-    </article></div>
-          <div class="final-panel">
-            <h2>Why browse competitions on OpportunityNest?</h2>
-            <p>Each competition listing is organized with deadlines, eligibility guidance, and the official application link in one place. That makes it easier to compare programs and keep your search focused.</p>
+          <div id="opportunity-controls" class="opportunity-controls">
+            <div class="filter-group">
+              <label for="live-search">Search</label>
+              <input type="search" id="live-search" placeholder="Search competitions..." aria-label="Search competitions">
+            </div>
+            <div class="filter-group">
+              <label for="category-filter">Category</label>
+              <select id="category-filter" aria-label="Filter by category">
+                <option value="">All categories</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="country-filter">Country</label>
+              <select id="country-filter" aria-label="Filter by country">
+                <option value="">All countries</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="funding-filter">Funding</label>
+              <select id="funding-filter" aria-label="Filter by funding">
+                <option value="">All funding</option>
+                <option value="Fully Funded">Fully Funded</option>
+                <option value="Partial Funding">Partial Funding</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="sort-filter">Sort by</label>
+              <select id="sort-filter" aria-label="Sort competitions">
+                <option value="deadline">Deadline</option>
+                <option value="newest">Newest</option>
+              </select>
+            </div>
+            <button id="clear-filters" class="button button-secondary" type="button">Clear Filters</button>
           </div>
+          <div id="category-chips" class="filter-chips" aria-label="Browse by category"></div>
+          <div id="country-chips" class="filter-chips" aria-label="Browse by country"></div>
+          <div id="opportunity-grid" class="opportunity-results grid three"></div>
+          <div id="pagination"></div>
         </div>
       </section>
     </main>
@@ -262,6 +235,8 @@
         <p>&copy; 2026 OpportunityNest.org. All rights reserved.</p>
       </div>
     </footer>
+      <script src="/utils.js" defer></script>
+      <script src="/script.js" defer></script>
       <script src="/nav.js" defer></script>
     <script>
       window.chtlConfig = {

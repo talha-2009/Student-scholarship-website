@@ -34,129 +34,65 @@ const navMenu = document.querySelector("#nav-menu");
 const MOBILE_NAV_BREAKPOINT = 767;
 
 const megaMenuData = {
+  "Study Abroad": [
+    {
+      title: "Top Destinations",
+      icon: "",
+      links: [
+        ["Study in UK", "/study-in-uk/"],
+        ["Study in USA", "/study-in-usa/"],
+        ["Study in Canada", "/study-in-canada/"],
+        ["Study in Australia", "/study-in-australia/"],
+        ["Study in Germany", "/study-in-germany/"],
+        ["Study in Europe", "/study-in-europe/"]
+      ]
+    }
+  ],
   Scholarships: [
     {
-      title: "Popular Countries",
-      icon: "ðŸŒ",
+      title: "Scholarship Types",
+      icon: "",
       links: [
-        ["Scholarships in USA", "/scholarships-in-usa/"],
-        ["Scholarships in Canada", "/scholarships-in-canada/"],
-        ["Scholarships in UK", "/scholarships-in-uk/"],
-        ["Scholarships in Germany", "/scholarships-in-germany/"],
-        ["Scholarships in Australia", "/scholarships-in-australia/"],
-        ["Scholarships in Japan", "/scholarships-in-japan/"],
-        ["Scholarships in South Korea", "/scholarships-in-south-korea/"],
-        ["Scholarships in China", "/scholarships-in-china/"]
-      ]
-    },
-    {
-      title: "Study Level",
-      icon: "ðŸŽ“",
-      links: [
-        ["High School Scholarships", "/high-school-scholarships/"],
+        ["Fully Funded Scholarships", "/fully-funded-scholarships/"],
         ["Undergraduate Scholarships", "/undergraduate-scholarships/"],
         ["Master's Scholarships", "/masters-scholarships/"],
         ["PhD Scholarships", "/phd-scholarships/"],
-        ["Postdoctoral Scholarships", "/postdoctoral-scholarships/"]
-      ]
-    },
-    {
-      title: "Funding Type",
-      icon: "ðŸ’°",
-      links: [
-        ["Fully Funded Scholarships", "/fully-funded-scholarships/"],
-        ["Partial Scholarships", "/partial-scholarships/"],
-        ["Merit Scholarships", "/merit-scholarships/"],
-        ["Need-Based Scholarships", "/need-based-scholarships/"]
-      ]
-    },
-    {
-      title: "Special Categories",
-      icon: "âœ¨",
-      links: [
-        ["Scholarships Without IELTS", "/scholarships-without-ielts/"],
-        ["Government Scholarships", "/government-scholarships/"],
-        ["University Scholarships", "/university-scholarships/"],
-        ["Exchange Scholarships", "/exchange-scholarships/"],
-        ["Research Scholarships", "/research-scholarships/"]
+        ["Government Scholarships", "/government-scholarships/"]
       ]
     }
   ],
   Internships: [
     {
-      title: "Popular Countries",
-      icon: "ðŸŒ",
-      links: [
-        ["Internships in USA", "/internships-in-usa/"],
-        ["Internships in Canada", "/internships-in-canada/"],
-        ["Internships in UK", "/internships-in-uk/"],
-        ["Internships in Germany", "/internships-in-germany/"],
-        ["Internships in Australia", "/internships-in-australia/"],
-        ["Internships in Japan", "/internships-in-japan/"],
-        ["Internships in South Korea", "/internships-in-south-korea/"]
-      ]
-    },
-    {
-      title: "Categories",
-      icon: "ðŸ§­",
+      title: "Internship Types",
+      icon: "",
       links: [
         ["Paid Internships", "/paid-internships/"],
         ["Remote Internships", "/remote-internships/"],
         ["Summer Internships", "/summer-internships/"],
-        ["Graduate Internships", "/graduate-internships/"],
-        ["Engineering Internships", "/engineering-internships/"],
-        ["IT Internships", "/it-internships/"],
-        ["Medical Internships", "/medical-internships/"],
-        ["Business Internships", "/business-internships/"]
+        ["International Internships", "/international-internships/"]
       ]
     }
   ],
   Fellowships: [
     {
-      title: "Countries",
-      icon: "ðŸ›",
-      links: [
-        ["USA", "/fellowships-in-usa/"],
-        ["UK", "/fellowships-in-uk/"],
-        ["Germany", "/fellowships-in-germany/"],
-        ["Canada", "/fellowships-in-canada/"],
-        ["Australia", "/fellowships-in-australia/"],
-        ["Japan", "/fellowships-in-japan/"]
-      ]
-    },
-    {
-      title: "Categories",
-      icon: "ðŸ§ª",
+      title: "Fellowship Types",
+      icon: "",
       links: [
         ["Fully Funded Fellowships", "/fully-funded-fellowships/"],
         ["Research Fellowships", "/research-fellowships/"],
-        ["Leadership Fellowships", "/leadership-fellowships/"],
-        ["Government Fellowships", "/government-fellowships/"],
-        ["Professional Fellowships", "/professional-fellowships/"]
+        ["Leadership Fellowships", "/leadership-fellowships/"]
       ]
     }
   ],
   Competitions: [
     {
       title: "Competition Types",
-      icon: "ðŸ†",
+      icon: "",
       links: [
-        ["Programming", "/programming-competitions/"],
-        ["Hackathons", "/hackathons/"],
-        ["Business Competitions", "/business-competitions/"],
-        ["Essay Competitions", "/essay-competitions/"],
-        ["Photography", "/photography-competitions/"],
-        ["Design Competitions", "/design-competitions/"]
-      ]
-    },
-    {
-      title: "Innovation",
-      icon: "ðŸš€",
-      links: [
-        ["Innovation Challenges", "/innovation-challenges/"],
+        ["Programming Competitions", "/programming-competitions/"],
         ["AI Competitions", "/ai-competitions/"],
-        ["Robotics Competitions", "/robotics-competitions/"],
-        ["Competitions Hub", "/competitions.html"]
+        ["Business Competitions", "/business-competitions/"],
+        ["Essay Competitions", "/essay-competitions/"]
       ]
     }
   ],
@@ -284,6 +220,7 @@ const megaMenuData = {
 };
 
 const navItems = [
+  { label: "Study Abroad", href: "/study-in-uk/", sections: megaMenuData["Study Abroad"] },
   { label: "Scholarships", href: "/scholarships.html", sections: megaMenuData.Scholarships },
   { label: "Internships", href: "/internships.html", sections: megaMenuData.Internships },
   { label: "Fellowships", href: "/fellowships.html", sections: megaMenuData.Fellowships },
@@ -418,7 +355,6 @@ const setupNavigationInteractions = () => {
     });
 
     trigger.addEventListener("click", (event) => {
-      if (!isMobileNav()) return;
       event.preventDefault();
       if (item.classList.contains("is-open")) {
         closeMegaMenu(item);
@@ -480,48 +416,6 @@ if (navMenu) {
   setupNavigationInteractions();
   window.closeNav = closeNav;
 }
-// ─── Dynamic Competitions Dropdown ─────────────────────────────────────────────
-(async function populateCompetitionsDropdown() {
-  const competitionsList = document.getElementById("competitions-list");
-  if (!competitionsList) return;
-
-  try {
-    // Wait for Supabase to be available
-    if (!window.ON || !window.ON.fetchOpportunityRows) {
-      // Retry after a short delay if ON is not ready yet
-      setTimeout(populateCompetitionsDropdown, 500);
-      return;
-    }
-
-    const opportunities = await window.ON.fetchOpportunityRows();
-    const competitions = opportunities.filter(
-      (item) => item.type && item.type.toLowerCase() === "competition"
-    );
-
-    if (!competitions.length) {
-      competitionsList.innerHTML = '<li><a href="/competitions.html">No competitions available</a></li>';
-      return;
-    }
-
-    // Sort by deadline (soonest first)
-    competitions.sort((a, b) => {
-      const dateA = new Date(a.deadline || "9999-12-31");
-      const dateB = new Date(b.deadline || "9999-12-31");
-      return dateA - dateB;
-    });
-
-    competitionsList.innerHTML = competitions
-      .map((comp) => {
-        const slug = comp.slug || comp.id;
-        const link = /opportunity//;
-        return <li><a href=""></a></li>;
-      })
-      .join("");
-  } catch (error) {
-    console.error("Failed to load competitions for dropdown:", error);
-    competitionsList.innerHTML = '<li><a href="/competitions.html">View all competitions</a></li>';
-  }
-})();
 
 // â”€â”€â”€ Footer SEO: enhance footer with additional internal links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 (function enhanceFooter() {

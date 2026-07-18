@@ -1,5 +1,5 @@
-/**
- * Shared helpers for OpportunityNest — Supabase client, formatting, rendering, pagination.
+﻿/**
+ * Shared helpers for OpportunityNest â€” Supabase client, formatting, rendering, pagination.
  */
 window.OpportunityNest = window.OpportunityNest || {};
 window.ON = window.OpportunityNest;
@@ -40,17 +40,17 @@ window.ON = window.OpportunityNest;
   };
 
   ON.COUNTRY_FLAGS = {
-    "Australia": "🇦🇺",
-    "Austria": "🇦🇹",
-    "Canada": "🇨🇦",
-    "Germany": "🇩🇪",
-    "Switzerland": "🇨🇭",
-    "United Kingdom": "🇬🇧",
-    "United States": "🇺🇸",
-    "Global": "🌍"
+    "Australia": "ðŸ‡¦ðŸ‡º",
+    "Austria": "ðŸ‡¦ðŸ‡¹",
+    "Canada": "ðŸ‡¨ðŸ‡¦",
+    "Germany": "ðŸ‡©ðŸ‡ª",
+    "Switzerland": "ðŸ‡¨ðŸ‡­",
+    "United Kingdom": "ðŸ‡¬ðŸ‡§",
+    "United States": "ðŸ‡ºðŸ‡¸",
+    "Global": "ðŸŒ"
   };
 
-  ON.getCountryFlag = (country = "") => ON.COUNTRY_FLAGS[country] || "🌍";
+  ON.getCountryFlag = (country = "") => ON.COUNTRY_FLAGS[country] || "ðŸŒ";
 
   ON.truncateDescription = (text = "", maxLength = 160) => {
     const clean = String(text).trim().replace(/\s+/g, " ");
@@ -59,7 +59,7 @@ window.ON = window.OpportunityNest;
     const sliced = clean.slice(0, maxLength);
     const lastSpace = sliced.lastIndexOf(" ");
     const safeCut = lastSpace > 80 ? sliced.slice(0, lastSpace) : sliced;
-    return `${safeCut.replace(/[.,;:!?-]+$/, "")}…`;
+    return `${safeCut.replace(/[.,;:!?-]+$/, "")}â€¦`;
   };
 
   ON.escapeHtml = (value = "") =>
@@ -135,7 +135,7 @@ window.ON = window.OpportunityNest;
       // Close any open list.
       if (inList) { html.push(listType === "ul" ? "</ul>" : "</ol>"); inList = false; }
 
-      // Regular paragraph — may contain inline headings.
+      // Regular paragraph â€” may contain inline headings.
       const paragraphLines = lines.map(l => {
         const t = l.trim();
         if (!t) return "";
@@ -152,7 +152,7 @@ window.ON = window.OpportunityNest;
     return html.join("\n");
   };
 
-  // AdSense: Safe ad initialization — prevents duplicate pushes
+  // AdSense: Safe ad initialization â€” prevents duplicate pushes
   ON.pushAd = (selector) => {
     try {
       const el = document.querySelector(selector);
@@ -160,7 +160,7 @@ window.ON = window.OpportunityNest;
         (window.adsbygoogle = window.adsbygoogle || []).push({});
         el.dataset.pushed = "true";
       }
-    } catch (e) { /* AdSense may throw on empty slots — safe to ignore */ }
+    } catch (e) { /* AdSense may throw on empty slots â€” safe to ignore */ }
   };
 
   // AdSense: Generate a responsive ad unit HTML string
@@ -370,7 +370,7 @@ window.ON = window.OpportunityNest;
     return a.title.localeCompare(b.title);
   };
 
-  ON.filterOpportunities = (items, { searchTerm = "", country = "", type = "" } = {}) => {
+  ON.filterOpportunities = (items, { searchTerm = "", country = "", type = "", funding = "" } = {}) => {
     const query = searchTerm.trim().toLowerCase();
     return items.filter((item) => {
       const haystack = [item.title, item.country, item.field, item.description, item.type, item.funding, item.level]
@@ -379,7 +379,8 @@ window.ON = window.OpportunityNest;
       const matchesSearch = !query || haystack.includes(query);
       const matchesCountry = !country || item.country.toLowerCase() === country.toLowerCase();
       const matchesType = !type || item.type.toLowerCase() === type.toLowerCase();
-      return matchesSearch && matchesCountry && matchesType;
+      const matchesFunding = !funding || (item.funding || "").toLowerCase() === funding.toLowerCase();
+      return matchesSearch && matchesCountry && matchesType && matchesFunding;
     });
   };
 
@@ -411,7 +412,7 @@ window.ON = window.OpportunityNest;
         </ul>
         <div class="card-actions">
           <a class="button button-secondary" href="${ON.escapeHtml(detailUrl)}">View Details</a>
-          <a class="button button-primary" href="${ON.escapeHtml(applyHref)}"${applyTarget}>Apply Now <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="${ON.escapeHtml(applyHref)}"${applyTarget}>Apply Now <span aria-hidden="true">â†—</span></a>
         </div>
       </article>
     `;
@@ -634,7 +635,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("SSRC Just Tech Fellowship", item),
       titleDescriptor: "Research Fellowship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded research fellowship for scholars studying technology's social impact. Explore eligibility, funding, and deadlines.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fully funded research fellowship for scholars studying technology's social impact. Explore eligibility, funding, and deadlines.`,
       intro: (keyword, item) => `The ${keyword} supports researchers and practitioners examining how technology shapes society, equity, and governance. Open to scholars, journalists, legal experts, and technology professionals with a strong record in relevant fields, this fellowship provides funding, mentorship, and access to a global network of specialists working at the intersection of technology and the public interest. Fellows receive financial support to pursue independent research, collaborate with SSRC networks, and share findings that inform policy and public debate. Whether you are advancing academic scholarship or applied practice, this programme offers a rare opportunity to focus deeply on technology's social dimensions. The selection process is competitive, so applicants should prepare a clear research proposal, gather strong references, and submit all materials before the published deadline.`,
       h2: (keyword) => `Benefits and Eligibility for the ${keyword}`,
       faqs: (keyword) => [
@@ -650,7 +651,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Geneva Challenge", item),
       titleDescriptor: "Competition",
       h1Suffix: "",
-      metaDescription: (keyword, item) => `Join the ${keyword} — a global competition for master's teams with a CHF 25,000 prize pool and funded finals in Geneva. Check eligibility and apply.`,
+      metaDescription: (keyword, item) => `Join the ${keyword} â€” a global competition for master's teams with a CHF 25,000 prize pool and funded finals in Geneva. Check eligibility and apply.`,
       intro: (keyword, item) => `The ${keyword} is an annual international contest run by the Geneva Graduate Institute that invites interdisciplinary teams of master's students to develop proposals advancing global development goals. Each team must include students from at least two different academic disciplines and can come from any university worldwide. Finalist teams win a share of the CHF 25,000 prize pool and receive fully funded travel to Geneva to present their proposals before an international jury. The competition rewards originality, feasibility, and genuine potential to address development challenges. If you are a master's student passionate about interdisciplinary problem-solving and global impact, this contest offers a unique platform to showcase your ideas. Review the deadline and team requirements carefully before registering your group.`,
       h2: (keyword) => `Why Enter This Global Competition`,
       faqs: (keyword) => [
@@ -666,8 +667,8 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("UNICEF Internship", item),
       titleDescriptor: "UN Internship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for a ${keyword} — paid global placements with UNICEF for students and recent graduates. Explore eligibility, stipend, and application steps.`,
-      intro: (keyword, item) => `The ${keyword} Programme places talented students and recent graduates inside UNICEF, the United Nations agency dedicated to child rights, education, health, and protection worldwide. Open to undergraduate, master's, and PhD students — as well as graduates within the past two years — these placements are available across UNICEF offices and country programmes around the globe. Interns receive a monthly stipend and, subject to available funding, a one-time contribution toward travel and visa costs. Whether your background is in development, communications, public health, education, or data, this programme offers direct exposure to global humanitarian work and a meaningful start to an international career. Positions are posted on a rolling basis, so check the official careers portal regularly and apply early.`,
+      metaDescription: (keyword, item) => `Apply for a ${keyword} â€” paid global placements with UNICEF for students and recent graduates. Explore eligibility, stipend, and application steps.`,
+      intro: (keyword, item) => `The ${keyword} Programme places talented students and recent graduates inside UNICEF, the United Nations agency dedicated to child rights, education, health, and protection worldwide. Open to undergraduate, master's, and PhD students â€” as well as graduates within the past two years â€” these placements are available across UNICEF offices and country programmes around the globe. Interns receive a monthly stipend and, subject to available funding, a one-time contribution toward travel and visa costs. Whether your background is in development, communications, public health, education, or data, this programme offers direct exposure to global humanitarian work and a meaningful start to an international career. Positions are posted on a rolling basis, so check the official careers portal regularly and apply early.`,
       h2: (keyword) => `Why Apply for This UNICEF Opportunity`,
       faqs: (keyword) => [
         { question: `What is the ${keyword}?`, answer: `The ${keyword} is a paid placement programme that gives students and recent graduates hands-on experience with UNICEF's global child rights and development work.` },
@@ -682,7 +683,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Marshall Scholarship", item),
       titleDescriptor: "UK Master's",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded UK master's scholarship for US students covering tuition, living costs, and airfare. Learn more and apply.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fully funded UK master's scholarship for US students covering tuition, living costs, and airfare. Learn more and apply.`,
       intro: (keyword, item) => `The ${keyword} is one of the most prestigious fully funded awards for US citizens who want to pursue a master's degree at any university in the United Kingdom. Awarded to up to 50 outstanding scholars each year, it covers full tuition, a living stipend, book and thesis grants, and airfare between the US and the UK. Candidates must be nominated by their undergraduate institution's Marshall campus committee and demonstrate exceptional academic achievement, leadership potential, and ambassadorial qualities. Almost any field of study is eligible, making this scholarship a flexible pathway for graduates seeking world-class education and international experience. If you are a final-year undergraduate or recent graduate with a strong academic record, begin your campus nomination process well before the national deadline.`,
       h2: (keyword) => `Benefits of This UK Master's Award`,
       faqs: (keyword) => [
@@ -698,7 +699,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("DAAD EPOS Scholarship", item),
       titleDescriptor: "Germany",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded German master's or PhD programme for development professionals. Explore eligible courses and deadlines.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fully funded German master's or PhD programme for development professionals. Explore eligible courses and deadlines.`,
       intro: (keyword, item) => `The ${keyword} funds development-related postgraduate courses at approved German universities for professionals from developing and newly industrialising countries. Unlike general DAAD scholarships, EPOS supports a curated list of master's and PhD programmes in fields such as public policy, economics, engineering, and environmental management. Applicants need at least two years of relevant professional experience and must apply to a specific course on the official EPOS list. Scholars receive a monthly stipend, health and liability insurance, a travel allowance, and a study allowance, with possible additional support for family members and language courses, depending on individual circumstances. If you are a development professional seeking targeted, fully funded qualification in Germany, this scholarship is one of the strongest options available.`,
       h2: (keyword) => `Eligibility for This German Scholarship`,
       faqs: (keyword) => [
@@ -714,7 +715,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("McCall MacBain Scholarship", item),
       titleDescriptor: "Award",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — McGill's flagship fully funded master's award with leadership development, mentorship, and a living stipend.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” McGill's flagship fully funded master's award with leadership development, mentorship, and a living stipend.`,
       intro: (keyword, item) => `The ${keyword} is McGill University's flagship graduate leadership award for outstanding students and recent graduates from any country. It funds a full-time master's or eligible second-entry professional degree at McGill in Montreal, pairing academic study with a structured leadership development programme. Recipients receive full tuition and fees, a CAD 2,300 monthly living stipend during academic terms, up to CAD 5,000 in summer funding, and funded travel to the final interview stage in Montreal, with accommodation and logistics arranged for finalists. Selection weighs leadership, community engagement, and academic strength equally through essays, references, and multi-stage interviews. If you are an ambitious graduate seeking a fully funded Canadian master's degree with a leadership focus, this award offers one of the most comprehensive packages available.`,
       h2: (keyword) => `Why Apply for This McGill Award`,
       faqs: (keyword) => [
@@ -730,7 +731,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Franz Werfel Fellowship", item),
       titleDescriptor: "Austria",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded residency at the University of Vienna for German-language writers, scholars, and translators. Explore eligibility and deadlines.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fully funded residency at the University of Vienna for German-language writers, scholars, and translators. Explore eligibility and deadlines.`,
       intro: (keyword, item) => `The ${keyword} is a prestigious fully funded residency fellowship hosted by the University of Vienna's Franz Werfel Centre for German-language and literary studies. Open to established and emerging writers, translators, and scholars working in or on German-language literature, the fellowship provides a dedicated period of focused research, writing, or translation in Vienna. Fellows receive a monthly stipend, accommodation support, and access to the university's library and academic networks. The programme honours the legacy of Franz Werfel, the Austrian novelist and playwright known for his commitment to intellectual freedom and humanitarian values. Applicants should demonstrate a strong body of work in German-language literary scholarship, creative writing, or translation, along with a clear project proposal for their time in Vienna. The fellowship is highly competitive and attracts candidates from across Europe and beyond.`,
       h2: (keyword) => `Eligibility for This Austrian Literary Fellowship`,
       faqs: (keyword) => [
@@ -746,13 +747,13 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Gates Cambridge Scholarship", item),
       titleDescriptor: "UK Master's Award",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — Cambridge University's flagship fully funded award for outstanding international postgraduates. Explore eligibility and deadlines.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” Cambridge University's flagship fully funded award for outstanding international postgraduates. Explore eligibility and deadlines.`,
       intro: (keyword, item) => `The ${keyword} is one of the most prestigious international graduate awards, funding up to 40 outstanding students from outside the UK each year to pursue a full-time postgraduate degree at the University of Cambridge. Founded in 2001 by the Bill and Melinda Gates Foundation, the scholarship covers full university fees, a generous living stipend, round-trip airfare, and additional funding for academic conferences and family allowances. Scholars are selected not only for academic excellence but for their leadership potential, commitment to improving the lives of others, and ability to think critically across disciplines. If you are a high-achieving student with a record of meaningful impact and a clear vision for how a Cambridge education will amplify your contribution to society, this scholarship offers an unmatched combination of financial support, intellectual community, and lifelong network.`,
       h2: (keyword) => `Why This Cambridge Award Stands Out`,
       faqs: (keyword) => [
-        { question: `What does the ${keyword} cover?`, answer: `Full university fees, a living stipend of approximately £20,000 per year, round-trip airfare, and additional funding for academic development and family allowances.` },
+        { question: `What does the ${keyword} cover?`, answer: `Full university fees, a living stipend of approximately Â£20,000 per year, round-trip airfare, and additional funding for academic development and family allowances.` },
         { question: `Who is eligible?`, answer: `Outstanding students from any country outside the UK who are applying to a full-time postgraduate degree at the University of Cambridge.` },
-        { question: `How competitive is this scholarship?`, answer: `Extremely competitive — around 40 scholarships are awarded annually from thousands of applications worldwide. Selection weighs academic merit, leadership, and commitment to social impact equally.` }
+        { question: `How competitive is this scholarship?`, answer: `Extremely competitive â€” around 40 scholarships are awarded annually from thousands of applications worldwide. Selection weighs academic merit, leadership, and commitment to social impact equally.` }
       ],
       imageAlt: (keyword) => `${keyword} University of Cambridge banner`
     },
@@ -762,12 +763,12 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Erasmus Mundus Joint Master Degrees", item),
       titleDescriptor: "EU Programme",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — EU-funded fully funded master's programmes at top European universities. Explore eligible fields, scholarships, and deadlines.`,
-      intro: (keyword, item) => `The ${keyword} (EMJMD) are prestigious, integrated, international study programmes jointly delivered by consortia of higher education institutions across Europe and beyond. Each programme lasts one to two years and awards a joint or multiple degree. The European Union funds full scholarships for outstanding students worldwide, covering participation costs, a monthly living allowance of €1,400, travel expenses, and insurance. With over 150 programmes spanning fields from renewable energy to human rights, public health to data science, EMJMD offers a unique opportunity to study in at least two different countries, gain intercultural competence, and build a pan-European professional network. If you are a bachelor's graduate seeking a truly international master's experience with full financial support, this is one of the most comprehensive funded programmes available.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” EU-funded fully funded master's programmes at top European universities. Explore eligible fields, scholarships, and deadlines.`,
+      intro: (keyword, item) => `The ${keyword} (EMJMD) are prestigious, integrated, international study programmes jointly delivered by consortia of higher education institutions across Europe and beyond. Each programme lasts one to two years and awards a joint or multiple degree. The European Union funds full scholarships for outstanding students worldwide, covering participation costs, a monthly living allowance of â‚¬1,400, travel expenses, and insurance. With over 150 programmes spanning fields from renewable energy to human rights, public health to data science, EMJMD offers a unique opportunity to study in at least two different countries, gain intercultural competence, and build a pan-European professional network. If you are a bachelor's graduate seeking a truly international master's experience with full financial support, this is one of the most comprehensive funded programmes available.`,
       h2: (keyword) => `What Makes This EU Programme Unique`,
       faqs: (keyword) => [
-        { question: `How much funding does the ${keyword} provide?`, answer: `Full scholarships cover tuition, a €1,400 monthly allowance, travel costs, and insurance for the entire programme duration (1–2 years).` },
-        { question: `Can I choose which countries to study in?`, answer: `Each EMJMD programme has a fixed mobility pattern — you study at a minimum of two different European universities as part of the consortium. You cannot pick individual institutions, but each programme publishes its exact mobility path.` },
+        { question: `How much funding does the ${keyword} provide?`, answer: `Full scholarships cover tuition, a â‚¬1,400 monthly allowance, travel costs, and insurance for the entire programme duration (1â€“2 years).` },
+        { question: `Can I choose which countries to study in?`, answer: `Each EMJMD programme has a fixed mobility pattern â€” you study at a minimum of two different European universities as part of the consortium. You cannot pick individual institutions, but each programme publishes its exact mobility path.` },
         { question: `Who can apply?`, answer: `Graduates with a bachelor's degree from any country worldwide. Specific programmes may require relevant academic backgrounds, language proficiency, or professional experience.` }
       ],
       imageAlt: (keyword) => `${keyword} European universities banner`
@@ -778,28 +779,28 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("MEXT Japanese Government Scholarship", item),
       titleDescriptor: "Japan Scholarship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — Japan's flagship fully funded government award for international students. Explore eligibility, benefits, and application routes.`,
-      intro: (keyword, item) => `The ${keyword} is the Japanese government's flagship programme for international students, offering full funding for undergraduate, master's, doctoral, and research students to study at Japanese universities. Established in 1954, the scholarship reflects Japan's commitment to global education and cultural exchange. Recipients receive full tuition coverage, a monthly stipend (approximately ¥143,000–148,000 depending on level), round-trip airfare, and a preparatory Japanese language course if needed. The programme is available through two routes: embassy recommendation (applied through your local Japanese embassy) or university recommendation (nominated by a Japanese institution). If you are drawn to Japanese academic culture, eager to learn the language, and committed to building bridges between your home country and Japan, MEXT provides one of the most generous and long-standing government scholarship programmes in the world.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” Japan's flagship fully funded government award for international students. Explore eligibility, benefits, and application routes.`,
+      intro: (keyword, item) => `The ${keyword} is the Japanese government's flagship programme for international students, offering full funding for undergraduate, master's, doctoral, and research students to study at Japanese universities. Established in 1954, the scholarship reflects Japan's commitment to global education and cultural exchange. Recipients receive full tuition coverage, a monthly stipend (approximately Â¥143,000â€“148,000 depending on level), round-trip airfare, and a preparatory Japanese language course if needed. The programme is available through two routes: embassy recommendation (applied through your local Japanese embassy) or university recommendation (nominated by a Japanese institution). If you are drawn to Japanese academic culture, eager to learn the language, and committed to building bridges between your home country and Japan, MEXT provides one of the most generous and long-standing government scholarship programmes in the world.`,
       h2: (keyword) => `Benefits of Studying in Japan on MEXT`,
       faqs: (keyword) => [
-        { question: `What does the ${keyword} cover?`, answer: `Full tuition, a monthly stipend of ¥143,000–148,000, round-trip airfare, and a Japanese language preparatory course if required.` },
+        { question: `What does the ${keyword} cover?`, answer: `Full tuition, a monthly stipend of Â¥143,000â€“148,000, round-trip airfare, and a Japanese language preparatory course if required.` },
         { question: `What are the two application routes?`, answer: `Embassy recommendation (apply through your local Japanese embassy or consulate) and university recommendation (a Japanese university nominates you directly).` },
-        { question: `Do I need to speak Japanese?`, answer: `Not initially. Many MEXT scholarships include a 1–2 year Japanese language preparatory course before your degree begins. Some programmes at the graduate level are available in English.` }
+        { question: `Do I need to speak Japanese?`, answer: `Not initially. Many MEXT scholarships include a 1â€“2 year Japanese language preparatory course before your degree begins. Some programmes at the graduate level are available in English.` }
       ],
       imageAlt: (keyword) => `${keyword} Japan study banner`
     },
     {
       id: "knight-hennessy",
-      test: (title) => /Knight\s*[-–]?\s*Hennessy/i.test(title),
+      test: (title) => /Knight\s*[-â€“]?\s*Hennessy/i.test(title),
       keyword: (item) => ON.resolveKeywordYear("Knight-Hennessy Scholars Program", item),
       titleDescriptor: "Stanford Award",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — Stanford's flagship fully funded graduate scholarship with leadership development. Explore eligibility and how to apply.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” Stanford's flagship fully funded graduate scholarship with leadership development. Explore eligibility and how to apply.`,
       intro: (keyword, item) => `The ${keyword} is Stanford University's most ambitious graduate fellowship, funding up to 100 outstanding students each year to pursue any graduate degree at Stanford. Founded by Phil Knight and John Hennessy, the programme covers full tuition and fees, a living stipend, travel allowance, and additional academic expenses for up to three years. Beyond financial support, Knight-Hennessy provides a transformative leadership development programme including immersive workshops, global trips, one-on-one coaching, and a diverse community of scholars across all seven Stanford schools. Selection weighs academic excellence, leadership experience, civic contribution, and personal character through a multi-stage process including written essays and a two-day immersive assessment weekend. If you are an ambitious graduate student with a track record of meaningful impact and a vision for addressing the world's most pressing challenges, this programme offers an unparalleled combination of funding, community, and leadership training at one of the world's leading universities.`,
       h2: (keyword) => `Why This Stanford Programme Is Unique`,
       faqs: (keyword) => [
         { question: `What does the ${keyword} fund?`, answer: `Full tuition and fees for any Stanford graduate programme, plus a living stipend, travel allowance, and academic expenses for up to three years.` },
-        { question: `Can I apply to any Stanford school?`, answer: `Yes — Knight-Hennessy Scholars can pursue any graduate degree across all seven Stanford schools: Business, Education, Engineering, Humanities & Sciences, Law, Medicine, and Earth Sustainability.` },
+        { question: `Can I apply to any Stanford school?`, answer: `Yes â€” Knight-Hennessy Scholars can pursue any graduate degree across all seven Stanford schools: Business, Education, Engineering, Humanities & Sciences, Law, Medicine, and Earth Sustainability.` },
         { question: `How is the selection process structured?`, answer: `A holistic review of academic records, leadership experience, essays, and references, followed by an immersive assessment weekend for finalists that includes group activities, interviews, and presentations.` }
       ],
       imageAlt: (keyword) => `${keyword} Stanford University banner`
@@ -810,8 +811,8 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Mastercard Foundation Scholars Program", item),
       titleDescriptor: "Global Scholarship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded university education for young leaders from Africa. Explore partner universities, eligibility, and benefits.`,
-      intro: (keyword, item) => `The ${keyword} is one of the largest scholarship programmes in the world, providing comprehensive funding for academically talented yet economically disadvantaged young people from Africa to access and complete university education. The programme partners with over 20 universities across Africa and select institutions worldwide, covering full tuition, accommodation, books, a living stipend, travel, and psychosocial support throughout your studies. Scholars also receive leadership development, mentoring, and access to a global network of over 20,000 alumni committed to giving back to their communities. The programme specifically targets students who would otherwise be unable to afford university — combining financial access with the tools, networks, and values needed to become transformational leaders. If you are a young African student with strong academic potential, financial need, and a genuine commitment to community impact, this programme offers a life-changing educational pathway.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” fully funded university education for young leaders from Africa. Explore partner universities, eligibility, and benefits.`,
+      intro: (keyword, item) => `The ${keyword} is one of the largest scholarship programmes in the world, providing comprehensive funding for academically talented yet economically disadvantaged young people from Africa to access and complete university education. The programme partners with over 20 universities across Africa and select institutions worldwide, covering full tuition, accommodation, books, a living stipend, travel, and psychosocial support throughout your studies. Scholars also receive leadership development, mentoring, and access to a global network of over 20,000 alumni committed to giving back to their communities. The programme specifically targets students who would otherwise be unable to afford university â€” combining financial access with the tools, networks, and values needed to become transformational leaders. If you are a young African student with strong academic potential, financial need, and a genuine commitment to community impact, this programme offers a life-changing educational pathway.`,
       h2: (keyword) => `How This Programme Supports African Leaders`,
       faqs: (keyword) => [
         { question: `Who can apply for the ${keyword}?`, answer: `Young people from Africa who are academically talented, financially disadvantaged, and committed to giving back to their communities. Specific eligibility varies by partner university.` },
@@ -826,8 +827,8 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("WHO Internship Programme", item),
       titleDescriptor: "UN Internship",
       h1Suffix: "",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — gain hands-on experience at the World Health Organization. Explore eligibility, stipend details, and application steps.`,
-      intro: (keyword, item) => `The ${keyword} offers students and recent graduates the chance to work alongside WHO professionals at headquarters, regional, or country offices worldwide. Internships typically last six weeks to six months and cover areas such as public health, epidemiology, health policy, communications, data science, and programme management. Interns receive a monthly stipend to cover living expenses and, depending on the duty station, may also receive travel support. The programme provides direct exposure to global health operations, policy development, and emergency response — experience that is invaluable for careers in international public health. WHO welcomes applicants from diverse academic backgrounds including medicine, nursing, public health, economics, social sciences, and statistics. If you are passionate about global health and want to contribute to the organisation leading the world's health response, this internship offers a meaningful entry point.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” gain hands-on experience at the World Health Organization. Explore eligibility, stipend details, and application steps.`,
+      intro: (keyword, item) => `The ${keyword} offers students and recent graduates the chance to work alongside WHO professionals at headquarters, regional, or country offices worldwide. Internships typically last six weeks to six months and cover areas such as public health, epidemiology, health policy, communications, data science, and programme management. Interns receive a monthly stipend to cover living expenses and, depending on the duty station, may also receive travel support. The programme provides direct exposure to global health operations, policy development, and emergency response â€” experience that is invaluable for careers in international public health. WHO welcomes applicants from diverse academic backgrounds including medicine, nursing, public health, economics, social sciences, and statistics. If you are passionate about global health and want to contribute to the organisation leading the world's health response, this internship offers a meaningful entry point.`,
       h2: (keyword) => `Why This WHO Experience Matters`,
       faqs: (keyword) => [
         { question: `Is the ${keyword} paid?`, answer: `Yes, WHO interns receive a monthly living stipend. Some duty stations may also provide travel support, though this varies by location and funding availability.` },
@@ -842,7 +843,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Rotary Peace Fellowship", item),
       titleDescriptor: "Peace Studies",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded master's or career-development fellowship in peace and conflict studies at top universities worldwide.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” fully funded master's or career-development fellowship in peace and conflict studies at top universities worldwide.`,
       intro: (keyword, item) => `The ${keyword} is one of the most prestigious fully funded fellowships in peace and conflict studies, supporting up to 130 fellows each year to study at one of six Rotary Peace Centres located at leading universities across Japan, Sweden, England, Australia, Thailand, and the United States. Fellows pursue either a master's degree in peace and conflict studies or a career-development fellowship for experienced professionals. The programme covers tuition, fees, room and board, round-trip transportation, and internship expenses. Rotary Peace Fellows join a global network of over 1,600 alumni working in diplomacy, humanitarian aid, policy, and peacebuilding worldwide. If you are committed to advancing peace and have the academic background and professional drive to make an impact, this fellowship provides world-class education and a lifelong community of practice.`,
       h2: (keyword) => `What Sets This Peace Fellowship Apart`,
       faqs: (keyword) => [
@@ -858,7 +859,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Google Software Engineering Internship", item),
       titleDescriptor: "Tech Internship",
       h1Suffix: "",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a competitive paid internship at Google for computer science students. Explore eligibility, stipend, and application tips.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a competitive paid internship at Google for computer science students. Explore eligibility, stipend, and application tips.`,
       intro: (keyword, item) => `The ${keyword} is one of the most sought-after technical internships in the world, placing undergraduate, master's, and PhD students inside Google's engineering teams for a 12-week summer placement. Interns work on real projects alongside full-time engineers, receive a competitive salary and housing stipend, and gain exposure to Google's engineering culture, tools, and scale. The programme is open to students studying computer science, software engineering, or a closely related technical field at an accredited university. Selection is highly competitive and based on coding ability, problem-solving skills, and demonstrated interest in technology. The application process typically involves online assessments followed by technical interviews. If you are a CS student with strong programming fundamentals and a passion for building at scale, this internship provides an unmatched launchpad for a career in software engineering.`,
       h2: (keyword) => `How to Prepare for This Google Internship`,
       faqs: (keyword) => [
@@ -874,7 +875,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("ETH Zurich Excellence Scholarship", item),
       titleDescriptor: "Swiss Scholarship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fully funded master's scholarship at one of the world's top technical universities in Switzerland. Explore eligibility and benefits.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fully funded master's scholarship at one of the world's top technical universities in Switzerland. Explore eligibility and benefits.`,
       intro: (keyword, item) => `The ${keyword} (ESOP) supports outstanding master's students at ETH Zurich, one of the world's leading technical universities. Each year, a small number of top-performing students receive a scholarship covering full living and study expenses plus a tuition fee waiver for the duration of the master's programme. Scholars are selected based on exceptional academic performance, strong letters of recommendation, and a compelling motivation letter. The programme also pairs scholars with a faculty mentor who provides academic guidance throughout their studies. ETH Zurich is consistently ranked among the top 10 universities globally for engineering, computer science, and natural sciences. If you are a high-achieving student seeking a rigorous technical education in Switzerland with full financial support, ESOP offers a rare combination of academic excellence and institutional prestige.`,
       h2: (keyword) => `Why Study at ETH Zurich`,
       faqs: (keyword) => [
@@ -890,7 +891,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("Joint Japan World Bank Graduate Scholarship", item),
       titleDescriptor: "Development Scholarship",
       h1Suffix: " (Fully Funded)",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — fully funded master's scholarships for students from developing countries at top universities worldwide.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” fully funded master's scholarships for students from developing countries at top universities worldwide.`,
       intro: (keyword, item) => `The ${keyword} (JJ/WBGSP) is a fully funded programme that enables outstanding students from developing countries to pursue a master's degree at one of the programme's partner universities worldwide. The scholarship covers full tuition, a monthly living stipend, round-trip airfare, health insurance, and a travel allowance. In return, scholars commit to returning to their home country after graduation to apply their skills in development-related work. The programme prioritises fields directly relevant to international development, including economics, public health, education, agriculture, environment, and urban planning. If you are from a developing country, have a strong academic record, and are committed to contributing to your country's development, this scholarship provides a world-class education with a clear purpose.`,
       h2: (keyword) => `Who Should Apply for This Development Scholarship`,
       faqs: (keyword) => [
@@ -906,7 +907,7 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("National Geographic Explorer Grant", item),
       titleDescriptor: "Research Grant",
       h1Suffix: "",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — competitive research funding for explorers working in conservation, science, education, and storytelling. Explore eligibility and deadlines.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” competitive research funding for explorers working in conservation, science, education, and storytelling. Explore eligibility and deadlines.`,
       intro: (keyword, item) => `The ${keyword} programme funds bold individuals and teams working to conserve, explore, and illuminate the world through research, storytelling, and innovation. Grants range from $10,000 to $100,000 and support projects in conservation, scientific research, archaeology, education, photography, filmmaking, and technology. The programme is open to researchers, educators, journalists, photographers, and changemakers from any country. Applicants must propose a project with clear objectives, measurable outcomes, and alignment with National Geographic's mission. Selection is competitive and based on the project's potential impact, innovation, and the applicant's track record. If you have a compelling project idea that advances exploration or conservation, this grant provides both funding and membership in a global community of National Geographic Explorers.`,
       h2: (keyword) => `What Types of Projects This Grant Supports`,
       faqs: (keyword) => [
@@ -922,12 +923,12 @@ window.ON = window.OpportunityNest;
       keyword: (item) => ON.resolveKeywordYear("TED Fellows Program", item),
       titleDescriptor: "Global Fellowship",
       h1Suffix: "",
-      metaDescription: (keyword, item) => `Apply for the ${keyword} — a fellowship for exceptional innovators and changemakers worldwide. Explore benefits, eligibility, and how to apply.`,
-      intro: (keyword, item) => `The ${keyword} identifies and supports extraordinary individuals from every field and region who are creating meaningful change in their communities and beyond. Each year, a new cohort of Fellows is selected from hundreds of nominations across more than 100 countries. Fellows receive a transformative package including a fully funded trip to the TED Conference, professional development workshops, media training, mentorship from the TED community, and a cash grant to support their projects. The fellowship is not limited to any specific field — past Fellows include scientists, artists, entrepreneurs, activists, journalists, and engineers. What unites them is bold thinking, tangible impact, and the potential to scale their work with TED's platform. If you are an exceptional individual working on an ambitious project with global relevance, this fellowship offers visibility, resources, and a network that can accelerate your impact.`,
+      metaDescription: (keyword, item) => `Apply for the ${keyword} â€” a fellowship for exceptional innovators and changemakers worldwide. Explore benefits, eligibility, and how to apply.`,
+      intro: (keyword, item) => `The ${keyword} identifies and supports extraordinary individuals from every field and region who are creating meaningful change in their communities and beyond. Each year, a new cohort of Fellows is selected from hundreds of nominations across more than 100 countries. Fellows receive a transformative package including a fully funded trip to the TED Conference, professional development workshops, media training, mentorship from the TED community, and a cash grant to support their projects. The fellowship is not limited to any specific field â€” past Fellows include scientists, artists, entrepreneurs, activists, journalists, and engineers. What unites them is bold thinking, tangible impact, and the potential to scale their work with TED's platform. If you are an exceptional individual working on an ambitious project with global relevance, this fellowship offers visibility, resources, and a network that can accelerate your impact.`,
       h2: (keyword) => `What Makes This Fellowship Different`,
       faqs: (keyword) => [
         { question: `What do TED Fellows receive?`, answer: `A funded trip to the TED Conference, professional development, media training, mentorship, a cash grant, and lifelong access to the TED community.` },
-        { question: `Do I need to work in a specific field?`, answer: `No — TED Fellows come from every field: science, art, technology, activism, journalism, medicine, engineering, and more. The common thread is bold ideas and measurable impact.` },
+        { question: `Do I need to work in a specific field?`, answer: `No â€” TED Fellows come from every field: science, art, technology, activism, journalism, medicine, engineering, and more. The common thread is bold ideas and measurable impact.` },
         { question: `How are Fellows selected?`, answer: `Through a nomination and application process reviewed by the TED community. Selection weighs the ambition of the project, the applicant's track record, and the potential for global impact.` }
       ],
       imageAlt: (keyword) => `${keyword} innovation and ideas banner`
@@ -974,7 +975,7 @@ window.ON = window.OpportunityNest;
     return title
       .replace(/\s*(?:20\d\d|202[5-9])\s*/g, "")
       .replace(/\s*\([^)]*\)\s*$/g, "")
-      .replace(/\s*[–—-]\s*.*$/, "")
+      .replace(/\s*[â€“â€”-]\s*.*$/, "")
       .replace(/\s*\|.*$/, "")
       .replace(/\s+in\s+[^,]+(?:,.*)?$/i, "")
       .replace(/\s+for\s+.*$/i, "")
@@ -1026,7 +1027,7 @@ window.ON = window.OpportunityNest;
     const typeFragment = keywordLower.includes(type) ? "" : ` ${type}`;
     const descVariants = [
       `Apply for the ${keyword}${typeFragment} in ${country}. ${funding}. Deadline: ${deadline}. Explore details and apply via OpportunityNest.`,
-      `${keyword}${typeFragment} — ${country}. ${funding}. Deadline ${deadline}. Find full eligibility, funding details, and application steps on OpportunityNest.`,
+      `${keyword}${typeFragment} â€” ${country}. ${funding}. Deadline ${deadline}. Find full eligibility, funding details, and application steps on OpportunityNest.`,
       `Discover the ${keyword}${typeFragment} in ${country}. ${funding}, deadline ${deadline}. Read the full guide and apply through the official source.`,
       `${keyword}: ${funding} ${typeFragment} in ${country}. Application deadline ${deadline}. Check eligibility, required documents, and tips on OpportunityNest.`,
       `Looking for the ${keyword}${typeFragment}? Based in ${country}, ${funding}, deadline ${deadline}. OpportunityNest has the full breakdown.`
@@ -1047,7 +1048,7 @@ window.ON = window.OpportunityNest;
       return `${keyword}${override.h1Suffix}`;
     }
     if (override) return keyword;
-    const h1SuffixVariants = [" (Fully Funded)", " — Full Guide & Application", " — Eligibility, Funding & How to Apply", " (Application Guide)", " — Details, Deadline & Requirements"];
+    const h1SuffixVariants = [" (Fully Funded)", " â€” Full Guide & Application", " â€” Eligibility, Funding & How to Apply", " (Application Guide)", " â€” Details, Deadline & Requirements"];
     const h1Suffix = ON.pickVariant(h1SuffixVariants, item);
     return `${keyword}${h1Suffix}`;
   };
@@ -1080,13 +1081,13 @@ window.ON = window.OpportunityNest;
       // Variant 1: Direct and practical
       `The ${keyword} is a ${type} based in ${country}, open to ${level} candidates with an interest in ${field}.${orgMention} This programme offers ${funding}, enabling selected participants to focus fully on their studies, research, or professional development without financial pressure. Successful applicants join a cohort of driven individuals from around the world and gain access to academic mentors, networking events, and career-building resources throughout the programme. Whether your goal is to advance your education, gain international experience, or build specialised skills, this opportunity provides a structured path toward that objective. The application deadline is ${deadline}. Review all eligibility criteria carefully and submit your materials through the official programme website well before the closing date. OpportunityNest keeps this listing updated so you can apply with accurate deadline and funding information.`,
       // Variant 2: Aspirational and career-focused
-      `If you are looking to take a significant step in your academic or professional journey, the ${keyword} deserves your attention. This ${type} in ${country} welcomes ${level} applicants working in ${field} and provides ${funding} to help participants make the most of the experience.${orgMention} Past participants have described the programme as transformative — not just for the funding, but for the mentorship, peer network, and exposure to new perspectives that come with it. The deadline is ${deadline}, and applications are submitted through the official programme website. OpportunityNest recommends starting your preparation early: review the eligibility criteria, gather your documents, and draft your motivation letter well before the closing date. This listing is kept up to date so you always have the latest information at hand.`,
+      `If you are looking to take a significant step in your academic or professional journey, the ${keyword} deserves your attention. This ${type} in ${country} welcomes ${level} applicants working in ${field} and provides ${funding} to help participants make the most of the experience.${orgMention} Past participants have described the programme as transformative â€” not just for the funding, but for the mentorship, peer network, and exposure to new perspectives that come with it. The deadline is ${deadline}, and applications are submitted through the official programme website. OpportunityNest recommends starting your preparation early: review the eligibility criteria, gather your documents, and draft your motivation letter well before the closing date. This listing is kept up to date so you always have the latest information at hand.`,
       // Variant 3: Problem-solution framing
-      `Finding a ${type} that combines strong funding, clear eligibility, and a reputable host institution is not easy — the ${keyword} checks all three. Based in ${country} and aimed at ${level} candidates in ${field}, this programme provides ${funding} alongside access to a global network of scholars, professionals, and alumni.${orgMention} The application deadline is ${deadline}. What makes this opportunity stand out is its combination of financial support and structured development: participants do not just receive funding, they gain mentorship, training, and long-term career connections. If you meet the eligibility criteria, we recommend preparing your application at least six to eight weeks in advance. OpportunityNest monitors this listing for updates to deadlines and requirements.`,
+      `Finding a ${type} that combines strong funding, clear eligibility, and a reputable host institution is not easy â€” the ${keyword} checks all three. Based in ${country} and aimed at ${level} candidates in ${field}, this programme provides ${funding} alongside access to a global network of scholars, professionals, and alumni.${orgMention} The application deadline is ${deadline}. What makes this opportunity stand out is its combination of financial support and structured development: participants do not just receive funding, they gain mentorship, training, and long-term career connections. If you meet the eligibility criteria, we recommend preparing your application at least six to eight weeks in advance. OpportunityNest monitors this listing for updates to deadlines and requirements.`,
       // Variant 4: Comparative context
-      `Among the many ${type}s available to ${level} candidates in ${field}, the ${keyword} is notable for its scope, funding, and institutional backing. Hosted in ${country}, the programme offers ${funding} and attracts applicants from diverse academic and professional backgrounds.${orgMention} The selection process is competitive, but well-prepared candidates with a clear motivation letter and strong references have a realistic chance of success. The deadline is ${deadline}. Before applying, confirm that you meet all eligibility requirements — nationality restrictions, degree level, and field-specific criteria can vary. OpportunityNest provides this summary to help you decide whether to invest time in your application, and links directly to the official programme page for submission.`,
+      `Among the many ${type}s available to ${level} candidates in ${field}, the ${keyword} is notable for its scope, funding, and institutional backing. Hosted in ${country}, the programme offers ${funding} and attracts applicants from diverse academic and professional backgrounds.${orgMention} The selection process is competitive, but well-prepared candidates with a clear motivation letter and strong references have a realistic chance of success. The deadline is ${deadline}. Before applying, confirm that you meet all eligibility requirements â€” nationality restrictions, degree level, and field-specific criteria can vary. OpportunityNest provides this summary to help you decide whether to invest time in your application, and links directly to the official programme page for submission.`,
       // Variant 5: Action-oriented
-      `The ${keyword} is currently accepting applications from ${level} candidates interested in ${field}. This ${type}, based in ${country}, provides ${funding} and is designed for individuals who want to combine academic rigour with real-world impact.${orgMention} The deadline is ${deadline}, and all applications go through the official programme website — OpportunityNest does not process applications but keeps this listing current so you can apply with confidence. Successful participants typically describe the experience as a turning point: the funding removes financial barriers, while the programme structure — including mentorship, workshops, and peer collaboration — builds skills that last well beyond the programme itself. If this matches your goals, start preparing your documents now.`
+      `The ${keyword} is currently accepting applications from ${level} candidates interested in ${field}. This ${type}, based in ${country}, provides ${funding} and is designed for individuals who want to combine academic rigour with real-world impact.${orgMention} The deadline is ${deadline}, and all applications go through the official programme website â€” OpportunityNest does not process applications but keeps this listing current so you can apply with confidence. Successful participants typically describe the experience as a turning point: the funding removes financial barriers, while the programme structure â€” including mentorship, workshops, and peer collaboration â€” builds skills that last well beyond the programme itself. If this matches your goals, start preparing your documents now.`
     ];
 
     return ON.fitWordCount(ON.pickVariant(introVariants, item), 120, 180);
@@ -1124,9 +1125,9 @@ window.ON = window.OpportunityNest;
     const isFullyFunded = /fully\s*fund/i.test(funding);
 
     const eligibilityAnswers = [
-      `The ${keyword}${typeFragment} is open to ${level} applicants with an interest in ${field}. Eligibility typically depends on your nationality, academic background, and the specific requirements set by the programme. Review the official criteria carefully — some programmes restrict by country of origin, age, or degree field, while others are open to all nationalities and disciplines.`,
+      `The ${keyword}${typeFragment} is open to ${level} applicants with an interest in ${field}. Eligibility typically depends on your nationality, academic background, and the specific requirements set by the programme. Review the official criteria carefully â€” some programmes restrict by country of origin, age, or degree field, while others are open to all nationalities and disciplines.`,
       `Eligibility for the ${keyword}${typeFragment} depends on several factors: your nationality, current education level, and field of study. The programme welcomes ${level} candidates in ${field}, but specific restrictions may apply. Always check the official eligibility page before investing time in an application.`,
-      `The ${keyword}${typeFragment} accepts applications from ${level} candidates working in ${field}. Nationality requirements vary — some programmes are open globally, while others target specific regions or countries. Read the full criteria on the official website to confirm you qualify.`
+      `The ${keyword}${typeFragment} accepts applications from ${level} candidates working in ${field}. Nationality requirements vary â€” some programmes are open globally, while others target specific regions or countries. Read the full criteria on the official website to confirm you qualify.`
     ];
     const eligibilityAnswer = ON.pickVariant(eligibilityAnswers, { title: (item.title || "") + "_faq1" });
 
@@ -1135,34 +1136,34 @@ window.ON = window.OpportunityNest;
       `The ${keyword}${typeFragment} provides full funding that covers tuition, living expenses, health insurance, and international travel. The specific amounts and payment schedule are published on the official website and may be adjusted each cycle.`,
       `Yes, this is a fully funded programme. Selected participants receive a comprehensive package including tuition waivers, a monthly stipend, and travel support. Funding details can change between years, so verify the current structure on the official page.`
     ] : [
-      `The ${keyword}${typeFragment} provides ${funding}. The specific financial support depends on the programme structure — some cover tuition only, while others include living allowances, travel grants, or research funding. Check the official listing for the full details of what is included.`,
+      `The ${keyword}${typeFragment} provides ${funding}. The specific financial support depends on the programme structure â€” some cover tuition only, while others include living allowances, travel grants, or research funding. Check the official listing for the full details of what is included.`,
       `Funding for the ${keyword}${typeFragment} is ${funding}. The exact amount and coverage depend on the programme and your status. Review the funding section on the official website for a detailed breakdown of what is included.`,
-      `The ${keyword}${typeFragment} offers ${funding}. What this covers varies — it may include partial tuition, a monthly stipend, or a one-time grant. Confirm the details on the official programme page before applying.`
+      `The ${keyword}${typeFragment} offers ${funding}. What this covers varies â€” it may include partial tuition, a monthly stipend, or a one-time grant. Confirm the details on the official programme page before applying.`
     ];
     const fundingAnswer = ON.pickVariant(fundingAnswers, { title: (item.title || "") + "_faq2" });
 
     const applyAnswers = [
-      `You can apply through the official programme website. The deadline is ${deadline}. Before applying, confirm your eligibility, prepare your motivation letter and CV, and arrange your references early. Most successful applicants start preparing at least 6–8 weeks before the deadline.`,
-      `Applications are submitted via the official programme portal. The deadline is ${deadline}. Start by checking your eligibility, then gather your documents — transcripts, references, and motivation letter — well in advance. Early preparation gives you time to refine each component.`,
+      `You can apply through the official programme website. The deadline is ${deadline}. Before applying, confirm your eligibility, prepare your motivation letter and CV, and arrange your references early. Most successful applicants start preparing at least 6â€“8 weeks before the deadline.`,
+      `Applications are submitted via the official programme portal. The deadline is ${deadline}. Start by checking your eligibility, then gather your documents â€” transcripts, references, and motivation letter â€” well in advance. Early preparation gives you time to refine each component.`,
       `To apply, visit the official programme website and follow the application instructions. The closing date is ${deadline}. Give yourself at least six weeks to prepare: draft your motivation letter, request references, and collect your academic documents before the final submission.`
     ];
     const applyAnswer = ON.pickVariant(applyAnswers, { title: (item.title || "") + "_faq3" });
 
     const competitivenessAnswers = [
       `The ${keyword}${typeFragment} is competitive, as it attracts strong applicants from ${country} and internationally. To strengthen your application, focus on demonstrating clear goals, relevant experience in ${field}, and a well-prepared motivation letter that explains why this specific programme is the right fit for you.`,
-      `Competition for the ${keyword}${typeFragment} is significant — it draws applications from ${country} and beyond. What separates successful candidates is specificity: a motivation letter that names the programme's unique features, connects them to your background, and shows a realistic plan for what comes next.`,
+      `Competition for the ${keyword}${typeFragment} is significant â€” it draws applications from ${country} and beyond. What separates successful candidates is specificity: a motivation letter that names the programme's unique features, connects them to your background, and shows a realistic plan for what comes next.`,
       `This ${type} receives strong applications from ${country} and around the world. To stand out, invest time in your motivation letter, secure references from people who know your work well, and demonstrate a clear connection between your experience in ${field} and the programme's objectives.`
     ];
     const competitivenessAnswer = ON.pickVariant(competitivenessAnswers, { title: (item.title || "") + "_faq4" });
 
     const afterAnswers = [
       `After selection, recipients typically receive an official offer letter with programme details, start dates, and any pre-arrival requirements such as visa applications, accommodation arrangements, or orientation materials. The programme team will guide you through the next steps.`,
-      `Once selected, you will receive a formal acceptance with details about start dates, pre-arrival requirements, and any documentation you need to prepare — such as visa applications, health checks, or housing forms. The programme coordinators will walk you through each step.`,
+      `Once selected, you will receive a formal acceptance with details about start dates, pre-arrival requirements, and any documentation you need to prepare â€” such as visa applications, health checks, or housing forms. The programme coordinators will walk you through each step.`,
       `After a successful application, the programme team contacts you with an offer letter outlining your start date, funding details, and any pre-departure steps. This typically includes visa applications, accommodation arrangements, and an orientation schedule.`
     ];
     const afterAnswer = ON.pickVariant(afterAnswers, { title: (item.title || "") + "_faq5" });
 
-    // Select 4 most useful FAQs — vary which one is dropped based on the item
+    // Select 4 most useful FAQs â€” vary which one is dropped based on the item
     const allFaqs = [
       { question: `Who is eligible for the ${keyword}?`, answer: eligibilityAnswer },
       { question: `What does the ${keyword} cover financially?`, answer: fundingAnswer },
@@ -1280,7 +1281,7 @@ window.ON = window.OpportunityNest;
         `Master's graduates looking to specialise further in ${field} will find this programme a strong fit for their academic and career goals.`,
         `If you hold a bachelor's degree and want to build advanced knowledge in ${field}, this ${type} provides the structure and funding to do so.`,
         `This programme is designed for early-career graduates who see ${field} as central to their professional development and want rigorous training at the master's level.`,
-        `Recent graduates with a passion for ${field} are the primary audience — this ${type} gives you the academic foundation and credentials to advance.`
+        `Recent graduates with a passion for ${field} are the primary audience â€” this ${type} gives you the academic foundation and credentials to advance.`
       ],
       undergrad: [
         `This ${type} is designed for undergraduate students in ${field} who want to gain academic and professional experience early in their careers.`,
@@ -1301,7 +1302,7 @@ window.ON = window.OpportunityNest;
         `Anyone with a genuine commitment to ${field} and a clear sense of what they want to gain from this experience should consider applying.`,
         `This programme welcomes applicants from diverse backgrounds who share a common interest in ${field} and a drive to make the most of the opportunity.`,
         `Whether you are a student, early-career professional, or career-changer, this ${type} is relevant if ${field} is central to your goals.`,
-        `The programme is open to a broad range of applicants — what matters most is a clear motivation and a realistic plan for how you will use the experience.`
+        `The programme is open to a broad range of applicants â€” what matters most is a clear motivation and a realistic plan for how you will use the experience.`
       ]
     };
 
@@ -1309,11 +1310,11 @@ window.ON = window.OpportunityNest;
     const parts = [ON.pickVariant(levelVariants[levelKey], item)];
 
     const fundingVariants = [
-      `Because this programme is fully funded, it is especially valuable for candidates who need financial support to study or work in ${country} — including those from low- and middle-income backgrounds.`,
-      `Full funding means you can focus entirely on the programme without worrying about tuition, living costs, or travel — a significant advantage for international participants.`,
+      `Because this programme is fully funded, it is especially valuable for candidates who need financial support to study or work in ${country} â€” including those from low- and middle-income backgrounds.`,
+      `Full funding means you can focus entirely on the programme without worrying about tuition, living costs, or travel â€” a significant advantage for international participants.`,
       `The fully funded nature of this ${type} removes the financial barriers that often prevent talented candidates from applying to programmes in ${country}.`,
       `With full funding covering tuition, living expenses, and travel, this opportunity is accessible to candidates regardless of their personal financial situation.`,
-      `Fully funded programmes like this one are rare and competitive — if you qualify, the financial support allows you to commit fully to your studies or research in ${country}.`
+      `Fully funded programmes like this one are rare and competitive â€” if you qualify, the financial support allows you to commit fully to your studies or research in ${country}.`
     ];
 
     const intlVariants = [
@@ -1321,7 +1322,7 @@ window.ON = window.OpportunityNest;
       `International candidates looking at ${country} should note that this programme is designed to accommodate participants from diverse national and educational backgrounds.`,
       `For applicants from outside ${country}, this ${type} provides the kind of institutional framework that makes an international transition manageable.`,
       `If you are applying from abroad, this programme has a track record of supporting international participants through arrival, orientation, and integration.`,
-      `${country} is an increasingly popular destination for international students and professionals — this programme makes the process easier with dedicated support structures.`
+      `${country} is an increasingly popular destination for international students and professionals â€” this programme makes the process easier with dedicated support structures.`
     ];
 
     if (isFullyFunded) { parts.push(ON.pickVariant(fundingVariants, { title: (item.title || "") + "_fund" })); }
@@ -1337,27 +1338,27 @@ window.ON = window.OpportunityNest;
 
     if (/fully\s*fund/i.test(funding)) {
       const variants = [
-        `This ${type} covers the full cost of participation. For most recipients, this means tuition fees, a living stipend, health insurance, and travel costs are all included. The exact breakdown varies by programme — some cover accommodation directly, while others provide a monthly allowance that you manage yourself. Check the official programme page for the specific funding components, as they differ between recipients and may change from year to year.`,
+        `This ${type} covers the full cost of participation. For most recipients, this means tuition fees, a living stipend, health insurance, and travel costs are all included. The exact breakdown varies by programme â€” some cover accommodation directly, while others provide a monthly allowance that you manage yourself. Check the official programme page for the specific funding components, as they differ between recipients and may change from year to year.`,
         `Recipients of this fully funded ${type} do not pay tuition and receive a living stipend that covers accommodation, food, and day-to-day expenses in the host country. Health insurance and round-trip travel are typically included as well. The specific amounts and payment schedules are published on the official programme website and may be adjusted annually.`,
         `Full funding means the programme takes care of the major costs: tuition, a monthly stipend, health coverage, and international travel. You will not need to find separate housing funding or worry about insurance premiums. The exact stipend amount depends on the host city and cost of living, so review the funding breakdown on the official page.`,
         `This programme removes the financial barrier entirely. Selected participants receive a comprehensive package that includes tuition waivers, a monthly living allowance, health insurance, and a travel grant. Some programmes also provide settling-in allowances, book grants, or conference attendance funding. The official listing has the most current details on what is covered.`,
-        `As a fully funded opportunity, this ${type} provides everything you need to focus on your work: no tuition fees, a regular stipend for living costs, comprehensive health insurance, and travel support. Additional benefits — such as research budgets, family allowances, or conference funding — may also be available depending on the programme. Always check the official source for the latest funding structure.`
+        `As a fully funded opportunity, this ${type} provides everything you need to focus on your work: no tuition fees, a regular stipend for living costs, comprehensive health insurance, and travel support. Additional benefits â€” such as research budgets, family allowances, or conference funding â€” may also be available depending on the programme. Always check the official source for the latest funding structure.`
       ];
       return ON.pickVariant(variants, item);
     }
     if (/partial/i.test(funding)) {
       const variants = [
         `This ${type} provides partial funding toward your costs. Depending on the programme, this may cover a percentage of tuition fees, a one-time grant, or a monthly contribution toward living expenses. You will likely need to secure additional funding for the remaining costs through personal savings, other scholarships, or university financial aid.`,
-        `Partial funding means the programme contributes to — but does not fully cover — your expenses. Common structures include a tuition discount, a fixed-term stipend, or a one-off relocation grant. Plan ahead by identifying other funding sources to bridge the gap.`,
+        `Partial funding means the programme contributes to â€” but does not fully cover â€” your expenses. Common structures include a tuition discount, a fixed-term stipend, or a one-off relocation grant. Plan ahead by identifying other funding sources to bridge the gap.`,
         `The financial support for this ${type} covers part of the overall cost. Some recipients use it to offset tuition while covering living expenses themselves; others combine it with external scholarships or part-time work where permitted. The official website lists the exact funding components and amounts.`,
-        `This programme offers a meaningful but incomplete funding package. You can expect support for certain costs — often tuition or a monthly stipend — but should budget for expenses that fall outside the award. Many recipients successfully combine this with university bursaries, government loans, or crowdfunding.`,
-        `Partial funding provides a financial foundation but requires you to plan for the rest. The programme typically covers one or two major cost categories — check the official listing to understand exactly which expenses are included and which you will need to fund independently.`
+        `This programme offers a meaningful but incomplete funding package. You can expect support for certain costs â€” often tuition or a monthly stipend â€” but should budget for expenses that fall outside the award. Many recipients successfully combine this with university bursaries, government loans, or crowdfunding.`,
+        `Partial funding provides a financial foundation but requires you to plan for the rest. The programme typically covers one or two major cost categories â€” check the official listing to understand exactly which expenses are included and which you will need to fund independently.`
       ];
       return ON.pickVariant(variants, item);
     }
     if (/unpaid|volunteer/i.test(funding)) {
       const variants = [
-        `This ${type} does not include a salary or stipend. However, unpaid positions at international organisations often provide other benefits: professional networking, mentorship, hands-on experience, and a strong credential for your CV. Some host organisations may offer travel reimbursements or help with visa costs — check the official listing for details.`,
+        `This ${type} does not include a salary or stipend. However, unpaid positions at international organisations often provide other benefits: professional networking, mentorship, hands-on experience, and a strong credential for your CV. Some host organisations may offer travel reimbursements or help with visa costs â€” check the official listing for details.`,
         `While this opportunity is unpaid, the professional value can be substantial. Participants gain direct experience at a recognised organisation, build an international network, and develop skills that are difficult to acquire elsewhere. Some programmes assist with accommodation or visa costs even when they do not provide a salary.`,
         `This is an unpaid position, but the non-financial returns are significant: mentorship, real-world project experience, and a credential that opens doors in your field. Check whether the host organisation offers any logistical support such as housing assistance, travel reimbursement, or a certificate of completion.`,
         `No stipend or salary is provided for this ${type}. That said, many participants find the experience worthwhile for the professional connections, skill development, and career clarity it delivers. Some hosts may cover specific costs like local transport or provide a shared workspace.`,
@@ -1369,8 +1370,8 @@ window.ON = window.OpportunityNest;
       const variants = [
         `Recipients of this ${type} receive a regular stipend to cover living expenses during the programme. The amount is designed to cover basic costs such as accommodation, food, and local transport in the host country. Additional benefits like health insurance, travel allowances, or research grants may also be included depending on the programme structure.`,
         `A monthly stipend is provided to help you cover day-to-day living costs while you participate in this programme. The exact amount varies by host location and is calibrated to local cost-of-living estimates. Some programmes also include health insurance or a separate travel budget on top of the stipend.`,
-        `This programme pays a periodic stipend rather than a salary. It is intended to cover essentials — rent, meals, transport — during your time on the programme. Depending on the host city, the stipend may be modest, so budgeting carefully is advisable. Check the official page for the current rate and any supplementary benefits.`,
-        `The stipend for this ${type} is structured to support participants through the programme duration without financial distraction. It covers basic living costs in the host country. Additional support — such as health coverage, research funds, or conference travel — may be available depending on the specific programme terms.`,
+        `This programme pays a periodic stipend rather than a salary. It is intended to cover essentials â€” rent, meals, transport â€” during your time on the programme. Depending on the host city, the stipend may be modest, so budgeting carefully is advisable. Check the official page for the current rate and any supplementary benefits.`,
+        `The stipend for this ${type} is structured to support participants through the programme duration without financial distraction. It covers basic living costs in the host country. Additional support â€” such as health coverage, research funds, or conference travel â€” may be available depending on the specific programme terms.`,
         `Participants receive a monthly living allowance that covers accommodation, food, and local transport. The stipend amount is set annually and may be adjusted based on the host city. Review the official funding details to understand exactly what is included and whether additional costs need separate planning.`
       ];
       return ON.pickVariant(variants, item);
@@ -1380,7 +1381,7 @@ window.ON = window.OpportunityNest;
       `The financial structure of this ${type} depends on several factors including your status, the host institution, and the programme year. Visit the official website for the latest funding information and do not rely on summaries from previous years, as amounts and conditions can change.`,
       `Funding details for this programme are published on the official website and may differ depending on your eligibility category. Before investing time in an application, confirm what financial support is available and whether it meets your needs.`,
       `The programme's funding model is described on the official page. It may include tuition support, a living allowance, or other benefits depending on your level and status. Always check the most recent information rather than assumptions from past cycles.`,
-      `This ${type} offers financial support, but the specifics depend on the programme year and your circumstances. The official website is the authoritative source for current funding details — review it carefully before applying.`
+      `This ${type} offers financial support, but the specifics depend on the programme year and your circumstances. The official website is the authoritative source for current funding details â€” review it carefully before applying.`
     ];
     return ON.pickVariant(fallbackVariants, item);
   };
@@ -1392,28 +1393,28 @@ window.ON = window.OpportunityNest;
 
     const processSets = {
       research: [
-        ["Research proposal evaluation — your topic, methodology, and expected outcomes are assessed for originality and feasibility", "Academic references (typically two or three) from professors or supervisors who can speak to your research ability", "Interview with the selection committee (often by video call for international candidates)"],
+        ["Research proposal evaluation â€” your topic, methodology, and expected outcomes are assessed for originality and feasibility", "Academic references (typically two or three) from professors or supervisors who can speak to your research ability", "Interview with the selection committee (often by video call for international candidates)"],
         ["Review of your research proposal and academic record", "Assessment of your publications, conference presentations, or prior research output", "Panel interview to discuss your research interests and fit with the programme"],
         ["Initial screening of your academic CV and research proposal", "Evaluation of your references and any supporting materials", "In-depth interview where you present your research plan and answer committee questions"]
       ],
       master: [
-        ["Academic transcript review — your grades, institution, and degree classification are assessed", "Motivation letter or statement of purpose explaining your goals and fit with the programme", "At least one reference from a professor or academic supervisor", "Interview (in person or online) to discuss your background and ambitions"],
-        ["Evaluation of your academic record and degree relevance", "Review of your personal statement and any essays or writing samples", "Reference checks with your academic referees", "Selection interview — some programmes include a group activity or presentation"],
+        ["Academic transcript review â€” your grades, institution, and degree classification are assessed", "Motivation letter or statement of purpose explaining your goals and fit with the programme", "At least one reference from a professor or academic supervisor", "Interview (in person or online) to discuss your background and ambitions"],
+        ["Evaluation of your academic record and degree relevance", "Review of your personal statement and any essays or writing samples", "Reference checks with your academic referees", "Selection interview â€” some programmes include a group activity or presentation"],
         ["Academic merit screening based on your transcripts and degree classification", "Assessment of your motivation letter, CV, and extracurricular involvement", "Reference verification from your academic supervisors", "Final interview round, which may include a short presentation or case study"]
       ],
       internship: [
-        ["CV and cover letter screening — recruiters look for relevant coursework, projects, and motivation", "Competency-based interview (often two rounds) focusing on problem-solving and teamwork", "Possible written test or case study relevant to the role"],
+        ["CV and cover letter screening â€” recruiters look for relevant coursework, projects, and motivation", "Competency-based interview (often two rounds) focusing on problem-solving and teamwork", "Possible written test or case study relevant to the role"],
         ["Application review focusing on your academic background and any relevant experience", "Behavioural interview assessing your communication skills and adaptability", "Technical assessment or task depending on the department"],
         ["Initial screening of your resume and cover letter", "Structured interview with one or two rounds", "Practical exercise or written assignment to test your skills in the role area"]
       ],
       competition: [
         ["Written submission or project proposal outlining your idea, approach, or solution", "Jury review and shortlisting based on innovation, feasibility, and impact", "Final presentation or pitch (for finalists) in front of a panel of judges"],
-        ["Submission of your entry according to the competition brief and format requirements", "Expert review by a judging panel that scores entries against published criteria", "Shortlist announcement and final round — often involving a live presentation or demo"],
+        ["Submission of your entry according to the competition brief and format requirements", "Expert review by a judging panel that scores entries against published criteria", "Shortlist announcement and final round â€” often involving a live presentation or demo"],
         ["Open call for entries with a detailed proposal or portfolio submission", "Multi-stage judging process with scores from independent experts", "Finalist stage including a presentation, interview, or public showcase of your work"]
       ],
       general: [
-        ["Application form and supporting documents review — your CV, transcripts, and motivation letter are assessed", "Motivation letter assessment focusing on your goals, fit, and what you bring to the programme", "Interview with the selection panel to discuss your application in more depth"],
-        ["Initial eligibility check and document verification", "Qualitative review of your personal statement and references", "Selection interview — in person or virtual — to assess your motivation and suitability"],
+        ["Application form and supporting documents review â€” your CV, transcripts, and motivation letter are assessed", "Motivation letter assessment focusing on your goals, fit, and what you bring to the programme", "Interview with the selection panel to discuss your application in more depth"],
+        ["Initial eligibility check and document verification", "Qualitative review of your personal statement and references", "Selection interview â€” in person or virtual â€” to assess your motivation and suitability"],
         ["Screening of your application against the published criteria", "Evaluation of your experience, references, and written statements", "Final interview or assessment day where you meet the selection committee"]
       ]
     };
@@ -1440,7 +1441,7 @@ window.ON = window.OpportunityNest;
       `Start preparing for each stage well before the deadline. For interviews, practise articulating your goals and how this ${type} fits your trajectory.`,
       `Begin your preparation early. If there is an interview stage, rehearse explaining your motivation clearly and connecting your background to the programme's objectives.`,
       `Do not wait until the shortlist stage to think about interviews. Prepare your narrative now: why this programme, what you bring, and where you want to go next.`,
-      `Each stage is designed to filter for commitment and fit. Treat every component — from the application form to the interview — as an opportunity to demonstrate your seriousness.`,
+      `Each stage is designed to filter for commitment and fit. Treat every component â€” from the application form to the interview â€” as an opportunity to demonstrate your seriousness.`,
       `Preparation is the difference between a strong and a weak application. Start with the documents, move to the interview, and make sure every stage tells a consistent story about your goals.`
     ];
 
@@ -1493,7 +1494,7 @@ window.ON = window.OpportunityNest;
           <div class="explore-group">
             <h3>Same Country &amp; Region</h3>
             <ul>
-              ${countryLink ? `<li>${countryLink} — all programmes in ${ON.escapeHtml(country)}</li>` : ""}
+              ${countryLink ? `<li>${countryLink} â€” all programmes in ${ON.escapeHtml(country)}</li>` : ""}
               <li>Explore opportunities in ${otherDestinations.join(", ")}</li>
             </ul>
           </div>
@@ -1507,9 +1508,9 @@ window.ON = window.OpportunityNest;
           <div class="explore-group">
             <h3>Popular Destinations</h3>
             <ul>
-              <li><a href="/scholarships/united-kingdom/">Scholarships in the UK</a> — Chevening, Gates Cambridge, Rhodes &amp; more</li>
-              <li><a href="/scholarships/germany/">Scholarships in Germany</a> — DAAD, Deutschlandstipendium &amp; more</li>
-              <li><a href="/internships.html">International internships</a> — UN, CERN, Google &amp; more</li>
+              <li><a href="/scholarships/united-kingdom/">Scholarships in the UK</a> â€” Chevening, Gates Cambridge, Rhodes &amp; more</li>
+              <li><a href="/scholarships/germany/">Scholarships in Germany</a> â€” DAAD, Deutschlandstipendium &amp; more</li>
+              <li><a href="/internships.html">International internships</a> â€” UN, CERN, Google &amp; more</li>
             </ul>
           </div>
         </div>
@@ -1564,34 +1565,34 @@ window.ON = window.OpportunityNest;
 
     // Dynamic document list based on type/level
     const docs = [];
-    docs.push("<li><strong>Valid passport or national ID</strong> — must remain valid for the full programme duration</li>");
-    docs.push("<li><strong>Curriculum Vitae (CV)</strong> — highlight academic, professional, and volunteer experience relevant to this programme</li>");
-    docs.push("<li><strong>Academic transcripts</strong> — from all post-secondary institutions attended</li>");
-    docs.push("<li><strong>Motivation letter or statement of purpose</strong> — explain why this specific programme, how it aligns with your goals, and what you bring</li>");
+    docs.push("<li><strong>Valid passport or national ID</strong> â€” must remain valid for the full programme duration</li>");
+    docs.push("<li><strong>Curriculum Vitae (CV)</strong> â€” highlight academic, professional, and volunteer experience relevant to this programme</li>");
+    docs.push("<li><strong>Academic transcripts</strong> â€” from all post-secondary institutions attended</li>");
+    docs.push("<li><strong>Motivation letter or statement of purpose</strong> â€” explain why this specific programme, how it aligns with your goals, and what you bring</li>");
     if (level.match(/PhD|Doctoral|Postdoc|Research|Master/i) || typeLabel === "fellowship") {
-      docs.push("<li><strong>Research proposal</strong> — required for research-focused programmes; outline your topic, methodology, and expected outcomes</li>");
+      docs.push("<li><strong>Research proposal</strong> â€” required for research-focused programmes; outline your topic, methodology, and expected outcomes</li>");
     }
-    docs.push("<li><strong>Letters of recommendation</strong> — typically two or three; give your recommenders at least 3–4 weeks' notice</li>");
+    docs.push("<li><strong>Letters of recommendation</strong> â€” typically two or three; give your recommenders at least 3â€“4 weeks' notice</li>");
     if (country !== "Global" && country !== "Not specified") {
-      docs.push("<li><strong>Proof of language proficiency</strong> — TOEFL, IELTS, or equivalent if the programme is not in your native language</li>");
+      docs.push("<li><strong>Proof of language proficiency</strong> â€” TOEFL, IELTS, or equivalent if the programme is not in your native language</li>");
     }
     if (typeLabel === "internship") {
-      docs.push("<li><strong>Portfolio or work samples</strong> — if applicable to your field (design, writing, engineering, etc.)</li>");
+      docs.push("<li><strong>Portfolio or work samples</strong> â€” if applicable to your field (design, writing, engineering, etc.)</li>");
     }
     const docsHtml = docs.join("");
 
     // Dynamic mistakes based on type
     const mistakes = [];
-    mistakes.push("<li><strong>Submitting too close to the deadline</strong> — technical issues and time-zone differences cause last-minute failures. Aim to submit at least 48 hours early.</li>");
+    mistakes.push("<li><strong>Submitting too close to the deadline</strong> â€” technical issues and time-zone differences cause last-minute failures. Aim to submit at least 48 hours early.</li>");
     if (typeLabel === "scholarship" || typeLabel === "fellowship") {
-      mistakes.push("<li><strong>Writing a generic motivation letter</strong> — selection committees read hundreds of applications. Mention the specific programme by name, reference its unique features, and connect them to your background.</li>");
-      mistakes.push("<li><strong>Not addressing the selection criteria</strong> — most programmes list what they evaluate. Structure your letter and CV to address each criterion directly.</li>");
+      mistakes.push("<li><strong>Writing a generic motivation letter</strong> â€” selection committees read hundreds of applications. Mention the specific programme by name, reference its unique features, and connect them to your background.</li>");
+      mistakes.push("<li><strong>Not addressing the selection criteria</strong> â€” most programmes list what they evaluate. Structure your letter and CV to address each criterion directly.</li>");
     }
     if (typeLabel === "internship") {
-      mistakes.push("<li><strong>Applying without researching the organisation</strong> — interviewers expect you to understand their mission, recent projects, and how your skills contribute.</li>");
+      mistakes.push("<li><strong>Applying without researching the organisation</strong> â€” interviewers expect you to understand their mission, recent projects, and how your skills contribute.</li>");
     }
-    mistakes.push("<li><strong>Ignoring eligibility requirements</strong> — nationality, age, degree level, and field restrictions are non-negotiable. Verify before investing time.</li>");
-    mistakes.push("<li><strong>Asking for references at the last minute</strong> — give recommenders 3–4 weeks and share your CV and motivation letter so they write specific, strong references.</li>");
+    mistakes.push("<li><strong>Ignoring eligibility requirements</strong> â€” nationality, age, degree level, and field restrictions are non-negotiable. Verify before investing time.</li>");
+    mistakes.push("<li><strong>Asking for references at the last minute</strong> â€” give recommenders 3â€“4 weeks and share your CV and motivation letter so they write specific, strong references.</li>");
     const mistakesHtml = mistakes.join("");
 
     // Variant section headings so each page feels distinct
@@ -1672,7 +1673,7 @@ window.ON = window.OpportunityNest;
         ${logoHtml}
         <p class="detail-intro">${ON.escapeHtml(intro)}</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">â†—</span></a>
           <a class="button button-secondary" href="${categoryPage}">Browse more ${ON.escapeHtml(typeLabel)}s</a>
         </div>
         <p class="microcopy" style="margin-top:1rem">Listing verified by the OpportunityNest editorial team. Deadline and eligibility cross-referenced with the <a href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer" style="color:inherit">official programme page</a>. Always confirm details before applying.</p>
@@ -1733,23 +1734,23 @@ window.ON = window.OpportunityNest;
         <h2 id="timeline-heading">${ON.escapeHtml(timelineHeading)}</h2>
         <p>${timelineIntro}</p>
         <ul>
-          <li><strong>8–10 weeks before:</strong> Read the full eligibility criteria and programme description. Confirm you qualify before investing time.</li>
-          <li><strong>6–8 weeks before:</strong> Contact your referees and share your CV and draft motivation letter with them.</li>
-          <li><strong>4–6 weeks before:</strong> Write your motivation letter, research proposal, or other essays. Get feedback from mentors or peers.</li>
-          <li><strong>2–3 weeks before:</strong> Gather transcripts, certificates, language test scores, and any other required documents.</li>
+          <li><strong>8â€“10 weeks before:</strong> Read the full eligibility criteria and programme description. Confirm you qualify before investing time.</li>
+          <li><strong>6â€“8 weeks before:</strong> Contact your referees and share your CV and draft motivation letter with them.</li>
+          <li><strong>4â€“6 weeks before:</strong> Write your motivation letter, research proposal, or other essays. Get feedback from mentors or peers.</li>
+          <li><strong>2â€“3 weeks before:</strong> Gather transcripts, certificates, language test scores, and any other required documents.</li>
           <li><strong>1 week before:</strong> Complete the online application form. Review every field. Upload all documents.</li>
-          <li><strong>48 hours before:</strong> Submit your application. Do not wait until the final day — technical issues and time-zone differences cause missed deadlines every year.</li>
+          <li><strong>48 hours before:</strong> Submit your application. Do not wait until the final day â€” technical issues and time-zone differences cause missed deadlines every year.</li>
         </ul>
       </section>
 
       <section class="detail-section" aria-labelledby="apply-heading">
         <h2 id="apply-heading">${ON.escapeHtml(applyHeading)}</h2>
         <p>${applyIntro}</p>
-        <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Visit Official Website <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href="${ON.escapeHtml(item.link || item.official_url)}" target="_blank" rel="noopener noreferrer">Visit Official Website <span aria-hidden="true">â†—</span></a>
       </section>
 
       <p class="microcopy">OpportunityNest summarizes public information and directs applicants to the official programme website. Always verify requirements and deadlines before applying.</p>
-      ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Details may change — confirm on the official website.</p>` : ''}
+      ${item.created_at ? `<p class="microcopy">Listing added: ${new Date(item.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}. Details may change â€” confirm on the official website.</p>` : ''}
 
       ${ON.renderDetailExploreSection(item, country, typeLabel, level, field)}
 
@@ -1774,19 +1775,19 @@ window.ON = window.OpportunityNest;
         if (!error && data && data.length > 0) { related = data; }
       }
 
-      // Step 2: Fallback — same country, any type
+      // Step 2: Fallback â€” same country, any type
       if (related.length === 0 && item.country) {
         const { data, error } = await client.from(tableName).select("*").neq("id", item.id).eq("country", item.country).limit(6);
         if (!error && data && data.length > 0) { related = data; }
       }
 
-      // Step 3: Fallback — same type, any country
+      // Step 3: Fallback â€” same type, any country
       if (related.length === 0 && item.type) {
         const { data, error } = await client.from(tableName).select("*").neq("id", item.id).eq("type", item.type).limit(6);
         if (!error && data && data.length > 0) { related = data; }
       }
 
-      // Step 4: Fallback — any 4 recent opportunities
+      // Step 4: Fallback â€” any 4 recent opportunities
       if (related.length === 0) {
         const { data, error } = await client.from(tableName).select("*").neq("id", item.id).order("created_at", { ascending: false }).limit(4);
         if (!error && data && data.length > 0) { related = data; }
@@ -1817,3 +1818,69 @@ window.ON = window.OpportunityNest;
     }
   };
 })(window.OpportunityNest);
+
+  // ─── Filter Chips Component ─────────────────────────────────────────────────
+  ON.renderFilterChips = (containerId, items, type = "category") => {
+    const container = document.getElementById(containerId);
+    if (!container || !items.length) return;
+
+    const isCountry = type === "country";
+    const label = isCountry ? "Browse by Country" : "Browse Competition Categories";
+    
+    container.innerHTML = `<p class="chips-label">${ON.escapeHtml(label)}</p>`;
+    
+    const chipsContainer = document.createElement("div");
+    chipsContainer.className = "chips-wrapper";
+    chipsContainer.setAttribute("role", "group");
+    chipsContainer.setAttribute("aria-label", label);
+
+    items.forEach((item, index) => {
+      const chip = document.createElement("button");
+      chip.className = "filter-chip";
+      chip.type = "button";
+      chip.setAttribute("data-filter-type", type);
+      chip.setAttribute("data-filter-value", item.value);
+      chip.setAttribute("aria-label", `Filter by ${item.label || item.value}`);
+      chip.setAttribute("tabindex", "0");
+      
+      const count = item.count > 0 ? ` (${item.count})` : "";
+      const flag = isCountry && item.flag ? `${item.flag} ` : "";
+      
+      chip.innerHTML = `${ON.escapeHtml(flag)}${ON.escapeHtml(item.label || item.value)}${ON.escapeHtml(count)}`;
+      
+      chip.addEventListener("click", () => {
+        const filterId = isCountry ? "country-filter" : "category-filter";
+        const filterSelect = document.getElementById(filterId);
+        if (filterSelect) {
+          filterSelect.value = item.value;
+          filterSelect.dispatchEvent(new Event("change"));
+        }
+        
+        container.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+      
+      chip.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+      
+      chipsContainer.appendChild(chip);
+    });
+
+    container.appendChild(chipsContainer);
+  };
+
+  ON.getFilterCounts = (items, field) => {
+    const counts = new Map();
+    items.forEach((item) => {
+      const value = item[field]?.trim();
+      if (!value) return;
+      counts.set(value, (counts.get(value) || 0) + 1);
+    });
+    return Array.from(counts.entries())
+      .map(([value, count]) => ({ value, label: value, count }))
+      .sort((a, b) => b.count - a.count);
+  };

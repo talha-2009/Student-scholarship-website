@@ -260,6 +260,210 @@ LANDING_PAGE_DEFINITIONS = [
         "eligibility": "graduate preparation, research fit, proposal quality, supervisor availability, publications where relevant, and language",
         "process": "refine a viable research question, identify appropriate supervisors, prepare a proposal and references, and follow official instructions",
         "tips": "contact supervisors with a focused message, align the proposal with available expertise, and verify stipend duration and conditions"
+    },
+    {
+        "path": "study-in-uk",
+        "label": "Study in UK",
+        "h1": "Study in UK Opportunities",
+        "facet": "country",
+        "match": {"country": "United Kingdom"},
+        "audience": "students comparing UK scholarships, fellowships, internships, and other verified programs",
+        "benefits": "globally recognized universities, funded master's and doctoral routes, leadership networks, research access, and international experience",
+        "eligibility": "country eligibility, academic level, course admission, English-language evidence, provider criteria, and deadline timing",
+        "process": "compare UK opportunities, confirm the official provider rules, prepare academic documents and references, and apply through the official route",
+        "tips": "separate university admission from funding, check regional eligibility carefully, and plan early for visa and living-cost requirements"
+    },
+    {
+        "path": "study-in-usa",
+        "label": "Study in USA",
+        "h1": "Study in USA Opportunities",
+        "facet": "country",
+        "match": {"country": "United States"},
+        "audience": "international applicants exploring scholarships, fellowships, internships, and academic programs in the United States",
+        "benefits": "broad program choice, research facilities, assistantships, alumni networks, and funded academic or professional development",
+        "eligibility": "admission requirements, academic record, testing or language rules, funding criteria, nationality rules, and application deadlines",
+        "process": "shortlist relevant US programs, check official deadlines, prepare essays and recommendations, and submit directly to the provider",
+        "tips": "calculate the full cost of attendance, watch separate admission and funding dates, and apply to several realistic options"
+    },
+    {
+        "path": "study-in-canada",
+        "label": "Study in Canada",
+        "h1": "Study in Canada Opportunities",
+        "facet": "country",
+        "match": {"country": "Canada"},
+        "audience": "students seeking Canadian scholarships, internships, research programs, and fellowships",
+        "benefits": "multicultural campuses, research supervision, tuition awards, professional exposure, and strong public institutions",
+        "eligibility": "program admission, academic merit, research fit, citizenship or residence rules, language evidence, and nomination steps",
+        "process": "compare university and external awards, confirm official application steps, prepare records, and meet the earliest deadline",
+        "tips": "review provincial and institutional costs separately, contact supervisors appropriately, and track time zones for deadlines"
+    },
+    {
+        "path": "study-in-australia",
+        "label": "Study in Australia",
+        "h1": "Study in Australia Opportunities",
+        "facet": "country",
+        "match": {"country": "Australia"},
+        "audience": "students and researchers exploring Australian scholarships, internships, and funded study routes",
+        "benefits": "research training, university funding, international campuses, applied learning, and access to regional professional networks",
+        "eligibility": "degree level, admission status, academic merit, research alignment, English-language rules, and scholarship conditions",
+        "process": "identify eligible programs, verify official requirements, prepare transcripts and proposals, and apply before provider deadlines",
+        "tips": "check whether admission is required before scholarship review, verify stipend duration, and plan for uncovered relocation costs"
+    },
+    {
+        "path": "study-in-germany",
+        "label": "Study in Germany",
+        "h1": "Study in Germany Opportunities",
+        "facet": "country",
+        "match": {"country": "Germany"},
+        "audience": "international students considering German universities, research institutes, scholarships, and internships",
+        "benefits": "research strength, low-cost public education, monthly funding, industry exposure, and international academic networks",
+        "eligibility": "academic merit, program admission, language level, development goals, host fit, and provider-specific rules",
+        "process": "identify the right degree or placement, check DAAD or provider instructions, prepare certified records, and apply officially",
+        "tips": "distinguish admission from funding, verify German-language expectations, and budget for costs that awards may not cover"
+    },
+    {
+        "path": "study-in-europe",
+        "label": "Study in Europe",
+        "h1": "Study in Europe Opportunities",
+        "facet": "region",
+        "match": {"countries": ["United Kingdom", "Germany", "France", "Italy", "Netherlands", "Switzerland", "Austria", "Ireland"]},
+        "audience": "students comparing European scholarships, exchanges, fellowships, internships, and research opportunities",
+        "benefits": "cross-border study options, public and university funding, research networks, cultural experience, and international mobility",
+        "eligibility": "destination rules, degree level, nationality, language evidence, institutional admission, and funding conditions",
+        "process": "compare countries and providers, confirm official requirements, prepare translated documents where needed, and apply directly",
+        "tips": "check country-specific visa rules, distinguish EU and non-EU eligibility, and verify whether programs cover travel or living costs"
+    },
+    {
+        "path": "paid-internships",
+        "label": "Paid Internships",
+        "h1": "Paid Internships",
+        "facet": "funding",
+        "match": {"type": "Internship", "keywords": ["paid", "stipend", "salary", "monthly contribution", "allowance"]},
+        "audience": "students and graduates who need internship opportunities with stated financial support",
+        "benefits": "professional experience, workplace mentoring, financial support, stronger CV evidence, and international exposure",
+        "eligibility": "enrolment or graduate status, relevant field, availability, work authorization, language ability, and employer criteria",
+        "process": "review pay terms, confirm duty station requirements, tailor a concise CV, and apply through the official employer portal",
+        "tips": "read whether support covers all costs, compare location expenses, and keep proof of enrolment or graduation ready"
+    },
+    {
+        "path": "remote-internships",
+        "label": "Remote Internships",
+        "h1": "Remote Internships",
+        "facet": "work mode",
+        "match": {"type": "Internship", "keywords": ["remote", "virtual", "online", "hybrid"]},
+        "audience": "students and graduates looking for flexible internship experience that can be completed remotely or partly remotely",
+        "benefits": "flexible access, practical project work, international collaboration, lower relocation costs, and portfolio-building experience",
+        "eligibility": "time-zone availability, required tools, field fit, enrolment or graduate status, language ability, and team expectations",
+        "process": "confirm whether the role is fully remote or hybrid, prepare evidence of self-directed work, and apply officially",
+        "tips": "ask about supervision cadence, check whether any travel is required, and show remote collaboration skills in the application"
+    },
+    {
+        "path": "summer-internships",
+        "label": "Summer Internships",
+        "h1": "Summer Internships",
+        "facet": "season",
+        "match": {"type": "Internship", "keywords": ["summer", "june", "july", "august"]},
+        "audience": "students planning structured internships during summer breaks or short academic windows",
+        "benefits": "focused work experience, research exposure, seasonal training, professional references, and practical skill development",
+        "eligibility": "current study level, availability dates, subject fit, work authorization, language ability, and program-specific criteria",
+        "process": "match the internship dates to your academic calendar, prepare documents early, and submit before seasonal deadlines",
+        "tips": "apply months before summer begins, confirm housing or travel support, and explain your availability clearly"
+    },
+    {
+        "path": "international-internships",
+        "label": "International Internships",
+        "h1": "International Internships",
+        "facet": "category",
+        "match": {"type": "Internship"},
+        "audience": "students and recent graduates seeking practical international experience across organizations and countries",
+        "benefits": "cross-cultural work experience, professional references, applied skills, international networks, and clearer career direction",
+        "eligibility": "study or graduate status, field alignment, language ability, travel or remote-work readiness, and employer requirements",
+        "process": "compare role scope, funding, location, and deadlines, then apply through the official host organization",
+        "tips": "check visa and location rules, compare paid and unpaid terms, and tailor your CV to each role"
+    },
+    {
+        "path": "fully-funded-fellowships",
+        "label": "Fully Funded Fellowships",
+        "h1": "Fully Funded Fellowships",
+        "facet": "funding",
+        "match": {"type": "Fellowship", "keywords": ["fully funded", "full funding", "stipend", "travel", "accommodation"]},
+        "audience": "researchers, graduate students, and emerging leaders seeking fellowships with substantial financial support",
+        "benefits": "stipends, travel support, research time, mentoring, host-institution access, and international networks",
+        "eligibility": "career stage, research or leadership focus, nationality rules, proposed outcomes, and recommendation requirements",
+        "process": "verify the funding package, shape a focused proposal, secure referees, and submit through the official provider",
+        "tips": "read the funding breakdown carefully, show concrete impact, and leave time for referee coordination"
+    },
+    {
+        "path": "research-fellowships",
+        "label": "Research Fellowships",
+        "h1": "Research Fellowships",
+        "facet": "category",
+        "match": {"type": "Fellowship", "keywords": ["research", "doctoral", "postdoctoral", "scholar"]},
+        "audience": "doctoral candidates, postdoctoral researchers, faculty, and specialists seeking funded research time",
+        "benefits": "research support, host collaboration, mentorship, publication time, fieldwork access, and specialist networks",
+        "eligibility": "research stage, project fit, host alignment, academic record, methodology, and provider-specific rules",
+        "process": "define a precise research question, identify host fit, prepare a proposal and references, and apply officially",
+        "tips": "connect your project to the host's strengths, make outcomes measurable, and verify eligible costs"
+    },
+    {
+        "path": "leadership-fellowships",
+        "label": "Leadership Fellowships",
+        "h1": "Leadership Fellowships",
+        "facet": "category",
+        "match": {"type": "Fellowship", "keywords": ["leadership", "leader", "public service", "policy", "community"]},
+        "audience": "emerging leaders, professionals, students, and civic contributors seeking structured leadership development",
+        "benefits": "mentoring, leadership training, networks, project support, public-impact experience, and international exposure",
+        "eligibility": "leadership evidence, professional or civic focus, career stage, nationality rules, impact goals, and recommendations",
+        "process": "study the fellowship mission, document your impact, prepare essays and references, and apply through the official route",
+        "tips": "use specific examples of leadership, explain community impact, and connect the fellowship to a credible next step"
+    },
+    {
+        "path": "programming-competitions",
+        "label": "Programming Competitions",
+        "h1": "Programming Competitions",
+        "facet": "category",
+        "match": {"type": "Competition", "keywords": ["programming", "coding", "software", "algorithm", "hackathon"]},
+        "audience": "students, developers, and technical teams looking for coding and software competitions",
+        "benefits": "portfolio evidence, prizes, mentoring, technical practice, peer learning, and global visibility",
+        "eligibility": "age or student status, team rules, technical theme, submission format, region rules, and deadlines",
+        "process": "review the challenge brief, form a team if allowed, build a compliant submission, and enter through the official platform",
+        "tips": "read judging criteria before building, document your work clearly, and submit before the platform deadline"
+    },
+    {
+        "path": "ai-competitions",
+        "label": "AI Competitions",
+        "h1": "AI Competitions",
+        "facet": "category",
+        "match": {"type": "Competition", "keywords": ["ai", "artificial intelligence", "machine learning", "data science"]},
+        "audience": "students, researchers, and builders interested in AI, machine learning, and data competitions",
+        "benefits": "technical practice, public recognition, prizes, portfolio projects, mentorship, and exposure to real datasets",
+        "eligibility": "team rules, skill level, dataset terms, submission requirements, geographic eligibility, and competition deadlines",
+        "process": "study the rules, prepare a reproducible solution, document model choices, and submit through the official platform",
+        "tips": "respect data-use rules, benchmark early, and explain the practical value of your solution"
+    },
+    {
+        "path": "business-competitions",
+        "label": "Business Competitions",
+        "h1": "Business Competitions",
+        "facet": "category",
+        "match": {"type": "Competition", "keywords": ["business", "startup", "entrepreneur", "case competition", "venture"]},
+        "audience": "students, founders, and teams developing business ideas, ventures, or case-analysis submissions",
+        "benefits": "pitch experience, prizes, mentorship, investor exposure, business validation, and stronger entrepreneurial portfolios",
+        "eligibility": "team composition, stage of idea, student or founder status, region rules, submission materials, and deadlines",
+        "process": "review the brief, prepare a concise pitch or case solution, validate assumptions, and submit through the official channel",
+        "tips": "make the problem and customer clear, support claims with evidence, and rehearse the pitch before submission"
+    },
+    {
+        "path": "essay-competitions",
+        "label": "Essay Competitions",
+        "h1": "Essay Competitions",
+        "facet": "category",
+        "match": {"type": "Competition", "keywords": ["essay", "writing", "article", "policy brief"]},
+        "audience": "students and writers seeking essay, policy, and writing competitions with clear submission rules",
+        "benefits": "publication potential, prizes, writing practice, public recognition, and stronger academic or professional profiles",
+        "eligibility": "age or student status, topic fit, word limit, originality rules, citation style, region eligibility, and deadlines",
+        "process": "read the prompt, outline a focused argument, revise for evidence and clarity, and submit through the official platform",
+        "tips": "answer the exact prompt, follow formatting rules, and leave time for proofreading before the deadline"
     }
 ]
 
@@ -643,6 +847,8 @@ def matches_landing_page(item: dict, definition: dict) -> bool:
         return False
     if match.get("country") and item.get("country") != match["country"]:
         return False
+    if match.get("countries") and item.get("country") not in match["countries"]:
+        return False
     if match.get("funding") and item.get("funding") != match["funding"]:
         return False
     if match.get("level"):
@@ -653,6 +859,19 @@ def matches_landing_page(item: dict, definition: dict) -> bool:
         if level_match == "masters" and "master" not in level:
             return False
         if level_match == "phd" and "phd" not in level:
+            return False
+    if match.get("keywords"):
+        searchable = " ".join(str(item.get(field) or "") for field in (
+            "title",
+            "funding",
+            "eligibility_criteria",
+            "level",
+            "field",
+            "benefits",
+            "description",
+            "tags"
+        )).lower()
+        if not any(keyword.lower() in searchable for keyword in match["keywords"]):
             return False
     return True
 

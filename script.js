@@ -1,4 +1,4 @@
-const ON = window.ON || window.OpportunityNest;
+﻿const ON = window.ON || window.OpportunityNest;
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
@@ -125,21 +125,66 @@ const getCombinedDataset = () => {
   return opportunities;
 };
 
+const updateUrl = () => {
+  const params = new URLSearchParams();
+  const selectedType = typeFilter?.value || "";
+  const selectedCategory = document.getElementById("category-filter")?.value || "";
+  const selectedFunding = document.getElementById("funding-filter")?.value || "";
+  const selectedCountry = countryFilter?.value || "";
+  const searchQuery = liveSearch?.value || "";
+
+  if (selectedType) params.set("type", selectedType);
+  if (selectedCategory) params.set("category", selectedCategory);
+  if (selectedFunding) params.set("funding", selectedFunding);
+  if (selectedCountry) params.set("country", selectedCountry);
+  if (searchQuery) params.set("q", searchQuery);
+
+  const queryString = params.toString();
+  const newUrl = queryString ? `${window.location.pathname}?${queryString}#opportunities` : `${window.location.pathname}#opportunities`;
+  window.history.replaceState({}, "", newUrl);
+};
+
+const populateCategoryFilter = (items = []) => {
+  const categoryFilter = document.getElementById("category-filter");
+  if (!categoryFilter) return;
+
+  const selectedCategory = categoryFilter.value;
+  const categories = ON.getFilterCounts(items, "type").map((item) => item.value);
+  categoryFilter.innerHTML = '<option value="">All categories</option>';
+
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
+
+  if (categories.includes(selectedCategory)) categoryFilter.value = selectedCategory;
+};
+
+const renderFilterChips = (items = []) => {
+  ON.renderFilterChips("category-chips", ON.getFilterCounts(items, "type").slice(0, 8), "category");
+  ON.renderFilterChips("country-chips", ON.getFilterCounts(items, "country").slice(0, 8), "country");
+};
+
 const renderOpportunities = () => {
   if (!opportunityGrid) return;
 
   const dataset = getCombinedDataset();
+  const categoryValue = document.getElementById("category-filter")?.value || "";
+  const fundingValue = document.getElementById("funding-filter")?.value || "";
   
   // When a type is selected, dataset already contains only that type from getCombinedDataset
   // So don't apply additional type filter - only filter by search and country
   const filtered = ON.filterOpportunities(dataset, {
     searchTerm: liveSearch?.value || "",
     country: countryFilter?.value || "",
-    type: ""  // Always empty since dataset is pre-filtered by type
+    type: categoryValue,
+    funding: fundingValue
   }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
 
   if (!filtered.length) {
-    opportunityGrid.innerHTML = '<p class="empty-state">No opportunities match your search yet. Try clearing a filter or browse category pages.</p>';
+    opportunityGrid.innerHTML = `<div class="empty-state"><p>No opportunities match your current filters.</p><button class="button button-secondary" onclick="clearFilters()">Clear Filters</button></div>`;
     ON.renderPagination(pagination, 0, 1, () => {});
     setOpportunityStatus("No matching opportunities found.");
     return;
@@ -156,6 +201,7 @@ const renderOpportunities = () => {
   });
 
   setOpportunityStatus(`${filtered.length} opportunities found. Showing page ${currentPage} of ${pageCount}.`);
+  updateUrl();
 };
 
 const loadOpportunities = async () => {
@@ -169,8 +215,10 @@ const loadOpportunities = async () => {
     const types = getUniqueTypes(opportunities);
     populateTypeFilter(types);
     populateCountryFilter(opportunities);
+    populateCategoryFilter(opportunities);
     updateStatistics(opportunities);
     applyTypeFromUrl(types);
+    renderFilterChips(opportunities);
     renderOpportunities();
     renderFeaturedInternships(
       opportunities
@@ -223,7 +271,7 @@ const renderFeaturedInternships = (items = []) => {
           </ul>
           <div class="card-actions">
             <a class="button button-secondary" href="${ON.escapeHtml(detailUrl)}">View Details</a>
-            <a class="button button-primary" href="${ON.escapeHtml(item.link || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="${ON.escapeHtml(item.link || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">â†—</span></a>
           </div>
         </article>
       `;
@@ -240,6 +288,10 @@ const clearFilters = () => {
   if (liveSearch) liveSearch.value = "";
   if (countryFilter) countryFilter.value = "";
   if (typeFilter) typeFilter.value = "";
+  const categoryFilter = document.getElementById("category-filter");
+  if (categoryFilter) categoryFilter.value = "";
+  const fundingFilter = document.getElementById("funding-filter");
+  if (fundingFilter) fundingFilter.value = "";
   if (sortFilter) sortFilter.value = "deadline";
   currentPage = 1;
   renderOpportunities();
