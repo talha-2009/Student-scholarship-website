@@ -4,7 +4,7 @@ import os
 import pathlib
 import re
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 
 SITE_URL = "https://www.opportunitynest.org"
 SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co/rest/v1/opportunities"
@@ -594,10 +594,10 @@ def fetch_opportunities() -> list[dict]:
                 by_slug[slug].update({key: value for key, value in local.items() if value not in (None, "", [])})
             else:
                 rows.append(local)
-    today = datetime.utcnow().date().isoformat()
+    today = datetime.now(timezone.utc).date().isoformat()
     for index, row in enumerate(rows):
         row.setdefault("id", row.get("slug") or f"verified-{index + 1}")
-        row.setdefault("created_at", row.get("verified_at") or datetime.utcnow().isoformat())
+        row.setdefault("created_at", row.get("verified_at") or datetime.now(timezone.utc).isoformat())
     return [row for row in rows if is_active_opportunity(row, today)]
 
 
@@ -648,6 +648,9 @@ def build_footer() -> str:
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
+          <a href="/editorial-policy.html">Editorial Policy</a>
+          <a href="/fact-checking-policy.html">Fact Checking</a>
+          <a href="/verification-process.html">Verification Process</a>
           <a href="/privacy.html">Privacy</a>
           <a href="/terms.html">Terms</a>
           <a href="/disclaimer.html">Disclaimer</a>
@@ -660,6 +663,31 @@ def build_footer() -> str:
 
 
 def page_head(title: str, description: str, url: str, og_image_alt: str, additional_head: str = "") -> str:
+    organization_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "OpportunityNest",
+        "url": SITE_URL,
+        "logo": f"{SITE_URL}/logo.svg",
+        "sameAs": [],
+        "publishingPrinciples": f"{SITE_URL}/editorial-policy.html",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Editorial corrections",
+            "url": f"{SITE_URL}/contact.html"
+        }
+    }, indent=2)
+    website_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "OpportunityNest",
+        "url": SITE_URL,
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": f"{SITE_URL}/?q={{search_term_string}}#opportunities",
+            "query-input": "required name=search_term_string"
+        }
+    }, indent=2)
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -709,6 +737,8 @@ def page_head(title: str, description: str, url: str, og_image_alt: str, additio
       gtag('config', 'G-WKVTVB0X4X');
     </script>
     <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">{organization_schema}</script>
+    <script type="application/ld+json">{website_schema}</script>
     {additional_head}
   </head>
   <body>
@@ -1171,6 +1201,48 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     else:
         sections.append("<p class=\"empty-state\">There are no active programs for this country right now.</p>")
     related_html = "".join([f'<li><a href=\"/country/{slugify(name)}/\">{escape_html(name)} opportunities</a></li>' for name in related_countries[:6]])
+    top_fields = sorted({item.get("field") for item in country_items if item.get("field") and item.get("field") != "All Fields"})[:6]
+    top_fields_text = ", ".join(top_fields) if top_fields else "multiple academic and professional fields"
+    official_links = {
+        "United States": ("EducationUSA", "https://educationusa.state.gov/"),
+        "United Kingdom": ("UK Council for International Student Affairs", "https://www.ukcisa.org.uk/"),
+        "Canada": ("EduCanada", "https://www.educanada.ca/"),
+        "Australia": ("Study Australia", "https://www.studyaustralia.gov.au/"),
+        "Germany": ("DAAD", "https://www.daad.de/en/"),
+        "France": ("Campus France", "https://www.campusfrance.org/en"),
+        "Japan": ("Study in Japan", "https://www.studyinjapan.go.jp/en/"),
+        "China": ("Campus China", "https://www.campuschina.org/"),
+        "Switzerland": ("Swissuniversities", "https://www.swissuniversities.ch/en/"),
+        "Austria": ("Study in Austria", "https://studyinaustria.at/en/"),
+        "Singapore": ("Study in Singapore", "https://www.moe.gov.sg/"),
+        "New Zealand": ("Study with New Zealand", "https://www.studywithnewzealand.govt.nz/"),
+        "Turkey": ("Turkiye Scholarships", "https://www.turkiyeburslari.gov.tr/"),
+        "Saudi Arabia": ("Study in Saudi", "https://studyinsaudi.moe.gov.sa/")
+    }
+    official_name, official_url = official_links.get(country, ("the official education or immigration authority", "https://www.unesco.org/en/education"))
+    country_resource_html = f"""
+          <section class="final-panel country-resource">
+            <h2>Studying and applying in {escape_html(country)}</h2>
+            <p>{escape_html(country)} opportunities on OpportunityNest are reviewed as practical application resources, not just directory entries. Applicants should compare the funding amount, host institution, eligibility route, deadline status, and official source before deciding where to spend preparation time. The current listings for {escape_html(country)} cover {escape_html(top_fields_text)}, which means applicants can usually compare academic awards, professional placements, research support, and leadership programmes from one page.</p>
+            <p>For study-focused opportunities, begin with admission rules. Many scholarships require a separate university application before the funding application is assessed. Internship and fellowship applicants should pay close attention to work location, remote or in-person requirements, supervisor expectations, and whether the provider offers a stipend, travel support, insurance, or only a certificate of participation.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Funding, documents, and timing</h2>
+            <p>Most strong applications for {escape_html(country)} need a current CV, academic transcript, passport or national identity document, recommendation letters, and a motivation statement that is tailored to the exact programme. Research awards may also require a proposal, supervisor contact, writing sample, or publication record. If a listing mentions partial funding, calculate the remaining cost before applying, including visa fees, housing, insurance, travel, and deposits.</p>
+            <p>Deadlines can close earlier for nominated candidates, embassy routes, university portals, or high-demand programmes. A safe preparation window is six to eight weeks for scholarships and fellowships, and two to four weeks for internships with rolling recruitment. Always treat the official provider page as the final authority, because deadlines and eligibility can change after an opportunity is published.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Visa and official resources</h2>
+            <p>OpportunityNest does not provide immigration advice, but applicants should verify visa, residence, and work authorization rules before accepting any offer in {escape_html(country)}. Check whether the programme sponsor provides invitation letters, host confirmations, insurance, or proof of funding. For official background, start with <a href="{escape_html(official_url)}" target="_blank" rel="noopener noreferrer">{escape_html(official_name)}</a> and the provider's own application page.</p>
+            <p>Common mistakes include applying without checking nationality restrictions, reusing a generic personal statement, missing document translation rules, and assuming that a scholarship covers every cost. Strong applicants show fit with the host, explain outcomes clearly, and keep evidence ready before the final week.</p>
+          </section>
+          <section class="faq-list" aria-labelledby="country-faq-title">
+            <div class="section-heading"><p class="eyebrow">Country questions</p><h2 id="country-faq-title">{escape_html(country)} opportunity FAQs</h2></div>
+            <article><h3>Are these {escape_html(country)} listings officially verified?</h3><p>Each listing links to an official provider source and is reviewed for deadline, eligibility, funding, and application-route clarity before publication.</p></article>
+            <article><h3>What should I check before applying in {escape_html(country)}?</h3><p>Confirm the deadline, eligibility rules, required documents, funding coverage, visa implications, and whether admission or nomination is required before the funding application.</p></article>
+            <article><h3>Can international applicants use this page?</h3><p>Yes. The page is designed for international students, graduates, researchers, and early-career applicants, but every programme has its own nationality and residence rules.</p></article>
+          </section>
+    """
     faq = build_faq_schema(FAQ_TEMPLATES["Country"])
     item_list_schema = build_item_list_schema(country_items, path)
     breadcrumb_schema = json.dumps({
@@ -1210,6 +1282,7 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
       f"            <ul class=\"benefit-list\">{''.join('<li>' + escape_html(category) + ': ' + str(len(lst)) + ' listings</li>' for category, lst in categories.items() if lst)}</ul>\n"
       "          </div>\n"
       f"          {sections[1]}\n"
+      f"          {country_resource_html}\n"
       "          <div class=\"final-panel\">\n"
       f"            <h2>Related countries</h2>\n"
       f"            <ul>{related_html}</ul>\n"
@@ -1383,7 +1456,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "headline": item['title'],
         "description": description,
         "url": page_url,
-        "datePublished": item['created_at'] or datetime.utcnow().isoformat(),
+        "datePublished": item['created_at'] or datetime.now(timezone.utc).isoformat(),
         "author": {"@type": "Organization", "name": "OpportunityNest"}
     }, indent=2)
     breadcrumb_schema = json.dumps({
@@ -1473,7 +1546,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
     benefits = item.get("funding") or "Funding information is provided on the official listing page."
     host = item.get("host_organization") or item.get("country") or "Official provider"
     duration = item.get("duration") or "See official listing"
-    updated_at = (item.get("verified_at") or item.get("created_at") or datetime.utcnow().isoformat()).split("T")[0]
+    updated_at = (item.get("verified_at") or item.get("created_at") or datetime.now(timezone.utc).isoformat()).split("T")[0]
     verification_source = item.get("verification_source") or item.get("link")
     faqs = opportunity_faqs(item, benefits)
     faq_html = "".join(
@@ -1531,7 +1604,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "headline": item["title"],
         "description": meta_description,
         "url": page_url,
-        "datePublished": item.get("created_at") or datetime.utcnow().isoformat(),
+        "datePublished": item.get("created_at") or datetime.now(timezone.utc).isoformat(),
         "dateModified": updated_at,
         "author": {"@type": "Organization", "name": "OpportunityNest"}
     }, indent=2)
@@ -1634,6 +1707,78 @@ def build_sitemap(entries: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def build_trust_page(slug: str, title: str, description: str, sections: list[tuple[str, str]]) -> str:
+    url = f"{SITE_URL}/{slug}.html"
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (title, None)])
+    body = "".join(
+        f'<section class="final-panel trust-policy"><h2>{escape_html(heading)}</h2>{paragraphs_html(text)}</section>'
+        for heading, text in sections
+    )
+    person_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "OpportunityNest Editorial Team",
+        "url": f"{SITE_URL}/about.html",
+        "jobTitle": "Education opportunity researchers and editors",
+        "worksFor": {"@type": "Organization", "name": "OpportunityNest", "url": SITE_URL}
+    }, indent=2)
+    page_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": title,
+        "description": description,
+        "url": url,
+        "reviewedBy": {"@type": "Organization", "name": "OpportunityNest"},
+        "dateModified": datetime.now(timezone.utc).date().isoformat()
+    }, indent=2)
+    return page_head(
+        f"{title} | OpportunityNest",
+        description,
+        url,
+        title,
+        additional_head=f'<script type="application/ld+json">{person_schema}</script><script type="application/ld+json">{page_schema}</script>'
+    ) + f"""
+      <section class="page-hero section-pad">
+        <div class="container narrow">{breadcrumbs}
+          <p class="eyebrow">Trust and transparency</p>
+          <h1>{escape_html(title)}</h1>
+          <p>{escape_html(description)}</p>
+          <p class="review-note">Last updated: {datetime.now(timezone.utc).date().isoformat()} by the OpportunityNest Editorial Team.</p>
+        </div>
+      </section>
+      <section class="section-pad">
+        <div class="container narrow">
+          {body}
+        </div>
+      </section>
+    """ + page_footer()
+
+
+def write_trust_pages():
+    pages = [
+        ("editorial-policy", "Editorial Policy", "How OpportunityNest researches, writes, reviews, and updates education opportunity content for students worldwide.", [
+            ("Editorial mission", "OpportunityNest exists to help students, graduates, researchers, and early-career professionals find legitimate educational and career opportunities without sorting through duplicated, outdated, or misleading listings. Our editorial standard is usefulness first: every page should help a reader understand eligibility, funding, deadlines, application routes, and risks before visiting the official source."),
+            ("Independence", "OpportunityNest is independent. We are not a university, government agency, employer, scholarship provider, visa consultant, or application processor. Providers do not control our editorial summaries. We do not charge applicants for access to listings, and we direct users to official provider pages for final instructions."),
+            ("Source standards", "Editors prioritize official university pages, government scholarship portals, international organization pages, recognized foundations, and verified employer pages. When a listing cannot be connected to a reliable source, it is not eligible for publication. If an official source changes, the listing is updated, replaced, or removed from active discovery."),
+            ("Corrections", "Readers can report errors through the Contact page. Correction requests are reviewed against the official source, and verified errors are corrected as quickly as possible. Material corrections may include deadline changes, eligibility changes, source replacements, and funding clarifications.")
+        ]),
+        ("fact-checking-policy", "Fact Checking Policy", "The checks OpportunityNest uses before publishing scholarship, internship, fellowship, competition, grant, and exchange listings.", [
+            ("Pre-publication checks", "Before publication, each opportunity is checked for provider identity, official application URL, deadline language, country or region, opportunity type, funding level, eligible applicants, and required documents where available. Listings with unclear or suspicious sources are excluded until the provider can be verified."),
+            ("Deadline and funding review", "Deadlines are treated conservatively because missed dates harm applicants. If an official page uses rolling, annual, or variable deadlines, the listing states that clearly instead of inventing a date. Funding labels are also reviewed carefully: fully funded, partially funded, paid, unpaid, stipend, and fee waiver are not interchangeable."),
+            ("Human review", "Automated scripts help structure pages and detect route issues, but editorial judgment is still required for source quality, wording, and applicant usefulness. Generated pages are reviewed for duplicate patterns, thin summaries, broken official links, missing metadata, and unclear application guidance."),
+            ("Limitations", "Opportunity providers can change rules without notice. OpportunityNest summarizes public information and cannot guarantee admission, funding, visa approval, or selection outcomes. Applicants should always confirm final details on the official provider website.")
+        ]),
+        ("verification-process", "How Opportunities Are Verified", "A transparent overview of how OpportunityNest verifies opportunity listings and keeps pages useful after publication.", [
+            ("Verification workflow", "The verification workflow starts with the official source. Editors confirm that the provider exists, that the application route is active or clearly recurring, and that the listing is relevant to students, graduates, researchers, or early-career applicants. The page is then classified by country, category, level, funding type, field, and deadline status."),
+            ("What verification means", "Verified means the listing has been matched to a credible public source and organized for comparison. It does not mean OpportunityNest endorses the provider, guarantees acceptance, or has a partnership with the organization. The official provider remains the final authority for all application decisions."),
+            ("Ongoing review", "Generated opportunity pages include last-reviewed notes, official source links, related opportunities, and structured metadata. Route audits and HTTP checks are used before deployment to ensure opportunity URLs resolve correctly. Expired or changed opportunities are flagged for update during regular maintenance."),
+            ("Applicant safety", "Applicants should avoid any third party that asks for unofficial payment, passwords, or unnecessary personal documents. Apply through the official provider link, keep copies of submissions, and verify visa or travel rules through official government resources.")
+        ])
+    ]
+    for slug, title, description, sections in pages:
+        write_page(ROOT / f"{slug}.html", build_trust_page(slug, title, description, sections))
+
+
 def main():
     opportunities = fetch_opportunities()
     opportunities = [op for op in opportunities if op.get('title')]
@@ -1717,6 +1862,8 @@ def main():
         landing_path = ROOT / definition["path"] / "index.html"
         write_page(landing_path, build_landing_page(definition, landing_items, LANDING_PAGE_DEFINITIONS))
 
+    write_trust_pages()
+
     # Generate sitemap
     sitemap_entries = [
         {"loc": f"{SITE_URL}/", "changefreq": "daily", "priority": 1.0},
@@ -1729,7 +1876,10 @@ def main():
         {"loc": f"{SITE_URL}/faq.html", "changefreq": "monthly", "priority": 0.6},
         {"loc": f"{SITE_URL}/privacy.html", "changefreq": "yearly", "priority": 0.5},
         {"loc": f"{SITE_URL}/terms.html", "changefreq": "yearly", "priority": 0.5},
-        {"loc": f"{SITE_URL}/disclaimer.html", "changefreq": "yearly", "priority": 0.5}
+        {"loc": f"{SITE_URL}/disclaimer.html", "changefreq": "yearly", "priority": 0.5},
+        {"loc": f"{SITE_URL}/editorial-policy.html", "changefreq": "monthly", "priority": 0.6},
+        {"loc": f"{SITE_URL}/fact-checking-policy.html", "changefreq": "monthly", "priority": 0.6},
+        {"loc": f"{SITE_URL}/verification-process.html", "changefreq": "monthly", "priority": 0.6}
     ]
     for country in country_groups:
         sitemap_entries.append({"loc": f"{SITE_URL}/country/{slugify(country)}/", "changefreq": "weekly", "priority": 0.7})
@@ -1739,7 +1889,7 @@ def main():
             sitemap_entries.append({"loc": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}/{slugify(country)}/", "changefreq": "weekly", "priority": 0.7})
     for item in opportunities:
         if item.get('slug'):
-            sitemap_entries.append({"loc": f"{SITE_URL}/opportunity/{slugify(item['slug'])}/", "lastmod": (item.get('created_at') or datetime.utcnow().date().isoformat()), "changefreq": "weekly", "priority": 0.8})
+            sitemap_entries.append({"loc": f"{SITE_URL}/opportunity/{slugify(item['slug'])}/", "lastmod": (item.get('created_at') or datetime.now(timezone.utc).date().isoformat()), "changefreq": "weekly", "priority": 0.8})
     for definition in LANDING_PAGE_DEFINITIONS:
         sitemap_entries.append({
             "loc": f"{SITE_URL}/{definition['path']}/",

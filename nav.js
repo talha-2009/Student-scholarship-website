@@ -435,7 +435,10 @@ if (navMenu) {
     { href: "/country/united-states/", text: "Study in US" },
     { href: "/country/canada/", text: "Study in Canada" },
     { href: "/country/australia/", text: "Study in Australia" },
-    { href: "/blog/", text: "Blog" }
+    { href: "/blog/", text: "Blog" },
+    { href: "/editorial-policy.html", text: "Editorial Policy" },
+    { href: "/fact-checking-policy.html", text: "Fact Checking" },
+    { href: "/verification-process.html", text: "Verification Process" }
   ];
 
   extraLinks.forEach(function(link) {

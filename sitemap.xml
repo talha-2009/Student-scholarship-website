@@ -56,6 +56,21 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.opportunitynest.org/editorial-policy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/fact-checking-policy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/verification-process.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.opportunitynest.org/country/global/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
