@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <script>
@@ -343,6 +343,11 @@
                 <dd>internships</dd>
               </div>
             </dl>
+            <noscript>
+              <p style="font-size: 0.875rem; color: var(--muted); margin-top: 0.5rem;">
+                Statistics are updated live from our database. Enable JavaScript to see real-time counts.
+              </p>
+            </noscript>
           </div>
 
         </div>
@@ -450,6 +455,7 @@
 
       <section class="section-pad live-opportunities" id="opportunities" aria-labelledby="opportunities-title">
         <div class="container">
+          <nav class="breadcrumbs" id="breadcrumbs" aria-label="Breadcrumb navigation" style="margin-bottom: 1.5rem;"></nav>
           <!-- SEO: Added contextual internal links to section description -->
           <div class="section-heading">
             <p class="eyebrow">Live Listings</p>
@@ -467,6 +473,14 @@
             <select id="type-filter" name="type">
               <option value="">All types</option>
             </select>
+            <label class="sr-only" for="category-filter">Filter by category</label>
+            <select id="category-filter" name="category">
+              <option value="">All categories</option>
+            </select>
+            <label class="sr-only" for="funding-filter">Filter by funding</label>
+            <select id="funding-filter" name="funding">
+              <option value="">All funding</option>
+            </select>
             <label class="sr-only" for="sort-filter">Sort results</label>
             <select id="sort-filter" name="sort">
               <option value="deadline">Sort by deadline</option>
@@ -476,6 +490,46 @@
             <button class="button button-secondary clear-filters" type="button" id="clear-filters">Clear Filters</button>
           </form>
           <div class="status-message" id="opportunity-status" role="status">Loading opportunities...</div>
+          <noscript>
+            <div class="opportunity-results grid three">
+              <article class="live-opportunity-card compact-card">
+                <div class="opportunity-card-top">
+                  <p class="card-kicker">Scholarship • United Kingdom</p>
+                  <span class="deadline">29 Sep 2026</span>
+                </div>
+                <h3><a href="/opportunity/marshall-scholarship-united-kingdom/">Marshall Scholarship — Fully Funded UK Study for Americans</a></h3>
+                <p>Up to 50 US citizens funded for 1–3 years of graduate study at any UK university. Covers fees, stipend, and travel.</p>
+                <div class="card-actions">
+                  <a class="button button-primary" href="/opportunity/marshall-scholarship-united-kingdom/">View Details</a>
+                </div>
+              </article>
+              <article class="live-opportunity-card compact-card">
+                <div class="opportunity-card-top">
+                  <p class="card-kicker">Scholarship • Germany</p>
+                  <span class="deadline">15 Oct 2026</span>
+                </div>
+                <h3><a href="/opportunity/daad-epos-development-related-postgraduate-courses-germany/">DAAD EPOS Scholarship — Fully Funded Master's in Germany</a></h3>
+                <p>For professionals from developing countries with 2+ years' experience. Covers stipend, travel, and insurance.</p>
+                <div class="card-actions">
+                  <a class="button button-primary" href="/opportunity/daad-epos-development-related-postgraduate-courses-germany/">View Details</a>
+                </div>
+              </article>
+              <article class="live-opportunity-card compact-card">
+                <div class="opportunity-card-top">
+                  <p class="card-kicker">Fellowship • United States</p>
+                  <span class="deadline">01 Dec 2026</span>
+                </div>
+                <h3><a href="/opportunity/ssrc-just-tech-fellowship/">SSRC Just Tech Fellowship — Technology & Social Justice Research</a></h3>
+                <p>Funded research fellowship for scholars studying the intersection of technology, data, and social justice.</p>
+                <div class="card-actions">
+                  <a class="button button-primary" href="/opportunity/ssrc-just-tech-fellowship/">View Details</a>
+                </div>
+              </article>
+            </div>
+            <p style="text-align: center; color: var(--muted); margin-top: 1rem;">
+              Enable JavaScript to see live opportunities from our database with full search and filtering capabilities.
+            </p>
+          </noscript>
           <div class="opportunity-results grid three" id="opportunity-grid" aria-live="polite"></div>
           <nav class="pagination" id="pagination" aria-label="Opportunity pagination"></nav>
         </div>
@@ -659,88 +713,28 @@
         </div>
       </section>
 
-      <section class="section-pad" id="success" aria-labelledby="case-title">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Results</p>
-            <h2 id="case-title">Real Outcomes From Better Discovery</h2>
-          </div>
-          <div class="grid three">
-            <article class="story-card">
-              <p class="story-tag">Graduate Student • Pakistan</p>
-              <h3>Scholarship acceptance in Canada</h3>
-              <p>Ayesha found a fully funded graduate scholarship before the deadline and saved over $28,000 in tuition costs.</p>
-            </article>
-            <article class="story-card">
-              <p class="story-tag">Engineering Student • Nigeria</p>
-              <h3>Internship secured in Germany</h3>
-              <p>Daniel used filters to find paid research internships in Germany and applied early through the official program link.</p>
-            </article>
-            <article class="story-card">
-              <p class="story-tag">Young Professional • Philippines</p>
-              <h3>Career breakthrough in Singapore</h3>
-              <p>Maria discovered a global fellowship that led to mentorship, funding, and her first international role.</p>
-            </article>
-          </div>
-          <p class="microcopy" style="margin-top:1rem">Names and details are illustrative. Results vary by individual circumstances.</p>
-        </div>
-      </section>
-
-      <section class="testimonials section-pad" aria-labelledby="testimonial-title">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Testimonials</p>
-            <h2 id="testimonial-title">Students Trust OpportunityNest.org Because It Saves Time</h2>
-          </div>
-          <div class="grid four">
-            <figure class="quote-card">
-              <blockquote>"I stopped jumping between random websites. OpportunityNest made it clear which scholarships were still open and worth applying for."</blockquote>
-              <figcaption>Ayesha Khan <span>Graduate Applicant • Pakistan</span></figcaption>
-            </figure>
-            <figure class="quote-card">
-              <blockquote>"The filters helped me find internships that actually matched my field and eligibility. That saved me weeks."</blockquote>
-              <figcaption>Daniel Okoro <span>Engineering Student • Nigeria</span></figcaption>
-            </figure>
-            <figure class="quote-card">
-              <blockquote>"The deadline information helped me apply on time. I found an opportunity I would have completely missed."</blockquote>
-              <figcaption>Maria Santos <span>Early-Career Professional • Philippines</span></figcaption>
-            </figure>
-            <figure class="quote-card">
-              <blockquote>"It feels trustworthy. The listings are organized, current, and much easier to compare."</blockquote>
-              <figcaption>Hassan Ali <span>Undergraduate Student • UAE</span></figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
       <section class="section-pad" id="how-it-works" aria-labelledby="how-title">
         <div class="container">
-          <!-- SEO: Added contextual internal link to contact page -->
           <div class="section-heading">
-            <p class="eyebrow">Simple Workflow</p>
-            <h2 id="how-title">How OpportunityNest.org Works</h2>
-            <p>Need help? <a href="/contact.html">Contact us</a> for assistance.</p>
+            <p class="eyebrow">How It Works</p>
+            <h2 id="how-title">Find Opportunities in Three Simple Steps</h2>
+            <p>Our platform connects you directly to official program websites with verified information.</p>
           </div>
-          <div class="steps">
-            <article>
-              <span>1</span>
-              <h3>Search opportunities</h3>
-              <p>Enter your field, goal, country, or opportunity type.</p>
+          <div class="grid three">
+            <article class="feature-card">
+              <span class="icon" aria-hidden="true">1</span>
+              <h3>Search and Filter</h3>
+              <p>Use our smart search to find opportunities by country, funding type, field of study, or deadline. Filter results to match your specific eligibility and preferences.</p>
             </article>
-            <article>
-              <span>2</span>
-              <h3>Filter and compare</h3>
-              <p>Narrow results by country, type, funding, deadline, and field of study.</p>
+            <article class="feature-card">
+              <span class="icon" aria-hidden="true">2</span>
+              <h3>Review Details</h3>
+              <p>Each listing includes comprehensive information: eligibility requirements, funding details, application deadlines, and direct links to official program websites.</p>
             </article>
-            <article>
-              <span>3</span>
-              <h3>Apply directly</h3>
-              <p>Open verified application links and move straight to the official source.</p>
-            </article>
-            <article>
-              <span>4</span>
-              <h3>Confirm on official sites</h3>
-              <p>Always verify deadlines and eligibility on the official program website before applying.</p>
+            <article class="feature-card">
+              <span class="icon" aria-hidden="true">3</span>
+              <h3>Apply Directly</h3>
+              <p>Apply through the official program website. We provide the direct link so you can complete your application with the hosting organization.</p>
             </article>
           </div>
         </div>
@@ -861,6 +855,8 @@
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
+          <a href="/editorial-policy.html">Editorial Policy</a>
+          <a href="/fact-checking-policy.html">Fact Checking Policy</a>
           <a href="/privacy.html">Privacy</a>
           <a href="/terms.html">Terms</a>
           <a href="/disclaimer.html">Disclaimer</a>
