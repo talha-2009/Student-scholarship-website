@@ -44,6 +44,49 @@ TYPE_COLLECTION_ROUTES = {
     "Summer School": ("Workshops and Summer Programs", "/workshops/")
 }
 
+COUNTRY_INDEXING_PROFILES = {
+    "United States": {
+        "study": "The United States is strongest for applicants who want broad program choice, research-heavy universities, campus employment options, and large alumni networks. Because costs and funding policies vary widely by institution, students should compare the full cost of attendance, assistantship rules, and renewal terms before applying.",
+        "universities": "Commonly researched institutions include Harvard University, Stanford University, MIT, University of California campuses, Columbia University, and major public research universities.",
+        "student_life": "Student life often combines residential campuses, clubs, labs, internships, and regional career fairs. International applicants should plan early for health insurance, housing deposits, and documentation for the student visa interview."
+    },
+    "United Kingdom": {
+        "study": "The United Kingdom is attractive for focused one-year master's programs, historic universities, strong professional networks, and scholarship schemes tied to leadership or public service. Applicants should align scholarship essays with course choice because many awards expect a clear reason for studying in the UK.",
+        "universities": "Popular institutions include Oxford, Cambridge, Imperial College London, UCL, King's College London, Edinburgh, Manchester, Warwick, and other Russell Group universities.",
+        "student_life": "Student life is usually city-based and academically intensive, with societies, college communities, career services, and short travel distances between major university cities."
+    },
+    "Canada": {
+        "study": "Canada is often a good fit for students seeking research supervision, multicultural campuses, co-op pathways, and graduate funding connected to universities or national programs. Funding can depend on nomination, supervisor support, or admission status, so applicants should track institutional steps carefully.",
+        "universities": "Frequently searched institutions include the University of Toronto, UBC, McGill, McMaster, Alberta, Waterloo, Montreal, Calgary, and Queen's.",
+        "student_life": "Student life varies from large urban campuses to smaller research communities. Applicants should budget for winter clothing, provincial health coverage rules, housing, and study permit timelines."
+    },
+    "Australia": {
+        "study": "Australia is known for research training programs, development scholarships, post-study exposure, and universities with strong links to Asia-Pacific research and industry. Applicants should separate university admission deadlines from scholarship rounds because they may close at different times.",
+        "universities": "Popular universities include the University of Melbourne, Australian National University, University of Sydney, UNSW Sydney, Monash, Queensland, Adelaide, and Western Australia.",
+        "student_life": "Student life often blends campus clubs, part-time work rules, coastal cities, and practical research communities. International students should check overseas health cover, visa conditions, and accommodation timing."
+    },
+    "Germany": {
+        "study": "Germany is a strong destination for applicants interested in low-cost public education, research institutes, engineering, public policy, development studies, and structured DAAD funding. Many routes require careful attention to language, certified documents, and the difference between admission and scholarship selection.",
+        "universities": "Commonly researched institutions include Technical University of Munich, LMU Munich, Heidelberg, Humboldt University, RWTH Aachen, Freiburg, Bonn, and the Max Planck and Fraunhofer research networks.",
+        "student_life": "Student life is often independent and city-based, with public transport, student unions, research groups, and a strong emphasis on planning housing and residence paperwork early."
+    },
+    "Japan": {
+        "study": "Japan is valuable for students interested in advanced research, technology, language learning, regional studies, and government-supported scholarship routes. Embassy and university nomination tracks may differ, so applicants should read the latest call carefully.",
+        "universities": "Popular institutions include the University of Tokyo, Kyoto University, Osaka University, Tohoku University, Tokyo Institute of Technology, Waseda, and Keio.",
+        "student_life": "Student life can include laboratory culture, language classes, student circles, and compact urban campuses. Applicants should prepare for document certification, health checks, and scholarship nomination timelines."
+    },
+    "China": {
+        "study": "China offers large scholarship systems, fast-growing research universities, language study, and programs connected to international cooperation. Applicants should confirm whether a university pre-admission step, agency number, or parallel scholarship portal submission is required.",
+        "universities": "Frequently searched institutions include Peking University, Tsinghua University, Fudan, Shanghai Jiao Tong, Zhejiang University, USTC, Nanjing University, and Harbin Institute of Technology.",
+        "student_life": "Student life can include language learning, campus accommodation, research labs, city-based internships, and strong regional travel links. Document notarization and program-language checks are especially important."
+    },
+    "Switzerland": {
+        "study": "Switzerland is best suited to applicants seeking research excellence, international organizations, engineering, life sciences, policy, and highly selective fellowships. Costs are high, so funding coverage and host confirmation should be checked carefully.",
+        "universities": "Popular institutions include ETH Zurich, EPFL, University of Zurich, Geneva, Lausanne, Basel, Bern, and graduate institutes connected to international policy.",
+        "student_life": "Student life is international and multilingual, often shaped by research groups, mountain travel, public transport, and proximity to global organizations."
+    }
+}
+
 LANDING_PAGE_DEFINITIONS = [
     {
         "path": "scholarships",
@@ -1200,8 +1243,9 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
 
 
 def build_country_page(country: str, items: list[dict], related_countries: list[str]) -> str:
-    title = f"{country} Opportunities | OpportunityNest"
-    description = f"Discover scholarships, internships, fellowships, and competitions in {country}. Compare deadlines, funding, and eligibility on OpportunityNest."
+    updated_date = datetime.now(timezone.utc).date().isoformat()
+    title = f"{country} Scholarships, Internships and Fellowships | OpportunityNest"
+    description = f"Explore verified scholarships, internships, fellowships, competitions, study tips, visa notes, universities, and application guidance for {country}."
     path = f"{SITE_URL}/country/{slugify(country)}/"
     breadcrumbs = build_breadcrumbs([("Home", "/"), ("Country", "/#opportunities"), (country, None)])
     country_items = sorted(items, key=lambda item: item.get('deadline') or '', reverse=False)
@@ -1215,6 +1259,15 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     related_html = "".join([f'<li><a href=\"/country/{slugify(name)}/\">{escape_html(name)} opportunities</a></li>' for name in related_countries[:6]])
     top_fields = sorted({item.get("field") for item in country_items if item.get("field") and item.get("field") != "All Fields"})[:6]
     top_fields_text = ", ".join(top_fields) if top_fields else "multiple academic and professional fields"
+    profile = COUNTRY_INDEXING_PROFILES.get(country, {
+        "study": f"{country} can be useful for applicants who want to compare verified funding, study, research, internship, and leadership options from official providers before committing time to applications.",
+        "universities": f"Applicants should review official university, ministry, scholarship-provider, and host-organization pages for {country} before making a final shortlist.",
+        "student_life": f"Student life in {country} depends on the host city, campus model, language, housing market, and whether the opportunity is a degree program, internship, fellowship, competition, or short-term exchange."
+    })
+    scholarship_count = len([item for item in country_items if item.get("type") == "Scholarship"])
+    internship_count = len([item for item in country_items if item.get("type") == "Internship"])
+    fellowship_count = len([item for item in country_items if item.get("type") == "Fellowship"])
+    competition_count = len([item for item in country_items if item.get("type") == "Competition"])
     official_links = {
         "United States": ("EducationUSA", "https://educationusa.state.gov/"),
         "United Kingdom": ("UK Council for International Student Affairs", "https://www.ukcisa.org.uk/"),
@@ -1234,6 +1287,21 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     official_name, official_url = official_links.get(country, ("the official education or immigration authority", "https://www.unesco.org/en/education"))
     country_resource_html = f"""
           <section class="final-panel country-resource">
+            <h2>Why consider {escape_html(country)}?</h2>
+            <p>{escape_html(profile["study"])}</p>
+            <p>This page is built as a practical indexable guide, not just a list of cards. It connects active {escape_html(country)} opportunities with applicant guidance, category counts, related destinations, official resources, and direct links to detailed opportunity pages.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Scholarships, internships, fellowships, and competitions</h2>
+            <p>The current {escape_html(country)} collection includes {scholarship_count} scholarship listings, {internship_count} internship listings, {fellowship_count} fellowship listings, and {competition_count} competition listings where available. Use these counts as a starting point, then open individual pages to review funding, documents, deadlines, and the official source.</p>
+            <p>Scholarship applicants should check tuition coverage, stipend terms, renewal rules, and whether admission must come first. Internship applicants should review work location, supervision, stipend or unpaid status, and visa or authorization rules. Fellowship and competition applicants should pay close attention to selection criteria, project scope, and deliverables.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Universities, fields, and student life</h2>
+            <p>{escape_html(profile["universities"])}</p>
+            <p>Current OpportunityNest listings connected to {escape_html(country)} cover {escape_html(top_fields_text)}. {escape_html(profile["student_life"])}</p>
+          </section>
+          <section class="final-panel country-resource">
             <h2>Studying and applying in {escape_html(country)}</h2>
             <p>{escape_html(country)} opportunities on OpportunityNest are reviewed as practical application resources, not just directory entries. Applicants should compare the funding amount, host institution, eligibility route, deadline status, and official source before deciding where to spend preparation time. The current listings for {escape_html(country)} cover {escape_html(top_fields_text)}, which means applicants can usually compare academic awards, professional placements, research support, and leadership programmes from one page.</p>
             <p>For study-focused opportunities, begin with admission rules. Many scholarships require a separate university application before the funding application is assessed. Internship and fellowship applicants should pay close attention to work location, remote or in-person requirements, supervisor expectations, and whether the provider offers a stipend, travel support, insurance, or only a certificate of participation.</p>
@@ -1248,6 +1316,17 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
             <p>OpportunityNest does not provide immigration advice, but applicants should verify visa, residence, and work authorization rules before accepting any offer in {escape_html(country)}. Check whether the programme sponsor provides invitation letters, host confirmations, insurance, or proof of funding. For official background, start with <a href="{escape_html(official_url)}" target="_blank" rel="noopener noreferrer">{escape_html(official_name)}</a> and the provider's own application page.</p>
             <p>Common mistakes include applying without checking nationality restrictions, reusing a generic personal statement, missing document translation rules, and assuming that a scholarship covers every cost. Strong applicants show fit with the host, explain outcomes clearly, and keep evidence ready before the final week.</p>
           </section>
+          <section class="final-panel country-resource">
+            <h2>Helpful resources for {escape_html(country)} applicants</h2>
+            <ul>
+              <li><a href="/guides/application-checklist.html">Application checklist</a></li>
+              <li><a href="/guides/scholarship-essay.html">Scholarship essay guide</a></li>
+              <li><a href="/guides/cv-writing.html">CV writing guide</a></li>
+              <li><a href="/guides/student-visa.html">Student visa preparation guide</a></li>
+              <li><a href="/verification-process.html">How OpportunityNest verifies listings</a></li>
+            </ul>
+            <p class="review-note">Last updated: {escape_html(updated_date)} by the OpportunityNest editorial team.</p>
+          </section>
           <section class="faq-list" aria-labelledby="country-faq-title">
             <div class="section-heading"><p class="eyebrow">Country questions</p><h2 id="country-faq-title">{escape_html(country)} opportunity FAQs</h2></div>
             <article><h3>Are these {escape_html(country)} listings officially verified?</h3><p>Each listing links to an official provider source and is reviewed for deadline, eligibility, funding, and application-route clarity before publication.</p></article>
@@ -1257,6 +1336,21 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     """
     faq = build_faq_schema(FAQ_TEMPLATES["Country"])
     item_list_schema = build_item_list_schema(country_items, path)
+    webpage_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": title,
+        "description": description,
+        "url": path,
+        "dateModified": updated_date,
+        "isPartOf": {"@type": "WebSite", "name": "OpportunityNest", "url": SITE_URL},
+        "about": [
+            {"@type": "Thing", "name": f"{country} scholarships"},
+            {"@type": "Thing", "name": f"{country} internships"},
+            {"@type": "Thing", "name": f"{country} fellowships"}
+        ],
+        "reviewedBy": {"@type": "Organization", "name": "OpportunityNest"}
+    }, indent=2)
     breadcrumb_schema = json.dumps({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -1272,18 +1366,18 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
       description,
       path,
       f"OpportunityNest {country} opportunities",
-      additional_head=f"<script type=\"application/ld+json\">{item_list_schema}</script><script type=\"application/ld+json\">{breadcrumb_schema}</script><script type=\"application/ld+json\">{faq}</script>"
+      additional_head=f"<script type=\"application/ld+json\">{webpage_schema}</script><script type=\"application/ld+json\">{item_list_schema}</script><script type=\"application/ld+json\">{breadcrumb_schema}</script><script type=\"application/ld+json\">{faq}</script>"
     ) + (
       "\n      <section class=\"page-hero section-pad\">\n"
       f"        <div class=\"container\">{breadcrumbs}\n"
       "          <div class=\"section-heading\">\n"
       f"            <p class=\"eyebrow\">Country</p>\n"
-      f"            <h1>{escape_html(country)} Opportunities</h1>\n"
-      f"            <p>Explore the best scholarships, internships, fellowships, and competitions available for students and professionals in {escape_html(country)}.</p>\n"
+      f"            <h1>{escape_html(country)} Scholarships, Internships and Fellowships</h1>\n"
+      f"            <p>Explore verified scholarships, internships, fellowships, competitions, youth programs, and study resources for applicants considering {escape_html(country)}.</p>\n"
       "          </div>\n"
       "          <div class=\"final-panel\">\n"
       f"            <h2>Latest {escape_html(country)} listings</h2>\n"
-      f"            <p>Browse current opportunities with active deadlines and clear application links. Use the category sections below to find programs that match your field and level.</p>\n"
+      f"            <p>Browse current opportunities with active deadlines, canonical detail pages, structured data, and clear application links. Use the category sections below to find programs that match your field and level.</p>\n"
       "          </div>\n"
       "        </div>\n"
       "      </section>\n"
@@ -1307,7 +1401,14 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
 
 def paragraphs_html(text: str) -> str:
     parts = [part.strip() for part in re.split(r"\n\s*\n", text or "") if part.strip()]
-    return "".join(f"<p>{escape_html(part)}</p>" for part in parts)
+    html_parts = []
+    for part in parts:
+        heading = re.match(r"^#{2,3}\s+(.+)$", part)
+        if heading:
+            html_parts.append(f"<h3>{escape_html(heading.group(1))}</h3>")
+        else:
+            html_parts.append(f"<p>{escape_html(part)}</p>")
+    return "".join(html_parts)
 
 
 def detail_panel(title: str, body: str) -> str:
@@ -1823,6 +1924,7 @@ def write_trust_pages():
 
 def main():
     opportunities = fetch_opportunities()
+    today = datetime.now(timezone.utc).date().isoformat()
     opportunities = [op for op in opportunities if op.get('title')]
     for op in opportunities:
         op['link'] = OFFICIAL_URL_OVERRIDES.get(op.get('link'), op.get('link'))
@@ -1924,17 +2026,18 @@ def main():
         {"loc": f"{SITE_URL}/verification-process.html", "changefreq": "monthly", "priority": 0.6}
     ]
     for country in country_groups:
-        sitemap_entries.append({"loc": f"{SITE_URL}/country/{slugify(country)}/", "changefreq": "weekly", "priority": 0.7})
+        sitemap_entries.append({"loc": f"{SITE_URL}/country/{slugify(country)}/", "lastmod": today, "changefreq": "weekly", "priority": 0.8})
     for category, items in category_groups.items():
-        sitemap_entries.append({"loc": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}.html", "changefreq": "weekly", "priority": 0.8})
+        sitemap_entries.append({"loc": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}.html", "lastmod": today, "changefreq": "weekly", "priority": 0.8})
         for country in sorted({item['country'] for item in items if item.get('country')}):
-            sitemap_entries.append({"loc": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}/{slugify(country)}/", "changefreq": "weekly", "priority": 0.7})
+            sitemap_entries.append({"loc": f"{SITE_URL}/{slugify(PAGE_TYPES[category])}/{slugify(country)}/", "lastmod": today, "changefreq": "weekly", "priority": 0.7})
     for item in opportunities:
         if item.get('slug'):
             sitemap_entries.append({"loc": f"{SITE_URL}/opportunity/{slugify(item['slug'])}/", "lastmod": (item.get('created_at') or datetime.now(timezone.utc).date().isoformat()), "changefreq": "weekly", "priority": 0.8})
     for definition in LANDING_PAGE_DEFINITIONS:
         sitemap_entries.append({
             "loc": f"{SITE_URL}/{definition['path']}/",
+            "lastmod": today,
             "changefreq": "weekly",
             "priority": 0.9 if definition["facet"] == "category" else 0.8
         })
