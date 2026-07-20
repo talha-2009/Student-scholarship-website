@@ -41,7 +41,6 @@
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
     <link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>
-    <link rel="preload" href="/styles.css" as="style">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="canonical" href="https://www.opportunitynest.org/">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
@@ -58,12 +57,21 @@
             "@type": "Organization",
             "name": "OpportunityNest.org",
             "url": "https://www.opportunitynest.org/",
-            "description": "A global opportunity discovery hub for scholarships, internships, jobs, fellowships, and career programs."
+            "description": "A global opportunity discovery hub for scholarships, internships, jobs, fellowships, and career programs.",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.opportunitynest.org/logo.svg",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": []
           },
           {
             "@type": "WebSite",
             "name": "OpportunityNest.org",
             "url": "https://www.opportunitynest.org/",
+            "description": "A global opportunity discovery hub for scholarships, internships, jobs, fellowships, and career programs.",
+            "inLanguage": "en",
             "potentialAction": {
               "@type": "SearchAction",
               "target": "https://www.opportunitynest.org/?q={search_term_string}#opportunities",
@@ -97,6 +105,12 @@
                   "text": "New opportunities are added regularly, with updates checked every 24 hours."
                 }
               }
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.opportunitynest.org/" }
             ]
           }
         ]

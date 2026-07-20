@@ -383,7 +383,9 @@ window.ON = window.OpportunityNest;
     name: item.title,
     description: item.description,
     url,
-    provider: { "@type": "Organization", name: item.organization || item.country || "Official provider" }
+    image: "https://www.opportunitynest.org/og-image.png",
+    provider: { "@type": "Organization", name: item.organization || item.country || "Official provider", url: "https://www.opportunitynest.org" },
+    inLanguage: "en"
   });
   ON.generateBreadcrumbSchema = (items = []) => ({
     "@context": "https://schema.org",
