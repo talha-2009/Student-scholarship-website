@@ -321,6 +321,22 @@ const openMegaMenu = (item) => {
   closeAllMegaMenus(item);
   item.classList.add("is-open");
   item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
+
+  // Adjust dropdown position if it would overflow viewport
+  const dropdown = item.querySelector(".mega-menu");
+  if (!dropdown) return;
+
+  const rect = dropdown.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+
+  // If dropdown overflows right edge, align to right
+  if (rect.right > viewportWidth) {
+    dropdown.style.left = "auto";
+    dropdown.style.right = "0";
+  } else {
+    dropdown.style.left = "0";
+    dropdown.style.right = "auto";
+  }
 };
 
 const closeNav = () => {
@@ -334,24 +350,39 @@ const closeNav = () => {
 const setupNavigationInteractions = () => {
   if (!navMenu) return;
 
+  let hoverTimeout;
+  const HOVER_DELAY = 200;
+
   navMenu.querySelectorAll(".nav-item.has-mega").forEach((item) => {
     const trigger = item.querySelector(".mega-trigger");
     if (!trigger) return;
 
     item.addEventListener("pointerenter", () => {
-      if (!isMobileNav()) openMegaMenu(item);
+      if (!isMobileNav()) {
+        clearTimeout(hoverTimeout);
+        openMegaMenu(item);
+      }
     });
 
     item.addEventListener("pointerleave", () => {
-      if (!isMobileNav()) closeMegaMenu(item);
+      if (!isMobileNav()) {
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => closeMegaMenu(item), HOVER_DELAY);
+      }
     });
 
     item.addEventListener("focusin", () => {
-      if (!isMobileNav()) openMegaMenu(item);
+      if (!isMobileNav()) {
+        clearTimeout(hoverTimeout);
+        openMegaMenu(item);
+      }
     });
 
     item.addEventListener("focusout", (event) => {
-      if (!item.contains(event.relatedTarget)) closeMegaMenu(item);
+      if (!item.contains(event.relatedTarget)) {
+        clearTimeout(hoverTimeout);
+        closeMegaMenu(item);
+      }
     });
 
     trigger.addEventListener("click", (event) => {
@@ -362,6 +393,49 @@ const setupNavigationInteractions = () => {
       }
       openMegaMenu(item);
     });
+
+    // Keyboard navigation
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (item.classList.contains("is-open")) {
+          closeMegaMenu(item);
+        } else {
+          openMegaMenu(item);
+          // Focus first link in dropdown
+          const firstLink = item.querySelector(".mega-menu a");
+          if (firstLink) firstLink.focus();
+        }
+      }
+      if (event.key === "Escape") {
+        closeMegaMenu(item);
+        trigger.focus();
+      }
+    });
+
+    // Trap focus within dropdown when open
+    const dropdown = item.querySelector(".mega-menu");
+    if (dropdown) {
+      dropdown.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMegaMenu(item);
+          trigger.focus();
+        }
+        if (event.key === "Tab") {
+          const focusableElements = dropdown.querySelectorAll("a");
+          const firstElement = focusableElements[0];
+          const lastElement = focusableElements[focusableElements.length - 1];
+
+          if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          } else if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+          }
+        }
+      });
+    }
   });
 
   navMenu.addEventListener("click", (event) => {
