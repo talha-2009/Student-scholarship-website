@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #f7fbf9;
   --surface: #ffffff;
   --surface-strong: #eef8f5;
@@ -2252,3 +2252,1157 @@ details p {
     font-size: 0.8125rem;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE AUDIT FIXES — v2
+   Breakpoints tested: 320 · 360 · 375 · 390 · 414 · 480 · 768 · 1024 · 1280 · 1440 · 1920
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Global overflow guard ─────────────────────────────────────── */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Every block element must stay within viewport */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Images and media never overflow */
+img,
+video,
+svg,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Button min-width fix (prevents overflow at 320-375px) ─────── */
+.button {
+  min-width: 0;          /* override the hard 160px floor */
+  width: auto;
+}
+
+/* Keep full-width buttons responsive */
+.hero-actions .button,
+.cta-actions .button {
+  flex: 1 1 auto;
+  min-width: 140px;
+  max-width: 100%;
+}
+
+/* ── Opportunity controls grid — updated for 6-select layout ────── */
+/* The grid now has: search | country | type | category | funding | sort | clear */
+.opportunity-controls {
+  grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, 1fr));
+}
+
+/* ── Internship controls — prevent 8-col overflow ─────────────── */
+.internship-controls {
+  flex-wrap: wrap;
+}
+
+/* ── Detail page hero padding ────────────────────────────────────── */
+.page-hero {
+  min-height: auto; /* was calc(100vh - 280px) — too tall on mobile */
+}
+
+/* ── Internship detail container padding ─────────────────────────── */
+.internship-detail {
+  overflow-x: hidden;
+}
+
+/* ── Final panels on detail pages ─────────────────────────────────── */
+.final-panel {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ── Card action buttons — always stack cleanly ───────────────────── */
+.card-actions {
+  flex-wrap: wrap;
+}
+
+/* ── Breadcrumbs — prevent overflow ──────────────────────────────── */
+.breadcrumbs {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+/* ── Detail grid — use CSS grid with auto-fill for robustness ─────── */
+.detail-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+/* ── Review note text on opportunity pages ──────────────────────── */
+.review-note {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 12px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ── Benefit list — single column below certain widths  ───────────── */
+@media (max-width: 560px) {
+  .benefit-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 1024px  — tablet landscape
+   ═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .opportunity-controls {
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 1fr));
+  }
+
+  .internship-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Prevent footer-grid text overflow */
+  .footer-grid {
+    gap: 28px;
+  }
+
+  .site-footer p {
+    max-width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 900px  — tablet portrait (existing breakpoint — augmented)
+   ═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Opportunity controls — full single column */
+  .opportunity-controls {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  /* Internship controls — 2 cols */
+  .internship-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Detail grid — 2 columns */
+  .detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Hero min height auto on mobile */
+  .page-hero {
+    min-height: auto;
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  /* Final panel padding reduction */
+  .final-panel {
+    padding: 24px 18px;
+  }
+
+  /* Benefit list goes single column */
+  .benefit-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Breadcrumb font-size */
+  .breadcrumbs {
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+
+  /* Card actions — full width stacked */
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .card-actions .button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Section padding tighter */
+  .section-pad {
+    padding: 40px 0;
+  }
+
+  /* internship-detail remove hard padding */
+  .internship-detail {
+    padding: 20px;
+  }
+
+  /* Footer links */
+  .footer-links {
+    gap: 10px 14px;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 767px  — mobile (existing breakpoint — augmented)
+   ═══════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Prevent nav from covering content on short phones */
+  body {
+    padding-top: 64px;
+  }
+
+  .site-header .container {
+    width: min(100% - 24px, var(--max));
+  }
+
+  /* Opportunity controls — always single col */
+  .opportunity-controls {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  /* Category controls */
+  .category-controls {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Internship controls — single col */
+  .internship-controls {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Detail grid — single col */
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Final panels */
+  .final-panel {
+    padding: 20px 14px;
+    text-align: left;
+  }
+
+  .final-panel p {
+    font-size: 0.97rem;
+  }
+
+  .final-panel .hero-actions {
+    justify-content: flex-start;
+  }
+
+  /* Hero actions stacked */
+  .hero-actions,
+  .cta-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-actions .button,
+  .cta-actions .button {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Page hero */
+  .page-hero {
+    min-height: auto;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  /* Section heading */
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  /* Internship-detail */
+  .internship-detail {
+    padding: 16px;
+    gap: 18px;
+  }
+
+  /* Grid three / four both become single col */
+  .grid.three,
+  .grid.four {
+    grid-template-columns: 1fr;
+  }
+
+  /* Opportunity results */
+  .opportunity-results.grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  /* Trust stats */
+  .trust-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Steps */
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Logo strip */
+  .logo-strip {
+    gap: 6px;
+    padding: 14px;
+  }
+
+  /* CTA panel */
+  .cta-panel {
+    padding: 22px 16px;
+  }
+
+  /* Details / FAQ */
+  details {
+    padding: 14px 16px;
+  }
+
+  /* Benefit list */
+  .benefit-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Solution / benefits / faq-layout / footer-grid — single col */
+  .solution-grid,
+  .benefits-grid,
+  .faq-layout,
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Footer links wrap nicely */
+  .footer-links {
+    gap: 8px 12px;
+  }
+
+  /* Card actions */
+  .card-actions {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .card-actions .button {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
+
+  /* Hero stats */
+  .hero-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  /* Status message */
+  .status-message {
+    font-size: 0.9rem;
+  }
+
+  /* Pagination — smaller buttons on mobile */
+  .pagination-button {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 0.88rem;
+  }
+
+  /* Breadcrumbs — single line when possible */
+  .breadcrumbs {
+    font-size: 0.78rem;
+    gap: 4px;
+  }
+
+  /* Section pad */
+  .section-pad {
+    padding: 36px 0;
+  }
+
+  /* Dashboard */
+  .dashboard {
+    padding: 14px;
+  }
+
+  /* Filter chips */
+  .chips-wrapper {
+    gap: 0.4rem;
+  }
+
+  .filter-chip {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 480px  — small mobile
+   ═══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .container {
+    width: min(100% - 16px, var(--max));
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+    line-height: 1.18;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  h3 {
+    font-size: 0.98rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 11px 14px;
+    min-height: 46px;
+  }
+
+  /* Hero stats — all in one column on very small screens */
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Trust stats — 1 col */
+  .trust-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Search card */
+  .search-card {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  /* Filter row */
+  .filter-row {
+    gap: 6px;
+  }
+
+  .filter-row span {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  /* Internship detail */
+  .internship-detail {
+    padding: 12px;
+    gap: 16px;
+    border-radius: var(--radius);
+  }
+
+  /* Page hero h1 */
+  .page-hero h1 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .page-hero h2 {
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+    margin-top: 20px;
+  }
+
+  /* Final panel */
+  .final-panel {
+    padding: 16px 12px;
+  }
+
+  /* Opportunity controls */
+  .opportunity-controls {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  /* Section heading */
+  .section-heading {
+    margin-bottom: 16px;
+  }
+
+  /* Card padding */
+  .live-opportunity-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .info-card,
+  .feature-card,
+  .story-card,
+  .quote-card,
+  .steps article,
+  .comparison article {
+    padding: 16px;
+  }
+
+  /* FAQ */
+  details {
+    padding: 12px 14px;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 32px 0 20px;
+  }
+
+  .footer-links {
+    gap: 6px 10px;
+    font-size: 0.88rem;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    margin-top: 18px;
+  }
+
+  /* Nav drawer width on very narrow */
+  .nav-menu {
+    width: min(300px, calc(100vw - 24px));
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 414px  — iPhone Plus / large Android
+   ═══════════════════════════════════════ */
+@media (max-width: 414px) {
+  .hero-stats div,
+  .trust-stats div {
+    padding: 14px;
+  }
+
+  dt {
+    font-size: 1.15rem;
+  }
+
+  dd {
+    font-size: 0.85rem;
+  }
+
+  .card-actions .button {
+    font-size: 0.88rem;
+    min-height: 46px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.75rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 390px  — iPhone 14 / Pixel
+   ═══════════════════════════════════════ */
+@media (max-width: 390px) {
+  body {
+    font-size: 14.5px;
+  }
+
+  .container {
+    width: min(100% - 14px, var(--max));
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 9vw, 2.2rem);
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 8vw, 1.85rem);
+  }
+
+  .section-pad {
+    padding: 30px 0;
+  }
+
+  .final-panel {
+    padding: 14px 10px;
+  }
+
+  .internship-detail {
+    padding: 10px;
+    gap: 14px;
+  }
+
+  .live-opportunity-card {
+    padding: 12px;
+  }
+
+  .nav-menu {
+    width: min(280px, calc(100vw - 16px));
+    padding: 16px;
+  }
+
+  .card-actions .button {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  .opportunity-controls {
+    padding: 6px;
+    gap: 5px;
+  }
+
+  .opportunity-controls input,
+  .opportunity-controls select {
+    font-size: 14px;
+    padding: 8px 10px;
+    min-height: 42px;
+  }
+
+  .filter-chip {
+    font-size: 0.77rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  /* Pagination */
+  .pagination {
+    gap: 5px;
+  }
+
+  .pagination-button {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.82rem;
+  }
+
+  /* Related guides list */
+  .final-panel ul {
+    padding-left: 1.2rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 375px  — iPhone SE / standard
+   ═══════════════════════════════════════ */
+@media (max-width: 375px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    width: min(100% - 12px, var(--max));
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 9.5vw, 2rem);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 9.5vw, 2rem);
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .brand {
+    font-size: 0.88rem;
+    gap: 8px;
+  }
+
+  .button {
+    font-size: 0.88rem;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+
+  .card-actions .button {
+    font-size: 0.84rem;
+    min-height: 44px;
+  }
+
+  .live-opportunity-card {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .card-kicker,
+  .story-tag,
+  .eyebrow {
+    font-size: 0.72rem;
+  }
+
+  details {
+    padding: 10px 12px;
+  }
+
+  summary {
+    font-size: 0.9rem;
+  }
+
+  .final-panel p {
+    font-size: 0.9rem;
+  }
+
+  .footer-links {
+    gap: 5px 8px;
+    font-size: 0.82rem;
+  }
+
+  .copyright {
+    font-size: 0.77rem;
+  }
+
+  .status-message {
+    font-size: 0.84rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 360px  — compact Android
+   ═══════════════════════════════════════ */
+@media (max-width: 360px) {
+  body {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .container {
+    width: min(100% - 10px, var(--max));
+  }
+
+  h1 {
+    font-size: clamp(1.4rem, 10vw, 1.9rem);
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 9vw, 1.65rem);
+  }
+
+  h3 {
+    font-size: 0.93rem;
+  }
+
+  .button {
+    font-size: 0.84rem;
+    padding: 9px 11px;
+    min-height: 42px;
+  }
+
+  /* Prevent brand from wrapping oddly */
+  .brand {
+    font-size: 0.84rem;
+    gap: 6px;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+
+  .nav-toggle {
+    width: 38px;
+    height: 38px;
+    padding: 8px;
+  }
+
+  .card-actions .button {
+    font-size: 0.82rem;
+    min-height: 42px;
+    padding: 9px 10px;
+  }
+
+  .live-opportunity-card {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .internship-detail {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .final-panel {
+    padding: 12px 8px;
+  }
+
+  .final-panel h2 {
+    font-size: clamp(1.1rem, 8vw, 1.4rem);
+  }
+
+  .final-panel p {
+    font-size: 0.88rem;
+    margin-top: 10px;
+  }
+
+  .opportunity-controls {
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .opportunity-controls input,
+  .opportunity-controls select {
+    font-size: 13px;
+    padding: 7px 9px;
+    min-height: 40px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.72rem;
+    gap: 3px;
+  }
+
+  .section-pad {
+    padding: 24px 0;
+  }
+
+  .site-footer {
+    padding: 24px 0 14px;
+  }
+
+  .footer-links {
+    font-size: 0.78rem;
+    gap: 4px 7px;
+  }
+
+  .copyright {
+    font-size: 0.73rem;
+  }
+
+  .pagination-button {
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 0.78rem;
+  }
+
+  .filter-chip {
+    font-size: 0.74rem;
+    padding: 0.28rem 0.55rem;
+  }
+
+  .clear-filters {
+    font-size: 0.84rem;
+    padding: 8px 12px;
+  }
+
+  .detail-grid div {
+    padding: 12px;
+  }
+
+  .detail-grid dt {
+    font-size: 0.78rem;
+  }
+
+  .detail-grid dd {
+    font-size: 0.88rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≤ 320px  — absolute minimum (Galaxy Fold, etc.)
+   ═══════════════════════════════════════ */
+@media (max-width: 320px) {
+  body {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .container {
+    width: calc(100% - 8px);
+  }
+
+  h1 {
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  h3 {
+    font-size: 0.9rem;
+  }
+
+  .button {
+    font-size: 0.82rem;
+    padding: 8px 10px;
+    min-height: 40px;
+  }
+
+  .brand {
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    font-size: 9px;
+  }
+
+  .nav-toggle {
+    width: 36px;
+    height: 36px;
+    padding: 7px;
+  }
+
+  .nav-menu {
+    width: calc(100vw - 8px);
+    padding: 12px;
+  }
+
+  body {
+    padding-top: 60px;
+  }
+
+  .site-header {
+    /* Ensure header doesn't overflow at 320 */
+    overflow: hidden;
+  }
+
+  .site-header .container {
+    width: calc(100% - 8px);
+  }
+
+  .nav {
+    gap: 8px;
+  }
+
+  .card-actions {
+    gap: 6px;
+  }
+
+  .card-actions .button {
+    font-size: 0.8rem;
+    min-height: 40px;
+    padding: 8px 9px;
+  }
+
+  .live-opportunity-card {
+    padding: 8px;
+    gap: 8px;
+    border-radius: 6px;
+  }
+
+  .internship-detail {
+    padding: 6px;
+    gap: 10px;
+    border-radius: var(--radius);
+  }
+
+  .final-panel {
+    padding: 10px 8px;
+    border-radius: var(--radius);
+  }
+
+  .final-panel h2 {
+    font-size: 1rem;
+  }
+
+  .final-panel p {
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  .opportunity-controls {
+    padding: 4px;
+    gap: 4px;
+    border-radius: var(--radius);
+  }
+
+  .opportunity-controls input,
+  .opportunity-controls select {
+    font-size: 12.5px;
+    padding: 6px 8px;
+    min-height: 38px;
+  }
+
+  .hero-stats,
+  .trust-stats {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .hero-stats div,
+  .trust-stats div {
+    padding: 12px;
+  }
+
+  dt {
+    font-size: 1rem;
+  }
+
+  dd {
+    font-size: 0.82rem;
+  }
+
+  .section-pad {
+    padding: 20px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 14px;
+  }
+
+  .page-hero {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.7rem;
+    gap: 2px;
+  }
+
+  .eyebrow,
+  .card-kicker,
+  .story-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .detail-grid div {
+    padding: 10px;
+  }
+
+  details {
+    padding: 8px 10px;
+  }
+
+  summary {
+    font-size: 0.85rem;
+  }
+
+  .filter-chip {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .pagination {
+    gap: 4px;
+  }
+
+  .pagination-button {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .benefit-list li {
+    padding: 10px 10px 10px 36px;
+    font-size: 0.88rem;
+  }
+
+  .benefit-list li::before {
+    left: 10px;
+    top: 10px;
+  }
+
+  .footer-links {
+    font-size: 0.75rem;
+    gap: 3px 6px;
+  }
+
+  .copyright {
+    font-size: 0.7rem;
+  }
+
+  .site-footer {
+    padding: 20px 0 12px;
+  }
+
+  /* Don't stack breadcrumb dividers weirdly */
+  .breadcrumbs span[aria-hidden="true"] {
+    display: none;
+  }
+
+  /* Logo strip */
+  .logo-strip {
+    gap: 4px;
+    padding: 10px;
+  }
+
+  .logo-strip span {
+    font-size: 0.78rem;
+    padding: 5px 8px;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≥ 1280px — large desktop / wide
+   ═══════════════════════════════════════ */
+@media (min-width: 1280px) {
+  .opportunity-controls {
+    /* Full row: search | country | type | category | funding | sort | clear */
+    grid-template-columns: minmax(0, 2fr) repeat(4, minmax(130px, 160px)) auto auto;
+  }
+
+  .grid.three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid.four {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .trust-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≥ 1440px — wide desktop
+   ═══════════════════════════════════════ */
+@media (min-width: 1440px) {
+  :root {
+    --max: 1260px;
+  }
+
+  .section-pad {
+    padding: 72px 0;
+  }
+}
+
+/* ═══════════════════════════════════════
+   ≥ 1920px — ultrawide / 2K
+   ═══════════════════════════════════════ */
+@media (min-width: 1920px) {
+  :root {
+    --max: 1360px;
+  }
+
+  body {
+    font-size: 17px;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 4vw, 4.2rem);
+  }
+
+  h2 {
+    font-size: clamp(2.2rem, 3vw, 3rem);
+  }
+
+  .section-pad {
+    padding: 80px 0;
+  }
+}

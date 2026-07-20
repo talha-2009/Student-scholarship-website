@@ -31,6 +31,18 @@ PAGE_TYPES = {
     "Fellowship": "Fellowships",
     "Competition": "Competitions"
 }
+TYPE_COLLECTION_ROUTES = {
+    "Scholarship": ("Scholarships", "/scholarships/"),
+    "Internship": ("Internships", "/internships/"),
+    "Fellowship": ("Fellowships", "/fellowships/"),
+    "Competition": ("Competitions", "/competitions.html"),
+    "Exchange Program": ("Exchange Programs", "/exchange-programs/"),
+    "Research Grant": ("Research Grants", "/grants/"),
+    "Youth Program": ("Youth Programs", "/youth-programs/"),
+    "Volunteer Program": ("Volunteer Programs", "/volunteer-programs/"),
+    "Conference": ("Conferences", "/conferences/"),
+    "Summer School": ("Workshops and Summer Programs", "/workshops/")
+}
 
 LANDING_PAGE_DEFINITIONS = [
     {
@@ -1409,6 +1421,32 @@ def fallback_selection_criteria(item: dict) -> str:
     )
 
 
+def official_application_guidance(item: dict, host: str) -> str:
+    title = item["title"]
+    country = item.get("country") or "the listed destination"
+    type_label = (item.get("type") or "opportunity").lower()
+    deadline = format_deadline(item)
+    funding = item.get("funding") or "the funding terms shown by the provider"
+    return (
+        f"Open the {host} page for {title} before you start the final form. That source should be used to confirm the live {type_label} instructions, "
+        f"the {country} specific rules, the current deadline status ({deadline}), and the final wording on funding ({funding})."
+    )
+
+
+def opportunity_summary(item: dict, host: str, benefits: str) -> str:
+    title = item["title"]
+    type_label = (item.get("type") or "opportunity").lower()
+    field = item.get("field") or "the listed academic or professional area"
+    country = item.get("country") or "a global applicant pool"
+    deadline = format_deadline(item)
+    level = item.get("level") or "eligible applicants"
+    return (
+        f"{title} gives {level} a verified {type_label} route connected to {field} in {country}. Use this page to compare the core facts, "
+        f"then check {host} for the final application sequence, document rules, funding language ({benefits}), and deadline status ({deadline}). "
+        "A strong next step is to match each provider requirement with evidence from your CV, transcript, portfolio, proposal, or references before submitting."
+    )
+
+
 def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
     title = f"{item['title']} | OpportunityNest"
     description = f"Apply for the {item['title']} in {item['country']}. Funding, deadline, eligibility, and application details for this {item['type'].lower()}."
@@ -1541,8 +1579,8 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         f"Apply for {item['title']} with verified deadline, eligibility, funding, documents, and official application guidance."
     )
     page_url = f"{SITE_URL}/opportunity/{slugify(item['slug'])}/"
-    category_label = PAGE_TYPES.get(item["type"], item["type"])
-    breadcrumbs = build_breadcrumbs([("Home", "/"), (category_label, f"/{slugify(category_label)}.html"), (item["title"], None)])
+    category_label, category_href = type_collection(item.get("type"))
+    breadcrumbs = build_breadcrumbs([("Home", "/"), (category_label, category_href), (item["title"], None)])
     benefits = item.get("funding") or "Funding information is provided on the official listing page."
     host = item.get("host_organization") or item.get("country") or "Official provider"
     duration = item.get("duration") or "See official listing"
@@ -1586,7 +1624,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         f'<li><a href="/country/{slugify(country)}/">More opportunities in {escape_html(country)}</a></li>'
         for country in {item.get("country")} if country
     )
-    same_category_html = f'<li><a href="/{slugify(category_label)}/">More {escape_html(category_label.lower())}</a></li>'
+    same_category_html = f'<li><a href="{escape_html(category_href)}">More {escape_html(category_label.lower())}</a></li>'
     item_schema = json.dumps({
         "@context": "https://schema.org",
         "@type": "EducationalOccupationalProgram" if item["type"] != "Competition" else "Course",
@@ -1613,7 +1651,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
-            {"@type": "ListItem", "position": 2, "name": category_label, "item": f"{SITE_URL}/{slugify(category_label)}.html"},
+            {"@type": "ListItem", "position": 2, "name": category_label, "item": f"{SITE_URL}{category_href}"},
             {"@type": "ListItem", "position": 3, "name": item["title"], "item": page_url}
         ]
     }, indent=2)
@@ -1633,7 +1671,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         f"            {paragraphs_html(item.get('description') or meta_description)}\n"
         "            <div class=\"hero-actions\">\n"
         f"              <a class=\"button button-primary\" href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">View &amp; Apply <span aria-hidden=\"true\">↗</span></a>\n"
-        f"              <a class=\"button button-secondary\" href=\"{SITE_URL}/{slugify(category_label)}.html\">Back to {escape_html(category_label)}</a>\n"
+        f"              <a class=\"button button-secondary\" href=\"{SITE_URL}{category_href}\">Back to {escape_html(category_label)}</a>\n"
         "            </div>\n"
         f"            <p class=\"review-note\">Last reviewed: {escape_html(updated_at)}. Details are summarized from the official provider source.</p>\n"
         "          </div>\n"
@@ -1664,12 +1702,12 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "          </section>\n"
         "          <div class=\"final-panel\">\n"
         "            <h2>Official application link</h2>\n"
-        f"            <p>Use the provider page for the final application form, eligibility rules, deadline, and any country-specific instructions.</p><p><a href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">Open the official application page</a></p>\n"
+        f"            <p>{escape_html(official_application_guidance(item, host))}</p><p><a href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">Open the official application page</a></p>\n"
         f"            <p>Verification source: <a href=\"{escape_html(verification_source)}\" target=\"_blank\" rel=\"noopener noreferrer\">official source</a>.</p>\n"
         "          </div>\n"
         "          <div class=\"final-panel\">\n"
         "            <h2>Summary</h2>\n"
-        f"            <p>{escape_html(item['title'])} is a verified {escape_html(item['type'].lower())} listing for applicants interested in {escape_html(item.get('field') or 'relevant fields')}. Review the quick facts, confirm your eligibility, prepare the required documents, and apply through the official link before the published deadline.</p>\n"
+        f"            <p>{escape_html(opportunity_summary(item, host, benefits))}</p>\n"
         "          </div>\n"
         "          <div class=\"final-panel\"><h2>Share this opportunity</h2><div class=\"card-actions\">\n"
         f"            <a class=\"button button-secondary\" href=\"https://twitter.com/intent/tweet?text={escape_html(item['title'])}+-+{escape_html(page_url)}\" target=\"_blank\" rel=\"noopener noreferrer\">Share on Twitter</a>\n"
@@ -1685,6 +1723,10 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
 
 def build_page_url(path: str) -> str:
     return f"{SITE_URL}/{path.lstrip('/') }"
+
+
+def type_collection(item_type: str) -> tuple[str, str]:
+    return TYPE_COLLECTION_ROUTES.get(item_type, (PAGE_TYPES.get(item_type, item_type or "Opportunities"), "/#opportunities"))
 
 
 def build_sitemap(entries: list[dict]) -> str:
