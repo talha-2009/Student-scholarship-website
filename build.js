@@ -8,7 +8,7 @@
  * - Copies static assets to dist/
  */
 import { buildSync } from "esbuild";
-import { readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
 import { join, relative, extname, dirname } from "path";
 import { createHash } from "crypto";
 import { fileURLToPath } from "url";
@@ -58,8 +58,35 @@ const CRITICAL_CSS_LINES = 623;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
 const cssLines = rawCss.split("\n");
-const criticalRaw = cssLines.slice(0, CRITICAL_CSS_LINES).join("\n");
-const deferredRaw = cssLines.slice(CRITICAL_CSS_LINES).join("\n");
+function findSafeCssSplitIndex(lines, preferredLine) {
+  const preferredIndex = Math.min(Math.max(preferredLine, 1), lines.length) - 1;
+  let depth = 0;
+
+  for (let index = 0; index <= preferredIndex; index += 1) {
+    const line = lines[index];
+    for (const char of line) {
+      if (char === "{") depth += 1;
+      if (char === "}") depth = Math.max(0, depth - 1);
+    }
+  }
+
+  if (depth === 0) return preferredIndex + 1;
+
+  for (let index = preferredIndex + 1; index < lines.length; index += 1) {
+    const line = lines[index];
+    for (const char of line) {
+      if (char === "{") depth += 1;
+      if (char === "}") depth = Math.max(0, depth - 1);
+    }
+    if (depth === 0) return index + 1;
+  }
+
+  return lines.length;
+}
+
+const cssSplitIndex = findSafeCssSplitIndex(cssLines, CRITICAL_CSS_LINES);
+const criticalRaw = cssLines.slice(0, cssSplitIndex).join("\n");
+const deferredRaw = cssLines.slice(cssSplitIndex).join("\n");
 
 const cssAssetMap = {};
 
@@ -99,6 +126,10 @@ const jsAssetMap = {};
 
 for (const file of jsFiles) {
   const srcPath = join(ROOT, file);
+  if (!existsSync(srcPath)) {
+    console.warn(`  Skipping ${file} (source file not found)`);
+    continue;
+  }
   const origSize = statSync(srcPath).size;
   const input = readFileSync(srcPath, "utf8");
 
@@ -201,15 +232,7 @@ for (const htmlPath of htmlFiles) {
   // Remove duplicate defer
   html = html.replace(/\bdefer\s+defer\b/g, 'defer');
 
-  // 6. Add fetchpriority="high" to hero section if present (improves LCP)
-  if (html.includes('class="hero ') && !html.includes('fetchpriority')) {
-    html = html.replace(
-      /(<section\s+class="hero\s[^"]*")/,
-      '$1 fetchpriority="high"'
-    );
-  }
-
-  // 7. Add logo preload for LCP on pages with nav
+  // 6. Add logo preload for LCP on pages with nav
   if (!html.includes('rel="preload"') && html.includes('brand-mark')) {
     html = html.replace(
       /(<\/head>)/,

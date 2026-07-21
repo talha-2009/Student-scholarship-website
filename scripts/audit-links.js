@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const HTML_EXTENSIONS = ['.html'];
+const SKIPPED_DIRS = new Set(['.git', '.vercel', 'node_modules']);
 const IGNORED_PATTERNS = [
   'javascript:',
   'mailto:',
@@ -32,6 +32,7 @@ function getAllHtmlFiles(dir, fileList = []) {
     const stat = fs.statSync(filePath);
     
     if (stat.isDirectory()) {
+      if (SKIPPED_DIRS.has(file)) return;
       getAllHtmlFiles(filePath, fileList);
     } else if (HTML_EXTENSIONS.includes(path.extname(file))) {
       fileList.push(filePath);
@@ -63,9 +64,13 @@ function isInternalLink(href) {
 }
 
 function resolveInternalLink(href, filePath) {
+  const siteRoot = path.relative(ROOT_DIR, filePath).startsWith(`dist${path.sep}`)
+    ? path.join(ROOT_DIR, 'dist')
+    : ROOT_DIR;
+
   // Handle absolute paths (starting with /)
   if (href.startsWith('/')) {
-    let absolutePath = path.join(ROOT_DIR, href.substring(1));
+    let absolutePath = path.join(siteRoot, href.substring(1));
     
     // Handle anchors
     const anchorIndex = absolutePath.indexOf('#');
@@ -80,8 +85,8 @@ function resolveInternalLink(href, filePath) {
     }
     
     // If it's just "/" or empty after stripping, it's the homepage
-    if (absolutePath === ROOT_DIR || absolutePath === path.join(ROOT_DIR, '')) {
-      return path.join(ROOT_DIR, 'index.html');
+    if (absolutePath === siteRoot || absolutePath === path.join(siteRoot, '')) {
+      return path.join(siteRoot, 'index.html');
     }
     
     // If it ends with /, try index.html
