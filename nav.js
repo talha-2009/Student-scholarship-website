@@ -550,10 +550,7 @@ window.addDynamicNavLinks = (types = []) => {
   if (!navMenu) return;
   // Remove any previously injected links
   navMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
-  const links = [
-    { type: "Competition", label: "Competitions" },
-    { type: "Youth Program", label: "Youth Programs" }
-  ];
+  const links = [];
   const cta = navMenu.querySelector(".nav-cta");
   links.forEach(({ type, label }) => {
     const matchingType = types.find((t) => t.trim().toLowerCase() === type.toLowerCase());
