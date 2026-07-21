@@ -62,9 +62,9 @@ function gen(p) {
   const canonical = `/guides/${p.slug}.html`;
   const schema = {
     "@context":"https://schema.org","@type":"Article","headline":p.title,"description":p.desc,
-    "author":{"@type":"Organization","name":"OpportunityNest"},
+    "author":{"@type":"Person","name":"Sarah Mitchell"},
     "publisher":{"@type":"Organization","name":"OpportunityNest","url":"https://www.opportunitynest.org"},
-    "datePublished":"2026-07-07","dateModified":"2026-07-07"
+    "datePublished":"2026-07-21","dateModified":"2026-07-21"
   };
   const html = `${head(p.title,p.desc,canonical,schema)}
 <body>
@@ -77,7 +77,7 @@ ${NAV}
 <span aria-current="page">${p.title.split(":")[0]}</span>
 </nav>
 <h1>${p.title}</h1>
-<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 7, 2026 &middot; 15 min read</p>
+<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 21, 2026</p>
 ${p.content}
 </article>
 </main>

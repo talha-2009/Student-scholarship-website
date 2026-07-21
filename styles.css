@@ -150,6 +150,7 @@ body {
   color: var(--muted);
   font-size: 0.94rem;
   font-weight: 650;
+  min-width: 0; /* Prevent flex items from overflowing */
 }
 
 .nav-item {
@@ -272,6 +273,140 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* — Resources Mega Dropdown (must be critical — loaded before nav.js executes) — */
+.nav-item.has-mega,
+.mega-item {
+  position: relative;
+}
+
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 280px;
+  max-width: 320px;
+  width: max-content;
+  overflow: visible;
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 20px 24px;
+  margin: 8px 0 0;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 232, 228, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(16, 32, 29, 0.10), 0 4px 12px rgba(16, 32, 29, 0.05);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 250ms ease, transform 250ms ease, visibility 250ms ease;
+  z-index: 1001;
+}
+
+.mega-menu[data-cols="2"] {
+  max-width: 520px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 28px;
+}
+
+.mega-menu[data-cols="3"],
+.mega-menu[data-cols="4"] {
+  max-width: 720px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 28px;
+}
+
+.mega-menu[data-cols="5"],
+.mega-menu[data-cols="6"] {
+  max-width: 1050px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 28px;
+}
+
+.nav-item.is-open > .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mega-column {
+  min-width: 0;
+}
+
+.mega-column h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mega-column-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.mega-column-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mega-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mega-column li {
+  margin: 0;
+}
+
+.mega-column a {
+  display: block;
+  min-height: 36px;
+  padding: 8px 10px;
+  margin: 0 -10px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.mega-column a:hover,
+.mega-column a:focus-visible {
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.nav-cta {
+  margin-left: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: visible;
+  min-width: fit-content;
 }
 
 .button-primary {
@@ -1981,137 +2116,6 @@ details p {
   }
 }
 
-/* â”€â”€ Resources Mega Dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.nav-item.has-mega {
-  position: relative;
-}
-
-.mega-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 280px;
-  max-width: 320px;
-  width: max-content;
-  max-height: calc(100vh - 96px);
-  overflow: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4px;
-  padding: 20px 24px;
-  margin: 8px 0 0;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(219, 232, 228, 0.8);
-  border-radius: 16px;
-  box-shadow: 0 16px 48px rgba(16, 32, 29, 0.10), 0 4px 12px rgba(16, 32, 29, 0.05);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(4px);
-  transition: opacity 250ms ease, transform 250ms ease, visibility 250ms ease;
-  z-index: 1001;
-}
-
-.mega-menu[data-cols="2"] {
-  max-width: 520px;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 4px 28px;
-}
-
-.mega-menu[data-cols="3"],
-.mega-menu[data-cols="4"] {
-  max-width: 720px;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 4px 28px;
-}
-
-.mega-menu[data-cols="5"],
-.mega-menu[data-cols="6"] {
-  max-width: 1050px;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px 28px;
-}
-
-.nav-item.is-open > .mega-menu {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.mega-column {
-  min-width: 0;
-}
-
-.mega-column h3 {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 4px;
-  padding: 0 0 8px;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.mega-column-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  color: var(--primary);
-}
-
-.mega-column-icon svg {
-  width: 16px;
-  height: 16px;
-}
-
-.mega-column ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.mega-column li {
-  margin: 0;
-}
-
-.mega-column a {
-  display: block;
-  min-height: 36px;
-  padding: 8px 10px;
-  margin: 0 -10px;
-  border-radius: 8px;
-  color: var(--muted);
-  font-size: 0.88rem;
-  font-weight: 500;
-  line-height: 1.4;
-  white-space: normal;
-  transition: background 150ms ease, color 150ms ease;
-}
-
-.mega-column a:hover,
-.mega-column a:focus-visible {
-  background: var(--surface-strong);
-  color: var(--text);
-}
-
-.nav-cta {
-  margin-left: 12px;
-  flex-shrink: 1;
-  min-width: 0;
-  white-space: nowrap;
-}
-
 @media (max-width: 1199px) and (min-width: 768px) {
   .nav-menu {
     gap: 0;
@@ -2145,7 +2149,6 @@ details p {
   }
 
   .nav-cta {
-    min-width: 0;
     padding-inline: 10px;
     font-size: 0.85rem;
   }
@@ -2180,7 +2183,6 @@ details p {
   }
 
   .nav-cta {
-    min-width: 0;
     padding-inline: 12px;
     font-size: 0.88rem;
   }
@@ -2221,7 +2223,6 @@ details p {
 
   .nav-cta {
     margin-top: 0;
-    min-width: 0;
     padding-inline: 8px;
     font-size: 0.82rem;
   }
@@ -2404,13 +2405,6 @@ details p {
 html,
 body {
   overflow-x: hidden;
-  max-width: 100%;
-}
-
-/* Every block element must stay within viewport */
-*,
-*::before,
-*::after {
   max-width: 100%;
 }
 
@@ -3307,8 +3301,7 @@ object {
   }
 
   .site-header {
-    /* Ensure header doesn't overflow at 320 */
-    overflow: hidden;
+    overflow: visible;
   }
 
   .site-header .container {
@@ -3546,4 +3539,4 @@ object {
   .section-pad {
     padding: 80px 0;
   }
-}
+}

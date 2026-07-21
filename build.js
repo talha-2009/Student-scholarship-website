@@ -54,7 +54,7 @@ mkdirp(DIST);
 // ─── Step 1: Build CSS — split into critical + deferred ──────────
 console.log("Building production assets...\n");
 
-const CRITICAL_CSS_LINES = 488;
+const CRITICAL_CSS_LINES = 623;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
 const cssLines = rawCss.split("\n");
@@ -149,6 +149,13 @@ for (const htmlPath of htmlFiles) {
   if (cssLinkRegex.test(html)) {
     html = html.replace(/<link\s+rel="stylesheet"\s+href="\/styles\.css"\s*\/?>/,
       `${CRITICAL_STYLE_TAG}\n    ${DEFERRED_LINK_TAG}\n    ${NOSCRIPT_TAG}`);
+    modified = true;
+  }
+
+  // 1b. Remove preload of /styles.css (does not exist in dist — critical CSS is inlined)
+  const preloadRegex = /<link\s+rel="preload"\s+href="\/styles\.css"\s+as="style"\s*\/?>/g;
+  if (preloadRegex.test(html)) {
+    html = html.replace(preloadRegex, "");
     modified = true;
   }
 

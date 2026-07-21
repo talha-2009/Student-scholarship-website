@@ -95,28 +95,11 @@ const applyTypeFromUrl = (types = []) => {
   }
 };
 
+// Replaced by window.addDynamicNavLinks() in nav.js
 const renderConditionalTypeNavLinks = (types = []) => {
-  if (!headerNavMenu) return;
-
-  headerNavMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
-
-  const links = [
-    { type: "Competition", label: "Competitions" },
-    { type: "Youth Program", label: "Youth Programs" }
-  ];
-  const insertBefore = headerNavMenu.querySelector('a[href="/about.html"]') || headerNavMenu.querySelector(".nav-cta");
-
-  links.forEach(({ type, label }) => {
-    const matchingType = types.find((itemType) => normalizeTypeKey(itemType) === normalizeTypeKey(type));
-    if (!matchingType) return;
-
-    const link = document.createElement("a");
-    link.href = `/?type=${encodeURIComponent(matchingType)}#opportunities`;
-    link.textContent = label;
-    link.dataset.dynamicTypeLink = "true";
-
-    headerNavMenu.insertBefore(link, insertBefore);
-  });
+  if (typeof window.addDynamicNavLinks === "function") {
+    window.addDynamicNavLinks(types);
+  }
 };
 
 const getCombinedDataset = () => {
@@ -223,6 +206,11 @@ const loadOpportunities = async () => {
     applyTypeFromUrl(types);
     renderFilterChips(opportunities);
     renderOpportunities();
+    // Store types for nav.js to pick up (nav.js runs after this script)
+    window.__opportunityTypes = types;
+    if (typeof window.addDynamicNavLinks === "function") {
+      window.addDynamicNavLinks(types);
+    }
     renderFeaturedInternships(
       opportunities
         .filter((item) => normalizeTypeKey(item.type) === "internship" && item.link && item.link !== "#")

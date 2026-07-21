@@ -286,7 +286,7 @@ ${NAV}
 <span aria-current="page">${p.title.split(":")[0]}</span>
 </nav>
 <h1>${p.title}</h1>
-<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 7, 2026 &middot; 15 min read</p>
+<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 21, 2026</p>
 ${p.content}
 </article>
 </main>

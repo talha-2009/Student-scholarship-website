@@ -55,12 +55,12 @@ const RELATED = `<h2>Explore More Resources</h2><ul>
 
 function gen(p) {
   const canonical = `/guides/${p.slug}.html`;
-  const schema = {"@context":"https://schema.org","@type":"Article","headline":p.title,"description":p.desc,"author":{"@type":"Organization","name":"OpportunityNest"},"publisher":{"@type":"Organization","name":"OpportunityNest","url":"https://www.opportunitynest.org"},"datePublished":"2026-07-07","dateModified":"2026-07-07"};
+  const schema = {"@context":"https://schema.org","@type":"Article","headline":p.title,"description":p.desc,"author":{"@type":"Person","name":"Sarah Mitchell"},"publisher":{"@type":"Organization","name":"OpportunityNest","url":"https://www.opportunitynest.org"},"datePublished":"2026-07-21","dateModified":"2026-07-21"};
   const html = `${head(p.title,p.desc,canonical,schema)}
 <body>${NAV}<main id="main"><article style="max-width:780px;margin:0 auto;padding:2rem 1rem 4rem;">
 <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:1.5rem;font-size:0.9rem;"><a href="/" style="color:var(--color-primary,#0f766e);">Home</a> <span aria-hidden="true">\u203A</span> <a href="/blog/" style="color:var(--color-primary,#0f766e);">Resources</a> <span aria-hidden="true">\u203A</span> <span aria-current="page">${p.title.split(":")[0]}</span></nav>
 <h1>${p.title}</h1>
-<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 7, 2026 &middot; 15 min read</p>
+<p style="color:#6b7280;font-size:0.9rem;margin-bottom:2rem;">Published July 21, 2026</p>
 ${p.content}</article></main>${FOOTER}`;
   fs.writeFileSync(path.join(GUIDES_DIR, `${p.slug}.html`), html, "utf-8");
   console.log(`Created: /guides/${p.slug}.html`);

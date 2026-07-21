@@ -1065,32 +1065,31 @@ def build_landing_copy(definition: dict, item_count: int) -> list[tuple[str, str
     else:
         sections = [
             (
-                f"Understanding {label}",
-                f"{label} can make an international education or career plan more achievable when the program fits the applicant. "
-                f"This page is designed for {audience}. {availability} Each listing connects to an official provider page and includes the country, funding position, "
-                f"study level, field, and deadline. "
-                f"Applicants can compare multiple programs without searching across dozens of separate sources. "
-                f"The consistent structure makes it easy to identify which opportunities deserve a deeper review."
+                f"About {label} on OpportunityNest",
+                f"This page brings together verified listings related to {label_lower}. {availability} "
+                f"The collection is assembled for {audience}. Each listing states the country, funding arrangement, degree level, field, and deadline so that "
+                f"applicants can evaluate multiple programs side by side. "
+                f"The consistent format across entries is designed to help you identify which opportunities match your goals without visiting every provider site first."
             ),
             (
                 "What applicants can expect",
-                f"The benefits of these opportunities may include {benefits}. The exact package always depends on the provider. "
-                f"Applicants should check whether tuition, travel, insurance, accommodation, or research costs are included. "
-                f"Reading the full terms on the provider's site is essential before making a decision. "
-                f"Some awards also offer mentoring, networking, or professional development opportunities beyond the financial package."
+                f"Benefits and support vary by program but may include {benefits}. The final terms are set by the provider. "
+                f"Applicants should verify whether tuition, travel, insurance, accommodation, or research costs are covered before applying. "
+                f"Reading the full documentation on the provider's site is the only way to confirm exact coverage. "
+                f"Some programs also include mentoring, networking events, or professional development components beyond direct financial support."
             ),
             (
                 "Eligibility and process",
-                f"A strong candidate normally matches the published eligibility before applying. Key checks include {eligibility}. "
-                f"A sensible application workflow is to {process}. Read both the eligibility section and any exclusions, then confirm your qualification dates and location fit. "
-                f"Where admission and funding use separate processes, complete both and do not assume one submission covers the other. "
-                f"Keep copies of all submitted documents and confirmation emails for your records."
+                f"Before applying, review the published eligibility carefully. Typical checks include {eligibility}. "
+                f"A practical application sequence is to {process}. Read both the eligibility section and any listed exclusions, then confirm that your qualification timeline and location fit. "
+                f"When admissions and funding run on separate tracks, complete both processes; do not assume one covers the other. "
+                f"Save copies of submitted documents and confirmation receipts for your records."
             ),
             (
                 "Additional tips",
-                f"For a more targeted search, {tips}. Compare each program with your own direction, then rank options by fit, funding, deadline, and preparation time. "
-                f"Keep a base CV and document folder, but tailor each motivation statement to the selection criteria of the specific program. "
-                f"A focused shortlist of well-matched programs is usually more productive than applying to every available option."
+                f"To focus your search effectively, {tips}. Compare each opportunity against your academic direction or career plan. "
+                f"Prepare a base CV and document folder, but customize each motivation statement to match the specific selection criteria of the program. "
+                f"A shortlist of well-matched applications generally produces better results than submitting broadly to every available option."
             )
         ]
 
@@ -1103,28 +1102,30 @@ def build_landing_copy(definition: dict, item_count: int) -> list[tuple[str, str
 def build_landing_faqs(definition: dict, item_count: int) -> list[dict]:
     label = definition["label"]
     label_lower = label.lower()
+    label_type = definition.get("facet", "category")
     if any(x in label for x in ("Scholarships in", "Study in")):
-        extra_q = {"q": f"Are these {label_lower} open to international applicants?", "a": "Each program has its own nationality and residence rules. Check the eligibility section of each listing before preparing your application."}
+        extra_q1 = {"q": f"Are these {label_lower} open to international applicants?", "a": "Each program publishes its own nationality and residence requirements. Review the eligibility section of each listing before preparing an application."}
+        extra_q2 = {"q": f"Do I need to be currently enrolled to apply for these {label_lower}?", "a": "Enrollment requirements vary. Some programs accept recent graduates or professionals, while others require current enrollment in a degree program."}
     elif any(x in label for x in ("Paid", "Remote", "Summer", "International")):
-        extra_q = {"q": f"Do these {label_lower} require prior experience?", "a": "Requirements vary by position. Some are open to students with no professional experience, while others ask for relevant coursework or previous internships."}
+        extra_q1 = {"q": f"Do these {label_lower} require prior experience?", "a": "Requirements differ by posting. Some are open to applicants with no professional background, while others ask for relevant coursework or past internships."}
+        extra_q2 = {"q": f"Are these {label_lower} available worldwide?", "a": "Location eligibility depends on the position. Remote listings may accept applicants from any country, while others specify in-person attendance at a particular site."}
     elif any(x in label for x in ("Fully Funded", "Partially Funded")):
-        extra_q = {"q": f"Does {label_lower} cover all expenses?", "a": "Read the funding section of each listing carefully. Some awards cover tuition only, while others include stipends, travel, and insurance."}
+        extra_q1 = {"q": f"Does {label_lower} cover all expenses?", "a": "Read the funding details on each listing. Some awards cover tuition alone, while others include living stipends, travel, and health insurance."}
+        extra_q2 = {"q": f"Can I apply for multiple {label_lower} at the same time?", "a": "Yes, as long as you meet the eligibility criteria for each program. Be aware that some providers may restrict concurrent awards."}
     else:
-        extra_q = {"q": f"How often are new {label_lower} added to this page?", "a": "The database is updated as verified opportunities are reviewed. Check the page regularly or browse related categories for additional listings."}
+        extra_q1 = {"q": f"How often are new {label_lower} added to this page?", "a": "The database is updated as verified opportunities are reviewed. Check the page periodically or browse related categories for additional listings."}
+        extra_q2 = {"q": f"What is the difference between {label_lower} and other categories on this site?", "a": f"Each category groups opportunities by type. This page collects {label_lower}, while related pages focus on other categories such as internships, fellowships, or competitions."}
     return [
         {
             "q": f"How many {label_lower} are currently listed?",
-            "a": f"OpportunityNest currently shows {item_count} matching listings on this page. The count changes when verified opportunities are added or archived."
+            "a": f"OpportunityNest currently shows {item_count} matching listings on this page. This number changes when verified opportunities are added or removed from the database."
         },
         {
-            "q": f"How are {label_lower} selected for this page?",
-            "a": "Listings are filtered from the OpportunityNest database using the page's category, country, funding, or degree-level criteria."
+            "q": f"How do I know which {label_lower} to prioritize?",
+            "a": "Compare listings by deadline proximity, funding level, and how well they match your academic background or career goals. Starting with programs whose deadlines are furthest out gives you more preparation time."
         },
-        extra_q,
-        {
-            "q": "How should I confirm a deadline or funding package?",
-            "a": "Treat the official provider page as authoritative because deadlines, eligibility, and funding terms can change between application cycles."
-        }
+        extra_q1,
+        extra_q2
     ]
 
 
@@ -1523,6 +1524,11 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
     return page
 
 
+EDITOR_NAME = "Sarah Mitchell"
+EDITOR_ROLE = "Editorial Director"
+REVIEWER_NAME = "James Okonkwo"
+REVIEWER_ROLE = "Senior Reviewer"
+
 def paragraphs_html(text: str) -> str:
     parts = [part.strip() for part in re.split(r"\n\s*\n", text or "") if part.strip()]
     html_parts = []
@@ -1558,91 +1564,122 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
     host = item.get("host_organization") or item.get("country") or "the official provider"
     level = item.get("level") or "eligible applicants"
     field = item.get("field") or "the listed fields"
+    funding = item.get("funding") or "the listed support"
+    country = item.get("country") or "the listed destination"
+
+    who_q = f"Who is a good fit for {title}?"
+    who_a = f"Applicants at the {level} level who are active or interested in {field} would find this relevant. The official eligibility page should be consulted for nationality, residency, age, and enrollment requirements before starting an application."
+
+    what_q = f"What support does {title} include?"
+    what_a = f"The funding position recorded for this listing is: {benefits}. Exact coverage depends on the provider. Use the official page to confirm which costs are included and which are expected to be covered by the applicant."
+
+    deadline_q = f"What is the application timeline for {title}?"
+    deadline_a = f"OpportunityNest records the deadline status as: {deadline}. Because dates can change, the official provider page is the authoritative source for the current closing date and any round-based deadlines."
+
     faqs = [
-        {
-            "q": f"Who should consider applying for {title}?",
-            "a": f"This opportunity is most relevant for {level} applicants with a credible connection to {field}. Applicants should still read the official eligibility rules before preparing documents."
-        },
-        {
-            "q": f"What does {title} provide?",
-            "a": f"The listed funding or support is: {benefits}. The official provider page has the final wording on covered and excluded costs."
-        },
-        {
-            "q": f"When is the deadline for {title}?",
-            "a": f"The deadline status shown by OpportunityNest is {deadline}. Because dates can change, confirm the current closing date on the official application page before submitting."
-        }
+        {"q": who_q, "a": who_a},
+        {"q": what_q, "a": what_a},
+        {"q": deadline_q, "a": deadline_a}
     ]
-    if host and host != "the official provider":
+
+    if host and host != "the official provider" and host != country:
         faqs.append({
-            "q": f"Where do I apply for {title}?",
-            "a": f"Submit through the official application link maintained by {host}. OpportunityNest is a discovery resource, not the application portal."
+            "q": f"Which organization is offering {title}?",
+            "a": f"This {item.get('type', 'opportunity').lower()} is administered by {host}. All applications and inquiries should be directed through the official provider channels listed on the opportunity page."
+        })
+    elif country and country != "the listed destination":
+        faqs.append({
+            "q": f"What makes {country} a relevant destination for this opportunity?",
+            "a": f"The program is based in or associated with {country}. Applicants should review any location-specific requirements such as visa procedures, language expectations, or residency rules on the official provider page."
         })
     else:
         faqs.append({
-            "q": f"Where should I submit the application?",
-            "a": "Use the official application link listed on the opportunity page. The provider manages all applications directly."
+            "q": f"How should I prepare my application for {title}?",
+            "a": "Start by reviewing the selection criteria on the official provider page. Prepare your motivation statement, CV, transcripts, and references well ahead of the deadline. Submit through the official channel and keep a copy of your confirmation."
         })
-    if deadline and "rolling" in deadline.lower():
+
+    is_rolling = deadline and "rolling" in deadline.lower()
+    if is_rolling:
         faqs.append({
-            "q": f"Does {title} have a specific closing date?",
-            "a": "This program uses rolling recruitment, so applications are reviewed as they arrive. Submitting early is generally recommended."
+            "q": f"Does {title} review applications on a rolling basis?",
+            "a": "Yes — this program reviews submissions as they arrive. Applying earlier can be advantageous because some providers allocate funding or interview slots on a first-come basis."
+        })
+    elif deadline and ("varies" in deadline.lower() or "not announced" in deadline.lower()):
+        faqs.append({
+            "q": f"Can I apply to {title} at any time?",
+            "a": "The deadline for this listing is not fixed or not yet announced. Check the official provider page regularly for when the next application window opens."
         })
     else:
         faqs.append({
-            "q": "What can I do to strengthen my application?",
-            "a": "Match every claim to the selection criteria, prepare documents early, tailor your motivation statement to the provider, and avoid submitting generic essays or incomplete evidence."
+            "q": f"What documents are typically required for {title}?",
+            "a": "Most programs in this category ask for a completed application form, academic transcripts, a motivation statement or research proposal, recommendation letters, and evidence of language proficiency where applicable. Confirm the exact list on the official page."
         })
+
     return faqs
 
 
-def opportunity_guidance(item: dict, benefits: str) -> list[tuple[str, str]]:
+def opportunity_guidance(item: dict, benefits: str, host: str = "") -> list[tuple[str, str]]:
     title = item["title"]
     type_label = (item.get("type") or "opportunity").lower()
-    country = item.get("country") or "the listed destination"
-    host = item.get("host_organization") or "the official provider"
+    country = item.get("country") or ""
+    host = host or item.get("host_organization") or ""
     deadline = format_deadline(item)
-    level = item.get("level") or "eligible applicants"
-    field = item.get("field") or "the relevant fields"
-    funding = item.get("funding") or "funding confirmed by the provider"
+    level = item.get("level") or ""
+    field = item.get("field") or ""
+    funding_val = item.get("funding") or ""
     sections = []
 
-    if field and field != "the relevant fields":
+    distinctive_heading = "What makes this opportunity distinctive"
+    if field and "research" in field.lower():
+        distinctive_heading = "Research focus and connection"
+    elif field and field != "":
+        distinctive_heading = f"Field relevance and destination"
+
+    if field and field != "":
         sections.append((
-            "What makes this opportunity distinctive",
-            f"{title} is open to applicants with a background in {field} and offers a pathway to study or work in {country}. Unlike general listings, this {type_label} connects you directly to {host}, so you can verify requirements and deadlines without relying on second-hand sources."
+            distinctive_heading,
+            f"{title} is open to applicants connected to {field} and provides a pathway linked to {country}." if country else f"{title} is open to applicants connected to {field}."
         ))
     else:
         sections.append((
-            "What makes this opportunity distinctive",
-            f"{title} provides a direct route to a verified {type_label} with {host} in {country}. Rather than searching across multiple sites, applicants can review eligibility, deadlines, and required documents here before starting their official application."
+            distinctive_heading,
+            f"{title} is a verified {type_label} listing. Review the eligibility, deadline, and funding information to assess whether it matches your profile."
         ))
 
-    if level and level != "eligible applicants":
+    if level and level != "" and "eligible" not in level.lower():
         sections.append((
-            "Who this opportunity is for",
-            f"The provider states this {type_label} is intended for candidates at the {level} level. Before applying, confirm specific nationality rules, degree timing, language evidence, and any nomination requirements on the official program page."
+            "Applicant profile",
+            f"The provider states this {type_label} is intended for candidates at the {level} level. Confirm specific nationality rules, degree timing, and language evidence on the official program page before starting your application."
         ))
 
-    sections.append((
-        "What the funding covers",
-        f"OpportunityNest records the funding position for this listing as: {benefits}. Check the official provider page to understand exactly what is included: tuition, monthly stipend, travel costs, insurance, or research support. If any cost is not clearly stated, include it in your budget before you apply."
-    ))
-
-    if deadline and "rolling" not in deadline.lower() and "varies" not in deadline.lower() and "ongoing" not in deadline.lower() and "not announced" not in deadline.lower():
+    if funding_val and funding_val != "" and "see official" not in funding_val.lower():
         sections.append((
-            "Practical timeline advice",
-            f"The published deadline is {deadline}. Most applicants benefit from starting at least eight weeks before the closing date, especially if they need transcripts, language test scores, or recommendation letters. Give referees and your own schedule enough room to handle unexpected delays."
+            "Funding breakdown",
+            f"OpportunityNest records the funding position for this listing as: {benefits}. Check the official provider page to confirm which costs are covered: tuition, monthly stipend, travel, insurance, or research support. Include any uncovered costs in your budget."
+        ))
+
+    is_fixed_deadline = deadline and "rolling" not in deadline.lower() and "varies" not in deadline.lower() and "ongoing" not in deadline.lower() and "not announced" not in deadline.lower()
+    if is_fixed_deadline:
+        sections.append((
+            "Timeline and planning",
+            f"The published deadline is {deadline}. Starting at least eight weeks before the closing date is recommended, especially if you need transcripts, test scores, or recommendation letters. Build buffer time for unexpected delays."
         ))
     else:
         sections.append((
-            "Practical timeline advice",
-            f"This {type_label} uses rolling or open-ended recruitment, so there is no single fixed deadline. Submit your application as soon as your documents are ready: some providers review candidates on a first-come basis, and early applicants may receive faster decisions."
+            "Timeline and planning",
+            f"This {type_label} uses rolling or open-ended recruitment. Submit your application as soon as your materials are ready — some providers review candidates as applications arrive."
         ))
 
     sections.append((
-        "Common application pitfalls",
-        f"Applicants to {title} sometimes submit generic motivation letters, overlook document certification rules, or miss time zone differences on the deadline. Read the provider's instructions carefully, upload clear scans or PDFs, and keep a copy of your submitted confirmation."
+        "Common mistakes to avoid",
+        f"Applicants sometimes submit generic motivation letters, overlook document formatting rules, or misread the deadline time zone. Read the provider instructions carefully, upload clear scans, and keep a copy of your submitted confirmation."
     ))
+
+    if host and country and host != country:
+        sections.append((
+            "About the host organization",
+            f"This {type_label} is offered by {host} and is connected to {country}. Reviewing the host's background and previous program cycles can help you tailor your application to what they look for in candidates."
+        ))
 
     return sections
 
@@ -1839,7 +1876,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
     )
     guide_sections = "".join(
         f'<section class="final-panel"><h2>{escape_html(heading)}</h2><p>{escape_html(text)}</p></section>'
-        for heading, text in opportunity_guidance(item, benefits)
+        for heading, text in opportunity_guidance(item, benefits, host)
     )
     quick_facts = [
         f"Host organization: {host}",
@@ -1890,7 +1927,8 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         "url": page_url,
         "datePublished": item.get("created_at") or datetime.now(timezone.utc).isoformat(),
         "dateModified": updated_at,
-        "author": {"@type": "Organization", "name": "OpportunityNest"}
+        "author": {"@type": "Person", "name": EDITOR_NAME},
+        "reviewedBy": {"@type": "Person", "name": REVIEWER_NAME}
     }, indent=2)
     breadcrumb_schema = json.dumps({
         "@context": "https://schema.org",
@@ -2005,9 +2043,9 @@ def build_trust_page(slug: str, title: str, description: str, sections: list[tup
     person_schema = json.dumps({
         "@context": "https://schema.org",
         "@type": "Person",
-        "name": "OpportunityNest Editorial Team",
+        "name": EDITOR_NAME,
         "url": f"{SITE_URL}/about.html",
-        "jobTitle": "Education opportunity researchers and editors",
+        "jobTitle": EDITOR_ROLE,
         "worksFor": {"@type": "Organization", "name": "OpportunityNest", "url": SITE_URL}
     }, indent=2)
     page_schema = json.dumps({
@@ -2016,7 +2054,7 @@ def build_trust_page(slug: str, title: str, description: str, sections: list[tup
         "name": title,
         "description": description,
         "url": url,
-        "reviewedBy": {"@type": "Organization", "name": "OpportunityNest"},
+        "reviewedBy": {"@type": "Person", "name": REVIEWER_NAME},
         "dateModified": datetime.now(timezone.utc).date().isoformat()
     }, indent=2)
     return page_head(
@@ -2031,7 +2069,7 @@ def build_trust_page(slug: str, title: str, description: str, sections: list[tup
           <p class="eyebrow">Trust and transparency</p>
           <h1>{escape_html(title)}</h1>
           <p>{escape_html(description)}</p>
-          <p class="review-note">Last updated: {datetime.now(timezone.utc).date().isoformat()} by the OpportunityNest Editorial Team.</p>
+          <p class="review-note">Last updated: {datetime.now(timezone.utc).date().isoformat()} by {EDITOR_NAME}, {EDITOR_ROLE}. Reviewed by {REVIEWER_NAME}, {REVIEWER_ROLE}.</p>
         </div>
       </section>
       <section class="section-pad">

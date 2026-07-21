@@ -306,13 +306,8 @@ const createMegaItem = ({ label, href, sections }) => {
 const buildNavigation = () => {
   if (!navMenu) return;
 
-  // Skip rebuild if static HTML already has the nav structure (saves ~200 DOM node creations)
-  const existingItems = navMenu.querySelectorAll(".mega-item, .nav-item");
-  if (existingItems.length > 0) {
-    navMenu.dataset.navBuilt = "true";
-    return;
-  }
-
+  // Always rebuild to ensure consistent navigation across all pages
+  // This fixes dropdown issues on pages with simplified static nav
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
 
@@ -379,7 +374,8 @@ const setupNavigationInteractions = () => {
   let hoverTimeout;
   const HOVER_DELAY = 200;
 
-  navMenu.querySelectorAll(".nav-item.has-mega").forEach((item) => {
+  // Handle both dynamically built nav-items and static mega-items
+  navMenu.querySelectorAll(".nav-item.has-mega, .mega-item").forEach((item) => {
     const trigger = item.querySelector(".mega-trigger");
     if (!trigger) return;
 
@@ -511,10 +507,40 @@ const setupNavigationInteractions = () => {
   }
 };
 
+// ─── Dynamic type nav link injection ────────────────────────
+// Called by script.js / category.js after opportunities are loaded
+// to insert "Competitions" / "Youth Programs" links that only
+// appear when those opportunity types exist in the database.
+window.addDynamicNavLinks = (types = []) => {
+  if (!navMenu) return;
+  // Remove any previously injected links
+  navMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
+  const links = [
+    { type: "Competition", label: "Competitions" },
+    { type: "Youth Program", label: "Youth Programs" }
+  ];
+  const cta = navMenu.querySelector(".nav-cta");
+  links.forEach(({ type, label }) => {
+    const matchingType = types.find((t) => t.trim().toLowerCase() === type.toLowerCase());
+    if (!matchingType) return;
+    const link = document.createElement("a");
+    link.href = `/?type=${encodeURIComponent(matchingType)}#opportunities`;
+    link.className = "nav-link";
+    link.textContent = label;
+    link.dataset.dynamicTypeLink = "true";
+    navMenu.insertBefore(link, cta);
+  });
+};
+
 if (navMenu) {
   buildNavigation();
   setupNavigationInteractions();
   window.closeNav = closeNav;
+  // If script.js already loaded types (it runs before nav.js on most pages),
+  // inject dynamic nav links now that the menu is fully built.
+  if (window.__opportunityTypes) {
+    window.addDynamicNavLinks(window.__opportunityTypes);
+  }
 }
 
 // ─── Footer SEO: enhance footer with additional internal links ────────────
