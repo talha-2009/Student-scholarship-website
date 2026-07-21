@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const GUIDES_DIR = path.join(__dirname, "..", "guides");
@@ -39,7 +39,7 @@ const NAV = `<a class="skip-link" href="#main">Skip to content</a>
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
@@ -48,9 +48,9 @@ const FOOTER = `<footer class="site-footer" role="contentinfo"><div class="conta
 
 const RELATED = `<h2>Explore More Resources</h2>
 <ul>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/internships.html">Find paid internships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/internships/">Find paid internships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/blog/">Read our blog guides</a></li>
 <li><a href="/guides/how-to-write-sop.html">How to Write an SOP</a></li>
 <li><a href="/guides/cv-writing.html">CV Writing Guide</a></li>
@@ -188,7 +188,7 @@ ${RELATED}
     content: `
 <p>A cover letter is your first opportunity to make a personal impression on a potential employer or selection committee. While your CV lists your qualifications, the cover letter tells the story behind them — why you are interested in this role, what unique perspective you bring, and why you are worth interviewing. For students and recent graduates, a well-crafted cover letter can be the deciding factor between getting an interview and being passed over.</p>
 
-<p>This guide covers everything you need to write a cover letter that gets results, whether you are applying for an <a href="/internships.html">internship</a>, a graduate position, or a competitive fellowship.</p>
+<p>This guide covers everything you need to write a cover letter that gets results, whether you are applying for an <a href="/internships/">internship</a>, a graduate position, or a competitive fellowship.</p>
 
 <h2>What Is a Cover Letter?</h2>
 <p>A cover letter is a one-page document submitted alongside your CV or resume as part of a job or programme application. It introduces you, highlights your most relevant qualifications, explains your motivation for applying, and demonstrates your communication skills. Most employers expect one — a 2025 survey by the National Association of Colleges and Employers found that 65% of recruiters expect a cover letter, even when it is listed as optional.</p>
@@ -268,7 +268,7 @@ ${RELATED}
     desc: "Learn how to write a professional CV that gets results. Complete guide with format, examples, and tips for students applying for scholarships, internships, and graduate programmes.",
     keywords: "cv writing, how to write cv, cv template, student cv, academic cv, curriculum vitae",
     content: `
-<p>A curriculum vitae (CV) is the foundation of every application you will ever submit. Whether you are applying for a <a href="/scholarships.html">scholarship</a>, an <a href="/internships.html">internship</a>, a graduate programme, or a job, your CV is the first document that selection committees review. A well-structured CV communicates your qualifications clearly and professionally. A poorly structured one gets discarded within seconds.</p>
+<p>A curriculum vitae (CV) is the foundation of every application you will ever submit. Whether you are applying for a <a href="/scholarships/">scholarship</a>, an <a href="/internships/">internship</a>, a graduate programme, or a job, your CV is the first document that selection committees review. A well-structured CV communicates your qualifications clearly and professionally. A poorly structured one gets discarded within seconds.</p>
 
 <p>This guide covers everything students and recent graduates need to know about writing a CV that stands out — from formatting and structure to content strategy and common mistakes.</p>
 
@@ -353,7 +353,7 @@ ${RELATED}
     content: `
 <p>More than 75% of resumes submitted online are never seen by a human being. They are filtered out by Applicant Tracking Systems (ATS) — software that scans resumes for keywords, formatting, and relevance before a recruiter ever opens them. If your resume is not optimised for ATS, you could be highly qualified and still get rejected automatically.</p>
 
-<p>This guide teaches you how to create a resume that passes ATS screening and reaches the hands of the hiring manager. Whether you are applying for <a href="/internships.html">internships</a>, graduate programmes, or entry-level positions, understanding ATS is essential.</p>
+<p>This guide teaches you how to create a resume that passes ATS screening and reaches the hands of the hiring manager. Whether you are applying for <a href="/internships/">internships</a>, graduate programmes, or entry-level positions, understanding ATS is essential.</p>
 
 <h2>What Is an Applicant Tracking System?</h2>
 <p>An ATS is software used by employers to manage the recruitment process. When you submit a resume online, it goes into the ATS, which parses your information, scores your resume based on relevance to the job description, and ranks you against other candidates. Common ATS platforms include Workday, Taleo, Greenhouse, Lever, and iCIMS.</p>
@@ -438,7 +438,7 @@ ${RELATED}
 <p>A resume template is not about filling in blanks — it is about understanding the structure that works. The best templates are clean, professional, and designed to communicate your qualifications quickly. Selection committees spend an average of six to eight seconds scanning a resume before deciding whether to read further. Your template must make it easy for them to find what matters.</p>
 
 <h2>Template 1: The Internship Resume</h2>
-<p>For students with limited work experience applying for <a href="/internships.html">internships</a>. Focus on education, coursework, projects, and extracurricular activities.</p>
+<p>For students with limited work experience applying for <a href="/internships/">internships</a>. Focus on education, coursework, projects, and extracurricular activities.</p>
 <p><strong>Structure:</strong></p>
 <ul>
 <li>Contact Information (name, email, phone, LinkedIn, city/country)</li>
@@ -452,7 +452,7 @@ ${RELATED}
 <p><strong>Key tip:</strong> When you lack professional experience, your projects become your experience. Describe academic projects with the same rigour you would use for a job: what was the problem, what did you do, what was the outcome?</p>
 
 <h2>Template 2: The Scholarship CV</h2>
-<p>For students applying for <a href="/scholarships.html">scholarships</a> and fellowships. Focus on academic achievements, research, leadership, and community impact.</p>
+<p>For students applying for <a href="/scholarships/">scholarships</a> and fellowships. Focus on academic achievements, research, leadership, and community impact.</p>
 <p><strong>Structure:</strong></p>
 <ul>
 <li>Contact Information</li>

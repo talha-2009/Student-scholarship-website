@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const GUIDES_DIR = path.join(__dirname, "..", "guides");
@@ -36,15 +36,15 @@ const N=`<a class="skip-link" href="#main">Skip to content</a>
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
 const F=`<footer class="site-footer" role="contentinfo"><div class="container"><nav class="footer-links" aria-label="Footer navigation"><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a></nav><p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:#9ca3af;">&copy; 2026 OpportunityNest.org. All rights reserved.</p></div></footer><script src="/nav.js"></script></body></html>`;
 const R=`<h2>Explore More Resources</h2><ul>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/internships.html">Find paid internships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/internships/">Find paid internships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/guides/how-to-write-sop.html">How to Write an SOP</a></li>
 <li><a href="/guides/cv-writing.html">CV Writing Guide</a></li>
 <li><a href="/blog/">Read our blog guides</a></li>
@@ -67,7 +67,7 @@ const pages = [
 <p>Career planning is the process of identifying your professional goals and creating a roadmap to achieve them. For students, career planning is not about choosing a single job for life — it is about understanding your strengths, exploring possibilities, and making informed decisions about your education and early career. This guide helps you build a career plan that adapts as you grow.</p>
 
 <h2>Why Career Planning Matters</h2>
-<p>Students who plan their careers strategically are more likely to choose the right degree, gain relevant experience through <a href="/internships.html">internships</a>, build useful networks, and land meaningful jobs after graduation. Without a plan, students often drift — choosing courses randomly, missing key opportunities, and graduating without a clear direction.</p>
+<p>Students who plan their careers strategically are more likely to choose the right degree, gain relevant experience through <a href="/internships/">internships</a>, build useful networks, and land meaningful jobs after graduation. Without a plan, students often drift — choosing courses randomly, missing key opportunities, and graduating without a clear direction.</p>
 
 <h2>Step 1: Self-Assessment</h2>
 <p>Before you can plan your career, you need to understand yourself. Ask:</p>
@@ -89,7 +89,7 @@ const pages = [
 <p>Identify the skills you need for your target career and develop them through coursework, <a href="/guides/online-certifications.html">online certifications</a>, projects, internships, and extracurricular activities. Focus on both technical skills and soft skills like communication, leadership, and problem-solving.</p>
 
 <h2>Step 5: Gain Experience</h2>
-<p>Experience is the most important factor in career development. Pursue <a href="/internships.html">internships</a>, volunteer positions, research assistantships, and freelance projects. Each experience builds your skills, your network, and your resume.</p>
+<p>Experience is the most important factor in career development. Pursue <a href="/internships/">internships</a>, volunteer positions, research assistantships, and freelance projects. Each experience builds your skills, your network, and your resume.</p>
 
 <h2>Step 6: Build Your Network</h2>
 <p>Career opportunities often come through connections, not applications. Attend industry events, join professional associations, connect with alumni, and build relationships on <a href="/guides/linkedin-profile.html">LinkedIn</a>. See our <a href="/guides/networking.html">networking guide</a>.</p>
@@ -206,7 +206,7 @@ ${R}
     desc: "Boost your resume with top online certifications. Free and paid courses from Google, Harvard, MIT, and more. Best certifications for every field.",
     keywords: "online certifications, free certifications, online courses, student certifications, professional certificates",
     content: `
-<p>Online certifications are one of the most cost-effective ways to build skills, strengthen your resume, and demonstrate your commitment to learning. Whether you are looking for a <a href="/internships.html">internship</a>, a <a href="/scholarships.html">scholarship</a>, or your first job, relevant certifications show employers and selection committees that you have invested in developing your skills. This guide covers the best online certifications for students across every field.</p>
+<p>Online certifications are one of the most cost-effective ways to build skills, strengthen your resume, and demonstrate your commitment to learning. Whether you are looking for a <a href="/internships/">internship</a>, a <a href="/scholarships/">scholarship</a>, or your first job, relevant certifications show employers and selection committees that you have invested in developing your skills. This guide covers the best online certifications for students across every field.</p>
 
 <h2>Why Online Certifications Matter</h2>
 <p>Certifications provide third-party validation of your skills. They show that you have completed a structured programme, passed assessments, and earned a credential recognised by employers. For students with limited work experience, certifications fill the gap and demonstrate initiative.</p>
@@ -286,7 +286,7 @@ ${R}
 <ul>
 <li>Take <a href="/guides/online-certifications.html">online courses</a> to build technical skills</li>
 <li>Join clubs and organisations to develop leadership and teamwork</li>
-<li>Pursue <a href="/internships.html">internships</a> to gain real-world experience</li>
+<li>Pursue <a href="/internships/">internships</a> to gain real-world experience</li>
 <li>Enter <a href="/competitions.html">competitions</a> to develop problem-solving under pressure</li>
 <li>Volunteer to build communication and interpersonal skills</li>
 <li>Seek feedback from professors, mentors, and supervisors</li>
@@ -738,7 +738,7 @@ ${R}
 <p>Volunteering abroad is one of the most rewarding experiences available to students. It allows you to contribute to communities in need, develop new skills, gain cross-cultural experience, and build your resume — all while making a genuine difference. This guide covers the best international volunteer programmes and how to choose the right one.</p>
 
 <h2>Why Volunteer Abroad?</h2>
-<p>International volunteering develops skills that employers and scholarship committees value: adaptability, cross-cultural communication, problem-solving, and initiative. It demonstrates commitment to community service and global awareness. Many <a href="/scholarships.html">scholarships</a>, including <a href="/blog/top-fully-funded-scholarships.html">Chevening</a> and Rhodes, specifically look for evidence of community service.</p>
+<p>International volunteering develops skills that employers and scholarship committees value: adaptability, cross-cultural communication, problem-solving, and initiative. It demonstrates commitment to community service and global awareness. Many <a href="/scholarships/">scholarships</a>, including <a href="/blog/top-fully-funded-scholarships.html">Chevening</a> and Rhodes, specifically look for evidence of community service.</p>
 
 <h2>Types of Volunteer Programmes</h2>
 <ul>
@@ -753,7 +753,7 @@ ${R}
 <ul>
 <li><strong>Peace Corps:</strong> US government programme for long-term (27-month) volunteer service.</li>
 <li><strong>UN Volunteers:</strong> United Nations volunteer programme for professionals and students.</li>
-<li><strong>AIESEC:</strong> Student-led organisation offering international volunteer opportunities. See their <a href="/internships.html">internship-like programmes</a>.</li>
+<li><strong>AIESEC:</strong> Student-led organisation offering international volunteer opportunities. See their <a href="/internships/">internship-like programmes</a>.</li>
 <li><strong>IVHQ (International Volunteer HQ):</strong> Affordable volunteer programmes in 40+ countries.</li>
 <li><strong>VSO (Voluntary Service Overseas):</strong> International development organisation offering volunteer placements.</li>
 <li><strong>European Solidarity Corps:</strong> EU-funded volunteering opportunities for young people.</li>
@@ -795,7 +795,7 @@ ${R}
 <li><strong>Undergraduate research assistantships:</strong> Work with a professor on their research project. This is the most common entry point for student researchers.</li>
 <li><strong>Summer research programmes:</strong> Intensive 8-10 week research experiences during the summer. Examples include NSF REU programmes in the US, DAAD RISE in Germany, and various programmes at top universities.</li>
 <li><strong>Independent research:</strong> Conduct your own research project under faculty supervision, often for academic credit or a thesis.</li>
-<li><strong>Research fellowships:</strong> Competitive programmes that fund full-time research. Examples include Rhodes Scholarship, Gates Cambridge, and various <a href="/fellowships.html">fellowships</a>.</li>
+<li><strong>Research fellowships:</strong> Competitive programmes that fund full-time research. Examples include Rhodes Scholarship, Gates Cambridge, and various <a href="/fellowships/">fellowships</a>.</li>
 <li><strong>Conference presentations:</strong> Present your research at academic <a href="/guides/conferences.html">conferences</a>.</li>
 </ul>
 

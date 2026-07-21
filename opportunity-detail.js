@@ -78,9 +78,9 @@ const renderDetail = (item) => {
 };
 
 const getCategoryPage = (type) => {
-  if (type === "Scholarship") return "/scholarships.html";
-  if (type === "Fellowship") return "/fellowships.html";
-  if (type === "Internship") return "/internships.html";
+  if (type === "Scholarship") return "/scholarships/";
+  if (type === "Fellowship") return "/fellowships/";
+  if (type === "Internship") return "/internships/";
   return "/#opportunities";
 };
 

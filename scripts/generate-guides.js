@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * Generate all /guides/ pages for OpportunityNest.org
  * Each page: full SEO metadata, schema markup, 2000-3500+ words of unique content,
@@ -47,7 +47,7 @@ const NAV = `
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
@@ -56,9 +56,9 @@ const FOOTER = `<footer class="site-footer" role="contentinfo"><div class="conta
 
 const RELATED = `<h2>Explore More Resources</h2>
 <ul>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/internships.html">Find paid internships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/internships/">Find paid internships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/blog/">Read our blog guides</a></li>
 <li><a href="/blog/how-to-write-winning-scholarship-essay.html">Scholarship essay writing guide</a></li>
 <li><a href="/blog/how-to-ace-scholarship-interview.html">Scholarship interview tips</a></li>

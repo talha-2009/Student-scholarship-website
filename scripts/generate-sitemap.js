@@ -9,9 +9,9 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const staticPages = [
   ["/", "daily", "1.0"],
-  ["/scholarships.html", "daily", "0.9"],
-  ["/internships.html", "daily", "0.9"],
-  ["/fellowships.html", "daily", "0.9"],
+  ["/scholarships/", "daily", "0.9"],
+  ["/internships/", "daily", "0.9"],
+  ["/fellowships/", "daily", "0.9"],
   ["/competitions.html", "daily", "0.8"],
   ["/about.html", "monthly", "0.7"],
   ["/contact.html", "monthly", "0.6"],

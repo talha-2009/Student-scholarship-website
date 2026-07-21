@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const GUIDES_DIR = path.join(__dirname, "..", "guides");
@@ -36,15 +36,15 @@ const N=`<a class="skip-link" href="#main">Skip to content</a>
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
 const F=`<footer class="site-footer" role="contentinfo"><div class="container"><nav class="footer-links" aria-label="Footer navigation"><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a></nav><p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:#9ca3af;">&copy; 2026 OpportunityNest.org. All rights reserved.</p></div></footer><script src="/nav.js"></script></body></html>`;
 const R=`<h2>Explore More Resources</h2><ul>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/internships.html">Find paid internships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/internships/">Find paid internships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/guides/student-visa.html">Student Visa Guide</a></li>
 <li><a href="/guides/university-admissions.html">University Admissions Guide</a></li>
 <li><a href="/blog/study-abroad-on-a-budget.html">Study abroad on a budget</a></li>

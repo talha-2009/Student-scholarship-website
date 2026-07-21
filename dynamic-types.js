@@ -11,9 +11,23 @@ const typeToSlug = (type) => {
 };
 
 // Function to get category page URL for a type
+const typeRouteMap = {
+  Scholarship: "/scholarships/",
+  Internship: "/internships/",
+  Fellowship: "/fellowships/",
+  Competition: "/competitions.html",
+  "Exchange Program": "/exchange-programs/",
+  "Research Grant": "/grants/",
+  "Youth Program": "/youth-programs/",
+  "Volunteer Program": "/volunteer-programs/",
+  Conference: "/conferences/",
+  "Summer School": "/workshops/"
+};
+
 const typeToUrl = (type) => {
+  if (typeRouteMap[type]) return typeRouteMap[type];
   const slug = typeToSlug(type);
-  return `/${slug}.html`;
+  return `/${slug}/`;
 };
 
 // Populate type filter dropdown
@@ -42,9 +56,9 @@ const populateNavLinks = async () => {
     console.error("Error populating nav links:", error);
     // Fallback to hardcoded links if dynamic loading fails
     navContainer.innerHTML = `
-      <a href="/scholarships.html">Scholarships</a>
-      <a href="/internships.html">Internships</a>
-      <a href="/fellowships.html">Fellowships</a>
+      <a href="/scholarships/">Scholarships</a>
+      <a href="/internships/">Internships</a>
+      <a href="/fellowships/">Fellowships</a>
     `;
   }
 };
@@ -67,9 +81,9 @@ const populateFooterLinks = async () => {
     console.error("Error populating footer links:", error);
     // Fallback to hardcoded links if dynamic loading fails
     footerContainer.innerHTML = `
-      <a href="/scholarships.html">Scholarships</a>
-      <a href="/internships.html">Internships</a>
-      <a href="/fellowships.html">Fellowships</a>
+      <a href="/scholarships/">Scholarships</a>
+      <a href="/internships/">Internships</a>
+      <a href="/fellowships/">Fellowships</a>
     `;
   }
 };

@@ -32,7 +32,7 @@ const renderDetail = (item) => {
   const structuredData = ON.generateStructuredData(item, pageUrl);
   const breadcrumbSchema = ON.generateBreadcrumbSchema([
     { name: "Home", url: "https://www.opportunitynest.org/" },
-    { name: "Internships", url: "https://www.opportunitynest.org/internships.html" },
+    { name: "Internships", url: "https://www.opportunitynest.org/internships/" },
     { name: item.title, url: pageUrl }
   ]);
 
@@ -52,7 +52,7 @@ const renderDetail = (item) => {
   faqScript.textContent = JSON.stringify(faqSchema);
   document.head.appendChild(faqScript);
 
-  detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, "/internships.html", "internship");
+  detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, "/internships/", "internship");
 
   // Inject AdSense ad after main content (before related opportunities)
   const relatedDiv = document.getElementById('related-opportunities');

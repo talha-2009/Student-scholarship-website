@@ -35,9 +35,9 @@ window.ON = window.OpportunityNest;
   let supabaseClient;
   let opportunityRowsPromise;
   const typeRouteMap = {
-    Scholarship: "/scholarships.html",
-    Internship: "/internships.html",
-    Fellowship: "/fellowships.html",
+    Scholarship: "/scholarships/",
+    Internship: "/internships/",
+    Fellowship: "/fellowships/",
     Competition: "/competitions.html",
     "Exchange Program": "/exchange-programs/",
     "Research Grant": "/grants/",

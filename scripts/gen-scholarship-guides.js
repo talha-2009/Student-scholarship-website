@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const GUIDES_DIR = path.join(__dirname, "..", "guides");
@@ -38,15 +38,15 @@ const NAV = `<a class="skip-link" href="#main">Skip to content</a>
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
 const FOOTER = `<footer class="site-footer" role="contentinfo"><div class="container"><nav class="footer-links" aria-label="Footer navigation"><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a></nav><p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:#9ca3af;">&copy; 2026 OpportunityNest.org. All rights reserved.</p></div></footer><script src="/nav.js"></script></body></html>`;
 const RELATED = `<h2>Explore More Resources</h2><ul>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/internships.html">Find paid internships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/internships/">Find paid internships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/guides/how-to-write-sop.html">How to Write an SOP</a></li>
 <li><a href="/guides/cv-writing.html">CV Writing Guide</a></li>
 <li><a href="/guides/cover-letter.html">Cover Letter Guide</a></li>
@@ -73,7 +73,7 @@ const pages = [
     desc: "Learn how to request, prepare for, and follow up on recommendation letters for scholarships, graduate school, and internships. Includes email templates and tips.",
     keywords: "recommendation letter, letter of recommendation, reference letter, scholarship reference, academic reference",
     content: `
-<p>A strong recommendation letter can be the difference between acceptance and rejection. Whether you are applying for a <a href="/scholarships.html">scholarship</a>, a graduate programme, or a competitive <a href="/internships.html">internship</a>, the recommendation letter provides third-party validation of your abilities, character, and potential. Yet most students approach the process incorrectly — asking too late, choosing the wrong referees, or failing to give their recommenders the information they need.</p>
+<p>A strong recommendation letter can be the difference between acceptance and rejection. Whether you are applying for a <a href="/scholarships/">scholarship</a>, a graduate programme, or a competitive <a href="/internships/">internship</a>, the recommendation letter provides third-party validation of your abilities, character, and potential. Yet most students approach the process incorrectly — asking too late, choosing the wrong referees, or failing to give their recommenders the information they need.</p>
 
 <p>This guide covers the entire process: choosing the right referees, making the request, preparing supporting materials, following up, and handling the letter once it arrives.</p>
 
@@ -163,7 +163,7 @@ ${RELATED}
     content: `
 <p>Emailing a professor directly is one of the most powerful strategies for securing research positions, PhD supervision, and scholarship opportunities. Many professors have funding for students who are not advertised anywhere — they simply need the right person to reach out with a compelling, well-researched message.</p>
 
-<p>This guide teaches you how to write emails that professors actually read and respond to, whether you are seeking PhD supervision, a research assistantship, or advice about <a href="/scholarships.html">scholarship</a> applications.</p>
+<p>This guide teaches you how to write emails that professors actually read and respond to, whether you are seeking PhD supervision, a research assistantship, or advice about <a href="/scholarships/">scholarship</a> applications.</p>
 
 <h2>Why Cold Emailing Professors Works</h2>
 <p>Professors receive hundreds of generic emails from prospective students every year. But most of these emails are vague, poorly researched, and mass-sent. A well-crafted email that demonstrates genuine interest in the professor's specific research, shows that you have done your homework, and makes a clear ask — stands out dramatically.</p>
@@ -250,11 +250,11 @@ ${RELATED}
     desc: "Complete scholarship application checklist covering every document, deadline, and step. Never miss a requirement with this comprehensive guide.",
     keywords: "scholarship application checklist, scholarship documents, scholarship requirements, application timeline",
     content: `
-<p>Applying for scholarships involves many moving parts — documents, deadlines, references, essays, and forms. Missing even one requirement can disqualify your entire application. This comprehensive checklist ensures you have everything ready, on time, and submitted correctly for every <a href="/scholarships.html">scholarship</a> you apply to.</p>
+<p>Applying for scholarships involves many moving parts — documents, deadlines, references, essays, and forms. Missing even one requirement can disqualify your entire application. This comprehensive checklist ensures you have everything ready, on time, and submitted correctly for every <a href="/scholarships/">scholarship</a> you apply to.</p>
 
 <h2>Phase 1: Research and Preparation (3-6 months before deadline)</h2>
 <ul>
-<li>Identify 5-10 scholarships that match your profile. Use <a href="/scholarships.html">OpportunityNest's scholarship database</a> and our guide to <a href="/blog/top-fully-funded-scholarships.html">fully funded scholarships</a>.</li>
+<li>Identify 5-10 scholarships that match your profile. Use <a href="/scholarships/">OpportunityNest's scholarship database</a> and our guide to <a href="/blog/top-fully-funded-scholarships.html">fully funded scholarships</a>.</li>
 <li>Read the eligibility criteria carefully for each scholarship. Confirm you meet every requirement.</li>
 <li>Note all deadlines — application deadline, reference letter deadline, test score submission deadline, and interview date (if applicable).</li>
 <li>Create a spreadsheet tracking: scholarship name, deadline, required documents, word counts, and status.</li>
@@ -366,7 +366,7 @@ ${RELATED}
     content: `
 <p>One of the most common barriers to studying abroad is the IELTS requirement. Many students believe that without a high IELTS score, international scholarships are out of reach. This is simply not true. Numerous prestigious scholarships and universities accept students without IELTS scores, using alternative methods to assess English proficiency.</p>
 
-<p>This guide identifies <a href="/scholarships.html">scholarships</a> that do not require IELTS, explains alternative ways to prove your English ability, and shows you how to strengthen your application even without a standardised test score.</p>
+<p>This guide identifies <a href="/scholarships/">scholarships</a> that do not require IELTS, explains alternative ways to prove your English ability, and shows you how to strengthen your application even without a standardised test score.</p>
 
 <h2>Why Some Scholarships Do Not Require IELTS</h2>
 <p>Many universities and scholarship programmes have moved away from requiring standardised English tests because research shows they are not the best predictor of academic success. Instead, they use alternative assessments such as:</p>

@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const GUIDES_DIR = path.join(__dirname, "..", "guides");
@@ -38,15 +38,15 @@ const NAV = `<a class="skip-link" href="#main">Skip to content</a>
 <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
-<a href="/#opportunities">Opportunities</a><a href="/scholarships.html">Scholarships</a><a href="/internships.html">Internships</a><a href="/fellowships.html">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+<a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
 </div>
 </nav>
 </header>`;
 const FOOTER = `<footer class="site-footer" role="contentinfo"><div class="container"><nav class="footer-links" aria-label="Footer navigation"><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a></nav><p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:#9ca3af;">&copy; 2026 OpportunityNest.org. All rights reserved.</p></div></footer><script src="/nav.js"></script></body></html>`;
 const RELATED = `<h2>Explore More Resources</h2><ul>
-<li><a href="/internships.html">Browse all internships</a></li>
-<li><a href="/scholarships.html">Browse all scholarships</a></li>
-<li><a href="/fellowships.html">Explore fellowships</a></li>
+<li><a href="/internships/">Browse all internships</a></li>
+<li><a href="/scholarships/">Browse all scholarships</a></li>
+<li><a href="/fellowships/">Explore fellowships</a></li>
 <li><a href="/guides/cv-writing.html">CV Writing Guide</a></li>
 <li><a href="/guides/cover-letter.html">Cover Letter Guide</a></li>
 <li><a href="/guides/ats-resume.html">ATS Resume Guide</a></li>
@@ -75,7 +75,7 @@ const pages = [
 <p>Landing your first internship can feel impossible when every job posting asks for experience you do not yet have. But internships are specifically designed for students and early-career professionals — you do not need years of experience to qualify. You need the right strategy. This guide shows you exactly how to get an internship, whether you are a first-year student or a recent graduate.</p>
 
 <h2>Why Internships Matter</h2>
-<p>Internships are the single most important career development activity you can do as a student. They provide real-world experience that employers value, help you build a professional network, and often lead to full-time job offers. According to the National Association of Colleges and Employers, 57% of interns receive a full-time job offer from their internship employer. Browse our <a href="/internships.html">internship listings</a> to find opportunities right now.</p>
+<p>Internships are the single most important career development activity you can do as a student. They provide real-world experience that employers value, help you build a professional network, and often lead to full-time job offers. According to the National Association of Colleges and Employers, 57% of interns receive a full-time job offer from their internship employer. Browse our <a href="/internships/">internship listings</a> to find opportunities right now.</p>
 
 <h2>Step 1: Identify Your Target Industry</h2>
 <p>Before you start applying, decide which industry or field interests you most. This does not have to be your final career choice — internships are for exploration. But having a focus helps you target your search effectively. Consider your major, your coursework, your interests, and the skills you want to develop.</p>
@@ -89,7 +89,7 @@ const pages = [
 <h2>Step 4: Search Strategically</h2>
 <p>Use multiple channels to find internships:</p>
 <ul>
-<li><strong>OpportunityNest:</strong> Browse our <a href="/internships.html">curated internship listings</a> for verified opportunities worldwide.</li>
+<li><strong>OpportunityNest:</strong> Browse our <a href="/internships/">curated internship listings</a> for verified opportunities worldwide.</li>
 <li><strong>University career centre:</strong> Many universities have exclusive partnerships with employers.</li>
 <li><strong>Company websites:</strong> Check the careers page of companies you are interested in.</li>
 <li><strong>LinkedIn:</strong> Follow companies and set up job alerts for internship positions.</li>
@@ -164,7 +164,7 @@ ${RELATED}
 
 <h2>The Application Process Step by Step</h2>
 <h3>1. Find opportunities</h3>
-<p>Use <a href="/internships.html">OpportunityNest</a>, your university career centre, LinkedIn, and company websites. Apply to at least 15-20 positions.</p>
+<p>Use <a href="/internships/">OpportunityNest</a>, your university career centre, LinkedIn, and company websites. Apply to at least 15-20 positions.</p>
 <h3>2. Tailor your materials</h3>
 <p>Customise your resume and cover letter for each application. Highlight the experiences and skills most relevant to the specific role.</p>
 <h3>3. Submit online</h3>
@@ -371,7 +371,7 @@ ${RELATED}
 
 <h2>Where to Find Remote Internships</h2>
 <ul>
-<li><strong>OpportunityNest:</strong> Browse our <a href="/internships.html">internship listings</a> and filter for remote opportunities.</li>
+<li><strong>OpportunityNest:</strong> Browse our <a href="/internships/">internship listings</a> and filter for remote opportunities.</li>
 <li><strong>LinkedIn:</strong> Search for "remote internship" and set up job alerts.</li>
 <li><strong>Company career pages:</strong> Many tech companies, NGOs, and startups offer remote internships.</li>
 <li><strong>University career centres:</strong> Many universities now list remote opportunities.</li>
@@ -439,12 +439,12 @@ ${RELATED}
 <li><strong>Consulting:</strong> Management consulting interns earn $4,000-$7,000 per month at firms like McKinsey, BCG, and Bain.</li>
 <li><strong>Engineering:</strong> Petroleum, aerospace, and chemical engineering interns earn $3,000-$5,000 per month.</li>
 <li><strong>Data Science and AI:</strong> Data science and machine learning interns earn $4,000-$8,000 per month.</li>
-<li><strong>Government and NGOs:</strong> Many government internships offer stipends of $2,000-$4,000 per month. Some <a href="/fellowships.html">fellowships</a> offer full funding.</li>
+<li><strong>Government and NGOs:</strong> Many government internships offer stipends of $2,000-$4,000 per month. Some <a href="/fellowships/">fellowships</a> offer full funding.</li>
 </ul>
 
 <h2>Where to Find Paid Internships</h2>
 <ul>
-<li><strong>OpportunityNest:</strong> Browse our <a href="/internships.html">internship listings</a> — we highlight paid opportunities.</li>
+<li><strong>OpportunityNest:</strong> Browse our <a href="/internships/">internship listings</a> — we highlight paid opportunities.</li>
 <li><strong>Levels.fyi:</strong> Shows intern compensation at tech companies.</li>
 <li><strong>Glassdoor:</strong> Search for internship salaries at specific companies.</li>
 <li><strong>LinkedIn:</strong> Filter internship searches by compensation.</li>
@@ -499,7 +499,7 @@ ${RELATED}
 
 <h2>Where to Find Summer Internships</h2>
 <ul>
-<li><strong>OpportunityNest:</strong> Browse <a href="/internships.html">summer internship listings</a> curated for students.</li>
+<li><strong>OpportunityNest:</strong> Browse <a href="/internships/">summer internship listings</a> curated for students.</li>
 <li><strong>University career fairs:</strong> Most universities host fall career fairs specifically for summer internships.</li>
 <li><strong>Company websites:</strong> Check careers pages of companies you are interested in.</li>
 <li><strong>LinkedIn:</strong> Set up job alerts for summer internship positions.</li>

@@ -227,7 +227,7 @@ const megaMenuData = {
         ["TOEFL Guide", "/guides/toefl-guide.html"],
         ["GRE Guide", "/guides/gre-guide.html"],
         ["GMAT Guide", "/guides/gmat-guide.html"],
-        ["Fellowships", "/fellowships.html"],
+        ["Fellowships", "/fellowships/"],
         ["Grants", "/guides/grants.html"]
       ]
     }
@@ -236,9 +236,9 @@ const megaMenuData = {
 
 const navItems = [
   { label: "Study Abroad", href: "/study-in-uk/", sections: megaMenuData["Study Abroad"] },
-  { label: "Scholarships", href: "/scholarships.html", sections: megaMenuData.Scholarships },
-  { label: "Internships", href: "/internships.html", sections: megaMenuData.Internships },
-  { label: "Fellowships", href: "/fellowships.html", sections: megaMenuData.Fellowships },
+  { label: "Scholarships", href: "/scholarships/", sections: megaMenuData.Scholarships },
+  { label: "Internships", href: "/internships/", sections: megaMenuData.Internships },
+  { label: "Fellowships", href: "/fellowships/", sections: megaMenuData.Fellowships },
   { label: "Competitions", href: "/competitions.html", sections: megaMenuData.Competitions },
   { label: "Youth Programs", href: "/?type=Youth+Program#opportunities", sections: megaMenuData["Youth Programs"] },
   { label: "Blog", href: "/blog/", sections: megaMenuData.Blog },
