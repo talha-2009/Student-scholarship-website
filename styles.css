@@ -337,6 +337,12 @@ body {
   transform: translateY(0);
 }
 
+/* Fixed positioning for desktop mega-menus — anchored below the fixed header */
+.mega-menu.mega-menu-fixed {
+  position: fixed;
+  margin-top: 0;
+}
+
 .mega-column {
   min-width: 0;
 }

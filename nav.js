@@ -326,6 +326,17 @@ const closeMegaMenu = (item) => {
   if (!item) return;
   item.classList.remove("is-open");
   item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "false");
+
+  const dropdown = item.querySelector(".mega-menu");
+  if (dropdown) {
+    dropdown.classList.remove("mega-menu-fixed");
+    dropdown.style.top = "";
+    dropdown.style.left = "";
+    dropdown.style.right = "";
+  }
+
+  document.body.style.paddingTop = "";
+  document.body.style.transition = "";
 };
 
 const closeAllMegaMenus = (exceptItem = null) => {
@@ -340,24 +351,47 @@ const openMegaMenu = (item) => {
   item.classList.add("is-open");
   item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
 
-  // Adjust dropdown position if it would overflow viewport
   const dropdown = item.querySelector(".mega-menu");
   if (!dropdown) return;
 
-  // Batch layout reads to avoid forced reflow
-  requestAnimationFrame(() => {
-    const rect = dropdown.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
+  if (!isMobileNav()) {
+    // Desktop: use fixed positioning anchored below the header
+    requestAnimationFrame(() => {
+      const header = document.querySelector(".site-header");
+      const headerHeight = header ? header.offsetHeight : 72;
+      const trigger = item.querySelector(".mega-trigger");
+      if (!trigger) return;
 
-    // If dropdown overflows right edge, align to right
-    if (rect.right > viewportWidth) {
-      dropdown.style.left = "auto";
-      dropdown.style.right = "0";
-    } else {
-      dropdown.style.left = "0";
+      const triggerRect = trigger.getBoundingClientRect();
+
+      dropdown.classList.add("mega-menu-fixed");
+      dropdown.style.top = `${headerHeight}px`;
+      dropdown.style.left = `${triggerRect.left}px`;
       dropdown.style.right = "auto";
-    }
-  });
+
+      // Prevent right-edge overflow
+      const dropdownRect = dropdown.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      if (dropdownRect.right > viewportWidth) {
+        dropdown.style.left = "auto";
+        dropdown.style.right = "16px";
+      }
+
+      // Push body content down by the dropdown height so hero content
+      // always sits below the open dropdown instead of being overlapped
+      const dropdownHeight = dropdown.offsetHeight;
+      document.body.style.transition = "padding-top 250ms ease";
+      document.body.style.paddingTop = `${headerHeight + dropdownHeight}px`;
+    });
+  } else {
+    // Mobile: reset inline positioning — CSS handles layout naturally
+    dropdown.classList.remove("mega-menu-fixed");
+    dropdown.style.top = "";
+    dropdown.style.left = "";
+    dropdown.style.right = "";
+    document.body.style.paddingTop = "";
+    document.body.style.transition = "";
+  }
 };
 
 const closeNav = () => {
