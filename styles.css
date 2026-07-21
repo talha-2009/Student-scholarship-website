@@ -1378,7 +1378,7 @@ dd {
 }
 
 .benefit-list li::before {
-  content: "âœ“";
+  content: "✓";
   position: absolute;
   left: 16px;
   top: 16px;
@@ -2107,6 +2107,9 @@ details p {
 
 .nav-cta {
   margin-left: 12px;
+  flex-shrink: 1;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 @media (max-width: 1199px) and (min-width: 768px) {
@@ -2143,8 +2146,8 @@ details p {
 
   .nav-cta {
     min-width: 0;
-    padding-inline: 14px;
-    font-size: 0.88rem;
+    padding-inline: 10px;
+    font-size: 0.85rem;
   }
 }
 
@@ -2177,7 +2180,9 @@ details p {
   }
 
   .nav-cta {
-    padding-inline: 16px;
+    min-width: 0;
+    padding-inline: 12px;
+    font-size: 0.88rem;
   }
 }
 
@@ -2208,8 +2213,17 @@ details p {
     padding: 0;
   }
 
+  .nav-link,
+  .mega-trigger {
+    padding: 0 6px;
+    font-size: 0.82rem;
+  }
+
   .nav-cta {
     margin-top: 0;
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 0.82rem;
   }
 }
 

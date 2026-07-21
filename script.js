@@ -1,4 +1,4 @@
-﻿const ON = window.ON || window.OpportunityNest;
+const ON = window.ON || window.OpportunityNest;
 const opportunityGrid = document.querySelector("#opportunity-grid");
 const opportunityStatus = document.querySelector("#opportunity-status");
 const opportunityControls = document.querySelector("#opportunity-controls");
@@ -67,6 +67,8 @@ const populateCountryFilter = (items = []) => {
 };
 
 const updateStatistics = (items = []) => {
+  if (!items || items.length === 0) return;
+  const statsEl = document.querySelector('[data-stat-source]');
   const opportunityStat = document.querySelector('[data-stat="opportunities"]');
   const internshipStat = document.querySelector('[data-stat="internships"]');
   const countryStat = document.querySelector('[data-stat="countries"]');
@@ -78,6 +80,7 @@ const updateStatistics = (items = []) => {
   if (internshipStat) internshipStat.textContent = internshipCount.toLocaleString();
   if (countryStat) countryStat.textContent = countryCount.toLocaleString();
   if (internshipStatCard) internshipStatCard.style.opacity = internshipCount === 0 ? "0.3" : "1";
+  if (statsEl) statsEl.setAttribute("data-stat-source", "live");
 };
 
 const applyTypeFromUrl = (types = []) => {

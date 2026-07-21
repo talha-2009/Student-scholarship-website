@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * Generate all /guides/ pages for OpportunityNest.org
  * Each page: full SEO metadata, schema markup, 2000-3500+ words of unique content,

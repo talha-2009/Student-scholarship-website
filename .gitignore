@@ -1,5 +1,7 @@
 node_modules/
 dist/
+__pycache__/
+scripts/__pycache__/
 .vercel
 .qoder/
 .vercel-tmp/

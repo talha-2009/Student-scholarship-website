@@ -1,4 +1,4 @@
-﻿// ─── Logo injection ──────────────────────────────────────
+// ─── Logo injection ──────────────────────────────────────
 // Replace the "ON" text brand-mark with the SVG logo on every page.
 // Determine the correct relative path based on current page location.
 (function injectLogo() {
