@@ -40,6 +40,12 @@
       ]
     },
     {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Link", "value": "<https://pagead2.googlesyndication.com>; rel=dns-prefetch, <https://www.googletagmanager.com>; rel=dns-prefetch, <https://www.google-analytics.com>; rel=dns-prefetch, <https://rveunrzbeynaizitqanx.supabase.co>; rel=dns-prefetch, <https://chatling.ai>; rel=dns-prefetch" }
+      ]
+    },
+    {
       "source": "/:path*.html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=600, stale-while-revalidate=86400" }

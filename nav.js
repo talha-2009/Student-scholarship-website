@@ -306,6 +306,13 @@ const createMegaItem = ({ label, href, sections }) => {
 const buildNavigation = () => {
   if (!navMenu) return;
 
+  // Skip rebuild if static HTML already has the nav structure (saves ~200 DOM node creations)
+  const existingItems = navMenu.querySelectorAll(".mega-item, .nav-item");
+  if (existingItems.length > 0) {
+    navMenu.dataset.navBuilt = "true";
+    return;
+  }
+
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
 
@@ -342,17 +349,20 @@ const openMegaMenu = (item) => {
   const dropdown = item.querySelector(".mega-menu");
   if (!dropdown) return;
 
-  const rect = dropdown.getBoundingClientRect();
-  const viewportWidth = window.innerWidth;
+  // Batch layout reads to avoid forced reflow
+  requestAnimationFrame(() => {
+    const rect = dropdown.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
 
-  // If dropdown overflows right edge, align to right
-  if (rect.right > viewportWidth) {
-    dropdown.style.left = "auto";
-    dropdown.style.right = "0";
-  } else {
-    dropdown.style.left = "0";
-    dropdown.style.right = "auto";
-  }
+    // If dropdown overflows right edge, align to right
+    if (rect.right > viewportWidth) {
+      dropdown.style.left = "auto";
+      dropdown.style.right = "0";
+    } else {
+      dropdown.style.left = "0";
+      dropdown.style.right = "auto";
+    }
+  });
 };
 
 const closeNav = () => {
@@ -486,7 +496,7 @@ const setupNavigationInteractions = () => {
       document.body.classList.remove("nav-open");
     }
     closeAllMegaMenus();
-  });
+  }, { passive: true });
 
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {

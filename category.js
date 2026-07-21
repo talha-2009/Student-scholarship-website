@@ -83,7 +83,11 @@ const clearFilters = () => {
   renderOpportunities();
 };
 
-opportunityControls?.addEventListener("input", resetAndRender);
+let filterDebounce = 0;
+opportunityControls?.addEventListener("input", () => {
+  clearTimeout(filterDebounce);
+  filterDebounce = setTimeout(resetAndRender, 150);
+});
 opportunityControls?.addEventListener("submit", (event) => {
   event.preventDefault();
   resetAndRender();

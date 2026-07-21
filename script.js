@@ -297,10 +297,10 @@ const clearFilters = () => {
   renderOpportunities();
 };
 
-let filterFrame = 0;
+let filterDebounce = 0;
 opportunityControls?.addEventListener("input", () => {
-  window.cancelAnimationFrame(filterFrame);
-  filterFrame = window.requestAnimationFrame(resetAndRender);
+  clearTimeout(filterDebounce);
+  filterDebounce = setTimeout(resetAndRender, 150);
 });
 opportunityControls?.addEventListener("submit", (event) => {
   event.preventDefault();

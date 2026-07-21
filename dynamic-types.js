@@ -64,30 +64,6 @@ const populateNavLinks = async () => {
 };
 
 // Populate footer links dynamically
-const populateFooterLinks = async () => {
-  const footerContainer = document.getElementById("dynamic-footer-links");
-  if (!footerContainer || !ON) return;
-
-  try {
-    const types = await ON.fetchUniqueTypes();
-    
-    if (types && types.length > 0) {
-      footerContainer.innerHTML = types.map(type => {
-        const url = typeToUrl(type);
-        return `<a href="${url}">${type}s</a>`;
-      }).join('');
-    }
-  } catch (error) {
-    console.error("Error populating footer links:", error);
-    // Fallback to hardcoded links if dynamic loading fails
-    footerContainer.innerHTML = `
-      <a href="/scholarships/">Scholarships</a>
-      <a href="/internships/">Internships</a>
-      <a href="/fellowships/">Fellowships</a>
-    `;
-  }
-};
-
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {

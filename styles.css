@@ -8,7 +8,6 @@
   --primary: #0f766e;
   --primary-dark: #0b4f49;
   --accent: #2563eb;
-  --gold: #b7791f;
   --shadow: 0 24px 70px rgba(16, 32, 29, 0.12);
   --radius: 8px;
   --radius-lg: 14px;
@@ -1703,15 +1702,10 @@ details p {
 
   .cta-panel,
   .final-panel,
-  .contact-form,
   .internship-detail,
   .page-hero,
   .opportunity-card,
   .live-opportunity-card {
-    padding: 18px;
-  }
-
-  .contact-form {
     padding: 18px;
   }
 
@@ -1727,15 +1721,6 @@ details p {
 
   .footer-links {
     justify-content: start;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition: none !important;
   }
 }
 
@@ -2317,7 +2302,7 @@ details p {
   font-size: 0.875rem;
   color: var(--text);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   font-family: inherit;
 }
 
@@ -2361,7 +2346,6 @@ body {
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
   max-width: 100%;
 }
 
