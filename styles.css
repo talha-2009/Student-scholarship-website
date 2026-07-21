@@ -124,17 +124,17 @@ body {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   font-weight: 800;
   color: var(--text);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius);
   background: linear-gradient(135deg, var(--primary), var(--accent));
   color: white;
@@ -166,18 +166,49 @@ body {
 .mega-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-height: 72px;
-  padding: 0 12px;
+  padding: 0 11px;
   border-radius: 10px;
   color: var(--muted);
-  transition: color 160ms ease, background 160ms ease;
+  position: relative;
+  transition: color 200ms ease, background 200ms ease;
+}
+
+.nav-link::after,
+.mega-trigger::after {
+  content: "";
+  position: absolute;
+  bottom: 16px;
+  left: 11px;
+  right: 11px;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transition: transform 200ms ease;
 }
 
 .nav-menu a:hover,
 .nav-menu a:focus-visible {
   color: var(--text);
-  background: rgba(238, 248, 245, 0.9);
+  background: transparent;
+}
+
+.nav-link:hover::after,
+.mega-trigger:hover::after,
+.nav-item.is-open > .mega-trigger::after {
+  transform: scaleX(1);
+}
+
+.nav-link:focus-visible,
+.mega-trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.nav-item.is-open > .mega-trigger {
+  color: var(--primary-dark);
 }
 
 .nav-caret {
@@ -186,7 +217,7 @@ body {
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg) translateY(-1px);
-  transition: transform 160ms ease;
+  transition: transform 200ms ease;
 }
 
 .nav-item.is-open .nav-caret {
@@ -1924,25 +1955,47 @@ details p {
   top: 100%;
   left: 0;
   min-width: 280px;
-  max-width: 600px;
+  max-width: 320px;
   width: max-content;
   max-height: calc(100vh - 96px);
   overflow: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  padding: 20px;
-  margin: 4px 0 0;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(219, 232, 228, 0.95);
-  border-radius: 12px;
-  box-shadow: 0 24px 60px rgba(16, 32, 29, 0.14), 0 8px 22px rgba(16, 32, 29, 0.08);
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 20px 24px;
+  margin: 8px 0 0;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 232, 228, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(16, 32, 29, 0.10), 0 4px 12px rgba(16, 32, 29, 0.05);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 200ms ease, transform 200ms ease, visibility 200ms ease;
+  transform: translateY(4px);
+  transition: opacity 250ms ease, transform 250ms ease, visibility 250ms ease;
   z-index: 1001;
+}
+
+.mega-menu[data-cols="2"] {
+  max-width: 520px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 28px;
+}
+
+.mega-menu[data-cols="3"],
+.mega-menu[data-cols="4"] {
+  max-width: 720px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 28px;
+}
+
+.mega-menu[data-cols="5"],
+.mega-menu[data-cols="6"] {
+  max-width: 1050px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 28px;
 }
 
 .nav-item.is-open > .mega-menu {
@@ -1959,21 +2012,31 @@ details p {
 .mega-column h3 {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 8px;
-  padding-bottom: 8px;
+  gap: 6px;
+  margin: 0 0 4px;
+  padding: 0 0 8px;
   border-bottom: 1px solid var(--line);
-  color: var(--primary-dark);
-  font-size: 0.82rem;
-  font-weight: 850;
-  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   line-height: 1.2;
   text-transform: uppercase;
 }
 
 .mega-column-icon {
-  font-size: 1rem;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.mega-column-icon svg {
+  width: 16px;
+  height: 16px;
 }
 
 .mega-column ul {
@@ -1988,23 +2051,22 @@ details p {
 
 .mega-column a {
   display: block;
-  min-height: 40px;
-  padding: 10px 10px;
+  min-height: 36px;
+  padding: 8px 10px;
   margin: 0 -10px;
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
   white-space: normal;
-  transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+  transition: background 150ms ease, color 150ms ease;
 }
 
 .mega-column a:hover,
 .mega-column a:focus-visible {
   background: var(--surface-strong);
   color: var(--text);
-  transform: translateX(2px);
 }
 
 .nav-cta {
@@ -2013,7 +2075,7 @@ details p {
 
 @media (max-width: 1199px) and (min-width: 768px) {
   .nav-menu {
-    gap: 2px;
+    gap: 0;
   }
 
   .nav-link,
@@ -2023,10 +2085,24 @@ details p {
   }
 
   .mega-menu {
-    width: min(340px, calc(100vw - 24px));
+    max-width: min(340px, calc(100vw - 24px));
     grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 16px;
+    gap: 4px;
+    padding: 16px 20px;
+  }
+
+  .mega-menu[data-cols="2"] {
+    grid-template-columns: 1fr;
+    max-width: min(340px, calc(100vw - 24px));
+  }
+
+  .mega-menu[data-cols="3"],
+  .mega-menu[data-cols="4"],
+  .mega-menu[data-cols="5"],
+  .mega-menu[data-cols="6"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: min(520px, calc(100vw - 24px));
+    gap: 4px 20px;
   }
 
   .nav-cta {
@@ -2038,7 +2114,7 @@ details p {
 
 @media (min-width: 1024px) and (max-width: 1280px) {
   .nav-menu {
-    gap: 4px;
+    gap: 2px;
   }
 
   .nav-link,
@@ -2049,7 +2125,19 @@ details p {
 
   .mega-menu {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 500px;
+    max-width: 520px;
+  }
+
+  .mega-menu[data-cols="1"] {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+
+  .mega-menu[data-cols="5"],
+  .mega-menu[data-cols="6"] {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 800px;
+    gap: 4px 24px;
   }
 
   .nav-cta {
@@ -2182,6 +2270,10 @@ details p {
 
   .mega-column h3 {
     margin-bottom: 10px;
+  }
+
+  .mega-column-icon {
+    color: var(--primary);
   }
 
   .mega-column a {

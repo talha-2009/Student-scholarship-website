@@ -1,4 +1,4 @@
-﻿// â”€â”€â”€ Logo injection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+﻿// ─── Logo injection ──────────────────────────────────────
 // Replace the "ON" text brand-mark with the SVG logo on every page.
 // Determine the correct relative path based on current page location.
 (function injectLogo() {
@@ -11,8 +11,8 @@
     const img = document.createElement("img");
     img.src = "/logo.svg";
     img.alt = "";
-    img.width = 38;
-    img.height = 38;
+    img.width = 44;
+    img.height = 44;
     img.setAttribute("aria-hidden", "true");
     img.setAttribute("decoding", "async");
     el.appendChild(img);
@@ -28,7 +28,22 @@
   }
 })();
 
-// â”€â”€â”€ Navigation architecture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── SVG Icons ────────────────────────────────────────────
+const ICONS = {
+  globe: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  cap: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+  briefcase: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+  award: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
+  trophy: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+  users: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  compass: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+  book: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  lightbulb: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+  fileText: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+  dollarSign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+};
+
+// ─── Navigation architecture ──────────────────────────────
 const navToggle = document.querySelector(".nav-toggle");
 const navMenu = document.querySelector("#nav-menu");
 const MOBILE_NAV_BREAKPOINT = 767;
@@ -37,7 +52,7 @@ const megaMenuData = {
   "Study Abroad": [
     {
       title: "Top Destinations",
-      icon: "",
+      icon: ICONS.globe,
       links: [
         ["Study in UK", "/study-in-uk/"],
         ["Study in USA", "/study-in-usa/"],
@@ -51,7 +66,7 @@ const megaMenuData = {
   Scholarships: [
     {
       title: "Scholarship Types",
-      icon: "",
+      icon: ICONS.cap,
       links: [
         ["Fully Funded Scholarships", "/fully-funded-scholarships/"],
         ["Undergraduate Scholarships", "/undergraduate-scholarships/"],
@@ -64,7 +79,7 @@ const megaMenuData = {
   Internships: [
     {
       title: "Internship Types",
-      icon: "",
+      icon: ICONS.briefcase,
       links: [
         ["Paid Internships", "/paid-internships/"],
         ["Remote Internships", "/remote-internships/"],
@@ -76,7 +91,7 @@ const megaMenuData = {
   Fellowships: [
     {
       title: "Fellowship Types",
-      icon: "",
+      icon: ICONS.award,
       links: [
         ["Fully Funded Fellowships", "/fully-funded-fellowships/"],
         ["Research Fellowships", "/research-fellowships/"],
@@ -87,7 +102,7 @@ const megaMenuData = {
   Competitions: [
     {
       title: "Competition Types",
-      icon: "",
+      icon: ICONS.trophy,
       links: [
         ["Programming Competitions", "/programming-competitions/"],
         ["AI Competitions", "/ai-competitions/"],
@@ -99,7 +114,7 @@ const megaMenuData = {
   "Youth Programs": [
     {
       title: "Program Types",
-      icon: "ðŸ¤",
+      icon: ICONS.users,
       links: [
         ["Leadership Programs", "/leadership-programs/"],
         ["Volunteer Programs", "/volunteer-programs/"],
@@ -111,7 +126,7 @@ const megaMenuData = {
     },
     {
       title: "Explore More",
-      icon: "ðŸŒ±",
+      icon: ICONS.compass,
       links: [
         ["Youth Programs Feed", "/?type=Youth+Program#opportunities"],
         ["Research Opportunities", "/research-opportunities/"],
@@ -123,7 +138,7 @@ const megaMenuData = {
   Blog: [
     {
       title: "Scholarship Advice",
-      icon: "ðŸ“",
+      icon: ICONS.book,
       links: [
         ["Fully Funded Scholarships", "/blog/top-fully-funded-scholarships.html"],
         ["Scholarship Interview Tips", "/blog/how-to-ace-scholarship-interview.html"],
@@ -133,7 +148,7 @@ const megaMenuData = {
     },
     {
       title: "Application Help",
-      icon: "ðŸ’¡",
+      icon: ICONS.lightbulb,
       links: [
         ["Statement of Purpose", "/guides/how-to-write-sop.html"],
         ["Personal Statement", "/guides/personal-statement.html"],
@@ -146,7 +161,7 @@ const megaMenuData = {
   "Resource Center": [
     {
       title: "Application Guides",
-      icon: "âœŽ",
+      icon: ICONS.fileText,
       links: [
         ["How to Write an SOP", "/guides/how-to-write-sop.html"],
         ["SOP Examples", "/guides/sop-examples.html"],
@@ -158,7 +173,7 @@ const megaMenuData = {
     },
     {
       title: "Scholarship Guides",
-      icon: "ðŸŽ“",
+      icon: ICONS.cap,
       links: [
         ["Fully Funded Scholarships", "/blog/top-fully-funded-scholarships.html"],
         ["Without IELTS", "/guides/scholarships-without-ielts.html"],
@@ -170,7 +185,7 @@ const megaMenuData = {
     },
     {
       title: "Internship Guides",
-      icon: "ðŸ’¼",
+      icon: ICONS.briefcase,
       links: [
         ["How to Get an Internship", "/guides/how-to-get-internship.html"],
         ["Application Guide", "/guides/internship-application.html"],
@@ -182,7 +197,7 @@ const megaMenuData = {
     },
     {
       title: "Study Abroad",
-      icon: "ðŸŒ",
+      icon: ICONS.globe,
       links: [
         ["Study in USA", "/guides/study-in-usa.html"],
         ["Study in Canada", "/guides/study-in-canada.html"],
@@ -194,7 +209,7 @@ const megaMenuData = {
     },
     {
       title: "Career Resources",
-      icon: "ðŸ“š",
+      icon: ICONS.book,
       links: [
         ["Career Planning", "/guides/career-planning.html"],
         ["LinkedIn Optimization", "/guides/linkedin-profile.html"],
@@ -206,7 +221,7 @@ const megaMenuData = {
     },
     {
       title: "Tests and Funding",
-      icon: "ðŸ’°",
+      icon: ICONS.dollarSign,
       links: [
         ["IELTS Guide", "/guides/ielts-guide.html"],
         ["TOEFL Guide", "/guides/toefl-guide.html"],
@@ -240,7 +255,7 @@ const createMegaColumn = ({ title, icon, links }) => {
   const iconSpan = document.createElement("span");
   iconSpan.className = "mega-column-icon";
   iconSpan.setAttribute("aria-hidden", "true");
-  iconSpan.textContent = icon;
+  iconSpan.innerHTML = icon;
   heading.append(iconSpan, document.createTextNode(` ${title}`));
   column.appendChild(heading);
 
@@ -281,6 +296,7 @@ const createMegaItem = ({ label, href, sections }) => {
   dropdown.className = "mega-menu";
   dropdown.setAttribute("role", "group");
   dropdown.setAttribute("aria-label", `${label} links`);
+  dropdown.setAttribute("data-cols", String(sections.length));
   dropdown.append(...sections.map(createMegaColumn));
 
   item.append(trigger, dropdown);
@@ -491,7 +507,7 @@ if (navMenu) {
   window.closeNav = closeNav;
 }
 
-// â”€â”€â”€ Footer SEO: enhance footer with additional internal links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Footer SEO: enhance footer with additional internal links ────────────
 (function enhanceFooter() {
   const footerNav = document.querySelector(".footer-links");
   if (!footerNav) return;
@@ -525,4 +541,3 @@ if (navMenu) {
     footerNav.appendChild(a);
   });
 })();
-
