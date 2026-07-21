@@ -105,7 +105,7 @@ textarea {
 }
 
 body {
-  padding-top: 72px;
+  padding-top: calc(72px + var(--dropdown-offset, 0px));
 }
 
 .site-header .container {
@@ -146,11 +146,11 @@ body {
   align-items: center;
   justify-content: flex-end;
   flex: 1;
-  gap: 4px;
+  gap: 2px;
   color: var(--muted);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   font-weight: 650;
-  min-width: 0; /* Prevent flex items from overflowing */
+  min-width: 0;
 }
 
 .nav-item {
@@ -166,9 +166,9 @@ body {
 .mega-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   min-height: 72px;
-  padding: 0 11px;
+  padding: 0 9px;
   border-radius: 10px;
   color: var(--muted);
   position: relative;
@@ -2129,8 +2129,8 @@ details p {
 
   .nav-link,
   .mega-trigger {
-    padding: 0 8px;
-    font-size: 0.88rem;
+    padding: 0 6px;
+    font-size: 0.85rem;
   }
 
   .mega-menu {
@@ -2162,13 +2162,13 @@ details p {
 
 @media (min-width: 1024px) and (max-width: 1280px) {
   .nav-menu {
-    gap: 2px;
+    gap: 1px;
   }
 
   .nav-link,
   .mega-trigger {
-    padding: 0 10px;
-    font-size: 0.9rem;
+    padding: 0 8px;
+    font-size: 0.87rem;
   }
 
   .mega-menu {
@@ -2196,7 +2196,7 @@ details p {
 
 @media (min-width: 768px) and (max-width: 900px) {
   .nav {
-    gap: 18px;
+    gap: 14px;
   }
 
   .nav-toggle {
@@ -2223,14 +2223,16 @@ details p {
 
   .nav-link,
   .mega-trigger {
-    padding: 0 6px;
-    font-size: 0.82rem;
+    padding: 0 5px;
+    font-size: 0.8rem;
+    min-height: 56px;
   }
 
   .nav-cta {
     margin-top: 0;
-    padding-inline: 8px;
-    font-size: 0.82rem;
+    padding-inline: 6px;
+    font-size: 0.8rem;
+    min-height: 36px;
   }
 }
 

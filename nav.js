@@ -335,8 +335,7 @@ const closeMegaMenu = (item) => {
     dropdown.style.right = "";
   }
 
-  document.body.style.paddingTop = "";
-  document.body.style.transition = "";
+  document.body.style.removeProperty("--dropdown-offset");
 };
 
 const closeAllMegaMenus = (exceptItem = null) => {
@@ -348,20 +347,27 @@ const closeAllMegaMenus = (exceptItem = null) => {
 const openMegaMenu = (item) => {
   if (!item) return;
   closeAllMegaMenus(item);
-  item.classList.add("is-open");
-  item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
 
   const dropdown = item.querySelector(".mega-menu");
   if (!dropdown) return;
 
   if (!isMobileNav()) {
-    // Desktop: use fixed positioning anchored below the header
-    requestAnimationFrame(() => {
-      const header = document.querySelector(".site-header");
-      const headerHeight = header ? header.offsetHeight : 72;
-      const trigger = item.querySelector(".mega-trigger");
-      if (!trigger) return;
+    const header = document.querySelector(".site-header");
+    const headerHeight = header ? header.offsetHeight : 72;
+    const trigger = item.querySelector(".mega-trigger");
 
+    // Read dropdown height BEFORE opening (it has layout even when hidden)
+    // and push content down so hero content never overlaps the dropdown
+    const dropdownHeight = dropdown.offsetHeight;
+    document.body.style.setProperty("--dropdown-offset", `${dropdownHeight}px`);
+
+    // Now open the dropdown
+    item.classList.add("is-open");
+    item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
+
+    // Position dropdown in RAF — batch layout reads
+    requestAnimationFrame(() => {
+      if (!trigger) return;
       const triggerRect = trigger.getBoundingClientRect();
 
       dropdown.classList.add("mega-menu-fixed");
@@ -376,21 +382,16 @@ const openMegaMenu = (item) => {
         dropdown.style.left = "auto";
         dropdown.style.right = "16px";
       }
-
-      // Push body content down by the dropdown height so hero content
-      // always sits below the open dropdown instead of being overlapped
-      const dropdownHeight = dropdown.offsetHeight;
-      document.body.style.transition = "padding-top 250ms ease";
-      document.body.style.paddingTop = `${headerHeight + dropdownHeight}px`;
     });
   } else {
-    // Mobile: reset inline positioning — CSS handles layout naturally
+    // Mobile: open normally — CSS handles layout naturally inside the drawer
+    item.classList.add("is-open");
+    item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
     dropdown.classList.remove("mega-menu-fixed");
     dropdown.style.top = "";
     dropdown.style.left = "";
     dropdown.style.right = "";
-    document.body.style.paddingTop = "";
-    document.body.style.transition = "";
+    document.body.style.removeProperty("--dropdown-offset");
   }
 };
 
