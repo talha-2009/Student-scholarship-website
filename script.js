@@ -77,7 +77,7 @@ const updateStatistics = (items = []) => {
   if (opportunityStat) opportunityStat.textContent = items.length.toLocaleString();
   if (internshipStat) internshipStat.textContent = internshipCount.toLocaleString();
   if (countryStat) countryStat.textContent = countryCount.toLocaleString();
-  if (internshipStatCard) internshipStatCard.hidden = internshipCount === 0;
+  if (internshipStatCard) internshipStatCard.style.opacity = internshipCount === 0 ? "0.3" : "1";
 };
 
 const applyTypeFromUrl = (types = []) => {

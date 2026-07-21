@@ -266,7 +266,14 @@ window.ON = window.OpportunityNest;
   };
 
   ON.renderLoadingSkeleton = (count = 3) =>
-    Array.from({ length: count }, () => '<article class="live-opportunity-card skeleton-card" aria-hidden="true"><div></div><div></div><div></div></article>').join("");
+    Array.from({ length: count }, () => `<article class="live-opportunity-card skeleton-card" aria-hidden="true">
+        <div class="skeleton-card-top"><span class="skeleton skeleton-kicker"></span><span class="skeleton skeleton-deadline"></span></div>
+        <span class="skeleton skeleton-title"></span>
+        <span class="skeleton skeleton-text"></span>
+        <span class="skeleton skeleton-text-short"></span>
+        <ul class="card-overview compact-overview"><li><span class="skeleton skeleton-meta"></span></li><li><span class="skeleton skeleton-meta"></span></li><li><span class="skeleton skeleton-meta"></span></li></ul>
+        <div class="card-actions"><span class="skeleton skeleton-button"></span><span class="skeleton skeleton-button"></span></div>
+      </article>`).join("");
 
   ON.renderErrorWithRetry = (message, retryCall = "") =>
     `<div class="empty-state is-error"><p>${ON.escapeHtml(message)}</p>${retryCall ? `<button class="button button-secondary" type="button" onclick="${ON.escapeHtml(retryCall)}">Try again</button>` : ""}</div>`;

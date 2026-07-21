@@ -54,7 +54,7 @@ mkdirp(DIST);
 // ─── Step 1: Build CSS — split into critical + deferred ──────────
 console.log("Building production assets...\n");
 
-const CRITICAL_CSS_LINES = 409;
+const CRITICAL_CSS_LINES = 488;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
 const cssLines = rawCss.split("\n");

@@ -407,6 +407,85 @@ dd {
   font-size: 0.9rem;
 }
 
+/* — Skeleton loading states (critical — renders before deferred CSS) — */
+.skeleton-card {
+  pointer-events: none;
+  min-height: 280px;
+}
+
+.skeleton-card .skeleton-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton {
+  display: block;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-card .card-overview {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skeleton-card .card-overview li {
+  height: 16px;
+  margin-bottom: 4px;
+}
+
+.skeleton-card .card-actions {
+  display: flex;
+  gap: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-kicker {
+  height: 16px;
+  width: 120px;
+}
+
+.skeleton-deadline {
+  height: 24px;
+  width: 80px;
+  border-radius: 999px;
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 80%;
+  margin: 12px 0;
+}
+
+.skeleton-text {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-text-short {
+  height: 16px;
+  width: 60%;
+}
+
+.skeleton-meta {
+  height: 14px;
+  width: 100%;
+}
+
+.skeleton-button {
+  height: 42px;
+  width: 100%;
+}
+
 .dashboard {
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(219, 232, 228, 0.9);
@@ -1122,59 +1201,6 @@ dd {
   font-weight: 750;
 }
 
-.skeleton-card {
-  pointer-events: none;
-}
-
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.skeleton-kicker {
-  height: 16px;
-  width: 120px;
-}
-
-.skeleton-deadline {
-  height: 24px;
-  width: 80px;
-  border-radius: 999px;
-}
-
-.skeleton-title {
-  height: 28px;
-  width: 80%;
-  margin: 12px 0;
-}
-
-.skeleton-text {
-  height: 16px;
-  width: 100%;
-}
-
-.skeleton-text-short {
-  height: 16px;
-  width: 60%;
-}
-
-.skeleton-meta {
-  height: 14px;
-  width: 100%;
-}
-
-.skeleton-button {
-  height: 42px;
-  width: 100%;
-}
-
 .section-heading {
   max-width: 760px;
   margin-bottom: 28px;
@@ -1457,6 +1483,7 @@ details p {
   flex-wrap: wrap;
   gap: 12px 18px;
   justify-content: end;
+  min-height: 120px;
 }
 
 .footer-links a {
@@ -1893,22 +1920,46 @@ details p {
   contain-intrinsic-size: auto 600px;
 }
 
+/* — CLS: Reserve space for dynamically rendered sections — */
+#opportunity-grid,
+#featured-internship-grid {
+  min-height: 320px;
+}
+
+.hero-stats div {
+  min-height: 80px;
+}
+
+#internship-stat-card {
+  transition: opacity 0.2s ease;
+}
+
+#pagination {
+  min-height: 48px;
+}
+
+.live-opportunities,
+.featured-internships {
+  contain: content;
+}
+
 /* â”€â”€ Ad containers â”€â”€ */
 .ad-container {
-  min-height: 100px;
+  min-height: 250px;
   margin: 2rem auto;
   padding: 0 1rem;
   text-align: center;
   clear: both;
+  contain: layout size style;
 }
 
 .ad-container ins.adsbygoogle {
   display: block;
-  min-height: 90px;
+  min-height: 250px;
 }
 
 .ad-container--hero {
-  min-height: 100px;
+  min-height: 250px;
   margin-top: 0;
   padding-top: 1rem;
 }
