@@ -379,11 +379,17 @@ window.ON = window.OpportunityNest;
   ON.generateDetailH1 = (item) => `${item.title}`;
   ON.generateDetailH2 = (item) => `${item.title} overview`;
   ON.generateDetailIntro = (item) => item.description || ON.generateSEODescription(item);
-  ON.generateDetailFAQs = (item) => [
-    { q: `Who can apply for ${item.title}?`, a: `Applicants matching the official ${item.type || "opportunity"} eligibility rules should review the provider page before applying.` },
-    { q: `What is the deadline for ${item.title}?`, a: `The deadline status is ${ON.formatDeadline(item)}. Always confirm the latest date on the official page.` },
-    { q: "Where do I apply?", a: "Use the official application link listed on this page." }
-  ];
+  ON.generateDetailFAQs = (item) => {
+    const questions = [
+      { q: `Who is eligible for ${item.title}?`, a: `Review the official eligibility criteria on the provider page. Requirements typically cover ${item.level || "academic level"}, ${item.field || "field of study"}, and any nationality or residency rules.` },
+      { q: `When does the ${item.title} application close?`, a: `The deadline is listed as ${ON.formatDeadline(item)}. Confirm the exact closing time on the official provider page, as dates can change.` },
+      { q: "Where should I submit my application?", a: "Use the official application link on this page. OpportunityNest does not accept applications directly." }
+    ];
+    if (item.funding && item.funding !== "See official page") {
+      questions.push({ q: `What does the funding for ${item.title} cover?`, a: `The listing states: ${item.funding}. Read the provider's own terms to confirm what is included and any conditions attached.` });
+    }
+    return questions;
+  };
   ON.generateStructuredData = (item, url) => ({
     "@context": "https://schema.org",
     "@type": item.type === "Competition" ? "Course" : "EducationalOccupationalProgram",
@@ -408,9 +414,24 @@ window.ON = window.OpportunityNest;
       acceptedAnswer: { "@type": "Answer", text: faq.a }
     }))
   });
-  ON.generateWhoShouldApply = (item) => `Applicants with a fit for ${item.field || "the listed field"} and ${item.level || "the provider's level requirements"} should compare the official eligibility rules before applying.`;
-  ON.generateFundingExplained = (item) => item.funding || "Funding details are confirmed by the official provider.";
-  ON.generateSelectionProcess = () => "<p>Selection is managed by the official provider and usually considers eligibility fit, documents, motivation, and relevance to the program.</p>";
+  ON.generateWhoShouldApply = (item) => {
+    const parts = [];
+    if (item.field && item.field !== "All Fields") parts.push(`background in ${item.field}`);
+    if (item.level) parts.push(`at ${item.level} level`);
+    if (item.country && item.country !== "Global") parts.push(`interested in ${item.country}`);
+    return parts.length ? `Applicants with a ${parts.join(", ")} who meet the provider's eligibility rules should consider this program.` : `Applicants who meet the provider's eligibility criteria should review this program.`;
+  };
+  ON.generateFundingExplained = (item) => {
+    if (item.funding && item.funding !== "See official page") return item.funding;
+    return "Funding details are specified by the provider. Check the official page for the exact award amount, coverage, and conditions.";
+  };
+  ON.generateSelectionProcess = (item) => {
+    const t = (item.type || "").toLowerCase();
+    if (t === "internship") return "<p>The host organization manages the selection. Applications are reviewed based on qualifications, experience, and fit with the role. Some positions require interviews or skills assessments.</p>";
+    if (t === "competition") return "<p>The competition organizers evaluate submissions against published criteria. Winners are selected by a panel or jury. Review the judging process on the official page.</p>";
+    if (t === "fellowship") return "<p>Fellowship selection is typically conducted by a review committee. Applications are assessed on the candidate's qualifications, project proposal, and alignment with the program objectives.</p>";
+    return "<p>The official provider manages the entire selection process. Applications are reviewed based on eligibility fit, document completeness, and relevance to the program.</p>";
+  };
   ON.renderDetailExploreSection = (item) => {
     const country = item.country && item.country !== "Global" ? `<a href="/country/${ON.getCountrySlug(item.country)}/">More in ${ON.escapeHtml(item.country)}</a>` : "";
     const category = `<a href="${typeRouteMap[item.type] || "/#opportunities"}">More ${ON.escapeHtml((item.type || "opportunity").toLowerCase())} listings</a>`;
@@ -420,6 +441,8 @@ window.ON = window.OpportunityNest;
   ON.renderDetailContent = (item, urgencyClass = "", categoryPage = "/#opportunities", categoryType = "opportunity") => {
     const deadline = ON.formatDeadline(item);
     const faqs = ON.generateDetailFAQs(item).map((faq) => `<details><summary>${ON.escapeHtml(faq.q)}</summary><p>${ON.escapeHtml(faq.a)}</p></details>`).join("");
+    const type = (item.type || categoryType).toLowerCase();
+    const levelSection = item.level ? `<dt>Level</dt><dd>${ON.escapeHtml(item.level)}</dd>` : "";
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation"><a href="/">Home</a><span aria-hidden="true">/</span><a href="${categoryPage}">${ON.escapeHtml(categoryType)}s</a><span aria-hidden="true">/</span><span aria-current="page">${ON.escapeHtml(item.title)}</span></nav>
       <div class="detail-header">
@@ -429,12 +452,12 @@ window.ON = window.OpportunityNest;
         <div class="hero-actions"><a class="button button-primary" href="${ON.escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="${categoryPage}">Browse more</a></div>
       </div>
       <section class="detail-section"><h2>${ON.escapeHtml(ON.generateDetailH2(item))}</h2>${ON.renderMarkdown(item.description)}</section>
-      <section class="detail-section"><h2>Key information</h2><dl class="detail-grid"><div><dt>Country</dt><dd>${ON.escapeHtml(item.country)}</dd></div><div><dt>Level</dt><dd>${ON.escapeHtml(item.level || "Eligible applicants")}</dd></div><div><dt>Field</dt><dd>${ON.escapeHtml(item.field || "Multiple fields")}</dd></div><div><dt>Funding</dt><dd>${ON.escapeHtml(item.funding || "See official page")}</dd></div><div><dt>Deadline</dt><dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd></div></dl></section>
-      <section class="detail-section"><h2>Who should apply</h2><p>${ON.escapeHtml(ON.generateWhoShouldApply(item))}</p></section>
-      <section class="detail-section"><h2>Funding explained</h2><p>${ON.escapeHtml(ON.generateFundingExplained(item))}</p></section>
-      <section class="detail-section"><h2>Selection process</h2>${ON.generateSelectionProcess(item)}</section>
-      <section class="detail-section"><h2>Frequently asked questions</h2><div class="faq-list">${faqs}</div></section>
-      <section class="detail-section"><h2>How to apply</h2><p>Apply through the official provider page and verify the latest deadline, documents, and eligibility before submitting.</p><a class="button button-primary" href="${ON.escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Visit official website <span aria-hidden="true">↗</span></a></section>
+      <section class="detail-section"><h2>Key information</h2><dl class="detail-grid"><div><dt>Country</dt><dd>${ON.escapeHtml(item.country)}</dd></div>${levelSection}<div><dt>Field</dt><dd>${ON.escapeHtml(item.field || "Multiple fields")}</dd></div><div><dt>Funding</dt><dd>${ON.escapeHtml(item.funding || "See official page")}</dd></div><div><dt>Deadline</dt><dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd></div></dl></section>
+      <section class="detail-section"><h2>Applicant profile</h2><p>${ON.escapeHtml(ON.generateWhoShouldApply(item))}</p></section>
+      <section class="detail-section"><h2>Funding details</h2><p>${ON.escapeHtml(ON.generateFundingExplained(item))}</p></section>
+      <section class="detail-section"><h2>Selection and review</h2>${ON.generateSelectionProcess(item)}</section>
+      <section class="detail-section"><h2>Questions and answers</h2><div class="faq-list">${faqs}</div></section>
+      <section class="detail-section"><h2>Application instructions</h2><p>Submit through the official provider page. Verify the deadline, required documents, and eligibility rules on the provider's site before applying.</p><a class="button button-primary" href="${ON.escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Visit official website <span aria-hidden="true">↗</span></a></section>
       ${ON.renderDetailExploreSection(item)}
       <div id="related-opportunities" aria-live="polite"></div>`;
   };
@@ -445,7 +468,7 @@ window.ON = window.OpportunityNest;
     try {
       const rows = await ON.fetchOpportunityRows();
       const related = rows
-        .filter((row) => row.id !== item.id && (row.country === item.country || row.type === item.type))
+        .filter((row) => row.id !== item.id && row.country === item.country && row.type === item.type)
         .slice(0, 4);
       if (!related.length) return;
       container.innerHTML = `<h2>Related opportunities</h2><div class="related-grid">${related.map(ON.renderOpportunityCard).join("")}</div>`;

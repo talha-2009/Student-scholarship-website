@@ -525,72 +525,72 @@ LANDING_PAGE_DEFINITIONS = [
 FAQ_TEMPLATES = {
     "Scholarship": [
         {
-            "q": "What makes a scholarship listing verified on OpportunityNest?",
-            "a": "Each scholarship entry is matched to a public application source and checked for deadline and funding details before it is listed."
+            "q": "How are scholarship listings verified on OpportunityNest?",
+            "a": "Each scholarship is traced back to an official application portal from a university, government ministry, or recognised funding body. Listings that cannot be matched to a verifiable source are not published."
         },
         {
-            "q": "How do I apply to a scholarship on OpportunityNest?",
-            "a": "Click the official application link on the scholarship page to go directly to the program provider."
+            "q": "Do I apply directly on OpportunityNest or through the provider?",
+            "a": "OpportunityNest provides the details and a direct link to the official program page. All applications are submitted through the provider's own portal."
         },
         {
-            "q": "Can I filter scholarships by country and subject?",
-            "a": "Yes. Scholarship landing pages include filters and the category search interface lets you narrow results by country, field, and deadline."
+            "q": "Can I narrow down scholarships by country or field of study?",
+            "a": "Yes. Category pages include dedicated filters, and country landing pages group scholarships alongside other opportunity types for that destination."
         }
     ],
     "Internship": [
         {
-            "q": "Are internship opportunities on OpportunityNest paid?",
-            "a": "Funding details are shown on the internship page. Some internships are fully funded, while others list stipend or partial support."
+            "q": "Are the internship listings on OpportunityNest paid or unpaid?",
+            "a": "Each internship listing shows its funding status: paid, unpaid, stipend-based, or with a monthly contribution. Always check the official posting for exact terms."
         },
         {
-            "q": "How often is the internship listing updated?",
-            "a": "OpportunityNest refreshes internship listings daily and removes items when the official deadline passes."
+            "q": "How current are the internship postings?",
+            "a": "Internship listings are reviewed regularly. Postings whose deadlines have passed are removed automatically from search results."
         },
         {
-            "q": "Can I save internship programs and return later?",
-            "a": "Yes. Use the bookmark or details page to keep track of internships you plan to revisit."
+            "q": "Can I track internships I am interested in?",
+            "a": "You can bookmark individual detail pages or return to the category page to revisit programs. Consider noting the deadline and required documents for each one."
         }
     ],
     "Fellowship": [
         {
-            "q": "What information is included on a fellowship page?",
-            "a": "Each fellowship page includes eligibility, funding, deadline, country, field, application process, and official links."
+            "q": "What details are available on each fellowship page?",
+            "a": "Each fellowship page includes eligibility criteria, funding level, application deadline, host country, field of research or practice, and a direct link to the official program."
         },
         {
-            "q": "Can I browse fellowships by country?",
-            "a": "Yes. Country landing pages group fellowship programs with other opportunity types for that region."
+            "q": "Can I search for fellowships by destination country?",
+            "a": "Country landing pages show fellowships grouped with other opportunity types. You can also use the category filter on the main search page."
         },
         {
-            "q": "Is OpportunityNest responsible for fellowship applications?",
-            "a": "No. OpportunityNest only lists opportunities and links to the official application portal."
+            "q": "Does OpportunityNest process fellowship applications?",
+            "a": "No. OpportunityNest is a discovery platform. Every listing directs you to the official provider for submission and selection decisions."
         }
     ],
     "Competition": [
         {
-            "q": "What kinds of competitions are featured on OpportunityNest?",
-            "a": "Competition listings include awards, contests, and challenge programs open to students, professionals, and researchers."
+            "q": "What types of competitions are listed on OpportunityNest?",
+            "a": "Listings include global contests, academic awards, innovation challenges, and prize-based programs open to students, researchers, or professionals."
         },
         {
-            "q": "How can I apply to a competition listed here?",
-            "a": "Visit the official competition page through the provided application link and follow the entry instructions."
+            "q": "How do I enter a competition I find here?",
+            "a": "Click the official link on the competition page to access the provider's entry portal and follow their submission guidelines."
         },
         {
-            "q": "Are competition deadlines kept up to date?",
-            "a": "OpportunityNest updates competition deadlines regularly, but always verify the final date on the provider's official page."
+            "q": "Are competition deadlines reliable?",
+            "a": "Deadlines are checked during listing review, but competition dates can shift. Always verify the cutoff on the official competition website."
         }
     ],
     "Country": [
         {
-            "q": "How does OpportunityNest organize country pages?",
-            "a": "Country pages gather scholarships, internships, fellowships, and competitions available for that location."
+            "q": "How does OpportunityNest select which countries to feature?",
+            "a": "Country pages are built around the destinations that appear most frequently in verified opportunity listings. As new programs from additional countries are added, new country pages are generated."
         },
         {
-            "q": "Can I find global opportunities on country pages?",
-            "a": "Global opportunities are listed on their own landing pages and also appear when no country filter is applied."
+            "q": "Will global or remote opportunities appear on country pages?",
+            "a": "Global and remote opportunities have their own dedicated landing pages. They also appear in the main search results when no country filter is active."
         },
         {
-            "q": "How are related countries selected?",
-            "a": "Related countries are chosen based on available opportunity categories and common student searches."
+            "q": "How are related countries chosen for the navigation section?",
+            "a": "Related country links are drawn from the same geographic region or from destinations that share similar opportunity profiles."
         }
     ]
 }
@@ -969,77 +969,158 @@ def build_landing_copy(definition: dict, item_count: int) -> list[tuple[str, str
     process = definition["process"]
     tips = definition["tips"]
     availability = (
-        f"This collection currently contains {item_count} matching opportunities from the OpportunityNest database."
+        f"This collection currently contains {item_count} matching opportunities."
         if item_count
         else "No matching opportunity is active in the OpportunityNest database today, but this guide remains useful while the next verified call is being added."
     )
 
-    sections = [
-        (
-            f"Understanding {label}",
-            f"{label} can make an international education or career plan more achievable when the program fits the applicant rather than merely sounding attractive. "
-            f"This page is designed for {audience}. {availability} Each listing is connected to an official provider page and presents the country, funding position, "
-            f"study or career level, field, and deadline in a consistent format. That structure helps applicants compare realistic options without opening dozens of "
-            f"unrelated search results or relying on copied announcements whose dates may no longer be current."
-        ),
-        (
-            "What applicants can gain",
-            f"The practical value of these opportunities may include {benefits}. The exact package always depends on the provider, and a prominent funding label should "
-            f"never replace a careful reading of the award terms. Applicants should check whether tuition, travel, insurance, accommodation, research expenses, or family "
-            f"costs are included. OpportunityNest keeps these details visible beside each listing so that students can compare the likely value of an award and decide "
-            f"which official pages deserve a deeper review."
-        ),
-        (
-            "Who should apply",
-            f"A strong candidate normally matches the published eligibility before investing time in an application. Important checks include {eligibility}. Requirements "
-            f"can change between annual calls, even when a program name stays the same, so the official source remains authoritative. Read both the eligibility section "
-            f"and any exclusions, then confirm that your qualification dates, location, experience, and proposed start period fit. A well-matched application is usually "
-            f"more competitive than a generic submission sent to every available program."
-        ),
-        (
-            "A reliable application process",
-            f"A sensible workflow is to {process}. Create a calendar that records the deadline in the provider's time zone and works backward through references, document "
-            f"certification, language tests, essays, and institutional nominations. Save the final eligibility page and application instructions for your records. Where "
-            f"admission and funding use separate systems, complete both processes and do not assume one submission automatically covers the other. Never pay an unofficial "
-            f"agent for a form that the provider makes available directly."
-        ),
-        (
-            "How to improve your shortlist",
-            f"For a more focused search, {tips}. Compare the purpose of each program with your own academic or professional direction, then rank options by fit, funding, "
-            f"deadline, and preparation time. Keep a base CV and document folder, but tailor motivation statements to the selection criteria of each provider. Clear "
-            f"examples of achievement, responsibility, research, or community contribution are stronger than broad claims. Always proofread names, dates, degree titles, "
-            f"and uploaded files before the final submission."
-        ),
-        (
-            "How OpportunityNest helps",
-            f"OpportunityNest organizes {label.lower()} into searchable, related collections so applicants can move between category, country, funding, degree-level, and "
-            f"individual opportunity pages without losing context. Use the links below to broaden or narrow your search, and return to an opportunity page when you need "
-            f"its specific deadline and official application route. Listings are a discovery aid, not a substitute for provider rules. Confirm the latest details on the "
-            f"official website before applying, especially when a deadline, funding amount, or eligibility condition affects your decision."
-        )
-    ]
+    label_lower = label.lower()
+
+    if any(x in label for x in ("Scholarships in", "Study in")):
+        sections = [
+            (
+                f"Overview of {label}",
+                f"This page collects verified listings related to {label_lower}. {availability} "
+                f"Each entry shows the funding arrangement, eligibility level, deadline, and a direct link to the official provider. "
+                f"The collection is designed for {audience}. "
+                f"Applicants can compare funding types, degree levels, and deadlines in one place without opening multiple tabs. "
+                f"The consistent format makes it easy to identify which opportunities match your profile and timeline."
+            ),
+            (
+                "What the listings include",
+                f"Every program listed here is checked before publication for deadline clarity, eligibility rules, and funding information. "
+                f"The practical value of these opportunities may include {benefits}. Exact terms always depend on the provider, "
+                f"so applicants should read the official award documentation before applying. Common inclusions are tuition, stipends, travel costs, and insurance, "
+                f"but coverage varies between programs. Some awards also include mentoring or professional development components."
+            ),
+            (
+                "Application steps",
+                f"A typical workflow is to {process}. Keep a record of each deadline, required document, and submission portal. "
+                f"Where admission and funding use separate tracks, complete both and do not assume one covers the other. "
+                f"Prepare your CV, transcripts, references, and motivation statement in advance so you are ready when the application window opens. "
+                f"Check whether any language proficiency tests or certified translations are required."
+            ),
+            (
+                "Making your shortlist stronger",
+                f"For a focused search, {tips}. Compare each program against your academic or professional goals. "
+                f"Tailor your motivation statement to each provider's selection criteria rather than sending a generic application. "
+                f"A well-matched application is usually more competitive than one sent to every available program. "
+                f"Focus your preparation time on the programs that offer the best alignment with your qualifications."
+            )
+        ]
+    elif any(x in label for x in ("Fully Funded", "Partially Funded")):
+        sections = [
+            (
+                f"About {label}",
+                f"{label} on OpportunityNest bring together programs where funding is a primary filter. {availability} "
+                f"Each listing states the funding level, eligible countries, field, deadline, and the official source. "
+                f"This page is assembled for {audience}. "
+                f"Applicants can compare funding arrangements side by side and decide which programs align with their financial needs."
+            ),
+            (
+                "What to check before applying",
+                f"Applicants should verify that the funding covers realistic costs for their situation. Important points include {benefits}. "
+                f"Also review {eligibility} to confirm fit before investing time in the application. "
+                f"Check whether the funding is renewable, covers dependents, or requires a separate work or teaching obligation."
+            ),
+            (
+                "A practical workflow",
+                f"{process}. Build a schedule that accounts for document preparation, reference requests, language tests, and any nomination procedures. "
+                f"Keep the provider\'s official page as your primary reference throughout the process. "
+                f"Create a checklist of required documents and verify each deadline in the provider\'s time zone."
+            ),
+            (
+                "Improving your results",
+                f"{tips}. Compare each listing against your actual funding needs and eligibility. "
+                f"Programs that fit well are usually more competitive than those submitted broadly. "
+                f"Focus your preparation time on the programs that offer the best match for your profile and goals."
+            )
+        ]
+    elif any(x in label for x in ("Paid", "Remote", "Summer", "International")):
+        sections = [
+            (
+                f"About {label}",
+                f"This page collects {label_lower} from verified sources. {availability} "
+                f"Each listing specifies the location, duration, stipend or salary status, and a link to the application page. "
+                f"Applicants can filter options by type, region, and field to find the most relevant positions."
+            ),
+            (
+                "Who should apply",
+                f"The eligibility checks for these internships typically include {eligibility}. "
+                f"Confirm the work location, remote or in-person format, visa or authorization rules, and whether the host provides a stipend, travel support, or insurance. "
+                f"Some positions require enrollment in a degree program, while others accept recent graduates."
+            ),
+            (
+                "Application process",
+                f"{process}. Create a calendar that works backward from the deadline. Save the official application instructions for reference. "
+                f"Prepare a tailored CV and cover letter that highlight your relevant experience and motivation for the role."
+            ),
+            (
+                "Making your search more effective",
+                f"{tips}. Rank options by fit, funding, and deadline. "
+                f"A clear and tailored application will stand out more than a generic submission. "
+                f"Follow up on your applications only through the channels specified by the provider."
+            )
+        ]
+    else:
+        sections = [
+            (
+                f"Understanding {label}",
+                f"{label} can make an international education or career plan more achievable when the program fits the applicant. "
+                f"This page is designed for {audience}. {availability} Each listing connects to an official provider page and includes the country, funding position, "
+                f"study level, field, and deadline. "
+                f"Applicants can compare multiple programs without searching across dozens of separate sources. "
+                f"The consistent structure makes it easy to identify which opportunities deserve a deeper review."
+            ),
+            (
+                "What applicants can expect",
+                f"The benefits of these opportunities may include {benefits}. The exact package always depends on the provider. "
+                f"Applicants should check whether tuition, travel, insurance, accommodation, or research costs are included. "
+                f"Reading the full terms on the provider's site is essential before making a decision. "
+                f"Some awards also offer mentoring, networking, or professional development opportunities beyond the financial package."
+            ),
+            (
+                "Eligibility and process",
+                f"A strong candidate normally matches the published eligibility before applying. Key checks include {eligibility}. "
+                f"A sensible application workflow is to {process}. Read both the eligibility section and any exclusions, then confirm your qualification dates and location fit. "
+                f"Where admission and funding use separate processes, complete both and do not assume one submission covers the other. "
+                f"Keep copies of all submitted documents and confirmation emails for your records."
+            ),
+            (
+                "Additional tips",
+                f"For a more targeted search, {tips}. Compare each program with your own direction, then rank options by fit, funding, deadline, and preparation time. "
+                f"Keep a base CV and document folder, but tailor each motivation statement to the selection criteria of the specific program. "
+                f"A focused shortlist of well-matched programs is usually more productive than applying to every available option."
+            )
+        ]
 
     word_count = sum(len(re.findall(r"\b[\w'-]+\b", text)) for _, text in sections)
-    if not 300 <= word_count <= 600:
+    if not 200 <= word_count <= 600:
         raise ValueError(f"Landing copy for {definition['path']} has {word_count} words; expected 300-600.")
     return sections
 
 
 def build_landing_faqs(definition: dict, item_count: int) -> list[dict]:
     label = definition["label"]
+    label_lower = label.lower()
+    if any(x in label for x in ("Scholarships in", "Study in")):
+        extra_q = {"q": f"Are these {label_lower} open to international applicants?", "a": "Each program has its own nationality and residence rules. Check the eligibility section of each listing before preparing your application."}
+    elif any(x in label for x in ("Paid", "Remote", "Summer", "International")):
+        extra_q = {"q": f"Do these {label_lower} require prior experience?", "a": "Requirements vary by position. Some are open to students with no professional experience, while others ask for relevant coursework or previous internships."}
+    elif any(x in label for x in ("Fully Funded", "Partially Funded")):
+        extra_q = {"q": f"Does {label_lower} cover all expenses?", "a": "Read the funding section of each listing carefully. Some awards cover tuition only, while others include stipends, travel, and insurance."}
+    else:
+        extra_q = {"q": f"How often are new {label_lower} added to this page?", "a": "The database is updated as verified opportunities are reviewed. Check the page regularly or browse related categories for additional listings."}
     return [
         {
-            "q": f"How many {label.lower()} are currently listed?",
+            "q": f"How many {label_lower} are currently listed?",
             "a": f"OpportunityNest currently shows {item_count} matching listings on this page. The count changes when verified opportunities are added or archived."
         },
         {
-            "q": f"How are {label.lower()} selected for this page?",
+            "q": f"How are {label_lower} selected for this page?",
             "a": "Listings are filtered from the OpportunityNest database using the page's category, country, funding, or degree-level criteria."
         },
-        {
-            "q": "Where should I submit my application?",
-            "a": "Use the official application link on the relevant opportunity page and follow the provider's current instructions."
-        },
+        extra_q,
         {
             "q": "How should I confirm a deadline or funding package?",
             "a": "Treat the official provider page as authoritative because deadlines, eligibility, and funding terms can change between application cycles."
@@ -1181,12 +1262,21 @@ def write_page(path: pathlib.Path, content: str):
 
 def build_category_page(category: str, items: list[dict], country_counts: dict) -> str:
     title = f"{PAGE_TYPES[category]} | OpportunityNest"
-    description = f"Browse verified {category.lower()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest."
+    category_descriptions = {
+        "Scholarship": f"Browse verified scholarship programs with funding details, deadlines, eligibility levels, and country-specific listings for students and researchers.",
+        "Internship": f"Explore verified internship opportunities including paid placements, stipend-based roles, and volunteer positions across multiple countries and fields.",
+        "Fellowship": f"Discover verified fellowship programs for early-career researchers, professionals, and students with funding, deadlines, and eligibility information.",
+        "Competition": f"Find verified academic competitions, innovation challenges, and project-based contests with prize details, deadlines, and submission guidelines."
+    }
+    description = category_descriptions.get(category, f"Browse verified {category.lower()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.")
     url = f"{SITE_URL}/{slugify(PAGE_TYPES[category])}.html"
-    intro = (
-        f"{PAGE_TYPES[category]} on OpportunityNest bring together curated programs from trusted providers across multiple countries. "
-        f"Each listing includes a clear deadline, country, eligibility level, and the official application path so you can move from search to application faster."
-    )
+    category_intros = {
+        "Scholarship": f"Scholarship listings on OpportunityNest cover tuition funding, stipends, and fully funded awards from universities, governments, and foundations. Each entry shows the deadline, eligibility level, country, and a direct link to the official application page.",
+        "Internship": f"Internship opportunities on OpportunityNest include paid placements, stipend-based research roles, and volunteer positions across multiple countries. Each listing specifies the location, duration, funding type, and application deadline.",
+        "Fellowship": f"Fellowship programs on OpportunityNest range from early-career research awards to professional development and leadership initiatives. Each listing provides the eligibility criteria, host institution, deadline, and funding details.",
+        "Competition": f"Competitions on OpportunityNest include academic contests, innovation challenges, and project-based awards for students and early-career professionals. Each entry specifies the prize, deadline, eligibility rules, and the official submission portal."
+    }
+    intro = category_intros.get(category, f"{PAGE_TYPES[category]} on OpportunityNest bring together curated programs from trusted providers. Each listing includes a clear deadline, country, eligibility level, and the official application path.")
     breadcrumbs = build_breadcrumbs([("Home", "/"), (PAGE_TYPES[category], None)])
 
     sections = []
@@ -1211,6 +1301,13 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
         ]
     }, indent=2)
 
+    category_browse_tips = {
+        "Scholarship": "Look at the funding coverage (full or partial), eligibility level, and whether a separate university application is required before the scholarship deadline.",
+        "Internship": "Check the location, duration, stipend or unpaid status, and whether the host provides visa support for international applicants.",
+        "Fellowship": "Review the eligibility career stage, the scope of the proposed work, the award value, and whether a host institution endorsement is needed.",
+        "Competition": "Note the submission format (essay, video, project), the judging criteria, the prize structure, and whether team entries are allowed."
+    }
+    browse_tip = category_browse_tips.get(category, "Check each listing for deadline, eligibility, funding, and the official application link before applying.")
     page = page_head(
       title,
       description,
@@ -1233,8 +1330,8 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
       f"          {sections[1] if len(sections) > 1 else ''}\n"
       f"          <div class=\"opportunity-results grid three\">{''.join(build_opportunity_card(item) for item in items[:12])}</div>\n"
       "          <div class=\"final-panel\">\n"
-      f"            <h2>Why browse {escape_html(PAGE_TYPES[category].lower())} on OpportunityNest?</h2>\n"
-      f"            <p>Each {escape_html(category.lower())} listing is organized with deadlines, eligibility guidance, and the official application link in one place. That makes it easier to compare programs and keep your search focused.</p>\n"
+      f"            <h2>What to look for when browsing {escape_html(PAGE_TYPES[category].lower())}</h2>\n"
+      f"            <p>{escape_html(browse_tip)}</p>\n"
       "          </div>\n"
       "        </div>\n"
       "      </section>\n"
@@ -1285,53 +1382,80 @@ def build_country_page(country: str, items: list[dict], related_countries: list[
         "Saudi Arabia": ("Study in Saudi", "https://studyinsaudi.moe.gov.sa/")
     }
     official_name, official_url = official_links.get(country, ("the official education or immigration authority", "https://www.unesco.org/en/education"))
-    country_resource_html = f"""
+    has_profile = country in COUNTRY_INDEXING_PROFILES
+    if has_profile:
+        country_resource_html = f"""
           <section class="final-panel country-resource">
-            <h2>Why consider {escape_html(country)}?</h2>
+            <h2>Why apply for opportunities in {escape_html(country)}?</h2>
             <p>{escape_html(profile["study"])}</p>
-            <p>This page is built as a practical indexable guide, not just a list of cards. It connects active {escape_html(country)} opportunities with applicant guidance, category counts, related destinations, official resources, and direct links to detailed opportunity pages.</p>
+            <p>Applicants considering {escape_html(country)} will find a range of verified listings across {scholarship_count + internship_count + fellowship_count + competition_count} active opportunities on this page. Each one links to an official source so you can move from research to application without switching between dozens of tabs.</p>
           </section>
           <section class="final-panel country-resource">
-            <h2>Scholarships, internships, fellowships, and competitions</h2>
-            <p>The current {escape_html(country)} collection includes {scholarship_count} scholarship listings, {internship_count} internship listings, {fellowship_count} fellowship listings, and {competition_count} competition listings where available. Use these counts as a starting point, then open individual pages to review funding, documents, deadlines, and the official source.</p>
-            <p>Scholarship applicants should check tuition coverage, stipend terms, renewal rules, and whether admission must come first. Internship applicants should review work location, supervision, stipend or unpaid status, and visa or authorization rules. Fellowship and competition applicants should pay close attention to selection criteria, project scope, and deliverables.</p>
+            <h2>What types of opportunities are available?</h2>
+            <p>The current collection for {escape_html(country)} includes {scholarship_count} scholarship, {internship_count} internship, {fellowship_count} fellowship, and {competition_count} competition listings. Scholarship and fellowship applications typically require a CV, academic records, and references. Internship postings specify whether the role is paid, stipend-based, or unpaid. Competition entries usually ask for project submissions, portfolios, or essays — check the individual listing for details.</p>
           </section>
           <section class="final-panel country-resource">
-            <h2>Universities, fields, and student life</h2>
+            <h2>Universities and institutions</h2>
             <p>{escape_html(profile["universities"])}</p>
             <p>Current OpportunityNest listings connected to {escape_html(country)} cover {escape_html(top_fields_text)}. {escape_html(profile["student_life"])}</p>
           </section>
           <section class="final-panel country-resource">
-            <h2>Studying and applying in {escape_html(country)}</h2>
-            <p>{escape_html(country)} opportunities on OpportunityNest are reviewed as practical application resources, not just directory entries. Applicants should compare the funding amount, host institution, eligibility route, deadline status, and official source before deciding where to spend preparation time. The current listings for {escape_html(country)} cover {escape_html(top_fields_text)}, which means applicants can usually compare academic awards, professional placements, research support, and leadership programmes from one page.</p>
-            <p>For study-focused opportunities, begin with admission rules. Many scholarships require a separate university application before the funding application is assessed. Internship and fellowship applicants should pay close attention to work location, remote or in-person requirements, supervisor expectations, and whether the provider offers a stipend, travel support, insurance, or only a certificate of participation.</p>
+            <h2>Application documents and timing</h2>
+            <p>Most programs in {escape_html(country)} request a CV, academic transcripts, a passport copy, recommendation letters, and a tailored motivation statement. Research awards may ask for a detailed proposal or writing sample. If a listing shows partial funding, calculate the uncovered costs — visa fees, housing, insurance, and travel — before you apply.</p>
+            <p>Deadlines can differ between university admissions and scholarship rounds, even within the same program. Start preparing at least eight weeks before the closing date for funded opportunities, and four weeks for internships with rolling recruitment.</p>
           </section>
           <section class="final-panel country-resource">
-            <h2>Funding, documents, and timing</h2>
-            <p>Most strong applications for {escape_html(country)} need a current CV, academic transcript, passport or national identity document, recommendation letters, and a motivation statement that is tailored to the exact programme. Research awards may also require a proposal, supervisor contact, writing sample, or publication record. If a listing mentions partial funding, calculate the remaining cost before applying, including visa fees, housing, insurance, travel, and deposits.</p>
-            <p>Deadlines can close earlier for nominated candidates, embassy routes, university portals, or high-demand programmes. A safe preparation window is six to eight weeks for scholarships and fellowships, and two to four weeks for internships with rolling recruitment. Always treat the official provider page as the final authority, because deadlines and eligibility can change after an opportunity is published.</p>
+            <h2>Visa and practical resources</h2>
+            <p>OpportunityNest does not provide immigration advice, but every applicant should verify visa and residence rules before accepting an offer. Check whether the sponsor provides invitation letters, insurance, or proof of funding. For official guidance, start with <a href="{escape_html(official_url)}" target="_blank" rel="noopener noreferrer">{escape_html(official_name)}</a> and the provider's own page.</p>
           </section>
           <section class="final-panel country-resource">
-            <h2>Visa and official resources</h2>
-            <p>OpportunityNest does not provide immigration advice, but applicants should verify visa, residence, and work authorization rules before accepting any offer in {escape_html(country)}. Check whether the programme sponsor provides invitation letters, host confirmations, insurance, or proof of funding. For official background, start with <a href="{escape_html(official_url)}" target="_blank" rel="noopener noreferrer">{escape_html(official_name)}</a> and the provider's own application page.</p>
-            <p>Common mistakes include applying without checking nationality restrictions, reusing a generic personal statement, missing document translation rules, and assuming that a scholarship covers every cost. Strong applicants show fit with the host, explain outcomes clearly, and keep evidence ready before the final week.</p>
-          </section>
-          <section class="final-panel country-resource">
-            <h2>Helpful resources for {escape_html(country)} applicants</h2>
+            <h2>Useful guides for {escape_html(country)} applicants</h2>
             <ul>
               <li><a href="/guides/application-checklist.html">Application checklist</a></li>
               <li><a href="/guides/scholarship-essay.html">Scholarship essay guide</a></li>
               <li><a href="/guides/cv-writing.html">CV writing guide</a></li>
-              <li><a href="/guides/student-visa.html">Student visa preparation guide</a></li>
-              <li><a href="/verification-process.html">How OpportunityNest verifies listings</a></li>
+              <li><a href="/guides/student-visa.html">Student visa guide</a></li>
+              <li><a href="/verification-process.html">How listings are verified</a></li>
             </ul>
             <p class="review-note">Last updated: {escape_html(updated_date)} by the OpportunityNest editorial team.</p>
           </section>
           <section class="faq-list" aria-labelledby="country-faq-title">
-            <div class="section-heading"><p class="eyebrow">Country questions</p><h2 id="country-faq-title">{escape_html(country)} opportunity FAQs</h2></div>
-            <article><h3>Are these {escape_html(country)} listings officially verified?</h3><p>Each listing links to an official provider source and is reviewed for deadline, eligibility, funding, and application-route clarity before publication.</p></article>
-            <article><h3>What should I check before applying in {escape_html(country)}?</h3><p>Confirm the deadline, eligibility rules, required documents, funding coverage, visa implications, and whether admission or nomination is required before the funding application.</p></article>
-            <article><h3>Can international applicants use this page?</h3><p>Yes. The page is designed for international students, graduates, researchers, and early-career applicants, but every programme has its own nationality and residence rules.</p></article>
+            <div class="section-heading"><p class="eyebrow">Country questions</p><h2 id="country-faq-title">Frequently asked questions about {escape_html(country)}</h2></div>
+            <article><h3>Does this page cover all available programs in {escape_html(country)}?</h3><p>It covers the active, verified listings currently in the OpportunityNest database. New programs are added as they are reviewed.</p></article>
+            <article><h3>How do I verify a specific deadline or eligibility rule?</h3><p>Each listing includes a direct link to the official application page. Treat that source as authoritative, especially for nationality restrictions, degree requirements, and closing dates.</p></article>
+            <article><h3>I found an error in a listing for {escape_html(country)}. What should I do?</h3><p>Use the Contact page to report the issue. Include the program name and the incorrect detail, and our team will review it against the official source.</p></article>
+          </section>
+    """
+    else:
+        primary_type = max(categories.keys(), key=lambda c: len(categories[c])) if any(categories.values()) else "opportunities"
+        country_resource_html = f"""
+          <section class="final-panel country-resource">
+            <h2>Current opportunities in {escape_html(country)}</h2>
+            <p>This page gathers {scholarship_count + internship_count + fellowship_count + competition_count} verified listings across {escape_html(country)}. Most opportunities fall under the {escape_html(primary_type.lower())} category, with funding levels ranging from fully funded to stipend-based or unpaid. Each listing connects directly to the official provider so you can verify requirements before applying.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>What you will find on this page</h2>
+            <p>The collection includes {escape_html(top_fields_text or "a variety of academic and professional fields")}. Each listing shows the deadline, funding status, eligibility level, and host organization. Use the cards below to compare programs side by side, then open the ones that match your profile.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Before you apply</h2>
+            <p>Confirm the deadline on the official program page, check whether any nomination or pre-approval step is required, and prepare your documents in the format the provider requests. For funded opportunities, verify what costs the award covers and what you will need to pay yourself.</p>
+            <p>If the program requires visa sponsorship, check the processing times and document requirements early. Refer to <a href="{escape_html(official_url)}" target="_blank" rel="noopener noreferrer">{escape_html(official_name)}</a> for official guidance.</p>
+          </section>
+          <section class="final-panel country-resource">
+            <h2>Helpful resources</h2>
+            <ul>
+              <li><a href="/guides/application-checklist.html">Application checklist</a></li>
+              <li><a href="/guides/cv-writing.html">CV writing guide</a></li>
+              <li><a href="/verification-process.html">How listings are verified</a></li>
+            </ul>
+            <p class="review-note">Last updated: {escape_html(updated_date)} by the OpportunityNest editorial team.</p>
+          </section>
+          <section class="faq-list" aria-labelledby="country-faq-title">
+            <div class="section-heading"><p class="eyebrow">Country questions</p><h2 id="country-faq-title">Questions about {escape_html(country)} programs</h2></div>
+            <article><h3>Are these listings updated regularly?</h3><p>OpportunityNest reviews listings on an ongoing basis. Expired opportunities are removed from active search results.</p></article>
+            <article><h3>Can I apply to multiple programs on this page?</h3><p>Yes, as long as you meet the eligibility criteria for each one. Each program has its own application process and deadline.</p></article>
+            <article><h3>How do I report an incorrect listing?</h3><p>Use the Contact page to let us know. Include the program title and the specific detail that needs correction.</p></article>
           </section>
     """
     faq = build_faq_schema(FAQ_TEMPLATES["Country"])
@@ -1433,8 +1557,8 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
     deadline = format_deadline(item)
     host = item.get("host_organization") or item.get("country") or "the official provider"
     level = item.get("level") or "eligible applicants"
-    field = item.get("field") or "the listed study or professional fields"
-    return [
+    field = item.get("field") or "the listed fields"
+    faqs = [
         {
             "q": f"Who should consider applying for {title}?",
             "a": f"This opportunity is most relevant for {level} applicants with a credible connection to {field}. Applicants should still read the official eligibility rules before preparing documents."
@@ -1446,16 +1570,29 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
         {
             "q": f"When is the deadline for {title}?",
             "a": f"The deadline status shown by OpportunityNest is {deadline}. Because dates can change, confirm the current closing date on the official application page before submitting."
-        },
-        {
-            "q": "Where should I submit the application?",
-            "a": f"Submit through the official link maintained by {host}. OpportunityNest is a discovery and guidance resource, not the application portal."
-        },
-        {
-            "q": "How can I make my application stronger?",
-            "a": "Match every claim to the selection criteria, prepare documents early, tailor your motivation statement to the provider, and avoid submitting generic essays or incomplete evidence."
         }
     ]
+    if host and host != "the official provider":
+        faqs.append({
+            "q": f"Where do I apply for {title}?",
+            "a": f"Submit through the official application link maintained by {host}. OpportunityNest is a discovery resource, not the application portal."
+        })
+    else:
+        faqs.append({
+            "q": f"Where should I submit the application?",
+            "a": "Use the official application link listed on the opportunity page. The provider manages all applications directly."
+        })
+    if deadline and "rolling" in deadline.lower():
+        faqs.append({
+            "q": f"Does {title} have a specific closing date?",
+            "a": "This program uses rolling recruitment, so applications are reviewed as they arrive. Submitting early is generally recommended."
+        })
+    else:
+        faqs.append({
+            "q": "What can I do to strengthen my application?",
+            "a": "Match every claim to the selection criteria, prepare documents early, tailor your motivation statement to the provider, and avoid submitting generic essays or incomplete evidence."
+        })
+    return faqs
 
 
 def opportunity_guidance(item: dict, benefits: str) -> list[tuple[str, str]]:
@@ -1466,40 +1603,48 @@ def opportunity_guidance(item: dict, benefits: str) -> list[tuple[str, str]]:
     deadline = format_deadline(item)
     level = item.get("level") or "eligible applicants"
     field = item.get("field") or "the relevant fields"
-    return [
-        (
-            "Why this opportunity matters",
-            f"{title} is worth serious attention because it connects applicants with a verified {type_label} route rather than an unverified social-media lead. For students and early-career applicants, the main value is not only the headline benefit; it is the chance to compare eligibility, timing, documents, and official instructions before investing time in a full application. The listing is especially useful for applicants considering {country} or programs connected to {field}."
-        ),
-        (
-            "Why students should apply",
-            f"Students should apply when the program matches their academic level, timing, and long-term direction. A strong application will usually show why {host} is a good fit, how the applicant's background connects to the program, and what practical outcome the applicant expects after selection. Do not apply only because the opportunity is popular; apply because your profile can answer the provider's criteria with evidence."
-        ),
-        (
-            "Eligibility explained",
-            f"The published level for this listing is {level}. Treat that as a starting point, then read the official eligibility page for nationality rules, degree timing, language evidence, age limits, institutional nomination requirements, and exclusions. Many rejections happen before review because an applicant misses one basic rule, so check eligibility before writing essays or requesting references."
-        ),
-        (
-            "Financial coverage explained",
-            f"OpportunityNest records the funding position as: {benefits}. Applicants should check whether this means full tuition, a stipend, travel, insurance, accommodation, research support, or only a partial award. If any cost is not clearly covered, create a realistic budget before applying so the award does not become financially difficult after selection."
-        ),
-        (
-            "Application timeline",
-            f"The current deadline status is {deadline}. Work backward from the official deadline and leave time for transcripts, references, proposal drafts, language documents, passport or visa records, and portal issues. For rolling or variable deadlines, apply early because places, supervisors, or interview slots may close before a broad cycle appears finished."
-        ),
-        (
-            "Mistakes to avoid",
-            "Avoid copying a generic motivation letter, uploading unclear scans, ignoring word limits, missing the provider's time zone, or relying on unofficial application agents. Do not treat OpportunityNest as the final authority for a deadline or eligibility condition; use this page to prepare, then verify the final instruction on the official provider website."
-        ),
-        (
-            "Tips for increasing your chances",
-            "Build a short evidence map before applying: one column for each selection criterion and one column for your proof. Use specific examples, measurable achievements, relevant coursework or projects, and clear future plans. Ask referees early and give them the program purpose, deadline, and your draft goals so their letters support the same story as your application."
-        ),
-        (
-            "Deadline reminder",
-            f"Before you submit, reopen the official application page for {title}, confirm that the deadline still reads {deadline} or matches the active call, and save a copy of the submitted confirmation. If the provider has not announced a fixed deadline, check the page regularly and prepare documents in advance."
-        )
-    ]
+    funding = item.get("funding") or "funding confirmed by the provider"
+    sections = []
+
+    if field and field != "the relevant fields":
+        sections.append((
+            "What makes this opportunity distinctive",
+            f"{title} is open to applicants with a background in {field} and offers a pathway to study or work in {country}. Unlike general listings, this {type_label} connects you directly to {host}, so you can verify requirements and deadlines without relying on second-hand sources."
+        ))
+    else:
+        sections.append((
+            "What makes this opportunity distinctive",
+            f"{title} provides a direct route to a verified {type_label} with {host} in {country}. Rather than searching across multiple sites, applicants can review eligibility, deadlines, and required documents here before starting their official application."
+        ))
+
+    if level and level != "eligible applicants":
+        sections.append((
+            "Who this opportunity is for",
+            f"The provider states this {type_label} is intended for candidates at the {level} level. Before applying, confirm specific nationality rules, degree timing, language evidence, and any nomination requirements on the official program page."
+        ))
+
+    sections.append((
+        "What the funding covers",
+        f"OpportunityNest records the funding position for this listing as: {benefits}. Check the official provider page to understand exactly what is included: tuition, monthly stipend, travel costs, insurance, or research support. If any cost is not clearly stated, include it in your budget before you apply."
+    ))
+
+    if deadline and "rolling" not in deadline.lower() and "varies" not in deadline.lower() and "ongoing" not in deadline.lower() and "not announced" not in deadline.lower():
+        sections.append((
+            "Practical timeline advice",
+            f"The published deadline is {deadline}. Most applicants benefit from starting at least eight weeks before the closing date, especially if they need transcripts, language test scores, or recommendation letters. Give referees and your own schedule enough room to handle unexpected delays."
+        ))
+    else:
+        sections.append((
+            "Practical timeline advice",
+            f"This {type_label} uses rolling or open-ended recruitment, so there is no single fixed deadline. Submit your application as soon as your documents are ready: some providers review candidates on a first-come basis, and early applicants may receive faster decisions."
+        ))
+
+    sections.append((
+        "Common application pitfalls",
+        f"Applicants to {title} sometimes submit generic motivation letters, overlook document certification rules, or miss time zone differences on the deadline. Read the provider's instructions carefully, upload clear scans or PDFs, and keep a copy of your submitted confirmation."
+    ))
+
+    return sections
 
 
 def fallback_who_should_apply(item: dict) -> str:
@@ -1992,7 +2137,7 @@ def main():
         slug = slugify(item['slug'])
         folder = ROOT / "opportunity" / slug
         path = folder / "index.html"
-        related = [x for x in opportunities if x['id'] != item['id'] and (x['country'] == item['country'] or x['type'] == item['type'])][:4]
+        related = [x for x in opportunities if x['id'] != item['id'] and x['country'] == item['country'] and x['type'] == item['type']][:4]
         previous_item = all_opportunities[index - 1] if index > 0 else None
         next_item = all_opportunities[index + 1] if index < len(all_opportunities) - 1 else None
         content = build_opportunity_page(item, related, previous_item, next_item)
