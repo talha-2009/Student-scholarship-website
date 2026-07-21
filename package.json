@@ -1,0 +1,13 @@
+{
+  "name": "opportunitynest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OpportunityNest.org - Global Opportunity Discovery Hub",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

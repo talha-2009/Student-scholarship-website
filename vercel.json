@@ -1,4 +1,7 @@
 {
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/exchange-program.html", "destination": "/", "permanent": true },
