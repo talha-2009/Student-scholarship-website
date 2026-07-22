@@ -82,7 +82,7 @@ const loadInternshipDetail = async () => {
   try {
     const { data, error } = await ON.getSupabaseClient()
       .from("internships")
-      .select("id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,logo_url,featured,created_at")
+      .select("id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,deadline_status,official_url,description,logo_url,featured,created_at")
       .eq("id", internshipId)
       .single();
 

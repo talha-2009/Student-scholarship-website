@@ -54,6 +54,8 @@ mkdirp(DIST);
 // ─── Step 1: Build CSS — split into critical + deferred ──────────
 console.log("Building production assets...\n");
 
+// Preferred split line — adjusted safely by findSafeCssSplitIndex to the nearest rule boundary
+// Must land after layout/base/variables but before page-specific component styles
 const CRITICAL_CSS_LINES = 623;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
@@ -119,7 +121,7 @@ console.log(`  Total: ${(origCssSize/1024).toFixed(1)} KB → ${(Buffer.byteLeng
 
 // ─── Step 2: Minify JS ──────────────────────────────────────────
 const jsFiles = [
-  "nav.js", "utils.js", "script.js", "category.js",
+  "nav.js", "utils.js", "script.js",
   "contact.js", "opportunity-detail.js", "internship-detail.js", "dynamic-types.js"
 ];
 const jsAssetMap = {};

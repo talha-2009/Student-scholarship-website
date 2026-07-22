@@ -7,7 +7,7 @@
   const status = form.querySelector("#contact-status");
   const submitButton = form.querySelector("#contact-submit");
   const loadedAt = form.querySelector("#form-loaded-at");
-  const honeypot = form.querySelector('input[name="_gotcha"]');
+  const honeypot = form.querySelector('input[name="website_url"]');
   const fields = [
     {
       el: form.querySelector("#contact-name"),

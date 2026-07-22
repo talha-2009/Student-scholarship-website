@@ -8,6 +8,25 @@
   --primary: #0f766e;
   --primary-dark: #0b4f49;
   --accent: #2563eb;
+  --danger: #b42318;
+  --danger-bg: #fee2e2;
+  --danger-text: #b91c1c;
+  --success: #166534;
+  --success-bg: #e7f8f0;
+  --warning: #854d0e;
+  --warning-bg: #fff5db;
+  --warning-strong: #92400e;
+  --warning-soft: #fef3c7;
+  --footer-bg: #0d1816;
+  --footer-text: #dce7e4;
+  --footer-muted: #b6c5c1;
+  --badge-teal: #0d9488;
+  --badge-gray-bg: #f3f4f6;
+  --badge-gray-text: #374151;
+  --badge-blue-bg: #dbeafe;
+  --badge-blue-text: #1e40af;
+  --detail-bg: #f9fafb;
+  --detail-border: #e5e7eb;
   --shadow: 0 24px 70px rgba(16, 32, 29, 0.12);
   --radius: 8px;
   --radius-lg: 14px;
@@ -99,7 +118,7 @@ textarea {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #fff;
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 10px 30px rgba(16, 32, 29, 0.06);
 }
@@ -563,7 +582,7 @@ dd {
 
 .skeleton {
   display: block;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--badge-gray-bg) 25%, var(--detail-border) 50%, var(--badge-gray-bg) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 4px;
@@ -660,15 +679,14 @@ dd {
 }
 
 .verified,
-.deadline,
 .saved {
   display: inline-flex;
   align-items: center;
   min-height: 30px;
   padding: 5px 10px;
   border-radius: 999px;
-  background: #e7f8f0;
-  color: #166534;
+  background: var(--success-bg);
+  color: var(--success);
   font-size: 0.78rem;
   font-weight: 850;
   white-space: nowrap;
@@ -828,7 +846,7 @@ dd {
 
 .contact-form input[aria-invalid="true"],
 .contact-form textarea[aria-invalid="true"] {
-  border-color: #b42318;
+  border-color: var(--danger);
   box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
 }
 
@@ -841,7 +859,7 @@ dd {
 
 .field-error {
   min-height: 1.3em;
-  color: #b42318;
+  color: var(--danger);
 }
 
 .contact-status {
@@ -850,11 +868,11 @@ dd {
 }
 
 .contact-status.is-error {
-  color: #b42318;
+  color: var(--danger);
 }
 
 .contact-status.is-success {
-  color: #166534;
+  color: var(--success);
 }
 
 .contact-honeypot {
@@ -949,6 +967,27 @@ dd {
 
   .success-message {
     padding: 2rem 1rem;
+  }
+
+  .detail-section {
+    padding: 1rem;
+  }
+
+  .detail-badges {
+    flex-direction: column;
+  }
+
+  .badge {
+    width: fit-content;
+  }
+
+  .ad-container {
+    min-height: 60px;
+    margin: 1.25rem auto;
+  }
+
+  .ad-container ins.adsbygoogle {
+    min-height: 50px;
   }
 }
 
@@ -1301,24 +1340,24 @@ dd {
 }
 
 .deadline {
-  background: #fff5db;
-  color: #854d0e;
+  background: var(--warning-bg);
+  color: var(--warning);
 }
 
 .deadline-urgent {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--danger-bg);
+  color: var(--danger-text);
   animation: pulse 2s infinite;
 }
 
 .deadline-soon {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--warning-soft);
+  color: var(--warning-strong);
 }
 
 .deadline-expired {
-  background: #f3f4f6;
-  color: #4b5563;
+  background: var(--badge-gray-bg);
+  color: var(--badge-gray-text);
   text-decoration: line-through;
 }
 
@@ -1542,7 +1581,7 @@ dd {
 
 .cta-panel .eyebrow,
 .cta-panel p {
-  color: #b6e7de;
+  color: var(--badge-teal);
 }
 
 .cta-panel .button-secondary {
@@ -1606,7 +1645,7 @@ details p {
 
 .site-footer {
   padding: 44px 0 28px;
-  background: #0d1816;
+  background: var(--footer-bg);
   color: white;
 }
 
@@ -1616,7 +1655,7 @@ details p {
 
 .site-footer p {
   max-width: 420px;
-  color: #b6c5c1;
+  color: var(--footer-muted);
 }
 
 .footer-links {
@@ -1628,7 +1667,7 @@ details p {
 }
 
 .footer-links a {
-  color: #dce7e4;
+  color: var(--footer-text);
   font-weight: 700;
 }
 
@@ -1640,7 +1679,7 @@ details p {
   margin-top: 28px;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: #b6c5c1;
+  color: var(--footer-muted);
   font-size: 0.9rem;
 }
 
@@ -1911,23 +1950,23 @@ details p {
 }
 
 .badge-type {
-  background: linear-gradient(135deg, #0f766e, #0d9488);
+  background: linear-gradient(135deg, var(--primary), var(--badge-teal));
   color: white;
 }
 
 .badge-country {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--badge-gray-bg);
+  color: var(--badge-gray-text);
 }
 
 .badge-level {
-  background: #dbeafe;
-  color: #1e40af;
+  background: var(--badge-blue-bg);
+  color: var(--badge-blue-text);
 }
 
 .badge-expired {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--danger-bg);
+  color: var(--danger-text);
   font-weight: 600;
 }
 
@@ -1941,9 +1980,9 @@ details p {
 }
 
 .expired-notice {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-bg);
+  color: var(--danger-text);
   padding: 1rem 1.25rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
@@ -1955,21 +1994,20 @@ details p {
 .detail-section {
   margin: 2rem 0;
   padding: 1.5rem;
-  background: #f9fafb;
+  background: var(--detail-bg);
   border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--detail-border);
 }
 
 .detail-section h2 {
   margin: 0 0 1rem 0;
   font-size: 1.25rem;
-  color: #0f766e;
+  color: var(--primary);
 }
 
 .detail-intro {
   font-size: 1.125rem;
-  line-height: 1.75;
-  color: #374151;
+  color: var(--badge-gray-text);
   margin-bottom: 1.5rem;
 }
 
@@ -2006,7 +2044,7 @@ details p {
 }
 
 .detail-description a {
-  color: #0f766e;
+  color: var(--primary);
   text-decoration: underline;
 }
 
@@ -2023,7 +2061,7 @@ details p {
 
 #related-opportunities h2 {
   font-size: 1.5rem;
-  color: #0f766e;
+  color: var(--primary);
   margin-bottom: 1.5rem;
 }
 
@@ -2031,20 +2069,6 @@ details p {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .detail-section {
-    padding: 1rem;
-  }
-
-  .detail-badges {
-    flex-direction: column;
-  }
-
-  .badge {
-    width: fit-content;
-  }
 }
 
 .featured-internships,
@@ -2110,16 +2134,6 @@ details p {
   padding-bottom: 1rem;
   border-top: 1px solid #e5e7eb;
   padding-top: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .ad-container {
-    min-height: 60px;
-    margin: 1.25rem auto;
-  }
-  .ad-container ins.adsbygoogle {
-    min-height: 50px;
-  }
 }
 
 @media (max-width: 1199px) and (min-width: 768px) {
@@ -2453,9 +2467,6 @@ object {
 }
 
 /* ── Detail page hero padding ────────────────────────────────────── */
-.page-hero {
-  min-height: auto; /* was calc(100vh - 280px) — too tall on mobile */
-}
 
 /* ── Internship detail container padding ─────────────────────────── */
 .internship-detail {

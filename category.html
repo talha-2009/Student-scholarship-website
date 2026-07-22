@@ -18,7 +18,6 @@
     <title>Opportunities | OpportunityNest</title>
     <meta name="description" content="Browse verified opportunities on OpportunityNest.">
     <meta name="theme-color" content="#0f766e">
-    <link rel="canonical" href="https://www.opportunitynest.org/">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Opportunities | OpportunityNest">
     <meta property="og:description" content="Browse verified opportunities on OpportunityNest.">
@@ -97,9 +96,9 @@
         </div>
         <nav class="footer-links" role="navigation" aria-label="Footer navigation">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <a href="/scholarships/">Scholarships</a>
+          <a href="/internships/">Internships</a>
+          <a href="/fellowships/">Fellowships</a>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
           <a href="/faq.html">FAQ</a>
@@ -139,7 +138,13 @@
       document.querySelector('meta[property="og:description"]').setAttribute('content', `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`);
       document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${categoryType} | OpportunityNest`);
       document.querySelector('meta[name="twitter:description"]').setAttribute('content', `Browse verified ${categoryType.toLowerCase()} programs, funding details, deadlines, and country-specific opportunities on OpportunityNest.`);
-      document.querySelector('link[rel="canonical"]').setAttribute('href', `https://www.opportunitynest.org/${fileName}`);
+      var canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.href = 'https://www.opportunitynest.org/' + fileName;
 
       // Update heading
       document.getElementById('category-title').textContent = categoryType;
@@ -237,7 +242,9 @@
       document.getElementById("clear-filters")?.addEventListener("click", clearFilters);
 
       // Initialize
-      ON.populateCountryFilter(countryFilter);
+      (async () => {
+        await ON.populateCountryFilter(countryFilter);
+      })();
       loadOpportunities();
     </script>
     <script src="/dynamic-types.js"></script>

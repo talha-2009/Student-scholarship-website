@@ -19,8 +19,17 @@
     <title>Internship Details | OpportunityNest</title>
     <meta name="description" content="View internship details, eligibility, funding, deadline, and official application links.">
     <meta name="theme-color" content="#0f766e">
-    <link rel="canonical" href="https://www.opportunitynest.org/">
     <meta name="robots" content="index, follow">
+    <script>
+      (function(){
+        var link = document.createElement('link');
+        link.rel = 'canonical';
+        link.href = window.location.href;
+        document.head.appendChild(link);
+        var ogUrl = document.querySelector('meta[property="og:url"]');
+        if(ogUrl) ogUrl.setAttribute('content', window.location.href);
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Internship Details | OpportunityNest">
     <meta property="og:description" content="View internship details, eligibility, funding, deadline, and official application links.">
@@ -82,9 +91,9 @@
         </button>
         <div class="nav-menu" id="nav-menu">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <a href="/scholarships/">Scholarships</a>
+          <a href="/internships/">Internships</a>
+          <a href="/fellowships/">Fellowships</a>
           <a href="/competitions.html">Competitions</a>
           <a href="/?type=Youth+Program#opportunities">Youth Programs</a>
           <a href="/blog/">Blog</a>

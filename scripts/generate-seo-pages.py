@@ -2194,9 +2194,9 @@ def main():
     # Generate sitemap
     sitemap_entries = [
         {"loc": f"{SITE_URL}/", "changefreq": "daily", "priority": 1.0},
-        {"loc": f"{SITE_URL}/scholarships.html", "changefreq": "daily", "priority": 0.9},
-        {"loc": f"{SITE_URL}/internships.html", "changefreq": "daily", "priority": 0.9},
-        {"loc": f"{SITE_URL}/fellowships.html", "changefreq": "daily", "priority": 0.9},
+        {"loc": f"{SITE_URL}/scholarships/", "changefreq": "daily", "priority": 0.9},
+        {"loc": f"{SITE_URL}/internships/", "changefreq": "daily", "priority": 0.9},
+        {"loc": f"{SITE_URL}/fellowships/", "changefreq": "daily", "priority": 0.9},
         {"loc": f"{SITE_URL}/competitions.html", "changefreq": "daily", "priority": 0.8},
         {"loc": f"{SITE_URL}/about.html", "changefreq": "monthly", "priority": 0.7},
         {"loc": f"{SITE_URL}/contact.html", "changefreq": "monthly", "priority": 0.6},

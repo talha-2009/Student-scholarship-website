@@ -38,10 +38,12 @@
     <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
     <link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>
     <script>
-      // Set canonical and OG URL immediately from current location to avoid wrong canonical
       (function(){
         var u = window.location.href;
-        document.write('<link rel="canonical" href="' + u + '">');
+        var link = document.createElement('link');
+        link.rel = 'canonical';
+        link.href = u;
+        document.head.appendChild(link);
         var ogUrl = document.querySelector('meta[property="og:url"]');
         if(ogUrl) ogUrl.setAttribute('content', u);
       })();
@@ -88,9 +90,9 @@
         </button>
         <div class="nav-menu" id="nav-menu">
           <a href="/#opportunities">Opportunities</a>
-          <a href="/scholarships.html">Scholarships</a>
-          <a href="/internships.html">Internships</a>
-          <a href="/fellowships.html">Fellowships</a>
+          <a href="/scholarships/">Scholarships</a>
+          <a href="/internships/">Internships</a>
+          <a href="/fellowships/">Fellowships</a>
           <a href="/competitions.html">Competitions</a>
           <a href="/?type=Youth+Program#opportunities">Youth Programs</a>
           <a href="/blog/">Blog</a>

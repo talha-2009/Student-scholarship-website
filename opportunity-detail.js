@@ -11,7 +11,7 @@ const opportunitySlug = pathParts[0] === "opportunity" && pathParts[1]
 
 const setStatus = (message, isError = false) => ON.setStatus(detailStatus, message, isError);
 
-const renderDetail = (item) => {
+const renderDetail = (item, isExpired = false) => {
   const pageTitle = ON.generateSEOTitle(item);
   const metaDesc = ON.generateSEODescription(item);
   const pageUrl = window.location.href;
@@ -60,7 +60,12 @@ const renderDetail = (item) => {
   faqScript.textContent = JSON.stringify(faqSchema);
   document.head.appendChild(faqScript);
 
-  detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, categoryPage, item.type);
+  if (isExpired) {
+    const robots = document.querySelector('meta[name="robots"]');
+    if (robots) robots.setAttribute("content", "noindex, nofollow");
+  }
+  const expiredBanner = isExpired ? `<div class="expired-notice"><strong>This opportunity has expired.</strong> The deadline has passed, but the details below are kept for reference.</div>` : "";
+  detailContainer.innerHTML = expiredBanner + ON.renderDetailContent(item, urgencyClass, categoryPage, item.type);
 
   // Inject AdSense ad after main content (before related opportunities)
   const relatedDiv = document.getElementById('related-opportunities');
@@ -77,12 +82,7 @@ const renderDetail = (item) => {
   ON.renderRelatedOpportunities(item);
 };
 
-const getCategoryPage = (type) => {
-  if (type === "Scholarship") return "/scholarships/";
-  if (type === "Fellowship") return "/fellowships/";
-  if (type === "Internship") return "/internships/";
-  return "/#opportunities";
-};
+const getCategoryPage = (type) => ON.typeToUrl(type) || "/#opportunities";
 
 const loadOpportunityDetail = async () => {
   if (!opportunityId && !opportunitySlug) {
@@ -109,18 +109,20 @@ const loadOpportunityDetail = async () => {
     if (error) throw error;
     const item = ON.normalizeOpportunity(data);
 
-    if (!item || ON.getDeadlineUrgency(item) === "expired") {
+    if (!item) {
       window.location.replace("/404.html");
       return;
     }
+
+    const isExpired = ON.getDeadlineUrgency(item) === "expired";
 
     const canonicalPath = ON.getOpportunityPath(item);
     if (window.location.pathname !== canonicalPath) {
       window.history.replaceState({}, "", canonicalPath);
     }
 
-    renderDetail(item);
-    setStatus("Opportunity details loaded.");
+    renderDetail(item, isExpired);
+    setStatus(isExpired ? "This opportunity has expired." : "Opportunity details loaded.");
   } catch (error) {
     console.error("Opportunity detail fetch failed:", error);
     detailContainer.innerHTML = ON.renderErrorWithRetry(

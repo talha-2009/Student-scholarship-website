@@ -47,6 +47,9 @@ window.ON = window.OpportunityNest;
     "Summer School": "/workshops/"
   };
 
+  ON.typeRouteMap = typeRouteMap;
+  ON.typeToUrl = (type) => typeRouteMap[type] || `/${type.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "").replace(/--+/g, "-").replace(/^-+|-+$/g, "")}/`;
+
   const text = (value = "") => String(value ?? "").trim();
   const lower = (value = "") => text(value).toLowerCase();
   const activeDeadlineStatuses = new Set(["rolling", "varies", "not_announced"]);
@@ -258,7 +261,8 @@ window.ON = window.OpportunityNest;
     }
     container.innerHTML = Array.from({ length: pageCount }, (_, index) => {
       const page = index + 1;
-      return `<button type="button" class="pagination-button${page === currentPage ? " is-active" : ""}" data-page="${page}" aria-current="${page === currentPage ? "page" : "false"}">${page}</button>`;
+      const isPage = page === currentPage;
+      return `<button type="button" class="pagination-button${isPage ? " is-active" : ""}" data-page="${page}"${isPage ? ' aria-current="page"' : ""}>${page}</button>`;
     }).join("");
     container.querySelectorAll("[data-page]").forEach((button) => {
       button.addEventListener("click", () => onPageChange(Number(button.dataset.page)));
@@ -375,7 +379,6 @@ window.ON = window.OpportunityNest;
   ON.generateSEODescription = (item) =>
     `${item.title} details: deadline ${ON.formatDeadline(item)}, funding ${item.funding || "see official page"}, eligibility ${item.level || "eligible applicants"}.`;
   ON.generateImageAlt = (item) => `${item.title} opportunity in ${item.country || "Global"}`;
-  ON.pickVariant = (values = [], item = {}) => values[Math.abs(ON.cleanSlug(item.title || "").length) % values.length] || "";
   ON.generateDetailH1 = (item) => `${item.title}`;
   ON.generateDetailH2 = (item) => `${item.title} overview`;
   ON.generateDetailIntro = (item) => item.description || ON.generateSEODescription(item);

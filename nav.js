@@ -542,37 +542,10 @@ const setupNavigationInteractions = () => {
   }
 };
 
-// ─── Dynamic type nav link injection ────────────────────────
-// Called by script.js / category.js after opportunities are loaded
-// to insert "Competitions" / "Youth Programs" links that only
-// appear when those opportunity types exist in the database.
-window.addDynamicNavLinks = (types = []) => {
-  if (!navMenu) return;
-  // Remove any previously injected links
-  navMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
-  const links = [];
-  const cta = navMenu.querySelector(".nav-cta");
-  links.forEach(({ type, label }) => {
-    const matchingType = types.find((t) => t.trim().toLowerCase() === type.toLowerCase());
-    if (!matchingType) return;
-    const link = document.createElement("a");
-    link.href = `/?type=${encodeURIComponent(matchingType)}#opportunities`;
-    link.className = "nav-link";
-    link.textContent = label;
-    link.dataset.dynamicTypeLink = "true";
-    navMenu.insertBefore(link, cta);
-  });
-};
-
 if (navMenu) {
   buildNavigation();
   setupNavigationInteractions();
   window.closeNav = closeNav;
-  // If script.js already loaded types (it runs before nav.js on most pages),
-  // inject dynamic nav links now that the menu is fully built.
-  if (window.__opportunityTypes) {
-    window.addDynamicNavLinks(window.__opportunityTypes);
-  }
 }
 
 // ─── Footer SEO: enhance footer with additional internal links ────────────

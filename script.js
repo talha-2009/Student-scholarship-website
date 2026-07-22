@@ -8,7 +8,6 @@ const typeFilter = document.querySelector("#type-filter");
 const sortFilter = document.querySelector("#sort-filter");
 const pagination = document.querySelector("#pagination");
 const featuredInternshipGrid = document.querySelector("#featured-internship-grid");
-const headerNavMenu = document.querySelector("#nav-menu");
 
 let opportunities = [];
 let currentPage = 1;
@@ -95,12 +94,7 @@ const applyTypeFromUrl = (types = []) => {
   }
 };
 
-// Replaced by window.addDynamicNavLinks() in nav.js
-const renderConditionalTypeNavLinks = (types = []) => {
-  if (typeof window.addDynamicNavLinks === "function") {
-    window.addDynamicNavLinks(types);
-  }
-};
+
 
 const getCombinedDataset = () => {
   const selectedType = typeFilter?.value || "";
@@ -160,12 +154,10 @@ const renderOpportunities = () => {
   const categoryValue = document.getElementById("category-filter")?.value || "";
   const fundingValue = document.getElementById("funding-filter")?.value || "";
   
-  // When a type is selected, dataset already contains only that type from getCombinedDataset
-  // So don't apply additional type filter - only filter by search and country
   const filtered = ON.filterOpportunities(dataset, {
     searchTerm: liveSearch?.value || "",
     country: countryFilter?.value || "",
-    type: categoryValue,
+    type: "",
     funding: fundingValue
   }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
 
@@ -206,11 +198,7 @@ const loadOpportunities = async () => {
     applyTypeFromUrl(types);
     renderFilterChips(opportunities);
     renderOpportunities();
-    // Store types for nav.js to pick up (nav.js runs after this script)
-    window.__opportunityTypes = types;
-    if (typeof window.addDynamicNavLinks === "function") {
-      window.addDynamicNavLinks(types);
-    }
+
     renderFeaturedInternships(
       opportunities
         .filter((item) => normalizeTypeKey(item.type) === "internship" && item.link && item.link !== "#")
