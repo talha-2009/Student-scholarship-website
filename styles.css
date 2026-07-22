@@ -2431,6 +2431,7 @@ details p {
     top: 0;
     right: 0;
     bottom: 0;
+    left: auto;
     width: 320px;
     max-width: calc(100vw - 32px);
     display: flex;
@@ -2442,7 +2443,8 @@ details p {
     border-left: 1px solid var(--line);
     box-shadow: -4px 0 24px rgba(16, 32, 29, 0.12);
     transform: translateX(100%);
-    transition: transform 300ms ease;
+    visibility: hidden;
+    transition: transform 300ms ease, visibility 300ms ease;
     z-index: 1002;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -2450,6 +2452,7 @@ details p {
 
   .nav-menu.is-open {
     transform: translateX(0);
+    visibility: visible;
   }
 
   .nav-item {
