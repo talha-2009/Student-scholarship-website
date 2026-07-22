@@ -436,9 +436,13 @@ document.addEventListener("touchmove", (e) => {
 const manageChatbotZIndex = (lower) => {
   document.querySelectorAll('[class*="chtl"], [id*="chtl"], [class*="chatling"], [id*="chatling"]').forEach((el) => {
     if (lower) {
-      el.style.setProperty("z-index", "998", "important");
+      el.style.setProperty("z-index", "-1", "important");
+      el.style.setProperty("opacity", "0", "important");
+      el.style.setProperty("pointer-events", "none", "important");
     } else {
       el.style.zIndex = "";
+      el.style.opacity = "";
+      el.style.pointerEvents = "";
     }
   });
 };
