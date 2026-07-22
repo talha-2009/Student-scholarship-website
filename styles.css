@@ -249,6 +249,57 @@ body {
   }
 }
 
+/* Mobile drawer — must be in critical CSS (runs before deferred CSS loads) */
+@media (max-width: 767px) {
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    visibility: hidden;
+    z-index: 1002;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-menu.is-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .nav-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-menu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .nav-item {
   display: flex;
   align-items: center;
