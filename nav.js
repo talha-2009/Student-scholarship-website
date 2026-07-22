@@ -303,6 +303,16 @@ const createMegaItem = ({ label, href, sections }) => {
   return item;
 };
 
+const createCloseButton = () => {
+  const btn = document.createElement("button");
+  btn.className = "nav-menu-close";
+  btn.type = "button";
+  btn.setAttribute("aria-label", "Close navigation menu");
+  btn.innerHTML = '<span aria-hidden="true">&times;</span>';
+  btn.addEventListener("click", closeNav);
+  return btn;
+};
+
 const buildNavigation = () => {
   if (!navMenu) return;
 
@@ -310,6 +320,8 @@ const buildNavigation = () => {
   // This fixes dropdown issues on pages with simplified static nav
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
+
+  navMenu.appendChild(createCloseButton());
 
   navItems.forEach((item) => {
     navMenu.appendChild(createMegaItem(item));
@@ -395,11 +407,22 @@ const openMegaMenu = (item) => {
   }
 };
 
+// ─── Mobile nav overlay & scroll lock ──────────────────────
+let scrollPos = 0;
+
+const navOverlay = document.createElement("div");
+navOverlay.className = "nav-overlay";
+navOverlay.setAttribute("aria-hidden", "true");
+navOverlay.addEventListener("click", closeNav);
+
 const closeNav = () => {
   if (!navToggle || !navMenu) return;
   navToggle.setAttribute("aria-expanded", "false");
   navMenu.classList.remove("is-open");
+  navOverlay.classList.remove("is-visible");
   document.body.classList.remove("nav-open");
+  document.body.style.top = "";
+  window.scrollTo(0, scrollPos);
   closeAllMegaMenus();
 };
 
@@ -524,16 +547,27 @@ const setupNavigationInteractions = () => {
   window.addEventListener("resize", () => {
     if (!isMobileNav()) {
       navMenu?.classList.remove("is-open");
+      navOverlay?.classList.remove("is-visible");
       document.body.classList.remove("nav-open");
+      document.body.style.top = "";
+      window.scrollTo(0, scrollPos);
+      closeAllMegaMenus();
     }
-    closeAllMegaMenus();
   }, { passive: true });
 
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {
       const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+      if (!isOpen) {
+        scrollPos = window.scrollY;
+        document.body.style.top = `-${scrollPos}px`;
+      } else {
+        document.body.style.top = "";
+        window.scrollTo(0, scrollPos);
+      }
       navToggle.setAttribute("aria-expanded", String(!isOpen));
       navMenu.classList.toggle("is-open", !isOpen);
+      navOverlay.classList.toggle("is-visible", !isOpen);
       document.body.classList.toggle("nav-open", !isOpen);
       if (isOpen) {
         closeAllMegaMenus();
@@ -543,6 +577,7 @@ const setupNavigationInteractions = () => {
 };
 
 if (navMenu) {
+  document.body.appendChild(navOverlay);
   buildNavigation();
   setupNavigationInteractions();
   window.closeNav = closeNav;

@@ -109,6 +109,7 @@ body {
 
 body.nav-open {
   overflow: hidden;
+  width: 100%;
 }
 
 a {
@@ -308,10 +309,16 @@ body {
   display: none;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: white;
   padding: 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1003;
+  flex-shrink: 0;
 }
 
 .nav-toggle span:not(.sr-only) {
@@ -319,6 +326,46 @@ body {
   height: 2px;
   margin: 5px 0;
   background: var(--text);
+  transition: transform 300ms ease, opacity 300ms ease;
+  border-radius: 1px;
+}
+
+.nav-toggle[aria-expanded="true"] span:not(.sr-only):nth-child(2) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:not(.sr-only):nth-child(3) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:not(.sr-only):nth-child(4) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile drawer overlay and close button */
+.nav-overlay {
+  display: none;
+}
+
+.nav-menu-close {
+  display: none;
+}
+
+/* Scroll margin for anchored sections */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Touch-friendly clickable areas on mobile */
+a,
+button,
+input,
+select,
+summary,
+.filter-chip,
+.nav-link,
+.mega-trigger {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button {
@@ -2314,8 +2361,60 @@ details p {
     gap: 16px;
   }
 
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 32, 29, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease, visibility 300ms ease;
+    z-index: 1001;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+  }
+
+  .nav-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
   .nav-toggle {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-menu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text);
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .nav-menu-close span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-menu-close:hover {
+    background: var(--surface-strong);
   }
 
   .nav-menu {
@@ -2329,33 +2428,19 @@ details p {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 20px;
+    padding: 68px 20px 20px;
     background: #fff;
     border-left: 1px solid var(--line);
     box-shadow: -4px 0 24px rgba(16, 32, 29, 0.12);
     transform: translateX(100%);
     transition: transform 300ms ease;
     z-index: 1002;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav-menu.is-open {
     transform: translateX(0);
-  }
-
-  .nav-menu::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(16, 32, 29, 0.4);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 300ms ease, visibility 300ms ease;
-    z-index: -1;
-  }
-
-  .nav-menu.is-open::before {
-    opacity: 1;
-    visibility: visible;
   }
 
   .nav-item {
@@ -2367,7 +2452,7 @@ details p {
   .nav-link,
   .mega-trigger {
     width: 100%;
-    min-height: 0;
+    min-height: 44px;
     justify-content: space-between;
     padding: 14px 12px;
   }
@@ -2566,6 +2651,82 @@ object {
 @media (max-width: 560px) {
   .benefit-list {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Form elements — prevent overflow on small screens ───── */
+input,
+select,
+textarea,
+.search-card input,
+.search-card select {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Tables — allow horizontal scroll on mobile ──────────── */
+.table-wrapper,
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Pre / code — prevent horizontal page overflow ──────── */
+pre,
+code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ── Smooth scrolling for anchor links ──────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Logo strip — prevent overflow on small screens ─────── */
+.logo-strip {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ── Brand — prevent text cutoff ────────────────────────── */
+.brand-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 400px) {
+  .brand-text {
+    font-size: 0.85rem;
+  }
+}
+
+/* ── Hero section — prevent overflow on breakpoints ──────── */
+.hero-stats {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Nav link min-height — ensure 44px touch target ──────── */
+@media (max-width: 767px) {
+  .nav-link,
+  .mega-trigger,
+  .nav-menu-close,
+  .mega-column a {
+    min-height: 44px;
   }
 }
 
