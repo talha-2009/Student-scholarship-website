@@ -235,14 +235,20 @@ const megaMenuData = {
 };
 
 const navItems = [
-  { label: "Study Abroad", href: "/study-in-uk/", sections: megaMenuData["Study Abroad"] },
-  { label: "Scholarships", href: "/scholarships/", sections: megaMenuData.Scholarships },
-  { label: "Internships", href: "/internships/", sections: megaMenuData.Internships },
-  { label: "Fellowships", href: "/fellowships/", sections: megaMenuData.Fellowships },
-  { label: "Competitions", href: "/competitions.html", sections: megaMenuData.Competitions },
-  { label: "Youth Programs", href: "/?type=Youth+Program#opportunities", sections: megaMenuData["Youth Programs"] },
-  { label: "Blog", href: "/blog/", sections: megaMenuData.Blog },
-  { label: "Resource Center", href: "/guides/application-checklist.html", sections: megaMenuData["Resource Center"] }
+  { label: "Home", href: "/", mobile: true, desktop: false },
+  { label: "Scholarships", href: "/scholarships/", sections: megaMenuData.Scholarships, mobile: true, desktop: true },
+  { label: "Internships", href: "/internships/", sections: megaMenuData.Internships, mobile: true, desktop: true },
+  { label: "Fellowships", href: "/fellowships/", sections: megaMenuData.Fellowships, mobile: true, desktop: true },
+  { label: "Competitions", href: "/competitions.html", sections: megaMenuData.Competitions, mobile: true, desktop: true },
+  { label: "Jobs", href: "/jobs/", mobile: true, desktop: false },
+  { label: "Youth Programs", href: "/?type=Youth+Program#opportunities", sections: megaMenuData["Youth Programs"], mobile: true, desktop: true },
+  { label: "Resources", href: "/guides/application-checklist.html", sections: megaMenuData["Resource Center"], mobile: true, desktop: true },
+  { label: "Blog", href: "/blog/", sections: megaMenuData.Blog, mobile: true, desktop: true },
+  { label: "About", href: "/about.html", mobile: true, desktop: false },
+  { label: "Contact", href: "/contact.html", mobile: true, desktop: false },
+  { label: "Privacy Policy", href: "/privacy.html", mobile: true, desktop: false },
+  { label: "Terms of Service", href: "/terms.html", mobile: true, desktop: false },
+  { label: "Disclaimer", href: "/disclaimer.html", mobile: true, desktop: false }
 ];
 
 const isMobileNav = () => window.matchMedia(`(max-width: ${MOBILE_NAV_BREAKPOINT}px)`).matches;
@@ -316,15 +322,29 @@ const createCloseButton = () => {
 const buildNavigation = () => {
   if (!navMenu) return;
 
-  // Always rebuild to ensure consistent navigation across all pages
-  // This fixes dropdown issues on pages with simplified static nav
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
 
   navMenu.appendChild(createCloseButton());
 
+  const isMobile = isMobileNav();
+
   navItems.forEach((item) => {
-    navMenu.appendChild(createMegaItem(item));
+    // Only render items configured for the current view
+    if (isMobile && !item.mobile) return;
+    if (!isMobile && !item.desktop) return;
+
+    if (isMobile) {
+      // Mobile drawer renders as a simple flat vertical list
+      const link = document.createElement("a");
+      link.href = item.href;
+      link.className = "mobile-nav-link";
+      link.textContent = item.label;
+      navMenu.appendChild(link);
+    } else {
+      // Desktop renders complex mega menus
+      navMenu.appendChild(createMegaItem(item));
+    }
   });
 
   const cta = document.createElement("a");
@@ -578,9 +598,26 @@ const setupNavigationInteractions = () => {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+    if (event.key === "Escape" && document.body.classList.contains("nav-open")) {
       closeNav();
       navToggle?.focus();
+    }
+  });
+
+  navMenu.addEventListener("keydown", (event) => {
+    if (event.key === "Tab" && isMobileNav() && document.body.classList.contains("nav-open")) {
+      const focusableElements = navMenu.querySelectorAll("a, button, input, [tabindex]:not([tabindex=\"-1\"])");
+      if (focusableElements.length === 0) return;
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     }
   });
 
@@ -588,7 +625,15 @@ const setupNavigationInteractions = () => {
     if (!isMobileNav()) {
       closeNav(false);
     }
+    // Rebuild navigation if breakpoint is crossed
+    if (navMenu.dataset.wasMobile !== String(isMobileNav())) {
+      navMenu.dataset.wasMobile = String(isMobileNav());
+      buildNavigation();
+    }
   }, { passive: true });
+  
+  // Initialize breakpoint tracking
+  navMenu.dataset.wasMobile = String(isMobileNav());
 
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {
@@ -605,6 +650,11 @@ const setupNavigationInteractions = () => {
         navOverlay.setAttribute("aria-hidden", "false");
         document.body.classList.add("nav-open");
         manageChatbotZIndex(true);
+        // Focus first element inside nav after opening
+        setTimeout(() => {
+          const firstFocusable = navMenu.querySelector("a, button");
+          if (firstFocusable) firstFocusable.focus();
+        }, 100);
       }
     });
   }
