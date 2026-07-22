@@ -219,7 +219,7 @@ body {
 }
 
 .nav-menu {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: flex-end;
   flex: 1;
@@ -228,6 +228,16 @@ body {
   font-size: 0.9rem;
   font-weight: 650;
   min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-menu {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
 }
 
 .nav-item {
@@ -306,7 +316,6 @@ body {
 }
 
 .nav-toggle {
-  display: none;
   width: 44px;
   height: 44px;
   min-width: 44px;
