@@ -575,9 +575,56 @@ if (navMenu) {
   }
 }
 
+// ─── Chatbot — interaction-only loading ─────────────────────────
+// Root cause: auto-loaded chatbot widget overlaps content/ads on every page.
+// Fix: render a safe-positioned trigger button; load Chatling script only on first click.
+(function chatTrigger() {
+  var existing = document.getElementById('chtl-script');
+  if (existing) existing.remove();
+
+  var btn = document.createElement('button');
+  btn.className = 'chat-trigger';
+  btn.setAttribute('aria-label', 'Open chat');
+  btn.setAttribute('type', 'button');
+  btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+  document.body.appendChild(btn);
+
+  var loaded = false;
+  btn.addEventListener('click', function () {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://chatling.ai/js/embed.js';
+    s.async = true;
+    s.dataset.id = '9241558149';
+    s.id = 'chtl-script';
+    document.body.appendChild(s);
+  });
+})();
+
 // ─── Cookie Consent (GDPR / Google Consent Mode v2) ──────────────────
 (function cookieConsent() {
-  if (localStorage.getItem("on_consent")) return;
+  var saved = localStorage.getItem("on_consent");
+  if (saved === "accepted" || saved === "rejected") return;
+
+  var defaults = {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied'
+  };
+
+  function applyConsent(values) {
+    if (typeof gtag !== 'function') return;
+    gtag('consent', 'update', values);
+  }
+
+  function saveAndClose(values, label) {
+    applyConsent(values);
+    localStorage.setItem("on_consent", label);
+    banner.classList.remove("is-visible");
+    setTimeout(function () { banner.remove(); }, 350);
+  }
 
   var banner = document.createElement("div");
   banner.className = "cookie-consent";
@@ -585,9 +632,10 @@ if (navMenu) {
   banner.setAttribute("aria-label", "Cookie consent");
   banner.innerHTML =
     '<div class="container">' +
-      '<p>We use cookies and similar technologies to personalise content, serve ads, and analyse traffic. You can accept or reject non-essential cookies.</p>' +
+      '<p>We use cookies and similar technologies to personalise content, serve ads, and analyse traffic. You can accept all, reject all, or manage your preferences.</p>' +
       '<div class="cookie-consent-actions">' +
         '<button class="button button-secondary" data-action="reject">Reject All</button>' +
+        '<button class="button button-secondary" data-action="prefs">Manage Preferences</button>' +
         '<button class="button button-primary" data-action="accept">Accept All</button>' +
       '</div>' +
     '</div>';
@@ -595,21 +643,95 @@ if (navMenu) {
   document.body.appendChild(banner);
   requestAnimationFrame(function () { banner.classList.add("is-visible"); });
 
-  function setConsent( granted ) {
-    var value = granted ? "granted" : "denied";
-    gtag('consent', 'update', {
-      ad_storage: value,
-      ad_user_data: value,
-      ad_personalization: value,
-      analytics_storage: value
-    });
-    localStorage.setItem("on_consent", granted ? "accepted" : "rejected");
-    banner.classList.remove("is-visible");
-    setTimeout(function () { banner.remove(); }, 350);
-  }
+  banner.querySelector('[data-action="accept"]').addEventListener("click", function () {
+    saveAndClose({
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted'
+    }, 'accepted');
+  });
 
-  banner.querySelector('[data-action="accept"]').addEventListener("click", function () { setConsent(true); });
-  banner.querySelector('[data-action="reject"]').addEventListener("click", function () { setConsent(false); });
+  banner.querySelector('[data-action="reject"]').addEventListener("click", function () {
+    saveAndClose({
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    }, 'rejected');
+  });
+
+  banner.querySelector('[data-action="prefs"]').addEventListener("click", function () {
+    var backdrop = document.createElement("div");
+    backdrop.className = "consent-backdrop";
+    backdrop.setAttribute("role", "dialog");
+    backdrop.setAttribute("aria-modal", "true");
+    backdrop.setAttribute("aria-label", "Privacy preferences");
+    backdrop.innerHTML =
+      '<div class="consent-modal">' +
+        '<h2>Privacy Preferences</h2>' +
+        '<p>Choose which cookies and tracking technologies you allow.</p>' +
+        '<div class="consent-option">' +
+          '<label>Essential <small>Required for basic site functionality. Always active.</small></label>' +
+          '<span class="badge badge-essential">Always Active</span>' +
+        '</div>' +
+        '<div class="consent-option">' +
+          '<label for="consent-analytics">Analytics <small>Help us understand how visitors use the site.</small></label>' +
+          '<input type="checkbox" id="consent-analytics" checked>' +
+        '</div>' +
+        '<div class="consent-option">' +
+          '<label for="consent-ads">Advertising <small>Personalised ads and measurement. Required for AdSense revenue.</small></label>' +
+          '<input type="checkbox" id="consent-ads" checked>' +
+        '</div>' +
+        '<div class="consent-modal-actions">' +
+          '<button class="button button-secondary" data-prefs-action="reject">Reject All</button>' +
+          '<button class="button button-primary" data-prefs-action="save">Save Preferences</button>' +
+          '<button class="button button-primary" data-prefs-action="accept">Accept All</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(backdrop);
+    requestAnimationFrame(function () { backdrop.classList.add("is-visible"); });
+
+    backdrop.addEventListener("click", function (e) {
+      if (e.target === backdrop) {
+        backdrop.classList.remove("is-visible");
+        setTimeout(function () { backdrop.remove(); }, 250);
+      }
+    });
+
+    backdrop.querySelector('[data-prefs-action="accept"]').addEventListener("click", function () {
+      backdrop.remove();
+      saveAndClose({
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted'
+      }, 'accepted');
+    });
+
+    backdrop.querySelector('[data-prefs-action="reject"]').addEventListener("click", function () {
+      backdrop.remove();
+      saveAndClose({
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied'
+      }, 'rejected');
+    });
+
+    backdrop.querySelector('[data-prefs-action="save"]').addEventListener("click", function () {
+      var analytics = document.getElementById("consent-analytics").checked;
+      var ads = document.getElementById("consent-ads").checked;
+      backdrop.remove();
+      saveAndClose({
+        ad_storage: ads ? 'granted' : 'denied',
+        ad_user_data: ads ? 'granted' : 'denied',
+        ad_personalization: ads ? 'granted' : 'denied',
+        analytics_storage: analytics ? 'granted' : 'denied'
+      }, analytics || ads ? 'custom' : 'rejected');
+    });
+  });
 })();
 
 // ─── Footer SEO: enhance footer with additional internal links ────────────

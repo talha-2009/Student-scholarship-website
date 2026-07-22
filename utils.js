@@ -125,8 +125,8 @@ window.ON = window.OpportunityNest;
 
   ON.DEADLINE_STATUS_LABELS = {
     rolling: "Rolling / Ongoing",
-    varies: "Varies by Institution",
-    not_announced: "Deadline Not Announced"
+    varies: "Check official provider",
+    not_announced: "Official deadline unavailable"
   };
 
   ON.formatDeadline = (item = {}) => {
@@ -378,16 +378,94 @@ window.ON = window.OpportunityNest;
   ON.pickVariant = (values = [], item = {}) => values[Math.abs(ON.cleanSlug(item.title || "").length) % values.length] || "";
   ON.generateDetailH1 = (item) => `${item.title}`;
   ON.generateDetailH2 = (item) => `${item.title} overview`;
-  ON.generateDetailIntro = (item) => item.description || ON.generateSEODescription(item);
+  ON.generateDetailIntro = (item) => {
+    const type = item.type || "opportunity";
+    const country = item.country || "Global";
+    const funding = item.funding ? `with ${item.funding.toLowerCase()} support` : "";
+    return `Apply for the ${item.title}${funding ? " " + funding : ""}, a ${type.toLowerCase()} for students interested in ${country}. Deadline: ${ON.formatDeadline(item)}.`;
+  };
   ON.generateDetailFAQs = (item) => {
-    const questions = [
-      { q: `Who is eligible for ${item.title}?`, a: `Review the official eligibility criteria on the provider page. Requirements typically cover ${item.level || "academic level"}, ${item.field || "field of study"}, and any nationality or residency rules.` },
-      { q: `When does the ${item.title} application close?`, a: `The deadline is listed as ${ON.formatDeadline(item)}. Confirm the exact closing time on the official provider page, as dates can change.` },
-      { q: "Where should I submit my application?", a: "Use the official application link on this page. OpportunityNest does not accept applications directly." }
-    ];
-    if (item.funding && item.funding !== "See official page") {
-      questions.push({ q: `What does the funding for ${item.title} cover?`, a: `The listing states: ${item.funding}. Read the provider's own terms to confirm what is included and any conditions attached.` });
+    const title = item.title || "this opportunity";
+    const country = item.country || "Global";
+    const type = (item.type || "opportunity").toLowerCase();
+    const deadline = ON.formatDeadline(item);
+    const level = item.level || "eligible applicants";
+    const field = item.field && item.field !== "All Fields" ? item.field : "your field of study";
+    const funding = item.funding || "";
+    const provider = item.organization || "the programme provider";
+    const isRolling = item.deadline_status === "rolling";
+    const isVaries = item.deadline_status === "varies";
+    const isNotAnnounced = item.deadline_status === "not_announced";
+    const hasExactDeadline = !isRolling && !isVaries && !isNotAnnounced;
+
+    const questions = [];
+
+    questions.push({
+      q: `What exactly is the ${title}?`,
+      a: `The ${title} is a ${type}${country !== "Global" ? ` based in ${country}` : ""}. ${provider} offers this opportunity to ${level}. The official website has full programme details including specific terms, conditions, and application instructions.`
+    });
+
+    questions.push({
+      q: `Who can apply for the ${title}?`,
+      a: `Eligibility is determined by ${provider}. Generally, applicants should check the official page for requirements related to academic background (typically ${level}), ${field}, nationality or residency rules, and any language proficiency standards. Review the eligibility section on the provider's website before preparing your application.`
+    });
+
+    if (hasExactDeadline) {
+      questions.push({
+        q: `What is the application deadline for ${title}?`,
+        a: `The published deadline is ${deadline}. We recommend confirming the exact closing time and timezone on the official ${provider} website, as deadlines can change without notice. Plan to submit at least 48 hours before the deadline to avoid last‑minute technical issues.`
+      });
+    } else if (isRolling) {
+      questions.push({
+        q: `Does ${title} have a fixed application deadline?`,
+        a: `No — this opportunity uses rolling admissions. Applications are reviewed continuously until all positions are filled. Applying early is strongly recommended, as late applicants may find that places are no longer available even though the programme remains listed.`
+      });
+    } else if (isVaries) {
+      questions.push({
+        q: `When exactly does the ${title} deadline fall?`,
+        a: `The deadline varies by institution, course, or intake. Check the official ${provider} website for the specific deadline that applies to your chosen programme or start date. OpportunityNest lists this as varying because different tracks have different closing dates.`
+      });
+    } else if (isNotAnnounced) {
+      questions.push({
+        q: `Has the deadline for ${title} been announced yet?`,
+        a: `The deadline has not been announced for the current cycle. Check the official ${provider} website for updates, or sign up for their mailing list to receive notification when the new application window opens.`
+      });
     }
+
+    questions.push({
+      q: `How do I apply for the ${title}?`,
+      a: `Click the "Apply Now" button on this page to visit the official application portal of ${provider}. Follow their instructions carefully. OpportunityNest does not process applications; all submissions go directly through the provider's system.`
+    });
+
+    questions.push({
+      q: `What documents are required for the ${title} application?`,
+      a: `Required documents vary by programme. Common requirements include academic transcripts, a motivation letter or personal statement, letters of recommendation, a CV or résumé, proof of language proficiency, and copies of diplomas or certificates. Check the official ${provider} page for the exact document checklist.`
+    });
+
+    if (funding && funding !== "See official page") {
+      questions.push({
+        q: `What does the funding for ${title} cover?`,
+        a: `According to the listing, the funding includes: ${funding}. Review the provider's official terms to confirm what is covered, any conditions attached to the award, and whether additional costs (such as visa fees, health insurance, or travel) are included or need to be covered separately.`
+      });
+    } else {
+      questions.push({
+        q: `Is the ${title} funded or paid?`,
+        a: `Funding details should be confirmed on the official ${provider} application page. Some opportunities offer stipends, tuition waivers, or hourly wages, while others may be unpaid. Review the provider's website for exact compensation or funding information.`
+      });
+    }
+
+    if (country !== "Global") {
+      questions.push({
+        q: `Do I need a visa for the ${title} in ${country}?`,
+        a: `If your application is successful, you will likely need a student, work, or research visa depending on the ${type} and your nationality. Check the official embassy or consulate website of ${country} for the most current visa requirements. The ${provider} may also offer guidance or sponsorship for successful applicants.`
+      });
+    }
+
+    questions.push({
+      q: `When will I hear back after applying for the ${title}?`,
+      a: `Selection timelines vary. Some providers respond within four to six weeks, while others take several months due to committee review cycles. Check the official ${provider} page for their advertised notification date. You can also contact them directly through their website for timeline inquiries.`
+    });
+
     return questions;
   };
   ON.generateStructuredData = (item, url) => ({

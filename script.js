@@ -160,8 +160,6 @@ const renderOpportunities = () => {
   const categoryValue = document.getElementById("category-filter")?.value || "";
   const fundingValue = document.getElementById("funding-filter")?.value || "";
   
-  // When a type is selected, dataset already contains only that type from getCombinedDataset
-  // So don't apply additional type filter - only filter by search and country
   const filtered = ON.filterOpportunities(dataset, {
     searchTerm: liveSearch?.value || "",
     country: countryFilter?.value || "",
@@ -179,7 +177,51 @@ const renderOpportunities = () => {
   const { page, pageCount, items } = ON.paginate(filtered, currentPage);
   currentPage = page;
 
-  opportunityGrid.innerHTML = items.map(ON.renderOpportunityCard).join("");
+  // Progressive enhancement: update existing cards in-place, append new ones
+  const existingCards = opportunityGrid.querySelectorAll('.live-opportunity-card');
+  if (existingCards.length > 0 && currentPage === 1) {
+    // Update each existing card with live data
+    items.forEach((item, index) => {
+      if (index < existingCards.length) {
+        const card = existingCards[index];
+        const slug = item.slug || ON.cleanSlug(`${item.title} ${item.country}`);
+        card.dataset.opportunitySlug = slug;
+        // Update card content in-place
+        const kicker = card.querySelector('.card-kicker');
+        if (kicker) kicker.textContent = `${ON.getCountryFlag(item.country)} ${item.country || "Global"} / ${item.type || "Opportunity"}`;
+        const deadline = card.querySelector('.deadline');
+        if (deadline) deadline.textContent = ON.formatDeadline(item);
+        const title = card.querySelector('h3');
+        if (title) title.textContent = item.title || "Opportunity";
+        const desc = card.querySelector('p:not(.card-kicker)');
+        if (desc) desc.textContent = String(item.description || "").replace(/\s+/g, " ").slice(0, 180);
+        const fields = card.querySelectorAll('.card-overview li');
+        if (fields.length >= 3) {
+          fields[0].innerHTML = `<strong>Field:</strong> ${ON.escapeHtml(item.field || "Multiple fields")}`;
+          fields[1].innerHTML = `<strong>Level:</strong> ${ON.escapeHtml(item.level || "Eligible applicants")}`;
+          fields[2].innerHTML = `<strong>Funding:</strong> ${ON.escapeHtml(item.funding || "See details")}`;
+        }
+        const detailLink = card.querySelector('.button-secondary');
+        if (detailLink) detailLink.href = ON.getOpportunityPath(item);
+        const applyLink = card.querySelector('.button-primary');
+        if (applyLink) applyLink.href = item.link || "#";
+        const cardTopDeadline = card.querySelector('.opportunity-card-top .deadline');
+        if (cardTopDeadline) {
+          const urgency = ON.getDeadlineUrgency(item);
+          cardTopDeadline.className = `deadline${urgency !== "none" ? ` deadline-${urgency}` : ""}`;
+          cardTopDeadline.textContent = ON.escapeHtml(ON.formatDeadline(item));
+        }
+      }
+    });
+    // Append extra cards if Supabase has more than the static HTML
+    if (items.length > existingCards.length) {
+      const extraHtml = items.slice(existingCards.length).map(ON.renderOpportunityCard).join("");
+      opportunityGrid.insertAdjacentHTML('beforeend', extraHtml);
+    }
+  } else {
+    opportunityGrid.innerHTML = items.map(ON.renderOpportunityCard).join("");
+  }
+
   ON.renderPagination(pagination, pageCount, currentPage, (nextPage) => {
     currentPage = nextPage;
     renderOpportunities();
@@ -193,7 +235,11 @@ const renderOpportunities = () => {
 const loadOpportunities = async () => {
   if (!opportunityGrid) return;
 
-  opportunityGrid.innerHTML = ON.renderLoadingSkeleton(6);
+  // Progressive enhancement: if static cards exist in HTML, keep them as baseline
+  const hasStaticCards = opportunityGrid.querySelectorAll('.live-opportunity-card').length > 0;
+  if (!hasStaticCards) {
+    opportunityGrid.innerHTML = ON.renderLoadingSkeleton(6);
+  }
   setOpportunityStatus("Loading opportunities...");
 
   try {
@@ -218,10 +264,12 @@ const loadOpportunities = async () => {
     );
   } catch (error) {
     console.error("Supabase opportunities fetch failed:", error);
-    opportunityGrid.innerHTML = ON.renderErrorWithRetry(
-      error.message || "We could not load opportunities right now. Please check your connection.",
-      "loadOpportunities()"
-    );
+    if (!hasStaticCards) {
+      opportunityGrid.innerHTML = ON.renderErrorWithRetry(
+        error.message || "We could not load opportunities right now. Please check your connection.",
+        "loadOpportunities()"
+      );
+    }
     setOpportunityStatus(error.message || "We could not load opportunities right now.", true);
   }
 };
