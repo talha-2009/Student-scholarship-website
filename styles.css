@@ -434,6 +434,7 @@ body {
     top: 0;
     right: 0;
     bottom: 0;
+    left: auto;
     width: 320px;
     max-width: calc(100vw - 32px);
     display: flex;
@@ -2367,6 +2368,7 @@ details p {
     top: 0;
     right: 0;
     bottom: 0;
+    left: auto;
     width: 320px;
     max-width: calc(100vw - 32px);
     display: flex;
