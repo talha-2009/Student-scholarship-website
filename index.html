@@ -41,9 +41,6 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
     <link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="canonical" href="https://www.opportunitynest.org/">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKVTVB0X4X"></script>
@@ -473,23 +470,23 @@
             <label class="sr-only" for="live-search">Search live opportunities</label>
             <input id="live-search" name="search" type="search" placeholder="Search by title, field, country, funding..." autocomplete="off">
             <label class="sr-only" for="country-filter">Filter by country</label>
-            <select id="country-filter" name="country">
+            <select id="country-filter" name="country" autocomplete="country">
               <option value="">All countries</option>
             </select>
             <label class="sr-only" for="type-filter">Filter by type</label>
-            <select id="type-filter" name="type">
+            <select id="type-filter" name="type" autocomplete="off">
               <option value="">All types</option>
             </select>
             <label class="sr-only" for="category-filter">Filter by category</label>
-            <select id="category-filter" name="category">
+            <select id="category-filter" name="category" autocomplete="off">
               <option value="">All categories</option>
             </select>
             <label class="sr-only" for="funding-filter">Filter by funding</label>
-            <select id="funding-filter" name="funding">
+            <select id="funding-filter" name="funding" autocomplete="off">
               <option value="">All funding</option>
             </select>
             <label class="sr-only" for="sort-filter">Sort results</label>
-            <select id="sort-filter" name="sort">
+            <select id="sort-filter" name="sort" autocomplete="off">
               <option value="deadline">Sort by deadline</option>
               <option value="title">Sort by title</option>
               <option value="newest">Sort by newest</option>
