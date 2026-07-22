@@ -409,21 +409,55 @@ const openMegaMenu = (item) => {
 
 // ─── Mobile nav overlay & scroll lock ──────────────────────
 let scrollPos = 0;
+let wasNavOpen = false;
+
+const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+document.documentElement.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
 
 const navOverlay = document.createElement("div");
 navOverlay.className = "nav-overlay";
 navOverlay.setAttribute("aria-hidden", "true");
 navOverlay.addEventListener("click", closeNav);
 
-const closeNav = () => {
+navOverlay.addEventListener("touchmove", (e) => {
+  if (document.body.classList.contains("nav-open")) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Prevent body scroll on iOS when nav is open
+document.addEventListener("touchmove", (e) => {
+  if (document.body.classList.contains("nav-open") && navMenu && !navMenu.contains(e.target)) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Lower chatbot widget z-index when nav is open
+const manageChatbotZIndex = (lower) => {
+  document.querySelectorAll('[class*="chtl"], [id*="chtl"], [class*="chatling"], [id*="chatling"]').forEach((el) => {
+    if (lower) {
+      el.style.setProperty("z-index", "998", "important");
+    } else {
+      el.style.zIndex = "";
+    }
+  });
+};
+
+const closeNav = (restoreScroll = true) => {
   if (!navToggle || !navMenu) return;
   navToggle.setAttribute("aria-expanded", "false");
   navMenu.classList.remove("is-open");
   navOverlay.classList.remove("is-visible");
+  navOverlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("nav-open");
   document.body.style.top = "";
-  window.scrollTo(0, scrollPos);
+  if (restoreScroll && isMobileNav() && wasNavOpen) {
+    window.scrollTo(0, scrollPos);
+    wasNavOpen = false;
+  }
+  manageChatbotZIndex(false);
   closeAllMegaMenus();
+  navToggle?.focus();
 };
 
 const setupNavigationInteractions = () => {
@@ -466,6 +500,7 @@ const setupNavigationInteractions = () => {
     });
 
     trigger.addEventListener("click", (event) => {
+      if (event.detail === 0) return;
       event.preventDefault();
       if (item.classList.contains("is-open")) {
         closeMegaMenu(item);
@@ -498,6 +533,7 @@ const setupNavigationInteractions = () => {
     if (dropdown) {
       dropdown.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
+          event.stopPropagation();
           closeMegaMenu(item);
           trigger.focus();
         }
@@ -527,7 +563,7 @@ const setupNavigationInteractions = () => {
       return;
     }
 
-    closeNav();
+    closeNav(false);
   });
 
   document.addEventListener("click", (event) => {
@@ -546,31 +582,25 @@ const setupNavigationInteractions = () => {
 
   window.addEventListener("resize", () => {
     if (!isMobileNav()) {
-      navMenu?.classList.remove("is-open");
-      navOverlay?.classList.remove("is-visible");
-      document.body.classList.remove("nav-open");
-      document.body.style.top = "";
-      window.scrollTo(0, scrollPos);
-      closeAllMegaMenus();
+      closeNav(false);
     }
   }, { passive: true });
 
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {
       const isOpen = navToggle.getAttribute("aria-expanded") === "true";
-      if (!isOpen) {
+      if (isOpen) {
+        closeNav();
+      } else {
+        wasNavOpen = true;
         scrollPos = window.scrollY;
         document.body.style.top = `-${scrollPos}px`;
-      } else {
-        document.body.style.top = "";
-        window.scrollTo(0, scrollPos);
-      }
-      navToggle.setAttribute("aria-expanded", String(!isOpen));
-      navMenu.classList.toggle("is-open", !isOpen);
-      navOverlay.classList.toggle("is-visible", !isOpen);
-      document.body.classList.toggle("nav-open", !isOpen);
-      if (isOpen) {
-        closeAllMegaMenus();
+        navToggle.setAttribute("aria-expanded", "true");
+        navMenu.classList.add("is-open");
+        navOverlay.classList.add("is-visible");
+        navOverlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("nav-open");
+        manageChatbotZIndex(true);
       }
     });
   }

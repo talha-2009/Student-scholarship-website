@@ -110,6 +110,15 @@ body {
 body.nav-open {
   overflow: hidden;
   width: 100%;
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+/* Lower chatbot/widget z-index when nav is open */
+body.nav-open [class*="chtl"],
+body.nav-open [id*="chtl"],
+body.nav-open [class*="chatling"],
+body.nav-open [id*="chatling"] {
+  z-index: 998 !important;
 }
 
 a {
@@ -1841,44 +1850,6 @@ details p {
 
   .hero {
     padding-top: 56px;
-  }
-
-  .nav {
-    min-height: auto;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .nav-toggle {
-    display: inline-block;
-  }
-
-  .nav-menu {
-    position: fixed;
-    inset: 64px 10px auto;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 10px;
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    max-width: calc(100% - 20px);
-    width: auto;
-  }
-
-  .nav-menu.is-open {
-    display: flex;
-  }
-
-  .nav-menu a {
-    padding: 12px 10px;
-  }
-
-  .nav-cta {
-    margin-top: 12px;
   }
 
   .brand {
