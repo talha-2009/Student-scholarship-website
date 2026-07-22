@@ -56,7 +56,7 @@ console.log("Building production assets...\n");
 
 // Preferred split line — adjusted safely by findSafeCssSplitIndex to the nearest rule boundary
 // Must land after layout/base/variables but before page-specific component styles
-const CRITICAL_CSS_LINES = 623;
+const CRITICAL_CSS_LINES = 739;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
 const cssLines = rawCss.split("\n");
