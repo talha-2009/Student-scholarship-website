@@ -575,6 +575,43 @@ if (navMenu) {
   }
 }
 
+// ─── Cookie Consent (GDPR / Google Consent Mode v2) ──────────────────
+(function cookieConsent() {
+  if (localStorage.getItem("on_consent")) return;
+
+  var banner = document.createElement("div");
+  banner.className = "cookie-consent";
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-label", "Cookie consent");
+  banner.innerHTML =
+    '<div class="container">' +
+      '<p>We use cookies and similar technologies to personalise content, serve ads, and analyse traffic. You can accept or reject non-essential cookies.</p>' +
+      '<div class="cookie-consent-actions">' +
+        '<button class="button button-secondary" data-action="reject">Reject All</button>' +
+        '<button class="button button-primary" data-action="accept">Accept All</button>' +
+      '</div>' +
+    '</div>';
+
+  document.body.appendChild(banner);
+  requestAnimationFrame(function () { banner.classList.add("is-visible"); });
+
+  function setConsent( granted ) {
+    var value = granted ? "granted" : "denied";
+    gtag('consent', 'update', {
+      ad_storage: value,
+      ad_user_data: value,
+      ad_personalization: value,
+      analytics_storage: value
+    });
+    localStorage.setItem("on_consent", granted ? "accepted" : "rejected");
+    banner.classList.remove("is-visible");
+    setTimeout(function () { banner.remove(); }, 350);
+  }
+
+  banner.querySelector('[data-action="accept"]').addEventListener("click", function () { setConsent(true); });
+  banner.querySelector('[data-action="reject"]').addEventListener("click", function () { setConsent(false); });
+})();
+
 // ─── Footer SEO: enhance footer with additional internal links ────────────
 (function enhanceFooter() {
   const footerNav = document.querySelector(".footer-links");
