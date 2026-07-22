@@ -32,7 +32,10 @@ body {
 }
 
 body.nav-open {
+  position: fixed;
+  width: 100%;
   overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
 }
 
 a {
@@ -413,6 +416,118 @@ body {
   white-space: nowrap;
   overflow: visible;
   min-width: fit-content;
+}
+
+@media (max-width: 767px) {
+  .nav {
+    min-height: auto;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 20px;
+    background: #fff;
+    border-left: 1px solid var(--line);
+    box-shadow: -4px 0 24px rgba(16, 32, 29, 0.12);
+    transform: translateX(100%);
+    transition: transform 300ms ease;
+    z-index: 1002;
+  }
+
+  .nav-menu.is-open {
+    transform: translateX(0);
+  }
+
+  .nav-menu::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 32, 29, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease, visibility 300ms ease;
+    z-index: -1;
+  }
+
+  .nav-menu.is-open::before {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-item {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-link,
+  .mega-trigger {
+    width: 100%;
+    min-height: 0;
+    justify-content: space-between;
+    padding: 14px 12px;
+  }
+
+  .mega-menu {
+    position: static;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 12px;
+    margin: 0;
+    border: 0;
+    border-radius: 14px;
+    box-shadow: none;
+    background: var(--surface-strong);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: max-height 220ms ease, padding 220ms ease;
+  }
+
+  .nav-item.is-open > .mega-menu {
+    max-height: 2000px;
+    padding: 10px 12px 12px;
+  }
+
+  .mega-column h3 {
+    margin-bottom: 10px;
+  }
+
+  .mega-column-icon {
+    color: var(--primary);
+  }
+
+  .mega-column a {
+    min-height: 44px;
+    padding: 10px 8px;
+    margin: 0 -8px;
+    font-size: 0.92rem;
+  }
+
+  .nav-cta {
+    margin: 10px 0 0;
+    width: 100%;
+  }
 }
 
 .button-primary {
