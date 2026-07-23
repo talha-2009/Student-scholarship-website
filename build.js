@@ -133,7 +133,8 @@ const PRECONNECT_TAGS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
   '<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>',
-  '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>'
+  '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
+  '<link rel="preconnect" href="https://flagcdn.com" crossorigin>'
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;

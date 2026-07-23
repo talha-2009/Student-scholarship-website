@@ -21,15 +21,42 @@ window.ON = window.OpportunityNest;
     "https://www.urbanstudiesfoundation.org/grants-fellowships/": "https://www.urbanstudiesfoundation.org/funding/international-fellowships/"
   };
 
-  const countryFlags = {
-    Australia: "AU",
-    Austria: "AT",
-    Canada: "CA",
-    Germany: "DE",
-    Switzerland: "CH",
-    "United Kingdom": "UK",
-    "United States": "US",
-    Global: "Global"
+  const FLAG_CDN = "https://flagcdn.com/h20/";
+  const countryToFlagCode = {
+    Australia: "au",
+    Austria: "at",
+    Belgium: "be",
+    Canada: "ca",
+    China: "cn",
+    Denmark: "dk",
+    Europe: "eu",
+    Finland: "fi",
+    France: "fr",
+    Germany: "de",
+    India: "in",
+    Ireland: "ie",
+    Italy: "it",
+    Japan: "jp",
+    Malaysia: "my",
+    Netherlands: "nl",
+    "New Zealand": "nz",
+    Pakistan: "pk",
+    Qatar: "qa",
+    "Saudi Arabia": "sa",
+    Singapore: "sg",
+    "South Korea": "kr",
+    Spain: "es",
+    Sweden: "se",
+    Switzerland: "ch",
+    Thailand: "th",
+    Turkey: "tr",
+    "United Arab Emirates": "ae",
+    "United Kingdom": "gb",
+    "United States": "us",
+    UK: "gb",
+    USA: "us",
+    UAE: "ae",
+    Global: "global"
   };
 
   let supabaseClient;
@@ -154,8 +181,13 @@ window.ON = window.OpportunityNest;
   ON.isActiveOpportunity = (item) => ON.getDeadlineUrgency(item) !== "expired";
   ON.getOpportunityPath = (item) => `/opportunity/${encodeURIComponent(item.slug || ON.cleanSlug(`${item.title} ${item.country}`))}/`;
   ON.getOpportunityUrl = (item) => `${ON.SITE_URL}${ON.getOpportunityPath(item)}`;
-  ON.getCountryFlag = (country = "") => countryFlags[country] || "Global";
-  ON.getCountryLandmark = () => "";
+  ON.getCountryFlagHtml = (country = "") => {
+    const code = countryToFlagCode[country] || countryToFlagCode[country.replace(/^United\s+/, "").replace(/^U\.?\s*S\.?\s*A\.?\s*/, "USA").trim()];
+    if (!code || code === "global") {
+      return `<img class="country-flag" src="/global.svg" alt="Global" width="20" height="20" loading="lazy">`;
+    }
+    return `<img class="country-flag" src="${FLAG_CDN}${code}.svg" alt="Flag of ${ON.escapeHtml(country)}" width="20" height="15" loading="lazy">`;
+  };
 
   ON.setStatus = (element, message, isError = false) => {
     if (!element) return;
@@ -285,7 +317,7 @@ window.ON = window.OpportunityNest;
     return `
       <article class="live-opportunity-card compact-card">
         <div class="opportunity-card-top">
-          <p class="card-kicker">${ON.escapeHtml(ON.getCountryFlag(item.country))} ${ON.escapeHtml(item.country || "Global")} / ${ON.escapeHtml(item.type || "Opportunity")}</p>
+          <p class="card-kicker">${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")} / ${ON.escapeHtml(item.type || "Opportunity")}</p>
           <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
         </div>
         <h3>${ON.escapeHtml(item.title || "Opportunity")}</h3>
@@ -524,13 +556,13 @@ window.ON = window.OpportunityNest;
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation"><a href="/">Home</a><span aria-hidden="true">/</span><a href="${categoryPage}">${ON.escapeHtml(categoryType)}s</a><span aria-hidden="true">/</span><span aria-current="page">${ON.escapeHtml(item.title)}</span></nav>
       <div class="detail-header">
-        <p class="eyebrow">${ON.escapeHtml(item.type || categoryType)} - ${ON.escapeHtml(item.country || "Global")}</p>
+        <p class="eyebrow">${ON.escapeHtml(item.type || categoryType)} - ${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")}</p>
         <h1>${ON.escapeHtml(ON.generateDetailH1(item))}</h1>
         <p class="detail-intro">${ON.escapeHtml(ON.generateDetailIntro(item))}</p>
         <div class="hero-actions"><a class="button button-primary" href="${ON.escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="${categoryPage}">Browse more</a></div>
       </div>
       <section class="detail-section"><h2>${ON.escapeHtml(ON.generateDetailH2(item))}</h2>${ON.renderMarkdown(item.description)}</section>
-      <section class="detail-section"><h2>Key information</h2><dl class="detail-grid"><div><dt>Country</dt><dd>${ON.escapeHtml(item.country)}</dd></div>${levelSection}<div><dt>Field</dt><dd>${ON.escapeHtml(item.field || "Multiple fields")}</dd></div><div><dt>Funding</dt><dd>${ON.escapeHtml(item.funding || "See official page")}</dd></div><div><dt>Deadline</dt><dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd></div></dl></section>
+      <section class="detail-section"><h2>Key information</h2><dl class="detail-grid"><div><dt>Country</dt><dd>${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country)}</dd></div>${levelSection}<div><dt>Field</dt><dd>${ON.escapeHtml(item.field || "Multiple fields")}</dd></div><div><dt>Funding</dt><dd>${ON.escapeHtml(item.funding || "See official page")}</dd></div><div><dt>Deadline</dt><dd><span class="deadline${urgencyClass}">${ON.escapeHtml(deadline)}</span></dd></div></dl></section>
       <section class="detail-section"><h2>Applicant profile</h2><p>${ON.escapeHtml(ON.generateWhoShouldApply(item))}</p></section>
       <section class="detail-section"><h2>Funding details</h2><p>${ON.escapeHtml(ON.generateFundingExplained(item))}</p></section>
       <section class="detail-section"><h2>Selection and review</h2>${ON.generateSelectionProcess(item)}</section>

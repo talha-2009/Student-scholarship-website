@@ -771,6 +771,23 @@ dd {
   letter-spacing: 0.06em;
 }
 
+.country-flag {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 15px;
+  margin-right: 4px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .country-flag {
+    width: 18px;
+    height: 14px;
+  }
+}
+
 .dashboard h2 {
   font-size: 1.45rem;
 }
