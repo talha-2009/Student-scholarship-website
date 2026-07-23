@@ -3828,3 +3828,96 @@ object {
   background: var(--surface-strong);
   color: var(--text);
 }
+
+/* ─── Blog Cards ───────────────────────────────────────── */
+.blog-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+.blog-card {
+  border: 1px solid var(--line, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.blog-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+.blog-card-category {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  align-self: flex-start;
+}
+.blog-card-category.scholarship-guide { background: #f0fdf4; color: #166534; }
+.blog-card-category.scholarship-list { background: #eff6ff; color: #1e40af; }
+.blog-card-category.application-guide { background: #ecfdf5; color: #065f46; }
+.blog-card-category.budget-guide { background: #fce7f3; color: #9d174d; }
+.blog-card-category.interview-prep { background: #ede9fe; color: #5b21b6; }
+.blog-card-category.comparison { background: #fef3c7; color: #92400e; }
+.blog-card-body h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  line-height: 1.4;
+}
+.blog-card-body h2 a {
+  color: #111827;
+  text-decoration: none;
+}
+.blog-card-body h2 a:hover {
+  color: var(--primary, #0f766e);
+}
+.blog-card-body p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-top: auto;
+}
+.blog-card-readtime {
+  position: relative;
+  padding-left: 1rem;
+}
+.blog-card-readtime::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  background: #9ca3af;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.blog-card-cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary, #0f766e);
+  text-decoration: none;
+}
+.blog-card-cta:hover {
+  text-decoration: underline;
+}
+@media (max-width: 480px) {
+  .blog-card-grid {
+    grid-template-columns: 1fr;
+  }
+}

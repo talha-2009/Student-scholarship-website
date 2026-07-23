@@ -92,54 +92,7 @@
 
       <section style="padding:2rem 0 4rem;">
         <div class="container">
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;">
-
-            <article style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;">
-              <div style="padding:1.5rem;">
-                <span style="display:inline-block;background:#ecfdf5;color:#065f46;font-size:0.8rem;font-weight:600;padding:0.25rem 0.75rem;border-radius:99px;margin-bottom:0.75rem;">Application Guide</span>
-                <h2 style="font-size:1.25rem;margin-bottom:0.5rem;"><a href="/blog/how-to-write-winning-scholarship-essay.html" style="color:#111827;text-decoration:none;">How to Write a Winning Scholarship Essay: Step-by-Step Guide</a></h2>
-                <p style="color:#6b7280;font-size:0.95rem;line-height:1.6;">Your scholarship essay is the single most important part of any application. Learn the exact structure, opening hooks, and editing techniques that selection committees look for.</p>
-                <p style="margin-top:0.75rem;font-size:0.85rem;color:#9ca3af;">15 min read</p>
-              </div>
-            </article>
-
-            <article style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;">
-              <div style="padding:1.5rem;">
-                <span style="display:inline-block;background:#eff6ff;color:#1e40af;font-size:0.8rem;font-weight:600;padding:0.25rem 0.75rem;border-radius:99px;margin-bottom:0.75rem;">Scholarship List</span>
-                <h2 style="font-size:1.25rem;margin-bottom:0.5rem;"><a href="/blog/top-fully-funded-scholarships.html" style="color:#111827;text-decoration:none;">Top 10 Fully Funded Scholarships for International Students in 2026</a></h2>
-                <p style="color:#6b7280;font-size:0.95rem;line-height:1.6;">From Chevening to MEXT, these are the most generous and most-searched fully funded scholarships available to students from every country.</p>
-                <p style="margin-top:0.75rem;font-size:0.85rem;color:#9ca3af;">12 min read</p>
-              </div>
-            </article>
-
-            <article style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;">
-              <div style="padding:1.5rem;">
-                <span style="display:inline-block;background:#fef3c7;color:#92400e;font-size:0.8rem;font-weight:600;padding:0.25rem 0.75rem;border-radius:99px;margin-bottom:0.75rem;">Comparison</span>
-                <h2 style="font-size:1.25rem;margin-bottom:0.5rem;"><a href="/blog/chevening-vs-commonwealth.html" style="color:#111827;text-decoration:none;">Chevening vs Commonwealth Scholarship: Which Should You Apply For?</a></h2>
-                <p style="color:#6b7280;font-size:0.95rem;line-height:1.6;">Both are fully funded UK government scholarships, but they target different profiles. We break down eligibility, benefits, and selection criteria side by side.</p>
-                <p style="margin-top:0.75rem;font-size:0.85rem;color:#9ca3af;">10 min read</p>
-              </div>
-            </article>
-
-            <article style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;">
-              <div style="padding:1.5rem;">
-                <span style="display:inline-block;background:#fce7f3;color:#9d174d;font-size:0.8rem;font-weight:600;padding:0.25rem 0.75rem;border-radius:99px;margin-bottom:0.75rem;">Budget Guide</span>
-                <h2 style="font-size:1.25rem;margin-bottom:0.5rem;"><a href="/blog/study-abroad-on-a-budget.html" style="color:#111827;text-decoration:none;">How to Study Abroad on a Budget: The Complete Financial Guide</a></h2>
-                <p style="color:#6b7280;font-size:0.95rem;line-height:1.6;">Not every student wins a full ride. Here's how to fund your international education through partial scholarships, affordable destinations, and smart financial planning.</p>
-                <p style="margin-top:0.75rem;font-size:0.85rem;color:#9ca3af;">14 min read</p>
-              </div>
-            </article>
-
-            <article style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff;">
-              <div style="padding:1.5rem;">
-                <span style="display:inline-block;background:#ede9fe;color:#5b21b6;font-size:0.8rem;font-weight:600;padding:0.25rem 0.75rem;border-radius:99px;margin-bottom:0.75rem;">Interview Prep</span>
-                <h2 style="font-size:1.25rem;margin-bottom:0.5rem;"><a href="/blog/how-to-ace-scholarship-interview.html" style="color:#111827;text-decoration:none;">How to Ace Your Scholarship Interview: Questions, Answers & Tips</a></h2>
-                <p style="color:#6b7280;font-size:0.95rem;line-height:1.6;">You've made it past the application stage. Now learn how to prepare for the scholarship interview with proven frameworks for answering the most common questions.</p>
-                <p style="margin-top:0.75rem;font-size:0.85rem;color:#9ca3af;">11 min read</p>
-              </div>
-            </article>
-
-          </div>
+          <div class="blog-card-grid" id="blog-posts"></div>
         </div>
       </section>
     </main>
@@ -171,6 +124,8 @@
         <p>&copy; 2026 OpportunityNest.org. All rights reserved.</p>
       </div>
     </footer>
+    <script src="/blog/blog-data.js" defer></script>
+    <script src="/blog/blog-render.js" defer></script>
     <script src="/nav.js" defer></script>
   </body>
 </html>
