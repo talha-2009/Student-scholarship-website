@@ -575,33 +575,6 @@ if (navMenu) {
   }
 }
 
-// ─── Chatbot — interaction-only loading ─────────────────────────
-// Root cause: auto-loaded chatbot widget overlaps content/ads on every page.
-// Fix: render a safe-positioned trigger button; load Chatling script only on first click.
-(function chatTrigger() {
-  var existing = document.getElementById('chtl-script');
-  if (existing) existing.remove();
-
-  var btn = document.createElement('button');
-  btn.className = 'chat-trigger';
-  btn.setAttribute('aria-label', 'Open chat');
-  btn.setAttribute('type', 'button');
-  btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
-  document.body.appendChild(btn);
-
-  var loaded = false;
-  btn.addEventListener('click', function () {
-    if (loaded) return;
-    loaded = true;
-    var s = document.createElement('script');
-    s.src = 'https://chatling.ai/js/embed.js';
-    s.async = true;
-    s.dataset.id = '9241558149';
-    s.id = 'chtl-script';
-    document.body.appendChild(s);
-  });
-})();
-
 // ─── Cookie Consent (GDPR / Google Consent Mode v2) ──────────────────
 (function cookieConsent() {
   var saved = localStorage.getItem("on_consent");

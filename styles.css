@@ -3741,45 +3741,6 @@ object {
 /* ═══════════════════════════════════════
    Chat trigger button — interaction-only chatbot loading
    ═══════════════════════════════════════ */
-.chat-trigger {
-  position: fixed;
-  bottom: 100px;
-  right: 24px;
-  z-index: 9997;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, opacity 0.2s;
-}
-.chat-trigger:hover {
-  transform: scale(1.08);
-}
-.chat-trigger:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-@media (max-width: 767px) {
-  .chat-trigger {
-    bottom: 16px;
-    right: 16px;
-    width: 44px;
-    height: 44px;
-  }
-}
-@media (min-width: 768px) and (max-width: 1023px) {
-  .chat-trigger {
-    bottom: 24px;
-    right: 24px;
-  }
-}
 /* Chatling widget renders after interaction; z-index stays below consent modal */
 #chatling-widget {
   z-index: 9998 !important;
