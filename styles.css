@@ -4669,6 +4669,21 @@ input[type="url"] {
   font-size: 0.9rem;
 }
 
+/* ── Country landmark for featured cards ──────────────────── */
+.country-landmark {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .country-landmark {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
 .error-country-links a {
   color: var(--primary);
 }

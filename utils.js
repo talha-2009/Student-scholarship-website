@@ -181,12 +181,18 @@ window.ON = window.OpportunityNest;
   ON.isActiveOpportunity = (item) => ON.getDeadlineUrgency(item) !== "expired";
   ON.getOpportunityPath = (item) => `/opportunity/${encodeURIComponent(item.slug || ON.cleanSlug(`${item.title} ${item.country}`))}/`;
   ON.getOpportunityUrl = (item) => `${ON.SITE_URL}${ON.getOpportunityPath(item)}`;
+  ON.getCountryLandmark = (country = "") => {
+    const code = countryToFlagCode[country] || countryToFlagCode[country.replace(/^United\s+/, "").replace(/^U\.?\s*S\.?\s*A\.?\s*/, "USA").trim()];
+    if (!code || code === "global") return "";
+    return `<span class="country-landmark country-landmark--${code}" aria-hidden="true"></span>`;
+  };
+
   ON.getCountryFlagHtml = (country = "") => {
     const code = countryToFlagCode[country] || countryToFlagCode[country.replace(/^United\s+/, "").replace(/^U\.?\s*S\.?\s*A\.?\s*/, "USA").trim()];
     if (!code || code === "global") {
-      return `<img class="country-flag" src="/global.svg" alt="Global" width="20" height="20" loading="lazy">`;
+      return `<img class="country-flag" src="/global.svg" alt="Global" width="20" height="20" loading="lazy" onerror="this.style.display='none'">`;
     }
-    return `<img class="country-flag" src="${FLAG_CDN}${code}.svg" alt="Flag of ${ON.escapeHtml(country)}" width="20" height="15" loading="lazy">`;
+    return `<img class="country-flag" src="${FLAG_CDN}${code}.svg" alt="Flag of ${ON.escapeHtml(country)}" width="20" height="15" loading="lazy" onerror="this.style.display='none'">`;
   };
 
   ON.setStatus = (element, message, isError = false) => {
