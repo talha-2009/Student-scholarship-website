@@ -294,12 +294,9 @@ const renderFeaturedInternships = (items = []) => {
         <article class="live-opportunity-card compact-card internship-card">
           ${ON.getCountryLandmark(item.country)}
           <div class="opportunity-card-top">
-            <div class="internship-brand">
-              <span class="internship-logo" aria-hidden="true">${ON.escapeHtml((item.title || "ON").slice(0, 2).toUpperCase())}</span>
-              <div>
-                <p class="card-kicker">${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")}</p>
-                <h3>${ON.escapeHtml(item.title || "Internship program")}</h3>
-              </div>
+            <div>
+              <p class="card-kicker">${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")}</p>
+              <h3>${ON.escapeHtml(item.title || "Internship program")}</h3>
             </div>
             <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
           </div>

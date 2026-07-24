@@ -1244,25 +1244,6 @@ dd {
   margin-top: 2px;
 }
 
-.internship-brand {
-  display: flex;
-  align-items: start;
-  gap: 12px;
-}
-
-.internship-logo {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: white;
-  font-size: 0.8rem;
-  font-weight: 900;
-}
-
 .opportunity-card-top {
   display: flex;
   align-items: start;
@@ -1275,10 +1256,7 @@ dd {
   min-width: 0;
 }
 
-.internship-brand,
-.internship-brand > div {
-  min-width: 0;
-}
+
 
 .opportunity-meta {
   display: grid;
@@ -1930,9 +1908,7 @@ details p {
     align-items: flex-start;
   }
 
-  .opportunity-card-top > *,
-  .internship-brand,
-  .internship-brand > div {
+  .opportunity-card-top > * {
     min-width: 0;
   }
 
