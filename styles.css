@@ -2219,6 +2219,7 @@ details p {
   padding-bottom: 1rem;
   border-top: 1px solid #e5e7eb;
   padding-top: 1.5rem;
+  contain: layout style;
 }
 
 @media (max-width: 640px) {
