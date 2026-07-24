@@ -4146,3 +4146,450 @@ summary:focus-visible {
     background: var(--surface);
   }
 }
+
+/* ═══════════════════════════════════════
+   UX & Conversion Clarity Improvements
+   ═══════════════════════════════════════ */
+
+/* ── Hero: trust eyebrow prominence ─────────────────────────── */
+.eyebrow {
+  letter-spacing: 0.08em;
+}
+
+.hero .eyebrow {
+  display: inline-block;
+  background: rgba(15, 118, 110, 0.08);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+  font-size: 0.75rem;
+}
+
+.hero-lede {
+  margin: 16px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+/* ── Microcopy trust signal ─────────────────────────────────── */
+.microcopy {
+  display: inline-block;
+  margin: 12px 0 0;
+  padding: 8px 16px;
+  background: var(--surface-strong);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  border: 1px solid transparent;
+}
+
+.microcopy::before {
+  content: "✓ ";
+}
+
+/* ── Hero stats: better visual weight ───────────────────────── */
+.hero-stats {
+  gap: 16px;
+  margin: 32px 0 0;
+}
+
+.hero-stats div,
+.trust-stats div {
+  padding: 20px 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.hero-stats div:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(16, 32, 29, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stats div:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hero-stats div,
+  .trust-stats div {
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+}
+
+dt {
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+dd {
+  font-size: 0.88rem;
+  margin: 4px 0 0;
+}
+
+/* ── Section spacing & visual separation ────────────────────── */
+.section-pad + .section-pad {
+  border-top: 1px solid var(--line);
+}
+
+.section-pad:first-child {
+  border-top: 0;
+}
+
+@media (max-width: 767px) {
+  .section-pad + .section-pad {
+    border-top-color: transparent;
+  }
+
+  .section-pad {
+    border-top: 1px solid transparent;
+  }
+}
+
+/* ── Section heading improvements ───────────────────────────── */
+.section-heading {
+  margin-bottom: 32px;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.section-heading p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+/* ── Breadcrumbs: more visible ──────────────────────────────── */
+.breadcrumbs {
+  font-size: 0.88rem;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 0;
+}
+
+.breadcrumbs a {
+  font-weight: 700;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+  color: var(--primary-dark);
+}
+
+/* ── Page hero standardisation ──────────────────────────────── */
+.page-hero h1 {
+  margin-bottom: 16px;
+}
+
+.page-hero h2 {
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+.page-hero p {
+  margin: 0 0 12px;
+  line-height: 1.65;
+}
+
+.page-hero p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── FAQ accordion improvements ─────────────────────────────── */
+details {
+  border-radius: var(--radius);
+  transition: box-shadow 180ms ease, border-color 180ms ease;
+}
+
+details[open] {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(15, 118, 110, 0.06);
+}
+
+summary {
+  font-size: 1rem;
+  padding: 2px 0;
+  border-radius: var(--radius);
+}
+
+details p {
+  margin: 14px 0 4px;
+  line-height: 1.65;
+  font-size: 0.96rem;
+}
+
+.faq-list {
+  gap: 14px;
+}
+
+/* ── Cards: consistent base ─────────────────────────────────── */
+.live-opportunity-card {
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(16, 32, 29, 0.04), 0 4px 12px rgba(16, 32, 29, 0.04);
+}
+
+.info-card,
+.feature-card,
+.story-card,
+.quote-card,
+.steps article,
+.comparison article {
+  box-shadow: 0 1px 3px rgba(16, 32, 29, 0.04), 0 4px 12px rgba(16, 32, 29, 0.03);
+}
+
+/* ── Card heading consistency ───────────────────────────────── */
+.live-opportunity-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.info-card h3,
+.feature-card h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.story-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* ── Filter controls: clearer container ──────────────────────── */
+.opportunity-controls {
+  box-shadow: 0 2px 8px rgba(16, 32, 29, 0.04);
+}
+
+#live-search {
+  font-size: 0.95rem;
+}
+
+#live-search::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+/* ── Footer consistency ─────────────────────────────────────── */
+.site-footer {
+  padding: 48px 0 32px;
+}
+
+.footer-links {
+  gap: 14px 20px;
+}
+
+.footer-links a {
+  font-size: 0.9rem;
+  font-weight: 650;
+  padding: 2px 0;
+  transition: color 150ms ease;
+}
+
+.copyright {
+  margin-top: 24px;
+  padding-top: 18px;
+}
+
+/* ── Skip link: better visibility on focus ──────────────────── */
+.skip-link:focus {
+  top: 12px;
+  z-index: 10001;
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+/* ── Nav link touch target: minimum 44px on mobile ──────────── */
+@media (max-width: 767px) {
+  .nav-menu a:not(.button) {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ── Select/input touch target minimum ──────────────────────── */
+select,
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"] {
+  min-height: 46px;
+}
+
+/* ── Blog: article body typography ──────────────────────────── */
+.blog-article-body {
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+
+.blog-article-body h2 {
+  font-size: 1.6rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.blog-article-body h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.blog-article-body p {
+  margin: 1rem 0;
+}
+
+.blog-article-body ul,
+.blog-article-body ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.blog-article-body li {
+  margin: 0.4rem 0;
+}
+
+/* ── Content list styling ───────────────────────────────────── */
+.container.narrow ol,
+.container.narrow ul {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.container.narrow ol li,
+.container.narrow ul li {
+  margin: 0.6rem 0;
+}
+
+.container.narrow ol li strong,
+.container.narrow ul li strong {
+  color: var(--text);
+}
+
+/* ── Success/thank-you page ─────────────────────────────────── */
+.success-message h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.success-message p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ── Related opportunities: consistent heading ──────────────── */
+#related-opportunities h2 {
+  font-size: 1.4rem;
+}
+
+.related-grid .live-opportunity-card {
+  padding: 18px;
+  gap: 12px;
+}
+
+/* ── Detail sections: tighter spacing ───────────────────────── */
+.detail-section {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+}
+
+.detail-section p {
+  line-height: 1.7;
+  margin: 0.75rem 0;
+}
+
+/* ── Detail grid consistency ────────────────────────────────── */
+.detail-grid div {
+  padding: 16px 18px;
+}
+
+.detail-grid dt {
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.detail-grid dd {
+  font-weight: 600;
+}
+
+/* ── Sort select consistency ────────────────────────────────── */
+#sort-filter {
+  min-width: 140px;
+}
+
+/* ── Clear filters button position ──────────────────────────── */
+.clear-filters {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+/* ── Base link hover for all in-content links ───────────────── */
+.page-hero p a,
+.section-heading p a,
+.info-card p a,
+.feature-card p a,
+.container.narrow a:not(.button):not(.brand):not(.nav-link) {
+  font-weight: 700;
+}
+
+/* ── Error page layout ──────────────────────────────────────── */
+.error-page h1 {
+  margin-bottom: 0.5rem;
+}
+
+.error-page p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── Empty state consistency ────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 32px 22px;
+}
+
+.empty-state.is-error {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+/* ── Mobile: smaller touch targets fine-tune ────────────────── */
+@media (max-width: 480px) {
+  .hero .eyebrow {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+  }
+
+  .microcopy {
+    font-size: 0.84rem;
+    padding: 6px 14px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.82rem;
+  }
+
+  #sort-filter {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 375px) {
+  .hero-stats div {
+    padding: 14px;
+  }
+
+  dt {
+    font-size: 1.25rem;
+  }
+}
