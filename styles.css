@@ -3921,3 +3921,228 @@ object {
     grid-template-columns: 1fr;
   }
 }
+
+/* ═══════════════════════════════════════
+   UI/UX & Accessibility Improvements v3
+   ═══════════════════════════════════════ */
+
+/* ── Fix low-contrast text in blog cards (WCAG AA) ──────────── */
+.blog-card-body p {
+  color: #4b5563;
+}
+
+.blog-card-meta {
+  color: #6b7280;
+}
+
+.blog-card-readtime::before {
+  background: #6b7280;
+}
+
+/* ── Better link underlines for in-content readability ──────── */
+.page-hero p a,
+.section-heading p a,
+.info-card p a,
+.feature-card p a,
+.narrow p a,
+.page-faq-list a,
+.entry-content a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(15, 118, 110, 0.35);
+  transition: text-decoration-color 150ms ease;
+}
+
+.page-hero p a:hover,
+.section-heading p a:hover,
+.info-card p a:hover,
+.feature-card p a:hover,
+.narrow p a:hover,
+.page-faq-list a:hover,
+.entry-content a:hover {
+  text-decoration-color: var(--primary);
+}
+
+/* ── Subtle card hover lift (opportunity cards) ─────────────── */
+.live-opportunity-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.live-opportunity-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(16, 32, 29, 0.08);
+  border-color: rgba(15, 118, 110, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-opportunity-card:hover {
+    transform: none;
+  }
+}
+
+/* ── Info/feature card hover ────────────────────────────────── */
+.info-card,
+.feature-card,
+.story-card,
+.quote-card,
+.steps article,
+.comparison article {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.info-card:hover,
+.feature-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px rgba(16, 32, 29, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-card:hover,
+  .feature-card:hover {
+    transform: none;
+  }
+}
+
+/* ── Improve button hover/press states ──────────────────────── */
+.button:active {
+  transform: translateY(0);
+}
+
+.button-primary:active {
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.3);
+}
+
+/* ── Accessible focus for all interactive elements ──────────── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+details:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* ── details/summary accessible focus ────────────────────────── */
+details:focus-visible {
+  outline-offset: 0;
+}
+
+summary:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ── Better select/input focus ──────────────────────────────── */
+.opportunity-controls input:focus,
+.opportunity-controls select:focus,
+.contact-form input:focus,
+.contact-form textarea:focus,
+.filter-chip:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  outline: none;
+}
+
+/* ── Improved pagination active state accessibility ─────────── */
+.pagination-button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* ── prefers-contrast: more ─────────────────────────────────── */
+@media (prefers-contrast: more) {
+  :root {
+    --muted: #2d4a44;
+    --line: #87a39b;
+    --primary: #0b5e58;
+  }
+
+  .card-kicker,
+  .eyebrow,
+  .story-tag {
+    color: #0b4f49;
+  }
+
+  .live-opportunity-card {
+    border-width: 2px;
+  }
+
+  .button {
+    border-width: 2px;
+  }
+
+  .button-secondary {
+    border-color: #4a6b64;
+    color: #0b1a17;
+  }
+
+  .deadline,
+  .verified,
+  .saved {
+    border: 1px solid currentColor;
+  }
+
+  .pagination-button {
+    border-width: 2px;
+  }
+
+  [class*="badge"] {
+    border: 1px solid currentColor;
+  }
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .nav-link,
+  .mega-trigger {
+    text-decoration: none;
+  }
+}
+
+/* ── prefers-contrast: less ────────────────────────────────── */
+@media (prefers-contrast: less) {
+  :root {
+    --muted: #6d807c;
+    --line: #cbd9d5;
+    --shadow: 0 20px 60px rgba(16, 32, 29, 0.08);
+  }
+
+  .live-opportunity-card {
+    border-color: transparent;
+  }
+
+  .opportunity-controls,
+  .contact-form,
+  .dashboard {
+    border-color: transparent;
+  }
+}
+
+/* ── Reduced transparency ───────────────────────────────────── */
+@media (prefers-reduced-transparency: reduce) {
+  .hero-bg {
+    background: var(--surface-strong);
+  }
+
+  .mega-menu {
+    background: #fff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .dashboard {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--surface);
+  }
+
+  .hero-stats div,
+  .trust-stats div {
+    background: var(--surface);
+  }
+}
