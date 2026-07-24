@@ -66,7 +66,6 @@ const populateNavLinks = async () => {
   }
 };
 
-// Populate footer links dynamically
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
