@@ -552,7 +552,7 @@ window.ON = window.OpportunityNest;
     const deadline = ON.formatDeadline(item);
     const faqs = ON.generateDetailFAQs(item).map((faq) => `<details><summary>${ON.escapeHtml(faq.q)}</summary><p>${ON.escapeHtml(faq.a)}</p></details>`).join("");
     const type = (item.type || categoryType).toLowerCase();
-    const levelSection = item.level ? `<dt>Level</dt><dd>${ON.escapeHtml(item.level)}</dd>` : "";
+    const levelSection = item.level ? `<div><dt>Level</dt><dd>${ON.escapeHtml(item.level)}</dd></div>` : "";
     return `
       <nav class="breadcrumbs" aria-label="Breadcrumb navigation"><a href="/">Home</a><span aria-hidden="true">/</span><a href="${categoryPage}">${ON.escapeHtml(categoryType)}s</a><span aria-hidden="true">/</span><span aria-current="page">${ON.escapeHtml(item.title)}</span></nav>
       <div class="detail-header">

@@ -74,9 +74,9 @@
           <p class="eyebrow">404 — Page Not Found</p>
           <h1>This page doesn't exist</h1>
           <p>The link you followed may be broken, the opportunity may have expired, or the page may have moved. Use the search below or browse by category to find what you need.</p>
-          <form class="opportunity-controls" role="search" action="/" method="get" style="margin:1.5rem 0">
+          <form class="opportunity-controls error-page-form" role="search" action="/" method="get">
             <label class="sr-only" for="error-search">Search opportunities</label>
-            <input id="error-search" name="q" type="search" placeholder="Search scholarships, internships, fellowships..." style="width:100%;max-width:480px">
+            <input id="error-search" name="q" type="search" placeholder="Search scholarships, internships, fellowships..." class="error-page-input">
             <button class="button button-primary" type="submit">Search</button>
           </form>
           <div class="hero-actions">
@@ -84,9 +84,9 @@
             <a class="button button-secondary" href="/#opportunities">Browse All Opportunities</a>
           </div>
 
-          <nav class="error-links" aria-label="Helpful links" style="margin-top:2.5rem">
-            <h2 style="font-size:1.1rem;margin-bottom:0.75rem;color:var(--text)">Popular Categories</h2>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+          <nav class="error-links error-nav-section" aria-label="Helpful links">
+            <h2 class="error-nav-title">Popular Categories</h2>
+            <div class="error-nav-links">
               <a class="button button-secondary" href="/scholarships.html">Scholarships</a>
               <a class="button button-secondary" href="/internships.html">Internships</a>
               <a class="button button-secondary" href="/fellowships.html">Fellowships</a>
@@ -97,29 +97,29 @@
             </div>
           </nav>
 
-          <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--line)">
-            <h2 style="font-size:1rem;margin-bottom:0.75rem;color:var(--muted)">Popular Countries</h2>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:0.9rem">
-              <a href="/country/united-states/" style="color:var(--primary)">United States</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/united-kingdom/" style="color:var(--primary)">United Kingdom</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/canada/" style="color:var(--primary)">Canada</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/germany/" style="color:var(--primary)">Germany</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/australia/" style="color:var(--primary)">Australia</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/japan/" style="color:var(--primary)">Japan</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/china/" style="color:var(--primary)">China</a>
-              <span aria-hidden="true">·</span>
-              <a href="/country/switzerland/" style="color:var(--primary)">Switzerland</a>
+          <div class="error-country-section">
+            <h2 class="error-country-title">Popular Countries</h2>
+            <div class="error-country-links">
+              <a href="/country/united-states/">United States</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/united-kingdom/">United Kingdom</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/canada/">Canada</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/germany/">Germany</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/australia/">Australia</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/japan/">Japan</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/china/">China</a>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href="/country/switzerland/">Switzerland</a>
             </div>
           </div>
 
-          <p style="margin-top:2rem;font-size:0.9rem;color:var(--muted)">
-            Need help? <a href="/contact.html" style="color:var(--primary)">Contact us</a> and we will point you in the right direction.
+          <p class="error-help-text">
+            Need help? <a href="/contact.html">Contact us</a> and we will point you in the right direction.
           </p>
         </div>
       </section>

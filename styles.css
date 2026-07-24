@@ -4593,3 +4593,246 @@ input[type="url"] {
     font-size: 1.25rem;
   }
 }
+
+/* ═══════════════════════════════════════
+   UX Consistency & Polish
+   ═══════════════════════════════════════ */
+
+/* ── Cards: consistent border-radius across site ──────────── */
+.live-opportunity-card,
+.info-card,
+.feature-card,
+.story-card,
+.quote-card,
+.steps article,
+.comparison article {
+  border-radius: var(--radius);
+}
+
+.blog-card {
+  border-radius: var(--radius);
+}
+
+/* ── Card borders: use variable throughout ────────────────── */
+.detail-section {
+  border-radius: var(--radius);
+}
+
+.badge {
+  border-radius: 9999px;
+}
+
+/* ── Inline style migration: 404 error page ───────────────── */
+.error-page-form {
+  margin: 1.5rem 0;
+}
+
+.error-page-input {
+  width: 100%;
+  max-width: 480px;
+}
+
+.error-nav-section {
+  margin-top: 2.5rem;
+}
+
+.error-nav-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.error-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.error-country-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.error-country-title {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--muted);
+}
+
+.error-country-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.error-country-links a {
+  color: var(--primary);
+}
+
+.error-country-links a:hover {
+  text-decoration: underline;
+}
+
+.error-country-links .separator {
+  color: var(--muted);
+}
+
+.error-help-text {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.error-help-text a {
+  color: var(--primary);
+}
+
+.error-help-text a:hover {
+  text-decoration: underline;
+}
+
+/* ── Visual breadcrumbs for content pages ─────────────────── */
+.page-breadcrumbs {
+  margin-bottom: 1.5rem;
+}
+
+.page-breadcrumbs .breadcrumbs {
+  margin-bottom: 0;
+}
+
+/* ── Content page hero heading spacing ────────────────────── */
+.page-hero-content h1 {
+  margin-bottom: 0.75rem;
+}
+
+.page-hero-content p {
+  margin: 0 0 0.75rem;
+  line-height: 1.65;
+}
+
+/* ── Policy page content ──────────────────────────────────── */
+.policy-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+}
+
+.policy-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.policy-content p {
+  margin: 0.75rem 0;
+  line-height: 1.65;
+}
+
+.policy-content ul,
+.policy-content ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  line-height: 1.65;
+}
+
+.policy-content li {
+  margin: 0.4rem 0;
+}
+
+/* ── Related links section on listing pages ───────────────── */
+.related-links {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface-strong);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.related-links p {
+  margin: 0 0 0.5rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.related-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.related-links li {
+  margin: 0;
+}
+
+.related-links a {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.related-links a:hover {
+  text-decoration: underline;
+}
+
+/* ── Listing page status line ─────────────────────────────── */
+.opportunity-status {
+  margin-bottom: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.opportunity-status p {
+  margin: 0.5rem 0;
+}
+
+/* ── Live opportunity grid heading fix (h2 before cards) ──── */
+.listing-section-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ── Accordion arrows for disclosure widgets ──────────────── */
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+  margin-top: -4px;
+}
+
+details[open] summary::after {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  summary::after,
+  details[open] summary::after {
+    transition: none;
+  }
+}
