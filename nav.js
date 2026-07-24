@@ -255,7 +255,7 @@ const createMegaColumn = ({ title, icon, links }) => {
   const iconSpan = document.createElement("span");
   iconSpan.className = "mega-column-icon";
   iconSpan.setAttribute("aria-hidden", "true");
-  iconSpan.innerHTML = icon;
+  try { var svgDoc = new DOMParser().parseFromString(icon, "image/svg+xml"), svgEl = svgDoc.documentElement; if (svgEl && svgEl.tagName === "svg") iconSpan.appendChild(svgEl); else iconSpan.innerHTML = ""; } catch(e) { iconSpan.innerHTML = ""; }
   heading.append(iconSpan, document.createTextNode(` ${title}`));
   column.appendChild(heading);
 

@@ -5,7 +5,8 @@ const { slugify } = require("./opportunity-slugs");
 const ROOT = path.join(__dirname, "..");
 const DATA_FILE = path.join(ROOT, "data", "verified-opportunities-2026.json");
 const REPORT_DIR = path.join(ROOT, "reports");
-const SUPABASE_URL = process.env.SUPABASE_URL || "https://rveunrzbeynaizitqanx.supabase.co";
+var SUPABASE_URL = process.env.SUPABASE_URL;
+if (!SUPABASE_URL) { console.error("ERROR: SUPABASE_URL env var required"); process.exit(1); }
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const DRY_RUN = process.argv.includes("--dry-run");
 const VALID_TYPES = new Set([

@@ -3,9 +3,10 @@ const path = require("path");
 const { SITE_URL, assignOpportunitySlugs, getOpportunityDetailUrl } = require("./opportunity-slugs");
 const SITE_ROOT = "https://www.opportunitynest.org";
 
-const SUPABASE_URL = process.env.SUPABASE_URL || "https://rveunrzbeynaizitqanx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY =
-  process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
+var SUPABASE_URL = process.env.SUPABASE_URL;
+if (!SUPABASE_URL) { console.error("ERROR: SUPABASE_URL env var required"); process.exit(1); }
+var SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+if (!SUPABASE_PUBLISHABLE_KEY) { console.error("ERROR: SUPABASE_PUBLISHABLE_KEY env var required"); process.exit(1); }
 
 const staticPages = [
   ["/", "daily", "1.0"],

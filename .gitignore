@@ -9,3 +9,23 @@ scripts/__pycache__/
 .seo-test.js
 .fetch-seo-data.js
 .seo-verify.js
+
+# Environment and secrets
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+
+# Logs, archives, and artifacts
+*.log
+*.zip
+*.gz
+reports/
+
+# Database schema files in project root (reveal internal structure)
+*.sql
+
+# Data and internal assets
+data/
+brand-kit/

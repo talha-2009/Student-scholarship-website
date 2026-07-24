@@ -7,8 +7,8 @@ import urllib.request
 from datetime import datetime, timezone
 
 SITE_URL = "https://www.opportunitynest.org"
-SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co/rest/v1/opportunities"
-SUPABASE_KEY = "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD"
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/") + "/rest/v1/opportunities"
+SUPABASE_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 GENERATED_DIRS = [ROOT / "country", ROOT / "scholarships", ROOT / "internships", ROOT / "fellowships", ROOT / "opportunity"]
 OFFICIAL_URL_OVERRIDES = {

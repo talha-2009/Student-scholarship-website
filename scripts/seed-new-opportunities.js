@@ -3,7 +3,8 @@
  * Usage: SUPABASE_SERVICE_ROLE_KEY=<key> node scripts/seed-new-opportunities.js
  */
 
-const SUPABASE_URL = process.env.SUPABASE_URL || "https://rveunrzbeynaizitqanx.supabase.co";
+var SUPABASE_URL = process.env.SUPABASE_URL;
+if (!SUPABASE_URL) { console.error("ERROR: SUPABASE_URL env var required"); process.exit(1); }
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SERVICE_KEY) {

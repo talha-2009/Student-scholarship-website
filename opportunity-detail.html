@@ -41,9 +41,14 @@
       // Set canonical and OG URL immediately from current location to avoid wrong canonical
       (function(){
         var u = window.location.href;
-        document.write('<link rel="canonical" href="' + u + '">');
+        var safe = u.split("#")[0].split("?")[0];
+        if (safe.slice(-1) === "/") safe = safe.slice(0, -1);
+        var link = document.createElement("link");
+        link.rel = "canonical";
+        link.href = safe;
+        document.head.appendChild(link);
         var ogUrl = document.querySelector('meta[property="og:url"]');
-        if(ogUrl) ogUrl.setAttribute('content', u);
+        if(ogUrl) ogUrl.setAttribute("content", safe);
       })();
     </script>
 

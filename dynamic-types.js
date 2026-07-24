@@ -1,6 +1,12 @@
 // Dynamic type filter and navigation population from Supabase database
 const ON = window.OpportunityNest;
 
+function escapeHtml(str) {
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 // Function to convert type name to SEO-friendly URL slug
 const typeToSlug = (type) => {
   return type.toLowerCase()
@@ -48,18 +54,15 @@ const populateNavLinks = async () => {
     
     if (types && types.length > 0) {
       navContainer.innerHTML = types.map(type => {
-        const url = typeToUrl(type);
-        return `<a href="${url}">${type}s</a>`;
+        const safeType = escapeHtml(type);
+        const url = escapeHtml(typeToUrl(type));
+        return '<a href="' + url + '">' + safeType + 's</a>';
       }).join('');
     }
   } catch (error) {
     console.error("Error populating nav links:", error);
     // Fallback to hardcoded links if dynamic loading fails
-    navContainer.innerHTML = `
-      <a href="/scholarships/">Scholarships</a>
-      <a href="/internships/">Internships</a>
-      <a href="/fellowships/">Fellowships</a>
-    `;
+    navContainer.innerHTML = '<a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a>';
   }
 };
 

@@ -1,5 +1,6 @@
-const SUPABASE_URL = "https://rveunrzbeynaizitqanx.supabase.co";
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+var SUPABASE_URL = process.env.SUPABASE_URL;
+var SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SUPABASE_URL || !SERVICE_KEY) { console.error("ERROR: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars required"); process.exit(1); }
 
 async function test() {
   // Get one record

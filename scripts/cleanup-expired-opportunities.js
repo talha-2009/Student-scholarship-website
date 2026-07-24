@@ -5,10 +5,11 @@ const { assignOpportunitySlugs, getOpportunityDetailUrl } = require("./opportuni
 
 const ROOT = path.join(__dirname, "..");
 const REPORT_DIR = path.join(ROOT, "reports");
-const SUPABASE_URL = process.env.SUPABASE_URL || "https://rveunrzbeynaizitqanx.supabase.co";
-const SUPABASE_READ_KEY =
-  process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_i_Hzb5vyGZhjIXWNprJ_Tg_FJTry3DD";
-const SUPABASE_DELETE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ACCESS_TOKEN;
+var SUPABASE_URL = process.env.SUPABASE_URL;
+if (!SUPABASE_URL) { console.error("ERROR: SUPABASE_URL env var required"); process.exit(1); }
+var SUPABASE_READ_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+if (!SUPABASE_READ_KEY) { console.error("ERROR: SUPABASE_PUBLISHABLE_KEY env var required"); process.exit(1); }
+var SUPABASE_DELETE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ACCESS_TOKEN;
 const PAGE_SIZE = 1000;
 const TODAY = process.env.CLEANUP_CURRENT_DATE || new Date().toISOString().slice(0, 10);
 
