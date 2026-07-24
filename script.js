@@ -188,7 +188,7 @@ const renderOpportunities = () => {
         card.dataset.opportunitySlug = slug;
         // Update card content in-place
         const kicker = card.querySelector('.card-kicker');
-        if (kicker) kicker.innerHTML = `${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")} / ${ON.escapeHtml(item.type || "Opportunity")}`;
+        if (kicker) kicker.textContent = `${ON.escapeHtml(item.type || "Opportunity")} \u2022 ${ON.escapeHtml(item.country || "Global")}`;
         const deadline = card.querySelector('.deadline');
         if (deadline) deadline.textContent = ON.formatDeadline(item);
         const title = card.querySelector('h3');
@@ -295,7 +295,7 @@ const renderFeaturedInternships = (items = []) => {
           ${ON.getCountryLandmark(item.country)}
           <div class="opportunity-card-top">
             <div>
-              <p class="card-kicker">${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")}</p>
+                <p class="card-kicker">${ON.escapeHtml(item.type || "Internship")} &bull; ${ON.escapeHtml(item.country || "Global")}</p>
               <h3>${ON.escapeHtml(item.title || "Internship program")}</h3>
             </div>
             <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>

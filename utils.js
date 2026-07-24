@@ -323,7 +323,7 @@ window.ON = window.OpportunityNest;
     return `
       <article class="live-opportunity-card compact-card">
         <div class="opportunity-card-top">
-          <p class="card-kicker">${ON.getCountryFlagHtml(item.country)} ${ON.escapeHtml(item.country || "Global")} / ${ON.escapeHtml(item.type || "Opportunity")}</p>
+          <p class="card-kicker">${ON.escapeHtml(item.type || "Opportunity")} &bull; ${ON.escapeHtml(item.country || "Global")}</p>
           <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
         </div>
         <h3>${ON.escapeHtml(item.title || "Opportunity")}</h3>

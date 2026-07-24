@@ -9,7 +9,7 @@ const PROJECT_ROOT = join(ROOT, "..");
 const CDN = "https://flagcdn.com/h20/";
 
 function flagImg(code, country, w, h) {
-  return '<img class="country-flag" src="' + (code === "global" ? "/global.svg" : CDN + code + ".svg") + '" alt="' + (code === "global" ? "Global" : "Flag of " + country) + '" width="' + w + '" height="' + h + '" loading="lazy">';
+  return '';
 }
 
 const emojiMap = [
