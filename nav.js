@@ -575,8 +575,15 @@ if (navMenu) {
   }
 }
 
-// ─── Cookie Consent (GDPR / Google Consent Mode v2) ──────────────────
+// ─── Cookie Consent (GDPR / Google Consent Mode v2) — deferred ──────
+// Runs after critical rendering to avoid blocking TBT
 (function cookieConsent() {
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(initCookieConsent, { timeout: 3000 });
+  } else {
+    setTimeout(initCookieConsent, 2000);
+  }
+  function initCookieConsent() {
   var saved = localStorage.getItem("on_consent");
   if (saved === "accepted" || saved === "rejected") return;
 
@@ -705,6 +712,7 @@ if (navMenu) {
       }, analytics || ads ? 'custom' : 'rejected');
     });
   });
+  }
 })();
 
 

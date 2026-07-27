@@ -131,12 +131,13 @@ console.log("\nUpdating HTML files...");
 const htmlFiles = getAllHtmlFiles(ROOT);
 let updatedCount = 0;
 
-const PRECONNECT_TAGS = [
+const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
   '<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
-  '<link rel="preconnect" href="https://flagcdn.com" crossorigin>'
+  '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
+  '<link rel="dns-prefetch" href="https://chatling.ai">'
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;
@@ -162,18 +163,22 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 2. Add preconnect hints if missing
+  // 1c. Defer Google Fonts CSS (render-blocking → async)
+  const googleFontsPattern = 'fonts.googleapis.com/css2?family=';
+  if (html.includes(googleFontsPattern) && html.includes('rel="stylesheet"')) {
+    // Replace the blocking Google Fonts link with async version
+    html = html.replace(
+      /<link\s+href="(https:\/\/fonts\.googleapis\.com\/css2\?family=[^"]+)"\s+rel="stylesheet"\s*\/?>/,
+      '<link href="$1" rel="stylesheet" media="print" onload="this.media=\'all\'"> <noscript><link href="$1" rel="stylesheet"></noscript>'
+    );
+    modified = true;
+  }
+
+  // 2. Add resource hints (preconnect, dns-prefetch) right after <head>
+  // Place before any scripts so browser can start DNS/connection early
   if (!html.includes('pagead2.googlesyndication.com" crossorigin>')) {
-    // Insert after existing preconnects if any, else after </title>, else after <meta charset
-    if (html.includes('<link rel="preconnect"')) {
-      const lastPreconnect = html.lastIndexOf('<link rel="preconnect"');
-      const endOfLine = html.indexOf('>', lastPreconnect) + 1;
-      html = html.slice(0, endOfLine) + '\n    ' + PRECONNECT_TAGS + html.slice(endOfLine);
-    } else if (html.includes('</title>')) {
-      html = html.replace('</title>', `</title>\n    ${PRECONNECT_TAGS}`);
-    } else if (html.includes('<meta charset')) {
-      html = html.replace('<meta charset', `${PRECONNECT_TAGS}\n    <meta charset`);
-    }
+    // Insert resource hints immediately after <head> tag
+    html = html.replace('<head>', '<head>\n    ' + RESOURCE_HINTS);
     modified = true;
   }
 
@@ -204,20 +209,40 @@ for (const htmlPath of htmlFiles) {
   // Remove duplicate defer
   html = html.replace(/\bdefer\s+defer\b/g, 'defer');
 
-  // 6. Add fetchpriority="high" to hero section if present (improves LCP)
+  // 6. Add fetchpriority="high" and containment to hero section (improves LCP + CLS)
   if (html.includes('class="hero ') && !html.includes('fetchpriority')) {
     html = html.replace(
       /(<section\s+class="hero\s[^"]*")/,
       '$1 fetchpriority="high"'
     );
   }
-
-  // 7. Add logo preload for LCP on pages with nav
-  if (!html.includes('rel="preload"') && html.includes('brand-mark')) {
+  // Add CSS containment to hero to isolate its layout
+  if (html.includes('class="hero ')) {
     html = html.replace(
-      /(<\/head>)/,
-      '    <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">\n    $1'
+      /(<section\s+class="hero\s[^"]*")/,
+      '$1 style="contain:layout style paint"'
     );
+  }
+
+
+
+  // 7. Add preload hints for LCP and critical resources
+  if (html.includes('brand-mark')) {
+    // Preload logo (LCP element)
+    if (!html.includes('rel="preload" href="/logo.svg"')) {
+      html = html.replace(
+        /(<\/head>)/,
+        '    <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">\n    $1'
+      );
+    }
+    // Preload nav JS (critical for navigation rendering, early download before defer)
+    const navHash = jsAssetMap["nav.js"];
+    if (navHash && !html.includes(`rel="preload" href="/${navHash}"`)) {
+      html = html.replace(
+        /(<\/head>)/,
+        `    <link rel="preload" href="/${navHash}" as="script">\n    $1`
+      );
+    }
   }
 
   // 8. Replace old footer with new redesigned footer
