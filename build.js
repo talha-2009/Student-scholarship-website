@@ -330,5 +330,105 @@ for (const filePath of staticFiles) {
 }
 console.log(`  Copied ${staticFiles.length} static files\n`);
 
+// ─── Step 5: Auto-generate sitemap.xml ────────────────────────────
+console.log("Generating sitemap.xml...");
+function generateSitemap() {
+  const BASE = "https://www.opportunitynest.org";
+  const today = new Date().toISOString().split("T")[0];
+
+  // Priority map: assign priority based on path patterns
+  function getPriority(relPath, isDirIndex) {
+    const p = relPath.replace(/\\/g, "/").toLowerCase();
+    if (p === "index.html" || p === "") return "1.0";
+    if (p.startsWith("opportunity/")) return "0.8";
+    if (p.startsWith("scholarships/") || p.startsWith("internships/") || p.startsWith("fellowships/") || p.startsWith("competitions/")) return "0.7";
+    if (p.startsWith("country/")) return "0.8";
+    if (p.startsWith("guides/")) return "0.7";
+    if (p.startsWith("blog/")) return "0.8";
+    if (["about.html","contact.html","faq.html"].includes(p)) return "0.7";
+    if (["privacy.html","terms.html","disclaimer.html"].includes(p)) return "0.5";
+    if (["editorial-policy.html","fact-checking-policy.html","verification-process.html"].includes(p)) return "0.6";
+    // Category pages
+    const categories = ["fully-funded-scholarships","partially-funded-scholarships","undergraduate-scholarships",
+      "masters-scholarships","phd-scholarships","postdoctoral-scholarships","high-school-scholarships",
+      "government-scholarships","merit-scholarships","paid-internships","remote-internships","summer-internships",
+      "international-internships","fully-funded-fellowships","research-fellowships","leadership-fellowships",
+      "youth-programs","exchange-programs","grants","study-in-usa","study-in-uk","study-in-canada",
+      "study-in-australia","study-in-germany","study-in-europe"];
+    if (categories.some(c => p.startsWith(c))) return "0.8";
+    return "0.5";
+  }
+
+  function getChangefreq(relPath) {
+    const p = relPath.replace(/\\/g, "/").toLowerCase();
+    if (p === "index.html" || p === "") return "daily";
+    if (p.startsWith("opportunity/")) return "weekly";
+    if (p.startsWith("blog/")) return "monthly";
+    if (["privacy.html","terms.html","disclaimer.html"].includes(p)) return "yearly";
+    return "weekly";
+  }
+
+  // Convert file path to clean URL
+  function toCleanUrl(relPath) {
+    let url = relPath.replace(/\\/g, "/");
+    // Remove index.html
+    if (url.endsWith("/index.html")) { url = url.slice(0, -10); }
+    // Remove .html extension for non-root pages
+    else if (url.endsWith(".html")) { url = url.slice(0, -5); }
+    // Root index.html -> /
+    if (url === "index.html" || url === "") return BASE + "/";
+    // Ensure no double slashes
+    if (url.endsWith("/")) url = url.slice(0, -1);
+    return BASE + "/" + url + "/";
+  }
+
+  // Pages to exclude from sitemap
+  const excludePatterns = ["404.html","preview.html","nav-dropdown-backup.html","exchange-program.html",
+    "node_modules","dist",".next",".git","brand-kit","/partial-scholarships/"];
+
+  function shouldExclude(relPath) {
+    const p = relPath.replace(/\\/g, "/").toLowerCase();
+    return excludePatterns.some(pat => p.includes(pat));
+  }
+
+  // Collect all HTML files excluding noindex/private pages
+  const allHtml = getAllHtmlFiles(ROOT);
+  const sitemapUrls = [];
+
+  for (const filePath of allHtml) {
+    const relPath = relative(ROOT, filePath).replace(/\\/g, "/");
+    if (shouldExclude(relPath)) continue;
+
+    // Check if contains noindex
+    const content = readFileSync(filePath, "utf8");
+    if (/noindex/i.test(content)) continue;
+
+    const cleanUrl = toCleanUrl(relPath);
+    const priority = getPriority(relPath);
+    const changefreq = getChangefreq(relPath);
+
+    sitemapUrls.push({ loc: cleanUrl, changefreq, priority, lastmod: today });
+  }
+
+  // Deduplicate by URL
+  const seen = new Set();
+  const unique = [];
+  for (const u of sitemapUrls) {
+    if (!seen.has(u.loc)) { seen.add(u.loc); unique.push(u); }
+  }
+
+  // Build XML
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  for (const u of unique) {
+    xml += `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>\n  </url>\n`;
+  }
+  xml += `</urlset>\n`;
+
+  writeFileSync(join(ROOT, "sitemap.xml"), xml);
+  console.log(`  Generated sitemap with ${unique.length} URLs`);
+  return unique.length;
+}
+const sitemapCount = generateSitemap();
+
 // ─── Done ─────────────────────────────────────────────────────────
-console.log("Build complete! Output → dist/");
+console.log(`Build complete! Output → dist/ (${sitemapCount} URLs in sitemap)`);

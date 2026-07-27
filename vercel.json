@@ -52,7 +52,13 @@
     { "source": "/verification-process/", "destination": "/verification-process.html" },
     { "source": "/thank-you/", "destination": "/thank-you.html" },
     { "source": "/cookie-policy/", "destination": "/privacy.html" },
-    { "source": "/nav-dropdown-backup/", "destination": "/nav-dropdown-backup.html" }
+    { "source": "/nav-dropdown-backup/", "destination": "/nav-dropdown-backup.html" },
+    { "source": "/blog/:slug/", "destination": "/blog/:slug.html" },
+    { "source": "/blog/:slug", "destination": "/blog/:slug.html" },
+    { "source": "/guides/:slug/", "destination": "/guides/:slug.html" },
+    { "source": "/guides/:slug", "destination": "/guides/:slug.html" },
+    { "source": "/404/", "destination": "/404.html" },
+    { "source": "/404", "destination": "/404.html" }
   ],
   "headers": [
     {
