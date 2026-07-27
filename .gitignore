@@ -29,3 +29,13 @@ reports/
 # Data and internal assets
 data/
 brand-kit/
+
+# Next.js migration artifacts (production uses static dist/)
+.next/
+app/
+components/
+lib/
+next-env.d.ts
+next.config.js
+tsconfig.json
+public/

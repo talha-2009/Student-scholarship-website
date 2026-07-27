@@ -128,7 +128,7 @@ const megaMenuData = {
       title: "Explore More",
       icon: ICONS.compass,
       links: [
-        ["Youth Programs Feed", "/?type=Youth+Program#opportunities"],
+        ["Youth Programs Feed", "/youth-programs/"],
         ["Research Opportunities", "/research-opportunities/"],
         ["Conferences", "/conferences/"],
         ["Grants", "/grants/"]
@@ -240,7 +240,7 @@ const navItems = [
   { label: "Internships", href: "/internships/", sections: megaMenuData.Internships },
   { label: "Fellowships", href: "/fellowships/", sections: megaMenuData.Fellowships },
   { label: "Competitions", href: "/competitions.html", sections: megaMenuData.Competitions },
-  { label: "Youth Programs", href: "/?type=Youth+Program#opportunities", sections: megaMenuData["Youth Programs"] },
+  { label: "Youth Programs", href: "/youth-programs/", sections: megaMenuData["Youth Programs"] },
   { label: "Blog", href: "/blog/", sections: megaMenuData.Blog },
   { label: "Resource Center", href: "/guides/application-checklist.html", sections: megaMenuData["Resource Center"] }
 ];
@@ -316,7 +316,7 @@ const buildNavigation = () => {
   });
 
   const cta = document.createElement("a");
-  cta.href = "/#opportunities";
+  cta.href = "/scholarships/";
   cta.className = "button button-primary nav-cta";
   cta.textContent = "Explore Opportunities";
   navMenu.appendChild(cta);
@@ -556,7 +556,7 @@ window.addDynamicNavLinks = (types = []) => {
     const matchingType = types.find((t) => t.trim().toLowerCase() === type.toLowerCase());
     if (!matchingType) return;
     const link = document.createElement("a");
-    link.href = `/?type=${encodeURIComponent(matchingType)}#opportunities`;
+    link.href = `/scholarships/`;
     link.className = "nav-link";
     link.textContent = label;
     link.dataset.dynamicTypeLink = "true";

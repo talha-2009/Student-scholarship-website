@@ -2,9 +2,10 @@
 .agents
 .chrome-console-check
 .chrome-csp-check
+.next
 brand-kit
 scripts
-supabase
+/supabase
 
 *.md
 *.sql

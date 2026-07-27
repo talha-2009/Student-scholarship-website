@@ -227,6 +227,89 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
+  // ─── SEO: fix hash fragment links, .html extensions, and canonical URLs ──
+  // 9a. Replace hash fragment navigation links with proper clean routes
+  const hashReplacements = [
+    ['/#opportunities', '/scholarships/'],
+    ['?type=Youth+Program#opportunities', 'youth-programs/'],
+    ['?type=Undergraduate#opportunities', 'undergraduate-scholarships/'],
+    ['?type=Master%27s#opportunities', 'masters-scholarships/'],
+    ['?type=PhD#opportunities', 'phd-scholarships/'],
+    ['?type=Postdoctoral#opportunities', 'postdoctoral-scholarships/'],
+    ['?funding=Fully+Funded#opportunities', 'fully-funded-scholarships/'],
+    ['?funding=Partial+Funding#opportunities', 'partially-funded-scholarships/'],
+    ['?funding=Merit+Based#opportunities', 'merit-scholarships/'],
+    ['?type=Internship&funding=Paid#opportunities', 'paid-internships/'],
+    ['?type=Internship&funding=Remote#opportunities', 'remote-internships/'],
+    ['?type=Internship&category=Engineering#opportunities', 'engineering-internships/'],
+    ['?type=Internship&category=IT#opportunities', 'it-internships/'],
+    ['?type=Fellowship&funding=Fully+Funded#opportunities', 'fully-funded-fellowships/'],
+    ['?type=Fellowship&category=Research#opportunities', 'research-fellowships/'],
+    ['?type=Fellowship&category=Leadership#opportunities', 'leadership-fellowships/'],
+    ['?type=Youth+Program&category=Leadership#opportunities', 'leadership-programs/'],
+    ['?type=Youth+Program&category=Volunteer#opportunities', 'volunteer-programs/'],
+    ['?type=Youth+Program&category=Conference#opportunities', 'conferences/'],
+    ['search_term_string}#opportunities', 'search_term_string}'],
+    ['search_term_string%5C%23opportunities', 'search_term_string}'],
+  ];
+  for (const [from, to] of hashReplacements) {
+    if (html.includes(from)) {
+      html = html.split(from).join(to);
+      modified = true;
+    }
+  }
+
+  // 9b. Fix .html navigation links → clean trailing-slash routes
+  const htmlToRoute = [
+    ['/scholarships.html', '/scholarships/'],
+    ['/internships.html', '/internships/'],
+    ['/fellowships.html', '/fellowships/'],
+    ['/competitions.html', '/competitions/'],
+    ['/conferences.html', '/conferences/'],
+    ['/about.html', '/about/'],
+    ['/contact.html', '/contact/'],
+    ['/faq.html', '/faq/'],
+    ['/privacy.html', '/privacy/'],
+    ['/terms.html', '/terms/'],
+    ['/disclaimer.html', '/disclaimer/'],
+    ['/editorial-policy.html', '/editorial-policy/'],
+    ['/fact-checking-policy.html', '/fact-checking-policy/'],
+    ['/verification-process.html', '/verification-process/'],
+    ['/thank-you.html', '/thank-you/'],
+    ['/exchange-program.html', '/exchange-programs/'],
+    ['/category.html', '/scholarships/'],
+    ['/opportunity-detail.html', '/scholarships/'],
+    ['/internship-detail.html', '/scholarships/'],
+  ];
+  for (const [from, to] of htmlToRoute) {
+    if (html.includes(from)) {
+      html = html.split(from).join(to);
+      modified = true;
+    }
+  }
+
+  // 9c. Fix canonical .html URLs to clean trailing-slash
+  html = html.replace(
+    /(rel="canonical"\s+href="https:\/\/www\.opportunitynest\.org\/)([^"]+)\.html(")/g,
+    '$1$2/$3'
+  );
+  // Fix og:url .html URLs
+  html = html.replace(
+    /(property="og:url"\s+content="https:\/\/www\.opportunitynest\.org\/)([^"]+)\.html(")/g,
+    '$1$2/$3'
+  );
+
+  // 9d. Fix BreadcrumbList schema item URLs (remove .html)
+  html = html.replace(
+    /("item":\s*"https:\/\/www\.opportunitynest\.org\/[^"]+)\.html(")/g,
+    '$1/$2'
+  );
+  // Fix ItemList schema urls
+  html = html.replace(
+    /("url":\s*"https:\/\/www\.opportunitynest\.org\/[^"]+)\.html(")/g,
+    '$1/$2'
+  );
+
   const relativePath = relative(ROOT, htmlPath);
   const distPath = join(DIST, relativePath);
   mkdirp(join(distPath, ".."));

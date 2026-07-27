@@ -30,7 +30,22 @@
   ],
   "rewrites": [
     { "source": "/opportunity/:slug/", "destination": "/opportunity-detail.html" },
-    { "source": "/opportunity/:slug", "destination": "/opportunity-detail.html" }
+    { "source": "/opportunity/:slug", "destination": "/opportunity-detail.html" },
+    { "source": "/competitions/", "destination": "/competitions.html" },
+    { "source": "/about/", "destination": "/about.html" },
+    { "source": "/contact/", "destination": "/contact.html" },
+    { "source": "/faq/", "destination": "/faq.html" },
+    { "source": "/privacy/", "destination": "/privacy.html" },
+    { "source": "/privacy-policy/", "destination": "/privacy.html" },
+    { "source": "/terms/", "destination": "/terms.html" },
+    { "source": "/terms-conditions/", "destination": "/terms.html" },
+    { "source": "/disclaimer/", "destination": "/disclaimer.html" },
+    { "source": "/editorial-policy/", "destination": "/editorial-policy.html" },
+    { "source": "/fact-checking-policy/", "destination": "/fact-checking-policy.html" },
+    { "source": "/verification-process/", "destination": "/verification-process.html" },
+    { "source": "/thank-you/", "destination": "/thank-you.html" },
+    { "source": "/cookie-policy/", "destination": "/privacy.html" },
+    { "source": "/nav-dropdown-backup/", "destination": "/nav-dropdown-backup.html" }
   ],
   "headers": [
     {
@@ -55,6 +70,13 @@
       "source": "/",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=600, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/ads.txt",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300, must-revalidate" },
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
       ]
     },
     {
