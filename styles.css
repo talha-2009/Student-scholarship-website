@@ -4169,6 +4169,11 @@ summary:focus-visible {
 .hero-stats {
   gap: 16px;
   margin: 32px 0 0;
+  contain: layout style paint;
+}
+
+.hero-stats dt {
+  font-variant-numeric: tabular-nums;
 }
 
 .hero-stats div,
