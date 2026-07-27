@@ -135,6 +135,7 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
   '<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>',
+  '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
   '<link rel="dns-prefetch" href="https://chatling.ai">'
@@ -241,6 +242,13 @@ for (const htmlPath of htmlFiles) {
       html = html.replace(
         /(<\/head>)/,
         `    <link rel="preload" href="/${navHash}" as="script">\n    $1`
+      );
+    }
+    // Preload Google Fonts CSS (already async, preload gives it higher download priority)
+    if (html.includes('fonts.googleapis.com/css2') && !html.includes('rel="preload" href="https://fonts.googleapis.com/css2')) {
+      html = html.replace(
+        /(<\/head>)/,
+        '    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">\n    $1'
       );
     }
   }
