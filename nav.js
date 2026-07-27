@@ -255,19 +255,19 @@ const createMegaColumn = ({ title, icon, links }) => {
   const iconSpan = document.createElement("span");
   iconSpan.className = "mega-column-icon";
   iconSpan.setAttribute("aria-hidden", "true");
-  try { var svgDoc = new DOMParser().parseFromString(icon, "image/svg+xml"), svgEl = svgDoc.documentElement; if (svgEl && svgEl.tagName === "svg") iconSpan.appendChild(svgEl); else iconSpan.innerHTML = ""; } catch(e) { iconSpan.innerHTML = ""; }
-  heading.append(iconSpan, document.createTextNode(` ${title}`));
+  iconSpan.innerHTML = icon;
+  heading.append(iconSpan, ` ${title}`);
   column.appendChild(heading);
 
   const list = document.createElement("ul");
-  links.forEach(([label, href]) => {
+  for (let i = 0; i < links.length; i++) {
     const item = document.createElement("li");
     const link = document.createElement("a");
-    link.href = href;
-    link.textContent = label;
+    link.href = links[i][1];
+    link.textContent = links[i][0];
     item.appendChild(link);
     list.appendChild(item);
-  });
+  }
   column.appendChild(list);
   return column;
 };
@@ -297,7 +297,11 @@ const createMegaItem = ({ label, href, sections }) => {
   dropdown.setAttribute("role", "group");
   dropdown.setAttribute("aria-label", `${label} links`);
   dropdown.setAttribute("data-cols", String(sections.length));
-  dropdown.append(...sections.map(createMegaColumn));
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < sections.length; i++) {
+    frag.appendChild(createMegaColumn(sections[i]));
+  }
+  dropdown.appendChild(frag);
 
   item.append(trigger, dropdown);
   return item;
@@ -306,20 +310,21 @@ const createMegaItem = ({ label, href, sections }) => {
 const buildNavigation = () => {
   if (!navMenu) return;
 
-  // Always rebuild to ensure consistent navigation across all pages
-  // This fixes dropdown issues on pages with simplified static nav
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
 
-  navItems.forEach((item) => {
-    navMenu.appendChild(createMegaItem(item));
-  });
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < navItems.length; i++) {
+    frag.appendChild(createMegaItem(navItems[i]));
+  }
 
   const cta = document.createElement("a");
   cta.href = "/scholarships/";
   cta.className = "button button-primary nav-cta";
   cta.textContent = "Explore Opportunities";
-  navMenu.appendChild(cta);
+  frag.appendChild(cta);
+
+  navMenu.appendChild(frag);
 };
 
 const closeMegaMenu = (item) => {
