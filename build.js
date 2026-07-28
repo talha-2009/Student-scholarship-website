@@ -185,6 +185,118 @@ const SEO_OVERRIDES = {
   "fellowships/index.html": {
     title: "International Fellowships 2026 | Research, Policy & Leadership",
     description: "Explore verified fellowships for 2026, including research, policy, leadership, government, and fully funded programs with deadlines and official source links."
+  },
+  "fully-funded-scholarships/index.html": {
+    title: "Fully Funded Scholarships 2026 | Complete List for International Students",
+    description: "Explore fully funded scholarships for 2026 covering full tuition, living stipends, airfare, and health insurance. Compare top programs like Chevening, DAAD, Fulbright, and more."
+  },
+  "masters-scholarships/index.html": {
+    title: "Master's Scholarships 2026 | Fully Funded Graduate Programs Worldwide",
+    description: "Find master's scholarships for 2026 including fully funded graduate programs, tuition waivers, and research assistantships. Search by country, field, and funding type."
+  },
+  "phd-scholarships/index.html": {
+    title: "PhD Scholarships 2026 | Fully Funded Doctoral Programs | OpportunityNest",
+    description: "Discover PhD scholarships for 2026 — fully funded doctoral programs, research fellowships, and graduate assistantships worldwide with application deadlines."
+  },
+  "undergraduate-scholarships/index.html": {
+    title: "Undergraduate Scholarships 2026 | Bachelor's Degree Funding",
+    description: "Browse undergraduate scholarships for 2026, including bachelor's degree funding, merit-based awards, need-based aid, and fully funded programs for international students."
+  },
+  "high-school-scholarships/index.html": {
+    title: "High School Scholarships & Summer Programs 2026 | OpportunityNest",
+    description: "Find high school scholarships, summer programs, pre-college opportunities, and youth leadership programs for high school students worldwide."
+  },
+  "scholarships-without-ielts/index.html": {
+    title: "Scholarships Without IELTS for International Students 2026",
+    description: "Apply for scholarships without IELTS in 2026. Find programs accepting Duolingo, TOEFL, or no English test requirements. Study abroad without language barriers."
+  },
+  "scholarships-in-germany/index.html": {
+    title: "Scholarships in Germany 2026 | DAAD & Fully Funded Programs",
+    description: "Explore scholarships in Germany for 2026, including DAAD programs, Heinrich Böll, Konrad Adenauer, and fully funded German study opportunities for international students."
+  },
+  "scholarships-in-usa/index.html": {
+    title: "Scholarships in USA 2026 | Fully Funded American Programs",
+    description: "Find scholarships in USA 2026 — Fulbright, Hubert Humphrey, Knight-Hennessy, and more. Fully funded American study programs for international students."
+  },
+  "scholarships-in-uk/index.html": {
+    title: "Scholarships in UK 2026 | Chevening, Rhodes & British Programs",
+    description: "Browse scholarships in UK for 2026 — Chevening, Rhodes, Marshall, Clarendon, Gates Cambridge and more fully funded British study programs."
+  },
+  "scholarships-in-canada/index.html": {
+    title: "Scholarships in Canada 2026 | Fully Funded Canadian Programs",
+    description: "Explore scholarships in Canada for 2026 including UBC, UofT, Vanier, McCall MacBain, and other fully funded Canadian study programs."
+  },
+  "scholarships-in-china/index.html": {
+    title: "Scholarships in China 2026 | CSC & Chinese Government Programs",
+    description: "Find scholarships in China for 2026 — Chinese Government Scholarship (CSC), Schwarzman, and fully funded programs for international students studying in China."
+  },
+  "scholarships-in-japan/index.html": {
+    title: "Scholarships in Japan 2026 | MEXT & Japanese Government Programs",
+    description: "Discover scholarships in Japan for 2026 including MEXT, Japanese Government (Monbusho), and fully funded programs for international students."
+  },
+  "scholarships-in-australia/index.html": {
+    title: "Scholarships in Australia 2026 | Australia Awards & Merit Programs",
+    description: "Browse scholarships in Australia for 2026 — Australia Awards, Destination Australia, University of Melbourne, UNSW, and other Australian study funding."
+  },
+  "paid-internships/index.html": {
+    title: "Paid Internships 2026 | Fully Funded & Stipend Programs",
+    description: "Find paid internships for 2026, including fully funded international programs with stipends, travel coverage, and accommodation. Apply to Google, UN, Microsoft, and more."
+  },
+  "summer-internships/index.html": {
+    title: "Summer Internships 2026 | Paid Programs for Students",
+    description: "Discover summer internships for 2026 with stipends, housing, and travel benefits. Programs for undergraduate, graduate, and PhD students worldwide."
+  },
+  "remote-internships/index.html": {
+    title: "Remote Internships 2026 | Work-from-Home Global Programs",
+    description: "Find remote internships for 2026 you can do from anywhere. Paid virtual programs in tech, marketing, design, research, and more fields."
+  },
+  "fully-funded-fellowships/index.html": {
+    title: "Fully Funded Fellowships 2026 | Research & Leadership Programs",
+    description: "Explore fully funded fellowships for 2026, including research, policy, leadership, and postdoctoral programs with full funding for international applicants."
+  },
+  "government-scholarships/index.html": {
+    title: "Government Scholarships 2026 | National & International Awards",
+    description: "Browse government scholarships for 2026 from DAAD, Fulbright, Chevening, MEXT, Chinese Government, and other national scholarship programs."
+  },
+  "study-in-usa/index.html": {
+    title: "Study in USA 2026 | Scholarships, Visas & University Guide",
+    description: "Complete guide to study in USA for 2026. Find US scholarships, student visa info, top universities, and funding opportunities for international students."
+  },
+  "study-in-uk/index.html": {
+    title: "Study in UK 2026 | Scholarships, Visas & University Guide",
+    description: "Guide to study in UK for 2026. UK scholarships, student visa (Tier 4) process, top universities, and funding for international students."
+  },
+  "study-in-canada/index.html": {
+    title: "Study in Canada 2026 | Scholarships, Visas & University Guide",
+    description: "Learn how to study in Canada for 2026. Canadian scholarships, study permit process, top universities and college funding for international students."
+  },
+  "study-in-germany/index.html": {
+    title: "Study in Germany 2026 | DAAD, Free Tuition & Scholarships",
+    description: "Complete guide to study in Germany for 2026. Free tuition universities, DAAD scholarships, student visa, and application process for international students."
+  },
+  "study-in-australia/index.html": {
+    title: "Study in Australia 2026 | Scholarships, Visas & University Guide",
+    description: "Your guide to study in Australia for 2026. Australian scholarships, student visa (Subclass 500), and top university funding for international students."
+  },
+  "study-in-europe/index.html": {
+    title: "Study in Europe 2026 | Scholarships & Free Tuition Programs",
+    description: "Discover how to study in Europe for 2026. European scholarships, Erasmus Mundus, free tuition countries, and study abroad funding for international students."
+  },
+  "exchange-programs/index.html": {
+    title: "Student Exchange Programs 2026 | Global Study Abroad",
+    description: "Find student exchange programs for 2026, including semester abroad, year-long exchanges, and cultural immersion programs with funding support."
+  },
+  "youth-programs/index.html": {
+    title: "Youth Programs 2026 | Leadership, Volunteering & Summits",
+    description: "Explore youth programs for 2026 — leadership summits, volunteering abroad, UN youth programs, and global conferences for young leaders."
+  },
+  "conferences/index.html": {
+    title: "International Conferences 2026 | Academic & Youth Summits",
+    description: "Find international conferences for 2026, including academic conferences, youth summits, Model UN, and professional development events worldwide."
+  },
+  "grants/index.html": {
+    title: "Research Grants 2026 | Funding for Students & Researchers",
+    description: "Discover research grants for 2026, including academic funding, scientific research grants, and fieldwork support for students and early-career researchers."
   }
 };
 
@@ -264,7 +376,13 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 3. Defer Chatling chatbot — load only after user interaction
+  // 3. Add Monetag verification meta tag
+  if (!html.includes('name="monetag"')) {
+    html = html.replace('</head>', '    <meta name="monetag" content="8aca6e41b32c4da95a713300fdf33197">\n  </head>');
+    modified = true;
+  }
+
+  // 4. Defer Chatling chatbot — load only after user interaction
   if (html.includes('chatling.ai/js/embed.js')) {
     html = html.replace(
       /<script[^>]*src="https:\/\/chatling\.ai\/js\/embed\.js"[^>]*><\/script>/,
@@ -273,7 +391,7 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 4. JS hashed asset replacements
+  // 5. JS hashed asset replacements
   for (const [src, hashedName] of Object.entries(jsAssetMap)) {
     const oldRef = `src="/${src}"`;
     const newRef = `src="/${hashedName}"`;
@@ -283,7 +401,7 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
-  // 5. Ensure all JS scripts have defer (except inline scripts and Supabase)
+  // 6. Ensure all JS scripts have defer (except inline scripts and Supabase)
   html = html.replace(
     /(<script\s+src="[^"]*(?:nav|utils|script|category|contact|opportunity-detail|internship-detail|dynamic-types)\.[^"]*")\s*(?!defer|async|type=)/g,
     '$1 defer'
@@ -291,7 +409,7 @@ for (const htmlPath of htmlFiles) {
   // Remove duplicate defer
   html = html.replace(/\bdefer\s+defer\b/g, 'defer');
 
-  // 6. Add CSS containment to hero to isolate its layout
+  // 7. Add CSS containment to hero to isolate its layout
   if (html.includes('class="hero ')) {
     html = html.replace(
       /(<section\s+class="hero\s[^"]*")/,
@@ -301,7 +419,7 @@ for (const htmlPath of htmlFiles) {
 
 
 
-  // 7. Add preload hints for LCP and critical resources
+  // 8. Add preload hints for LCP and critical resources
   if (html.includes('brand-mark')) {
     // Preload logo (LCP element)
     if (!html.includes('rel="preload" href="/logo.svg"')) {
@@ -327,7 +445,7 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
-  // 8b. Add E-E-A-T badges to opportunity detail pages
+  // 9. Add E-E-A-T badges to opportunity detail pages
   if (html.includes('/opportunity/') && html.includes('review-note') && !html.includes('eeat-bar')) {
     const updatedAt = new Date().toISOString().split('T')[0];
     const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">Reviewed by Abdullah Ijaz Abbasi</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
@@ -335,7 +453,7 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 8d. Inject Event schema for deadlines on opportunity pages
+  // 10. Inject Event schema for deadlines on opportunity pages
   if (html.includes('"@type": "EducationalOccupationalProgram"') && html.includes('"timeRequired"')) {
     const deadlineMatch = html.match(/"timeRequired":\s*"([^"]+)"/);
     if (deadlineMatch && deadlineMatch[1] && !/varies|rolling|see|n\/a|tbd/i.test(deadlineMatch[1])) {
@@ -349,13 +467,38 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
-  // 8c. Add E-E-A-T badges to blog article pages (no eeat-bar yet, has Article schema)
+  // 11. Add E-E-A-T badges to blog article pages (no eeat-bar yet, has Article schema)
   if (html.includes('/blog/') && html.includes('"@type": "Article"') && !html.includes('eeat-bar')) {
     const updatedAt = new Date().toISOString().split('T')[0];
     const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">By Abdullah Ijaz Abbasi</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
     // Insert after the <h1> tag in blog pages
     html = html.replace(/(<\/h1>)/, '$1' + eeatBar);
     modified = true;
+  }
+
+  // 12. Add CollectionPage + FAQ schema to category listing pages that have ItemList
+  const categoryNameMatch = html.match(/<h1>([^<]+)<\/h1>/);
+  if (html.includes('"@type": "ItemList"') && categoryNameMatch && !html.includes('"@type": "FAQPage"')) {
+    const catName = categoryNameMatch[1].replace(/\([^)]*\)/g, '').trim();
+    const safeName = catName.replace(/"/g, '&quot;');
+    const faqQuestions = [
+      { q: `What are ${safeName}?`, a: `${safeName} are educational and professional development programs that provide financial support, training, or international exposure to students and early-career professionals. Each listing on this page includes verified deadlines, eligibility criteria, funding details, and direct links to official application pages.` },
+      { q: `Who can apply for ${safeName}?`, a: `Eligibility varies by program, but most ${safeName.toLowerCase()} are open to international students, recent graduates, and early-career professionals. Check each program's eligibility section for specific requirements regarding nationality, academic background, language proficiency, and work experience.` },
+      { q: `How do I apply for ${safeName}?`, a: `Each opportunity on this page has a direct "Apply Now" link to the official provider website. Before applying, review the eligibility requirements, prepare required documents (transcripts, CV, motivation letter, references), and note the application deadline. We recommend starting your applications at least 4 weeks before the deadline.` },
+      { q: `When are the deadlines for ${safeName}?`, a: `Deadlines are listed individually for each opportunity and vary by program. Some have fixed annual deadlines, while others use rolling admissions. Always verify the exact deadline on the official provider website and note that some deadlines are in the provider's local time zone.` }
+    ];
+    const faqSchema = `\n    <script type="application/ld+json">{\n  "@context": "https://schema.org",\n  "@type": "FAQPage",\n  "mainEntity": [${faqQuestions.map((f, i) => `\n    {"@type":"Question","name":"${f.q}","acceptedAnswer":{"@type":"Answer","text":"${f.a}"}}`).join(',')}\n  ]\n}</script>`;
+    html = html.replace('</head>', faqSchema + '\n  </head>');
+    modified = true;
+
+    // Also add CollectionPage type to existing ItemList
+    if (!html.includes('"@type": "CollectionPage"')) {
+      html = html.replace(
+        /("@type":\s*)"ItemList"/,
+        '$1"CollectionPage","@type":"ItemList"'
+      );
+      modified = true;
+    }
   }
   const footerRegex = /<footer\s+class="site-footer"[^>]*>[\s\S]*?<\/footer>/;
   if (footerRegex.test(html) && !html.includes('footer-heading')) {
