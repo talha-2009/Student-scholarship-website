@@ -570,13 +570,28 @@ window.addDynamicNavLinks = (types = []) => {
 };
 
 if (navMenu) {
-  buildNavigation();
-  setupNavigationInteractions();
   window.closeNav = closeNav;
-  // If script.js already loaded types (it runs before nav.js on most pages),
-  // inject dynamic nav links now that the menu is fully built.
-  if (window.__opportunityTypes) {
-    window.addDynamicNavLinks(window.__opportunityTypes);
+
+  let navBuilt = false;
+  function initNav() {
+    if (navBuilt) return;
+    navBuilt = true;
+    buildNavigation();
+    setupNavigationInteractions();
+    if (window.__opportunityTypes) {
+      window.addDynamicNavLinks(window.__opportunityTypes);
+    }
+  }
+
+  // Build nav on first interaction if idle callback hasn't fired yet
+  navMenu.addEventListener('pointerenter', initNav, { once: true });
+  navMenu.addEventListener('touchstart', initNav, { once: true });
+
+  // Defer mega menu construction to browser idle time — avoids blocking first paint
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(initNav, { timeout: 2000 });
+  } else {
+    setTimeout(initNav, 100);
   }
 }
 

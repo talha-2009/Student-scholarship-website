@@ -142,6 +142,7 @@ const RESOURCE_HINTS = [
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;
+const PRELOAD_DEFERRED_TAG = `<link rel="preload" href="/${deferredName}" as="style" fetchpriority="low">`;
 const DEFERRED_LINK_TAG = `<link rel="stylesheet" href="/${deferredName}" media="print" onload="this.media='all'">`;
 const NOSCRIPT_TAG = `<noscript><link rel="stylesheet" href="/${deferredName}"></noscript>`;
 
@@ -153,7 +154,7 @@ for (const htmlPath of htmlFiles) {
   const cssLinkRegex = /<link\s+rel="stylesheet"\s+href="\/styles\.css"\s*\/?>/g;
   if (cssLinkRegex.test(html)) {
     html = html.replace(/<link\s+rel="stylesheet"\s+href="\/styles\.css"\s*\/?>/,
-      `${CRITICAL_STYLE_TAG}\n    ${DEFERRED_LINK_TAG}\n    ${NOSCRIPT_TAG}`);
+      `${CRITICAL_STYLE_TAG}\n    ${PRELOAD_DEFERRED_TAG}\n    ${DEFERRED_LINK_TAG}\n    ${NOSCRIPT_TAG}`);
     modified = true;
   }
 
