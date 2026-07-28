@@ -520,6 +520,190 @@ LANDING_PAGE_DEFINITIONS = [
         "eligibility": "age or student status, topic fit, word limit, originality rules, citation style, region eligibility, and deadlines",
         "process": "read the prompt, outline a focused argument, revise for evidence and clarity, and submit through the official platform",
         "tips": "answer the exact prompt, follow formatting rules, and leave time for proofreading before the deadline"
+    },
+    {
+        "path": "scholarships-for-engineering-students",
+        "label": "Scholarships for Engineering Students",
+        "h1": "Scholarships for Engineering Students",
+        "facet": "field",
+        "match": {"type": "Scholarship", "keywords": ["engineering", "STEM", "technology", "computer science", "IT", "math", "physics", "chemistry", "biology"]},
+        "audience": "undergraduate, master's, and doctoral students in engineering, technology, and STEM fields",
+        "benefits": "tuition coverage, research funding, laboratory access, stipends, and opportunities for technical and professional development",
+        "eligibility": "enrollment in or admission to an engineering or STEM program, academic merit, language evidence, and provider-specific nationality rules",
+        "process": "match programs to your engineering specialization, confirm admission and scholarship deadlines, prepare technical references and CV, and submit through the official portal",
+        "tips": "highlight project experience, laboratory work, or internships in your application; many engineering programs value practical demonstration of skills"
+    },
+    {
+        "path": "fully-funded-phd-scholarships-2026",
+        "label": "Fully Funded PhD Scholarships",
+        "h1": "Fully Funded PhD Scholarships 2026",
+        "facet": "level",
+        "match": {"type": "Scholarship", "level": "phd", "funding": "Fully Funded"},
+        "audience": "doctoral candidates and researchers seeking comprehensive PhD funding with tuition and living support",
+        "benefits": "full tuition coverage, monthly stipends, research funding, travel grants, insurance, and access to academic supervision and facilities",
+        "eligibility": "strong academic record, research proposal quality, supervisory match, language ability, and provider-specific nationality rules",
+        "process": "identify doctoral programs and supervisors in your field, prepare a focused research proposal, secure academic references, and apply by the specified deadline",
+        "tips": "contact potential supervisors before applying, tailor your research proposal to each program's strengths, and budget for uncovered costs like visa fees or dependant support"
+    },
+    {
+        "path": "easiest-scholarships-to-get",
+        "label": "Easiest Scholarships to Get",
+        "h1": "Easiest Scholarships to Get in 2026",
+        "facet": "curated",
+        "match": {"type": "Scholarship", "keywords": ["undergraduate", "essay", "competition", "rolling", "open to all", "all fields", "no IELTS", "easy", "automatic", "merit", "need-based", "regional"]},
+        "audience": "students looking for scholarships with broad eligibility, rolling deadlines, or less restrictive requirements",
+        "benefits": "tuition awards, fee reductions, stipends, or full funding depending on the program; generally more accessible than highly selective awards",
+        "eligibility": "typically broader than competitive programs — check each listing for nationality, level, field, and language rules because 'easier' does not mean condition-free",
+        "process": "filter by your level and region, compare deadlines and funding, confirm each program's eligibility language, and apply through the official provider channel",
+        "tips": "focus on programs whose requirements you already meet rather than ones that ask for extensive new qualifications, and submit early for rolling-admission programs"
+    },
+    {
+        "path": "scholarships-without-ielts",
+        "label": "Scholarships Without IELTS",
+        "h1": "Scholarships Without IELTS for International Students",
+        "facet": "curated",
+        "match": {"type": "Scholarship", "keywords": ["no IELTS", "without IELTS", "IELTS", "English", "language", "TOEFL", "language requirement", "language evidence"]},
+        "audience": "international students who want to study abroad without submitting IELTS or equivalent English proficiency scores",
+        "benefits": "access to degree programs and funding without a standardized English test requirement, reducing application barriers and costs",
+        "eligibility": "each program sets its own language policy — some waive IELTS for native English speakers, previous English-medium study, or alternative evidence like a medium-of-instruction letter",
+        "process": "check each listing's language requirements, prepare alternative evidence (MOI letter, previous degree in English), confirm the admission deadline, and apply through the official channel",
+        "tips": "many universities accept a medium-of-instruction (MOI) certificate instead of IELTS if your previous degree was taught in English; check each provider's accepted alternatives"
+    }
+]
+
+NATIONALITY_DEFINITIONS = [
+    {
+        "path": "scholarships-for-pakistani-students",
+        "label": "Scholarships for Pakistani Students",
+        "h1": "Scholarships for Pakistani Students",
+        "facet": "nationality",
+        "nationality": "Pakistani",
+        "match": {
+            "type": "Scholarship",
+            "keywords": [
+                "Commonwealth", "Chevening", "DAAD", "Fulbright", "MEXT",
+                "CSC", "GKS", "Erasmus", "Turkiye", "Australia Awards",
+                "Joint Japan", "Mastercard Foundation", "Rotary Peace",
+                "Heinrich", "Konrad Adenauer", "Rosa Luxemburg",
+                "Swiss Government", "ETH Zurich", "Vanier",
+                "Pearson", "UBC", "ANU", "Sydney", "Monash",
+                "Melbourne", "Toronto", "McCall MacBain",
+                "Leiden", "Clarendon", "Gates Cambridge", "Marshall",
+                "Churchill", "Weidenfeld", "GREAT", "Rhodes",
+                "Knight-Hennessy", "Schwarzman", "Boren",
+                "NSF", "Trudeau", "Killam"
+            ]
+        },
+        "audience": "Pakistani students and recent graduates seeking undergraduate, master's, or PhD funding abroad",
+        "benefits": "full or partial tuition coverage, living stipends, travel support, research funding, and access to global academic networks",
+        "eligibility": "Pakistani nationality, academic merit, degree level requirements, language proficiency, and program-specific conditions set by each provider",
+        "process": "shortlist programs that match your academic level and field, confirm the official deadline, prepare transcripts and references, and submit through the provider's portal",
+        "tips": "prioritize programs with rolling deadlines, verify language test requirements early, and keep both original and certified copies of your documents ready"
+    },
+    {
+        "path": "scholarships-for-nigerian-students",
+        "label": "Scholarships for Nigerian Students",
+        "h1": "Scholarships for Nigerian Students",
+        "facet": "nationality",
+        "nationality": "Nigerian",
+        "match": {
+            "type": "Scholarship",
+            "keywords": [
+                "Commonwealth", "Chevening", "DAAD", "Fulbright", "MEXT",
+                "CSC", "GKS", "Erasmus", "Turkiye", "Australia Awards",
+                "Joint Japan", "Mastercard Foundation", "Rotary Peace",
+                "Heinrich", "Konrad Adenauer", "Rosa Luxemburg",
+                "Swiss Government", "ETH Zurich", "Vanier",
+                "Pearson", "UBC", "ANU", "Sydney", "Monash",
+                "Melbourne", "Toronto", "McCall MacBain",
+                "Leiden", "Clarendon", "Gates Cambridge", "Marshall",
+                "Churchill", "Weidenfeld", "GREAT", "Rhodes",
+                "Knight-Hennessy", "Schwarzman", "Boren",
+                "NSF", "Trudeau", "Killam", "AIST"
+            ]
+        },
+        "audience": "Nigerian students and recent graduates seeking undergraduate, master's, or PhD funding abroad",
+        "benefits": "full or partial tuition coverage, living stipends, travel support, research funding, and access to global academic networks",
+        "eligibility": "Nigerian nationality, academic merit, degree level requirements, language proficiency, and program-specific conditions set by each provider",
+        "process": "shortlist programs that match your academic level and field, confirm the official deadline, prepare transcripts and references, and submit through the provider's portal",
+        "tips": "pay attention to programs that require institutional nomination and start the endorsement process early with your university's international office"
+    },
+    {
+        "path": "scholarships-for-bangladeshi-students",
+        "label": "Scholarships for Bangladeshi Students",
+        "h1": "Scholarships for Bangladeshi Students",
+        "facet": "nationality",
+        "nationality": "Bangladeshi",
+        "match": {
+            "type": "Scholarship",
+            "keywords": [
+                "Commonwealth", "Chevening", "DAAD", "Fulbright", "MEXT",
+                "CSC", "GKS", "Erasmus", "Turkiye", "Australia Awards",
+                "Joint Japan", "Mastercard Foundation", "Rotary Peace",
+                "Heinrich", "Konrad Adenauer", "Rosa Luxemburg",
+                "Swiss Government", "ETH Zurich", "Vanier",
+                "ANU", "Sydney", "Monash", "Melbourne",
+                "Gates Cambridge", "Clarendon", "Rhodes",
+                "Knight-Hennessy", "Schwarzman", "Leiden",
+                "GREAT", "Weidenfeld", "Trudeau", "McCall MacBain"
+            ]
+        },
+        "audience": "Bangladeshi students and recent graduates seeking undergraduate, master's, or PhD funding abroad",
+        "benefits": "full or partial tuition coverage, living stipends, travel support, research funding, and access to global academic networks",
+        "eligibility": "Bangladeshi nationality, academic merit, degree level requirements, language proficiency, and program-specific conditions set by each provider",
+        "process": "shortlist programs that match your academic level and field, confirm the official deadline, prepare transcripts and references, and submit through the provider's portal",
+        "tips": "check whether each program accepts direct applications or requires university nomination, and allow extra time for document attestation"
+    },
+    {
+        "path": "scholarships-for-ethiopian-students",
+        "label": "Scholarships for Ethiopian Students",
+        "h1": "Scholarships for Ethiopian Students",
+        "facet": "nationality",
+        "nationality": "Ethiopian",
+        "match": {
+            "type": "Scholarship",
+            "keywords": [
+                "Commonwealth", "Chevening", "DAAD", "Fulbright", "MEXT",
+                "CSC", "GKS", "Erasmus", "Turkiye", "Australia Awards",
+                "Joint Japan", "Mastercard Foundation", "Rotary Peace",
+                "Heinrich", "Swiss Government", "ETH Zurich",
+                "Vanier", "Gates Cambridge", "Clarendon",
+                "Rhodes", "Knight-Hennessy", "Schwarzman",
+                "Leiden", "ANU", "Sydney", "Monash",
+                "GREAT", "McCall MacBain", "Trudeau"
+            ]
+        },
+        "audience": "Ethiopian students and recent graduates seeking undergraduate, master's, or PhD funding abroad",
+        "benefits": "full or partial tuition coverage, living stipends, travel support, research funding, and access to global academic networks",
+        "eligibility": "Ethiopian nationality, academic merit, degree level requirements, language proficiency, and program-specific conditions set by each provider",
+        "process": "shortlist programs that match your academic level and field, confirm the official deadline, prepare transcripts and references, and submit through the provider's portal",
+        "tips": "verify internet and power reliability when preparing for online submissions, and build a buffer of 2-3 weeks before each hard deadline"
+    },
+    {
+        "path": "scholarships-for-kenyan-students",
+        "label": "Scholarships for Kenyan Students",
+        "h1": "Scholarships for Kenyan Students",
+        "facet": "nationality",
+        "nationality": "Kenyan",
+        "match": {
+            "type": "Scholarship",
+            "keywords": [
+                "Commonwealth", "Chevening", "DAAD", "Fulbright", "MEXT",
+                "CSC", "GKS", "Erasmus", "Turkiye", "Australia Awards",
+                "Joint Japan", "Mastercard Foundation", "Rotary Peace",
+                "Heinrich", "Swiss Government", "ETH Zurich",
+                "Vanier", "Pearson", "Killam",
+                "Gates Cambridge", "Clarendon", "Rhodes",
+                "Knight-Hennessy", "Schwarzman", "ANU",
+                "Sydney", "Monash", "Melbourne", "Leiden",
+                "GREAT", "McCall MacBain", "Trudeau", "UBC"
+            ]
+        },
+        "audience": "Kenyan students and recent graduates seeking undergraduate, master's, or PhD funding abroad",
+        "benefits": "full or partial tuition coverage, living stipends, travel support, research funding, and access to global academic networks",
+        "eligibility": "Kenyan nationality, academic merit, degree level requirements, language proficiency, and program-specific conditions set by each provider",
+        "process": "shortlist programs that match your academic level and field, confirm the official deadline, prepare transcripts and references, and submit through the provider's portal",
+        "tips": "many programs require recommendation letters from academic referees — approach your referees at least one month before the deadline"
     }
 ]
 
@@ -955,7 +1139,9 @@ def matches_landing_page(item: dict, definition: dict) -> bool:
             "field",
             "benefits",
             "description",
-            "tags"
+            "tags",
+            "organization",
+            "eligible_countries"
         )).lower()
         if not any(keyword.lower() in searchable for keyword in match["keywords"]):
             return False
@@ -1063,6 +1249,36 @@ def build_landing_copy(definition: dict, item_count: int) -> list[tuple[str, str
                 f"Follow up on your applications only through the channels specified by the provider."
             )
         ]
+    elif "for " in label and "Students" in label and definition.get("facet") == "nationality":
+        nationality = label.replace("Scholarships for ", "").replace("Students", "").strip()
+        sections = [
+            (
+                f"About {label}",
+                f"This page collects verified scholarship opportunities that are open to {nationality} students and recent graduates. {availability} "
+                f"Each listing includes funding details, degree level, deadline, host country, and a direct link to the official provider. "
+                f"These scholarships are sourced from governments, universities, foundations, and international organizations that accept applicants from {nationality} backgrounds."
+            ),
+            (
+                "What types of scholarships are included",
+                f"The listings on this page cover the range of funding models — fully funded awards covering tuition and living costs, partially funded awards, "
+                f"and targeted awards for specific fields or career stages. {nationality} applicants can compare programs by funding level, destination country, "
+                f"degree level (undergraduate, master's, PhD), and field of study. Each listing is verified before publication for deadline clarity, "
+                f"eligibility rules, and funding information."
+            ),
+            (
+                "Application process for international scholarships",
+                f"Most of these programs require: verified academic transcripts, a motivation letter or personal statement, reference letters, "
+                f"and language proficiency evidence where applicable. Some require research proposals, portfolios, or institutional nomination. "
+                f"{nationality} applicants should plan for document certification, translation where needed, and visa timelines. "
+                f"Start applications 8-12 weeks before each deadline to allow time for referee coordination and document preparation."
+            ),
+            (
+                "Tips for {nationality} applicants".format(nationality=nationality),
+                f"Focus on programs that match your academic level and field. Compare funding packages carefully — some cover full costs while others require "
+                f"supplementary funding. Keep a checklist of deadlines, required documents, and application portals. Apply through the official provider channels only. "
+                f"Review the eligibility criteria for each program thoroughly before preparing your application package."
+            )
+        ]
     else:
         sections = [
             (
@@ -1113,6 +1329,10 @@ def build_landing_faqs(definition: dict, item_count: int) -> list[dict]:
     elif any(x in label for x in ("Fully Funded", "Partially Funded")):
         extra_q1 = {"q": f"Does {label_lower} cover all expenses?", "a": "Read the funding details on each listing. Some awards cover tuition alone, while others include living stipends, travel, and health insurance."}
         extra_q2 = {"q": f"Can I apply for multiple {label_lower} at the same time?", "a": "Yes, as long as you meet the eligibility criteria for each program. Be aware that some providers may restrict concurrent awards."}
+    elif "for " in label and "Students" in label and definition.get("facet") == "nationality":
+        nationality = label.replace("Scholarships for ", "").replace("Students", "").strip()
+        extra_q1 = {"q": f"Are these scholarships open to all {nationality} students?", "a": f"Each program sets its own eligibility rules. Some are open to all {nationality} nationals, while others target specific regions, age groups, or academic levels within {nationality}. Check the eligibility section of each listing before applying."}
+        extra_q2 = {"q": f"Do {nationality} students need an offer of admission before applying?", "a": "Some scholarships require a separate admission application to the university first, while others bundle admission and funding in one process. Read the application instructions for each program to understand the sequence."}
     else:
         extra_q1 = {"q": f"How often are new {label_lower} added to this page?", "a": "The database is updated as verified opportunities are reviewed. Check the page periodically or browse related categories for additional listings."}
         extra_q2 = {"q": f"What is the difference between {label_lower} and other categories on this site?", "a": f"Each category groups opportunities by type. This page collects {label_lower}, while related pages focus on other categories such as internships, fellowships, or competitions."}
@@ -2199,6 +2419,13 @@ def main():
         landing_path = ROOT / definition["path"] / "index.html"
         write_page(landing_path, build_landing_page(definition, landing_items, LANDING_PAGE_DEFINITIONS))
 
+    # Generate nationality-specific scholarship pages
+    for definition in NATIONALITY_DEFINITIONS:
+        nationality_items = [item for item in opportunities if matches_landing_page(item, definition)]
+        nationality_items.sort(key=lambda item: (item.get("deadline") or "9999", item.get("title") or ""))
+        landing_path = ROOT / definition["path"] / "index.html"
+        write_page(landing_path, build_landing_page(definition, nationality_items, NATIONALITY_DEFINITIONS))
+
     write_trust_pages()
 
     # Generate sitemap
@@ -2233,6 +2460,13 @@ def main():
             "lastmod": today,
             "changefreq": "weekly",
             "priority": 0.9 if definition["facet"] == "category" else 0.8
+        })
+    for definition in NATIONALITY_DEFINITIONS:
+        sitemap_entries.append({
+            "loc": f"{SITE_URL}/{definition['path']}/",
+            "lastmod": today,
+            "changefreq": "weekly",
+            "priority": 0.8
         })
     sitemap = build_sitemap(sitemap_entries)
     write_page(ROOT / "sitemap.xml", sitemap)
