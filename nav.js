@@ -220,7 +220,23 @@ function openMega(item) {
   item.classList.add("is-open");
   var trig = item.querySelector(".nav-link");
   if (trig) trig.setAttribute("aria-expanded", "true");
-  if (!isMobile()) positionMega(item);
+  if (!isMobile()) {
+    positionMega(item);
+    updateScrollIndicator(item);
+  }
+}
+
+function updateScrollIndicator(item) {
+  var mega = item.querySelector(".mega");
+  var inner = item.querySelector(".mega-inner");
+  if (!mega || !inner) return;
+  function check() {
+    var hasOverflow = inner.scrollHeight > inner.clientHeight;
+    var isAtBottom = inner.scrollHeight - inner.scrollTop - inner.clientHeight < 16;
+    mega.classList.toggle("has-overflow", hasOverflow && !isAtBottom);
+  }
+  check();
+  inner.addEventListener("scroll", check, { passive: true });
 }
 
 function positionMega(item) {
