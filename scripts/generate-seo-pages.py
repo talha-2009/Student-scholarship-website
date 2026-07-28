@@ -7,6 +7,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 SITE_URL = "https://www.opportunitynest.org"
+CURRENT_YEAR = str(datetime.now(timezone.utc).year)
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/") + "/rest/v1/opportunities"
 SUPABASE_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -1131,10 +1132,10 @@ def build_landing_faqs(definition: dict, item_count: int) -> list[dict]:
 
 def build_landing_page(definition: dict, items: list[dict], definitions: list[dict]) -> str:
     page_url = f"{SITE_URL}/{definition['path']}/"
-    title = f"{definition['h1']} | OpportunityNest"
+    title = f"{definition['h1']} ({CURRENT_YEAR}) | OpportunityNest"
     description = (
         f"Explore {definition['label'].lower()} with verified deadlines, eligibility, funding details, "
-        "and direct links to official application pages."
+        f"and direct links to official application pages for {CURRENT_YEAR}."
     )
     copy_sections = build_landing_copy(definition, len(items))
     faqs = build_landing_faqs(definition, len(items))
@@ -1262,7 +1263,7 @@ def write_page(path: pathlib.Path, content: str):
 
 
 def build_category_page(category: str, items: list[dict], country_counts: dict) -> str:
-    title = f"{PAGE_TYPES[category]} | OpportunityNest"
+    title = f"{PAGE_TYPES[category]} ({CURRENT_YEAR}) | OpportunityNest"
     category_descriptions = {
         "Scholarship": f"Browse verified scholarship programs with funding details, deadlines, eligibility levels, and country-specific listings for students and researchers.",
         "Internship": f"Explore verified internship opportunities including paid placements, stipend-based roles, and volunteer positions across multiple countries and fields.",
@@ -1342,8 +1343,8 @@ def build_category_page(category: str, items: list[dict], country_counts: dict) 
 
 def build_country_page(country: str, items: list[dict], related_countries: list[str]) -> str:
     updated_date = datetime.now(timezone.utc).date().isoformat()
-    title = f"{country} Scholarships, Internships and Fellowships | OpportunityNest"
-    description = f"Explore verified scholarships, internships, fellowships, competitions, study tips, visa notes, universities, and application guidance for {country}."
+    title = f"{country} Scholarships, Internships and Fellowships ({CURRENT_YEAR}) | OpportunityNest"
+    description = f"Explore verified scholarships, internships, fellowships, competitions, study tips, visa notes, universities, and application guidance for {country} in {CURRENT_YEAR}."
     path = f"{SITE_URL}/country/{slugify(country)}/"
     breadcrumbs = build_breadcrumbs([("Home", "/"), ("Country", "/#opportunities"), (country, None)])
     country_items = sorted(items, key=lambda item: item.get('deadline') or '', reverse=False)
@@ -1587,12 +1588,12 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
         f"What kind of applicant should consider {title}?"
     ]
     a1_templates = [
-        f"This {type_label} is designed for candidates at the {level} level with interests in {field}. Before applying, check the provider's nationality, residency, and enrollment rules on their official page." if field else
-        f"Candidates at the {level} level who meet the stated requirements would be a strong match. Always confirm eligibility details, including age limits and degree timing, on the provider's website before starting your application.",
-        f"Applicants at the {level} level who are active or interested in {field} would find this relevant. The official eligibility page should be consulted for nationality, residency, age, and enrollment requirements before starting an application." if field else
-        f"Applicants at the {level} level who meet the provider's criteria should consider this opportunity. Verify age limits, degree timing, and residency rules on the official page before applying.",
-        f"{title} is best suited for candidates at the {level} level whose background aligns with {field}. The provider's official eligibility page is the definitive source for nationality, age, and degree requirements, so review it carefully before preparing your materials." if field else
-        f"{title} targets candidates at the {level} level who satisfy the provider's stated criteria. Make sure to verify the latest eligibility rules, including any country-specific restrictions, on the official program page."
+        f"{title} is designed for candidates at the {level} level with interests in {field}. The provider looks for applicants who demonstrate strong academic preparation and a clear connection between their background and the program's purpose. Nationality, residency, and enrollment rules are set by the host and published on their official eligibility page." if field else
+        f"{title} targets candidates at the {level} level who meet the provider's stated qualifications. Selection typically evaluates academic record, motivation, and alignment with program goals. Review the published eligibility criteria carefully before preparing your application.",
+        f"Applicants at the {level} level whose background is in {field} are the primary audience for {title}. Successful candidates usually show how their experience connects to what the program offers and can articulate their contribution to the cohort. The provider publishes detailed eligibility requirements including nationality, age, and degree conditions." if field else
+        f"Applicants at the {level} level who satisfy the provider's criteria should consider {title}. Assess your academic and professional background against the published eligibility requirements to determine fit before starting your application.",
+        f"{title} welcomes candidates at the {level} level with a background in {field}. Competitive applicants demonstrate how their experience aligns with the program's objectives and can contribute to {host}'s mission. Consult the official eligibility page for the complete list of requirements including degree level, language proficiency, and country-specific rules." if field else
+        f"{title} is open to candidates at the {level} level who meet the provider's eligibility criteria. Before applying, check your qualifications against the published requirements to confirm you meet the minimum standards for consideration."
     ]
     q1 = _pick(q1_templates, title + "q1")
     a1 = _pick(a1_templates, title + "a1")
@@ -1604,9 +1605,9 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
         f"What does {title} cover for selected participants?"
     ]
     a2_templates = [
-        f"OpportunityNest records the funding as: {benefits}. The exact package varies by provider, so check the official page to confirm whether tuition, stipends, travel, insurance, and research costs are included.",
-        f"The listed funding for this position is: {benefits}. Coverage details — tuition, stipends, travel, insurance — depend on the provider's current terms. Always verify the full breakdown on the official website before budgeting.",
-        f"This listing shows funding as: {benefits}. Before applying, confirm exactly which costs the provider covers — tuition, living expenses, airfare, insurance — and which remain your responsibility."
+        f"OpportunityNest records the funding as: {benefits}. {host} typically structures awards to cover the listed components, but the exact allocation — tuition, monthly stipend, travel, insurance, research costs — varies by cohort year. Budget for uncovered items such as visas, dependant costs, or incidental fees.",
+        f"The listed funding for this position is: {benefits}. Awards at this level from {host} commonly include the stated benefits, though the precise split between direct costs and living support changes annually. Plan your finances assuming you may need to cover some expenses beyond what the provider lists.",
+        f"This listing shows funding as: {benefits}. {host} publishes the final award breakdown on its official site. Review what each funding component covers — some packages pay the institution directly while others reimburse expenses — to avoid shortfalls during your program."
     ]
     q2 = _pick(q2_templates, title + "q2")
     a2 = _pick(a2_templates, title + "q2")
@@ -1617,9 +1618,9 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
         f"What is the deadline situation for {title}?",
         f"Does {title} have a fixed closing date or rolling admissions?"
     ]
-    a3a = f"OpportunityNest records the deadline as: {deadline}. Deadlines can shift, so always confirm the current closing date on the provider's official page."
-    a3b = f"The application deadline listed here is {deadline}. Because programme dates sometimes change, double-check the closing date — and any round-based deadlines — on the official provider website."
-    a3c = f"According to the listing, the deadline is {deadline}. For the most current schedule, including any early-bird or round-based deadlines, consult the provider's official page."
+    a3a = f"OpportunityNest records the deadline as: {deadline}. For most {type_label} programs, this is the final cutoff for complete submissions including supporting documents. Start your application 6-8 weeks before this date to allow time for transcripts, test scores, and reference letters."
+    a3b = f"The application deadline listed here is {deadline}. Note that some providers enforce a postmark or portal-timestamp rule — your full application package must be submitted by this time, not just started. Begin preparing your documents at least 8 weeks in advance."
+    a3c = f"According to the listing, the deadline is {deadline}. Many {type_label} programs operate in rounds or have document-cutoff dates that fall before the main deadline. Plan to have your transcripts, recommendations, and personal statement ready 4 weeks before the published closing date."
     a3_templates = [a3a, a3b, a3c]
     q3 = _pick(q3_templates, title + "q3")
     a3 = _pick(a3_templates, title + "q3")
@@ -1635,29 +1636,29 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
     if host and host != country:
         q4_pool = [
             (f"Which body runs {title}?",
-             f"This {type_label} is administered by {host}. Direct all applications and inquiries through the official provider channels listed on this page."),
+             f"This {type_label} is administered by {host}, an organization active in {country}. They set the eligibility criteria, manage the selection process, and disburse funding. All applications and inquiries should go through their official channels."),
             (f"Who is behind {title}?",
-             f"The program is offered by {host}. Check their official site for the most current information on eligibility, deadlines, and how to apply."),
+             f"The program is offered by {host}, which operates in {country}. Reviewing {host}'s mission, past cohort profiles, and published reports can help you tailor your application to what they value in candidates."),
             (f"Is {title} offered directly by {host}?",
-             f"Yes — {host} manages this {type_label}. Use the official application link on this page to submit your materials through their system.")
+             f"Yes — {host} manages this {type_label} from {country}. Their application system handles submissions, document review, and selection. Use the official application link to submit your materials directly through their portal.")
         ]
     elif country:
         q4_pool = [
             (f"Why is {title} based in {country}?",
-             f"The program is linked to {country}. Applicants should review location-specific requirements such as visa procedures, language expectations, or residency rules on the official provider page."),
+             f"The program is anchored in {country}, which affects eligibility rules, visa pathways, cost of living, and language expectations. Applicants outside {country} should research student visa timelines, accommodation costs, and any language preparation needed before the program starts."),
             (f"What makes {country} the destination for this opportunity?",
-             f"This {type_label} is associated with {country}. Be sure to research visa timelines, cost of living, and any language requirements before applying."),
+             f"This {type_label} is hosted in {country}. Factors like the academic calendar, visa processing times (typically 4-12 weeks), and regional cost differences can affect your planning. Research these early to avoid last-minute scheduling conflicts."),
             (f"Do I need to be based in {country} to apply for {title}?",
-             f"The opportunity is connected to {country}, but eligibility rules vary. Some programs accept international applicants; others require local residency. Check the official page for nationality and residence requirements.")
+             f"The opportunity is connected to {country}, but many applicants apply from abroad. Some {type_label} programs welcome international candidates; others require current residency or citizenship of {country}. Check the eligibility page for nationality and residence requirements, and factor in visa processing time if you would need to relocate.")
         ]
     else:
         q4_pool = [
             (f"What should I prepare before applying to {title}?",
-             "Start by reading the selection criteria on the provider's page. Prepare a tailored motivation statement, your CV, transcripts, and reference letters well ahead of the deadline. Submit through the official portal and keep a copy of your application."),
+             "Start by reading the selection criteria carefully. Prepare a tailored motivation statement that connects your background to the program's purpose, a current CV, certified transcripts, and at least two reference letters. Submit through the official portal and keep a copy of your submission confirmation."),
             (f"How do I put together a strong application for {title}?",
-             "Review the provider's criteria first, then write a targeted motivation statement. Gather your CV, academic records, and references early. Submit through the official channel and save your confirmation."),
+             "Review the provider's criteria first, then craft a motivation statement that shows alignment between your experience and what the program offers. Gather your CV, academic records, and references early. Submit through the official channel and save your confirmation email."),
             (f"What materials does {title} typically require?",
-             "Most listings ask for a completed form, transcripts, a motivation letter, references, and language test scores where relevant. Confirm the exact requirements on the provider's page and prepare well before the deadline.")
+             "Most opportunities ask for a completed application form, academic transcripts, a motivation letter or personal statement, reference letters, and language proficiency evidence where applicable. Some require a research proposal or portfolio. Prepare well before the deadline to allow time for revisions.")
         ]
     if q4_pool:
         q4, a4 = _pick(q4_pool, title + "q4")
@@ -1668,29 +1669,29 @@ def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
     if is_rolling:
         q5_pool = [
             (f"Should I apply early to {title}?",
-             "Yes — this program reviews applications as they arrive. Early submission can work in your favour if the provider allocates funding or interview slots on a first-come, first-served basis."),
+             "Yes — this program reviews applications as they arrive. Early submission is advantageous because the provider may allocate funding, interview slots, or limited placements on a progressive basis. Prepare your materials as soon as possible and submit once your application is complete."),
             (f"Does {title} operate on a rolling admissions cycle?",
-             "It does. Submissions are evaluated continuously, so getting your application in early is beneficial. Some providers fill positions or allocate stipends progressively throughout the cycle."),
+             "It does. Submissions are evaluated continuously rather than after a single cutoff. Getting your application in early is beneficial since some providers fill positions or allocate stipends progressively throughout the cycle. Prepare your materials ahead of time rather than waiting for an announced closing date."),
             (f"Will applying early improve my chances for {title}?",
-             "It can. Because this program reviews candidates as applications come in, earlier applicants may have a better shot at available spots or funding before later-stage competition intensifies.")
+             "It can. Because this program reviews candidates as applications arrive, earlier applicants may face less competition for available spots or funding. Submit once your materials are complete — there is no advantage to delaying if you already meet the eligibility criteria.")
         ]
     elif deadline and ("varies" in deadline.lower() or "not announced" in deadline.lower()):
         q5_pool = [
             (f"Can I submit my application for {title} whenever I want?",
-             "The deadline for this listing is either flexible or not yet announced. Monitor the official provider page for when the next intake opens and apply as soon as materials are requested."),
+             f"The deadline for this listing is either flexible or not yet announced. While you can prepare at your own pace, aim to have your documents ready by the typical intake season for {type_label} programs. Monitor the {host} page for when the next cycle opens."),
             (f"When will the next application window open for {title}?",
-             "The closing date for this listing has not been fixed yet. Keep checking the official program page for announcements about the next round."),
+             f"The closing date for this listing has not been fixed yet. Most {type_label} programs follow an annual or semester-based cycle, so reviewing {host}'s previous year's timeline can give you a reasonable estimate. Check periodically for official announcements."),
             (f"How do I know when {title} is accepting applications?",
-             "This listing does not have a confirmed deadline yet. Bookmark the official provider page and check periodically for updates on the next application cycle.")
+             f"This listing does not have a confirmed deadline yet. Bookmark {host}'s official page and check monthly for updates. Use this time to prepare your transcripts, draft your motivation statement, and identify referees so you are ready when the next cycle opens.")
         ]
     else:
         q5_pool = [
             (f"Which documents should I get ready for {title}?",
-             "Most programs ask for a completed form, academic transcripts, a motivation statement or research proposal, reference letters, and language proficiency evidence where applicable. Verify the exact requirements on the official page."),
+             f"Most {type_label} programs ask for a completed application form, academic transcripts (certified translations if not in English), a motivation statement or research proposal, two to three reference letters, and language proficiency evidence (IELTS, TOEFL, or equivalent). Some require a CV, portfolio, or writing sample. Start collecting these at least 8 weeks before the deadline."),
             (f"What paperwork does {title} typically require from applicants?",
-             "Common requirements include an application form, transcripts, a personal statement or research proposal, recommendation letters, and proof of English proficiency. Confirm the precise list with the provider before you start."),
+             f"Common requirements include an application form, official transcripts, a personal statement or research proposal, recommendation letters, and proof of English proficiency. Some providers also ask for a CV, passport copy, or health certificate. Confirm the precise list with the provider and allow time for certified translations if needed."),
             (f"What goes into a standard application package for {title}?",
-             "Typically you will need a filled application form, your academic records, a motivation letter or proposal, references, and language test results if required. Double-check the provider's instructions for any program-specific additions.")
+             f"Typically you will need: a completed application form, academic records from all institutions attended, a motivation letter or research proposal, two to three reference letters, and language test scores where required. Some programs request additional materials like a portfolio or writing sample. Check the provider's instructions for any program-specific additions and submit well before the deadline.")
         ]
     if q5_pool:
         q5, a5 = _pick(q5_pool, title + "q5")
@@ -1849,132 +1850,6 @@ def opportunity_summary(item: dict, host: str, benefits: str) -> str:
     return template.replace("{title}", title).replace("{level}", level).replace("{type_label}", type_label).replace("{field}", field).replace("{country}", country).replace("{host}", host).replace("{benefits}", benefits).replace("{deadline}", deadline)
 
 
-def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
-    title = f"{item['title']} | OpportunityNest"
-    description = f"Apply for the {item['title']} in {item['country']}. Funding, deadline, eligibility, and application details for this {item['type'].lower()}."
-    page_url = f"{SITE_URL}/opportunity/{slugify(item['slug'])}/"
-    breadcrumbs = build_breadcrumbs([("Home", "/"), (f"{PAGE_TYPES.get(item['type'], item['type'])}", f"/{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html"), (item['title'], None)])
-    eligibility = []
-    if item.get('level'):
-        eligibility.append(f"Level: {item['level']}")
-    if item.get('field'):
-        eligibility.append(f"Field: {item['field']}")
-    if item.get('country'):
-        eligibility.append(f"Country: {item['country']}")
-    eligibility_html = '<ul>' + ''.join(f'<li>{escape_html(value)}</li>' for value in eligibility) + '</ul>' if eligibility else '<p>Eligibility details are available on the official program page.</p>'
-    benefits = item.get('funding') or "Funding information is provided on the official listing page."
-    related_html = ''
-    if related_items:
-        related_html = '<div class="opportunity-results grid three">' + ''.join(build_opportunity_card(rel) for rel in related_items[:4]) + '</div>'
-    prevnext_html = ''
-    if previous_item or next_item:
-        prevnext_html = '<div class="card-actions">'
-        if previous_item:
-            prevnext_html += f'<a class="button button-secondary" href="{SITE_URL}/opportunity/{slugify(previous_item["slug"])}/">← {escape_html(previous_item["title"])}</a>'
-        if next_item:
-            prevnext_html += f'<a class="button button-secondary" href="{SITE_URL}/opportunity/{slugify(next_item["slug"])}/">{escape_html(next_item["title"])} →</a>'
-        prevnext_html += '</div>'
-
-    related_country_links = '<ul>' + ''.join(f'<li><a href="/country/{slugify(country)}/">More opportunities in {escape_html(country)}</a></li>' for country in {item['country']} if country) + '</ul>'
-    item_schema = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "EducationalOccupationalProgram" if item['type'] != 'Competition' else "Course",
-        "name": item['title'],
-        "description": item['description'],
-        "url": page_url,
-        "provider": {
-            "@type": "Organization",
-            "name": item['country']
-        },
-        "educationalCredentialAwarded": item['type'],
-        "learningResourceType": item['type'],
-        "timeRequired": item['deadline'] or 'Varies'
-    }, indent=2)
-    article_schema = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": item['title'],
-        "description": description,
-        "url": page_url,
-        "datePublished": item['created_at'] or datetime.now(timezone.utc).isoformat(),
-        "author": {"@type": "Organization", "name": "OpportunityNest"}
-    }, indent=2)
-    breadcrumb_schema = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
-            {"@type": "ListItem", "position": 2, "name": PAGE_TYPES.get(item['type'], item['type']), "item": f"{SITE_URL}/{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html"},
-            {"@type": "ListItem", "position": 3, "name": item['title'], "item": page_url}
-        ]
-    }, indent=2)
-    faq = build_faq_schema([
-        {"q": "How do I apply for this opportunity?", "a": "Use the official application button on this page to visit the provider's website and confirm the latest requirements."},
-        {"q": "How current is this information?", "a": "OpportunityNest displays the latest available public details, but always verify deadlines and eligibility on the official program page."},
-        {"q": "Is this opportunity fully funded?", "a": f"Funding details are shown here as: {escape_html(benefits)}. The official program page has the final funding terms."
-        }
-    ])
-
-    page = page_head(
-        title,
-        description,
-        page_url,
-        item['title'],
-        additional_head=f"<script type=\"application/ld+json\">{item_schema}</script><script type=\"application/ld+json\">{article_schema}</script><script type=\"application/ld+json\">{breadcrumb_schema}</script><script type=\"application/ld+json\">{faq}</script>"
-    ) + (
-        "\n      <section class=\"page-hero section-pad\">\n"
-        f"        <div class=\"container\">{breadcrumbs}\n"
-        "          <div class=\"detail-header\">\n"
-        f"            <p class=\"eyebrow\">{escape_html(item['type'])} • {escape_html(item['country'])}</p>\n"
-        f"            <h1>{escape_html(item['title'])}</h1>\n"
-        f"            <p>{escape_html(item['description'])}</p>\n"
-        "            <div class=\"hero-actions\">\n"
-        f"              <a class=\"button button-primary\" href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">View &amp; Apply <span aria-hidden=\"true\">↗</span></a>\n"
-        f"              <a class=\"button button-secondary\" href=\"{SITE_URL}/{slugify(PAGE_TYPES.get(item['type'], item['type']))}.html\">Back to {escape_html(PAGE_TYPES.get(item['type'], item['type']))}</a>\n"
-        "            </div>\n"
-        "          </div>\n"
-        "        </div>\n"
-        "      </section>\n"
-        "      <section class=\"section-pad\">\n"
-        "        <div class=\"container internship-detail\">\n"
-        "          <div class=\"detail-grid\">\n"
-        f"            <div><dt>Country</dt><dd>{escape_html(item['country'])}</dd></div>\n"
-        f"            <div><dt>Field</dt><dd>{escape_html(item['field'] or 'Multiple fields')}</dd></div>\n"
-        f"            <div><dt>Level</dt><dd>{escape_html(item['level'] or 'Open to eligible applicants')}</dd></div>\n"
-        f"            <div><dt>Funding</dt><dd>{escape_html(benefits)}</dd></div>\n"
-        f"            <div><dt>Deadline</dt><dd>{escape_html(format_deadline(item))}</dd></div>\n"
-        f"            <div><dt>Type</dt><dd>{escape_html(item['type'])}</dd></div>\n"
-        "          </div>\n"
-        "          <div class=\"final-panel\">\n"
-        "            <h2>Eligibility</h2>\n"
-        f"            {eligibility_html}\n"
-        "          </div>\n"
-        "          <div class=\"final-panel\">\n"
-        "            <h2>Benefits</h2>\n"
-        f"            <p>{escape_html(benefits)}</p>\n"
-        "          </div>\n"
-        "          <div class=\"final-panel\">\n"
-        "            <h2>Application Process</h2>\n"
-        "            <p>Follow the official program link and confirm the application requirements, deadline, and supporting documents before submitting.</p>\n"
-        "          </div>\n"
-        "          <div class=\"final-panel\">\n"
-        "            <h2>Share this opportunity</h2>\n"
-        "            <div class=\"card-actions\">\n"
-        f"              <a class=\"button button-secondary\" href=\"https://twitter.com/intent/tweet?text={escape_html(item['title'])}+-+{escape_html(page_url)}\" target=\"_blank\" rel=\"noopener noreferrer\">Share on Twitter</a>\n"
-        f"              <a class=\"button button-secondary\" href=\"mailto:?subject={escape_html(item['title'])}&body={escape_html(page_url)}\">Email link</a>\n"
-        "            </div>\n"
-        "          </div>\n"
-        f"          {prevnext_html}\n"
-        "          <div class=\"final-panel\">\n"
-        "            <h2>Related opportunities</h2>\n"
-        f"            {related_html if related_html else '<p>Explore similar landing pages for opportunities in the same country or category.</p>'}\n"
-        "          </div>\n"
-        "        </div>\n"
-        "      </section>\n"
-    ) + page_footer()
-    return page
-
-
 def estimate_reading_time(item: dict) -> int:
     """Estimate reading time in minutes based on content fields."""
     text_parts = [
@@ -1993,9 +1868,9 @@ def estimate_reading_time(item: dict) -> int:
 
 
 def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
-    page_title = item.get("seo_title") or f"{item['title']} | OpportunityNest"
+    page_title = item.get("seo_title") or f"{item['title']} ({CURRENT_YEAR}) | OpportunityNest"
     meta_description = item.get("seo_description") or (
-        f"Apply for {item['title']} with verified deadline, eligibility, funding, documents, and official application guidance."
+        f"Apply for {item['title']} {CURRENT_YEAR} with verified deadline, eligibility, funding, documents, and official application guidance."
     )
     page_url = f"{SITE_URL}/opportunity/{slugify(item['slug'])}/"
     category_label, category_href = type_collection(item.get("type"))
@@ -2108,7 +1983,6 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         f"            <div><dt>Deadline</dt><dd>{escape_html(format_deadline(item))}</dd></div>\n"
         "          </div>\n"
         f"          {detail_list_panel('Overview', quick_facts)}\n"
-        f"          {detail_panel('About the opportunity', item.get('description') or meta_description)}\n"
         f"          {guide_sections}\n"
         f"          {detail_panel('Who should apply', item.get('eligibility_criteria') or fallback_who_should_apply(item))}\n"
         f"          {detail_panel('Benefits explained', item.get('benefits') or benefits)}\n"
@@ -2280,8 +2154,8 @@ def main():
         for country in available_countries:
             folder = ROOT / slugify(PAGE_TYPES[category]) / slugify(country)
             page = folder / "index.html"
-            title = f"{country} {PAGE_TYPES[category]} | OpportunityNest"
-            description = f"Find {category.lower()} opportunities in {country}. Published deadlines, funding, and application links for {category.lower()}s in {country}."
+            title = f"{country} {PAGE_TYPES[category]} ({CURRENT_YEAR}) | OpportunityNest"
+            description = f"Find {category.lower()} opportunities in {country} for {CURRENT_YEAR}. Published deadlines, funding, and application links for {category.lower()}s in {country}."
             url = f"{SITE_URL}/{slugify(PAGE_TYPES[category])}/{slugify(country)}/"
             items_for_page = [item for item in items if item.get('country') == country]
             # Simple country-category page generation
