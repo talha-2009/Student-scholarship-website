@@ -275,6 +275,33 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mega-col-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mega-col-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mega-col-list::-webkit-scrollbar-thumb {
+  background: rgba(15,118,110,0.15);
+  border-radius: 3px;
+}
+
+.mega-col-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(15,118,110,0.3);
+}
+
+.mega-col-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15,118,110,0.15) transparent;
 }
 
 .mega-col-list li {
@@ -381,6 +408,9 @@ body {
   .mega-inner {
     gap: 20px 24px;
   }
+  .mega-col-list {
+    max-height: 240px;
+  }
 }
 
 /* ─── Tablet ─── */
@@ -407,6 +437,9 @@ body {
   .mega-col-list a {
     font-size: 0.82rem;
     padding: 5px 10px;
+  }
+  .mega-col-list {
+    max-height: 220px;
   }
 }
 
