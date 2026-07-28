@@ -8,7 +8,7 @@
  * - Copies static assets to dist/
  */
 import { buildSync } from "esbuild";
-import { readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
 import { join, relative, extname, dirname } from "path";
 import { createHash } from "crypto";
 import { fileURLToPath } from "url";
@@ -58,8 +58,27 @@ const CRITICAL_CSS_LINES = 852;
 
 const rawCss = readFileSync(join(ROOT, "styles.css"), "utf8");
 const cssLines = rawCss.split("\n");
-const criticalRaw = cssLines.slice(0, CRITICAL_CSS_LINES).join("\n");
-const deferredRaw = cssLines.slice(CRITICAL_CSS_LINES).join("\n");
+
+function findSafeCssSplitIndex(lines, preferredIndex) {
+  let depth = 0;
+  let lastSafeIndex = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    for (const char of line) {
+      if (char === "{") depth++;
+      if (char === "}") depth = Math.max(0, depth - 1);
+    }
+    if (depth === 0) {
+      lastSafeIndex = i + 1;
+      if (i + 1 >= preferredIndex) return i + 1;
+    }
+  }
+  return lastSafeIndex || lines.length;
+}
+
+const cssSplitIndex = findSafeCssSplitIndex(cssLines, CRITICAL_CSS_LINES);
+const criticalRaw = cssLines.slice(0, cssSplitIndex).join("\n");
+const deferredRaw = cssLines.slice(cssSplitIndex).join("\n");
 
 const cssAssetMap = {};
 
@@ -99,6 +118,10 @@ const jsAssetMap = {};
 
 for (const file of jsFiles) {
   const srcPath = join(ROOT, file);
+  if (!existsSync(srcPath)) {
+    console.warn(`  Skipping missing optional JS file: ${file}`);
+    continue;
+  }
   const origSize = statSync(srcPath).size;
   const input = readFileSync(srcPath, "utf8");
 
@@ -146,9 +169,66 @@ const PRELOAD_DEFERRED_TAG = `<link rel="preload" href="/${deferredName}" as="st
 const DEFERRED_LINK_TAG = `<link rel="stylesheet" href="/${deferredName}" media="print" onload="this.media='all'">`;
 const NOSCRIPT_TAG = `<noscript><link rel="stylesheet" href="/${deferredName}"></noscript>`;
 
+const SEO_OVERRIDES = {
+  "index.html": {
+    title: "Fully Funded Scholarships & Internships 2026 | OpportunityNest",
+    description: "Find verified fully funded scholarships, paid internships, fellowships, grants, and global opportunities for 2026 with deadlines and official application links."
+  },
+  "scholarships/index.html": {
+    title: "Scholarships for International Students 2026 | Fully Funded Awards",
+    description: "Browse verified scholarships for international students in 2026, including fully funded awards, country pages, deadlines, eligibility notes, and official application links."
+  },
+  "internships/index.html": {
+    title: "International Internships 2026 | Paid, Remote & Global Programs",
+    description: "Find verified international internships for 2026, including paid, remote, summer, NGO, engineering, IT, and global programs with official application links."
+  },
+  "fellowships/index.html": {
+    title: "International Fellowships 2026 | Research, Policy & Leadership",
+    description: "Explore verified fellowships for 2026, including research, policy, leadership, government, and fully funded programs with deadlines and official source links."
+  }
+};
+
+function replaceMetaContent(html, selector, content) {
+  const escaped = content.replace(/"/g, "&quot;");
+  const pattern = new RegExp(`(<meta\\s+${selector}\\s+content=")[^"]*(")`, "i");
+  return html.replace(pattern, `$1${escaped}$2`);
+}
+
+function applySeoOverrides(html, relativePath) {
+  const override = SEO_OVERRIDES[relativePath.replace(/\\/g, "/")];
+  if (!override) return html;
+
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${override.title}</title>`);
+  html = replaceMetaContent(html, 'name="description"', override.description);
+  html = replaceMetaContent(html, 'property="og:title"', override.title);
+  html = replaceMetaContent(html, 'property="og:description"', override.description);
+  html = replaceMetaContent(html, 'name="twitter:title"', override.title);
+  html = replaceMetaContent(html, 'name="twitter:description"', override.description);
+  return html;
+}
+
+function normalizeCrawlerText(html) {
+  return html
+    .replace(/1"“3/g, "1-3")
+    .replace(/4"“9/g, "4-9")
+    .replace(/â†’/g, "->")
+    .replace(/â†—/g, "↗")
+    .replace(/‰¡/g, "Filter")
+    .replace(/†—/g, "Link")
+    .replace(/˜…/g, "Details")
+    .replace(/\?{4}\s*/g, "");
+}
+
 for (const htmlPath of htmlFiles) {
   let html = readFileSync(htmlPath, "utf8");
+  const relativePath = relative(ROOT, htmlPath).replace(/\\/g, "/");
   let modified = false;
+
+  const seoUpdated = applySeoOverrides(html, relativePath);
+  if (seoUpdated !== html) {
+    html = seoUpdated;
+    modified = true;
+  }
 
   // 1. Replace render-blocking CSS link with critical inline + async deferred
   const cssLinkRegex = /<link\s+rel="stylesheet"\s+href="\/styles\.css"\s*\/?>/g;
@@ -211,14 +291,7 @@ for (const htmlPath of htmlFiles) {
   // Remove duplicate defer
   html = html.replace(/\bdefer\s+defer\b/g, 'defer');
 
-  // 6. Add fetchpriority="high" and containment to hero section (improves LCP + CLS)
-  if (html.includes('class="hero ') && !html.includes('fetchpriority')) {
-    html = html.replace(
-      /(<section\s+class="hero\s[^"]*")/,
-      '$1 fetchpriority="high"'
-    );
-  }
-  // Add CSS containment to hero to isolate its layout
+  // 6. Add CSS containment to hero to isolate its layout
   if (html.includes('class="hero ')) {
     html = html.replace(
       /(<section\s+class="hero\s[^"]*")/,
@@ -257,15 +330,29 @@ for (const htmlPath of htmlFiles) {
   // 8b. Add E-E-A-T badges to opportunity detail pages
   if (html.includes('/opportunity/') && html.includes('review-note') && !html.includes('eeat-bar')) {
     const updatedAt = new Date().toISOString().split('T')[0];
-    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">Reviewed by James Okonkwo</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
+    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">Reviewed by Abdullah Ijaz Abbasi</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
     html = html.replace('<p class="review-note">', eeatBar + '\n            <p class="review-note">');
     modified = true;
+  }
+
+  // 8d. Inject Event schema for deadlines on opportunity pages
+  if (html.includes('"@type": "EducationalOccupationalProgram"') && html.includes('"timeRequired"')) {
+    const deadlineMatch = html.match(/"timeRequired":\s*"([^"]+)"/);
+    if (deadlineMatch && deadlineMatch[1] && !/varies|rolling|see|n\/a|tbd/i.test(deadlineMatch[1])) {
+      const nameMatch = html.match(/"name":\s*"([^"]+)"/);
+      const eventName = nameMatch ? nameMatch[1] + ' Application Deadline' : 'Application Deadline';
+      const eventSchema = `\n    <script type="application/ld+json">{\n  "@context": "https://schema.org",\n  "@type": "Event",\n  "name": "${eventName}",\n  "eventStatus": "https://schema.org/EventScheduled",\n  "endDate": "${deadlineMatch[1]}",\n  "description": "Application deadline for ${nameMatch ? nameMatch[1] : 'this opportunity'}"\n}</script>`;
+      if (!html.includes('"@type": "Event"')) {
+        html = html.replace('</head>', eventSchema + '\n  </head>');
+        modified = true;
+      }
+    }
   }
 
   // 8c. Add E-E-A-T badges to blog article pages (no eeat-bar yet, has Article schema)
   if (html.includes('/blog/') && html.includes('"@type": "Article"') && !html.includes('eeat-bar')) {
     const updatedAt = new Date().toISOString().split('T')[0];
-    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">By Sarah Mitchell</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
+    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">By Abdullah Ijaz Abbasi</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
     // Insert after the <h1> tag in blog pages
     html = html.replace(/(<\/h1>)/, '$1' + eeatBar);
     modified = true;
@@ -337,6 +424,12 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
+  const searchActionTarget = 'https://www.opportunitynest.org/?q={search_term_string}#opportunities';
+  if (html.includes(searchActionTarget)) {
+    html = html.split(searchActionTarget).join('https://www.opportunitynest.org/scholarships/?q={search_term_string}');
+    modified = true;
+  }
+
   // 9c. Fix canonical .html URLs to clean trailing-slash
   html = html.replace(
     /(rel="canonical"\s+href="https:\/\/www\.opportunitynest\.org\/)([^"]+)\.html(")/g,
@@ -359,7 +452,12 @@ for (const htmlPath of htmlFiles) {
     '$1/$2'
   );
 
-  const relativePath = relative(ROOT, htmlPath);
+  const normalizedHtml = normalizeCrawlerText(html);
+  if (normalizedHtml !== html) {
+    html = normalizedHtml;
+    modified = true;
+  }
+
   const distPath = join(DIST, relativePath);
   mkdirp(join(distPath, ".."));
   writeFileSync(distPath, html);
@@ -433,10 +531,13 @@ function generateSitemap() {
 
   // Pages to exclude from sitemap
   const excludePatterns = ["404.html","preview.html","nav-dropdown-backup.html","exchange-program.html",
+    "category.html","internship-detail.html","opportunity-detail.html",
     "node_modules","dist",".next",".git","brand-kit","/partial-scholarships/"];
 
   function shouldExclude(relPath) {
     const p = relPath.replace(/\\/g, "/").toLowerCase();
+    if (p === "index.html") return false;
+    if (["category.html", "internship-detail.html", "opportunity-detail.html"].includes(p)) return true;
     return excludePatterns.some(pat => p.includes(pat));
   }
 
@@ -453,6 +554,7 @@ function generateSitemap() {
     if (/noindex/i.test(content)) continue;
 
     const cleanUrl = toCleanUrl(relPath);
+    if (cleanUrl === `${BASE}/index/`) continue;
     const priority = getPriority(relPath);
     const changefreq = getChangefreq(relPath);
 

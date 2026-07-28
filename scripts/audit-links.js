@@ -4,6 +4,7 @@ const { execSync } = require('child_process');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const HTML_EXTENSIONS = ['.html'];
+const SKIPPED_DIRS = new Set(['.git', '.next', '.vercel', 'dist', 'node_modules', 'brand-kit']);
 const IGNORED_PATTERNS = [
   'javascript:',
   'mailto:',
@@ -32,6 +33,7 @@ function getAllHtmlFiles(dir, fileList = []) {
     const stat = fs.statSync(filePath);
     
     if (stat.isDirectory()) {
+      if (SKIPPED_DIRS.has(file)) return;
       getAllHtmlFiles(filePath, fileList);
     } else if (HTML_EXTENSIONS.includes(path.extname(file))) {
       fileList.push(filePath);
@@ -65,7 +67,10 @@ function isInternalLink(href) {
 function resolveInternalLink(href, filePath) {
   // Handle absolute paths (starting with /)
   if (href.startsWith('/')) {
-    let absolutePath = path.join(ROOT_DIR, href.substring(1));
+    const baseDir = filePath.includes(`${path.sep}dist${path.sep}`)
+      ? path.join(ROOT_DIR, 'dist')
+      : ROOT_DIR;
+    let absolutePath = path.join(baseDir, href.substring(1));
     
     // Handle anchors
     const anchorIndex = absolutePath.indexOf('#');
@@ -80,8 +85,8 @@ function resolveInternalLink(href, filePath) {
     }
     
     // If it's just "/" or empty after stripping, it's the homepage
-    if (absolutePath === ROOT_DIR || absolutePath === path.join(ROOT_DIR, '')) {
-      return path.join(ROOT_DIR, 'index.html');
+    if (absolutePath === baseDir || absolutePath === path.join(baseDir, '')) {
+      return path.join(baseDir, 'index.html');
     }
     
     // If it ends with /, try index.html
@@ -89,8 +94,10 @@ function resolveInternalLink(href, filePath) {
       return path.join(absolutePath, 'index.html');
     }
     
-    // If it doesn't have an extension, try adding .html
+    // If it doesn't have an extension, prefer clean-route directories, then .html.
     if (!path.extname(absolutePath)) {
+      const dirIndex = path.join(absolutePath, 'index.html');
+      if (checkFileExists(dirIndex)) return dirIndex;
       return absolutePath + '.html';
     }
     

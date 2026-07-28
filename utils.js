@@ -409,9 +409,23 @@ window.ON = window.OpportunityNest;
     } catch (_) {}
   };
 
-  ON.generateSEOTitle = (item) => `${item.title} | ${item.country || "Global"} ${item.type || "Opportunity"} | OpportunityNest`;
-  ON.generateSEODescription = (item) =>
-    `${item.title} details: deadline ${ON.formatDeadline(item)}, funding ${item.funding || "see official page"}, eligibility ${item.level || "eligible applicants"}.`;
+  ON.generateSEOTitle = (item) => {
+    const base = item.title;
+    const funding = item.funding ? ` | ${item.funding}` : "";
+    const year = new Date().getFullYear();
+    const deadline = ON.formatDeadline(item);
+    const hasDeadline = deadline && !["rolling","varies","not announced"].includes((item.deadline_status||"").toLowerCase());
+    const deadlineSuffix = hasDeadline ? ` [Apply by ${deadline}]` : "";
+    return `${base}${funding}${deadlineSuffix} | ${item.country || "Global"} | OpportunityNest`;
+  };
+  ON.generateSEODescription = (item) => {
+    const deadline = ON.formatDeadline(item);
+    const funding = item.funding || "Funding TBD";
+    const level = item.level || "eligible applicants";
+    const country = item.country || "Global";
+    const type = (item.type || "Opportunity").toLowerCase();
+    return `Apply for the ${item.title} — a ${funding.toLowerCase()} ${type} in ${country} for ${level} students. Deadline: ${deadline}. Full tuition, stipend & benefits covered. Start your application today.`;
+  };
   ON.generateImageAlt = (item) => `${item.title} opportunity in ${item.country || "Global"}`;
   ON.pickVariant = (values = [], item = {}) => values[Math.abs(ON.cleanSlug(item.title || "").length) % values.length] || "";
   ON.generateDetailH1 = (item) => `${item.title}`;
