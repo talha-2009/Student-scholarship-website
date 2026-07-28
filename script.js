@@ -375,3 +375,15 @@ const setSearchPageMeta = () => {
 setSearchPageMeta();
 
 loadOpportunities();
+// Monetag Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('Monetag service worker registered:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Monetag service worker registration failed:', error);
+      });
+  });
+}
