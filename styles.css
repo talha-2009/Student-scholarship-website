@@ -2597,6 +2597,24 @@ object {
 }
 
 /* ── Review note text on opportunity pages ──────────────────────── */
+.eeat-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.eeat-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  color: var(--primary-dark);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
 .review-note {
   font-size: 0.82rem;
   color: var(--muted);

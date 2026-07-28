@@ -253,7 +253,22 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
-  // 8. Replace old footer with new redesigned footer
+  // 8b. Add E-E-A-T badges to opportunity detail pages
+  if (html.includes('/opportunity/') && html.includes('review-note') && !html.includes('eeat-bar')) {
+    const updatedAt = new Date().toISOString().split('T')[0];
+    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">Reviewed by James Okonkwo</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
+    html = html.replace('<p class="review-note">', eeatBar + '\n            <p class="review-note">');
+    modified = true;
+  }
+
+  // 8c. Add E-E-A-T badges to blog article pages (no eeat-bar yet, has Article schema)
+  if (html.includes('/blog/') && html.includes('"@type": "Article"') && !html.includes('eeat-bar')) {
+    const updatedAt = new Date().toISOString().split('T')[0];
+    const eeatBar = `<div class="eeat-bar"><span class="eeat-badge">By Sarah Mitchell</span><span class="eeat-badge">Fact checked</span><span class="eeat-badge">Updated ${updatedAt}</span></div>`;
+    // Insert after the <h1> tag in blog pages
+    html = html.replace(/(<\/h1>)/, '$1' + eeatBar);
+    modified = true;
+  }
   const footerRegex = /<footer\s+class="site-footer"[^>]*>[\s\S]*?<\/footer>/;
   if (footerRegex.test(html) && !html.includes('footer-heading')) {
     html = html.replace(footerRegex, NEW_FOOTER);

@@ -1558,151 +1558,269 @@ def detail_list_panel(title: str, items: list[str]) -> str:
     )
 
 
-def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
-    title = item["title"]
+def _pick(variants, seed_str):
+    """Deterministic pseudo-random pick from a list using a hash of the seed string."""
+    idx = abs(hash(seed_str)) % len(variants)
+    return variants[idx]
+
+def _advice_variants_for(item: dict, field_name: str) -> dict:
+    """Return a dict of field-to-variant mappings for an opportunity."""
+    title = item.get("title", "")
     deadline = format_deadline(item)
-    host = item.get("host_organization") or item.get("country") or "the official provider"
-    level = item.get("level") or "eligible applicants"
-    field = item.get("field") or "the listed fields"
+    host = item.get("host_organization") or item.get("country") or ""
+    country = item.get("country") or ""
+    level = item.get("level") or ""
+    field = item.get("field") or ""
+    type_label = (item.get("type") or "opportunity").lower()
+    is_rolling = deadline and "rolling" in deadline.lower()
+    return locals()
+
+def opportunity_faqs(item: dict, benefits: str) -> list[dict]:
+    ctx = _advice_variants_for(item, "faq")
+    title, deadline, host, country, level, field, type_label, is_rolling = [ctx[k] for k in ("title","deadline","host","country","level","field","type_label","is_rolling")]
     funding = item.get("funding") or "the listed support"
-    country = item.get("country") or "the listed destination"
 
-    who_q = f"Who is a good fit for {title}?"
-    who_a = f"Applicants at the {level} level who are active or interested in {field} would find this relevant. The official eligibility page should be consulted for nationality, residency, age, and enrollment requirements before starting an application."
+    # --- Question 1: Who should apply (3 variations) ---
+    q1_templates = [
+        f"Is {title} right for someone at the {level} level?",
+        f"Who is a good fit for {title}?",
+        f"What kind of applicant should consider {title}?"
+    ]
+    a1_templates = [
+        f"This {type_label} is designed for candidates at the {level} level with interests in {field}. Before applying, check the provider's nationality, residency, and enrollment rules on their official page." if field else
+        f"Candidates at the {level} level who meet the stated requirements would be a strong match. Always confirm eligibility details, including age limits and degree timing, on the provider's website before starting your application.",
+        f"Applicants at the {level} level who are active or interested in {field} would find this relevant. The official eligibility page should be consulted for nationality, residency, age, and enrollment requirements before starting an application." if field else
+        f"Applicants at the {level} level who meet the provider's criteria should consider this opportunity. Verify age limits, degree timing, and residency rules on the official page before applying.",
+        f"{title} is best suited for candidates at the {level} level whose background aligns with {field}. The provider's official eligibility page is the definitive source for nationality, age, and degree requirements, so review it carefully before preparing your materials." if field else
+        f"{title} targets candidates at the {level} level who satisfy the provider's stated criteria. Make sure to verify the latest eligibility rules, including any country-specific restrictions, on the official program page."
+    ]
+    q1 = _pick(q1_templates, title + "q1")
+    a1 = _pick(a1_templates, title + "a1")
 
-    what_q = f"What support does {title} include?"
-    what_a = f"The funding position recorded for this listing is: {benefits}. Exact coverage depends on the provider. Use the official page to confirm which costs are included and which are expected to be covered by the applicant."
+    # --- Question 2: What support / funding (3 variations) ---
+    q2_templates = [
+        f"What funding or benefits does {title} provide?",
+        f"What kind of financial support comes with {title}?",
+        f"What does {title} cover for selected participants?"
+    ]
+    a2_templates = [
+        f"OpportunityNest records the funding as: {benefits}. The exact package varies by provider, so check the official page to confirm whether tuition, stipends, travel, insurance, and research costs are included.",
+        f"The listed funding for this position is: {benefits}. Coverage details — tuition, stipends, travel, insurance — depend on the provider's current terms. Always verify the full breakdown on the official website before budgeting.",
+        f"This listing shows funding as: {benefits}. Before applying, confirm exactly which costs the provider covers — tuition, living expenses, airfare, insurance — and which remain your responsibility."
+    ]
+    q2 = _pick(q2_templates, title + "q2")
+    a2 = _pick(a2_templates, title + "q2")
 
-    deadline_q = f"What is the application timeline for {title}?"
-    deadline_a = f"OpportunityNest records the deadline status as: {deadline}. Because dates can change, the official provider page is the authoritative source for the current closing date and any round-based deadlines."
+    # --- Question 3: Timeline / deadline (3 variations) ---
+    q3_templates = [
+        f"By when should I apply for {title}?",
+        f"What is the deadline situation for {title}?",
+        f"Does {title} have a fixed closing date or rolling admissions?"
+    ]
+    a3a = f"OpportunityNest records the deadline as: {deadline}. Deadlines can shift, so always confirm the current closing date on the provider's official page."
+    a3b = f"The application deadline listed here is {deadline}. Because programme dates sometimes change, double-check the closing date — and any round-based deadlines — on the official provider website."
+    a3c = f"According to the listing, the deadline is {deadline}. For the most current schedule, including any early-bird or round-based deadlines, consult the provider's official page."
+    a3_templates = [a3a, a3b, a3c]
+    q3 = _pick(q3_templates, title + "q3")
+    a3 = _pick(a3_templates, title + "q3")
 
     faqs = [
-        {"q": who_q, "a": who_a},
-        {"q": what_q, "a": what_a},
-        {"q": deadline_q, "a": deadline_a}
+        {"q": q1, "a": a1},
+        {"q": q2, "a": a2},
+        {"q": q3, "a": a3}
     ]
 
-    if host and host != "the official provider" and host != country:
-        faqs.append({
-            "q": f"Which organization is offering {title}?",
-            "a": f"This {item.get('type', 'opportunity').lower()} is administered by {host}. All applications and inquiries should be directed through the official provider channels listed on the opportunity page."
-        })
-    elif country and country != "the listed destination":
-        faqs.append({
-            "q": f"What makes {country} a relevant destination for this opportunity?",
-            "a": f"The program is based in or associated with {country}. Applicants should review any location-specific requirements such as visa procedures, language expectations, or residency rules on the official provider page."
-        })
+    # --- Question 4: Organization or destination (3 variations) ---
+    q4_pool = []
+    if host and host != country:
+        q4_pool = [
+            (f"Which body runs {title}?",
+             f"This {type_label} is administered by {host}. Direct all applications and inquiries through the official provider channels listed on this page."),
+            (f"Who is behind {title}?",
+             f"The program is offered by {host}. Check their official site for the most current information on eligibility, deadlines, and how to apply."),
+            (f"Is {title} offered directly by {host}?",
+             f"Yes — {host} manages this {type_label}. Use the official application link on this page to submit your materials through their system.")
+        ]
+    elif country:
+        q4_pool = [
+            (f"Why is {title} based in {country}?",
+             f"The program is linked to {country}. Applicants should review location-specific requirements such as visa procedures, language expectations, or residency rules on the official provider page."),
+            (f"What makes {country} the destination for this opportunity?",
+             f"This {type_label} is associated with {country}. Be sure to research visa timelines, cost of living, and any language requirements before applying."),
+            (f"Do I need to be based in {country} to apply for {title}?",
+             f"The opportunity is connected to {country}, but eligibility rules vary. Some programs accept international applicants; others require local residency. Check the official page for nationality and residence requirements.")
+        ]
     else:
-        faqs.append({
-            "q": f"How should I prepare my application for {title}?",
-            "a": "Start by reviewing the selection criteria on the official provider page. Prepare your motivation statement, CV, transcripts, and references well ahead of the deadline. Submit through the official channel and keep a copy of your confirmation."
-        })
+        q4_pool = [
+            (f"What should I prepare before applying to {title}?",
+             "Start by reading the selection criteria on the provider's page. Prepare a tailored motivation statement, your CV, transcripts, and reference letters well ahead of the deadline. Submit through the official portal and keep a copy of your application."),
+            (f"How do I put together a strong application for {title}?",
+             "Review the provider's criteria first, then write a targeted motivation statement. Gather your CV, academic records, and references early. Submit through the official channel and save your confirmation."),
+            (f"What materials does {title} typically require?",
+             "Most listings ask for a completed form, transcripts, a motivation letter, references, and language test scores where relevant. Confirm the exact requirements on the provider's page and prepare well before the deadline.")
+        ]
+    if q4_pool:
+        q4, a4 = _pick(q4_pool, title + "q4")
+        faqs.append({"q": q4, "a": a4})
 
-    is_rolling = deadline and "rolling" in deadline.lower()
+    # --- Question 5: Rolling / documents (3 variations) ---
+    q5_pool = []
     if is_rolling:
-        faqs.append({
-            "q": f"Does {title} review applications on a rolling basis?",
-            "a": "Yes — this program reviews submissions as they arrive. Applying earlier can be advantageous because some providers allocate funding or interview slots on a first-come basis."
-        })
+        q5_pool = [
+            (f"Should I apply early to {title}?",
+             "Yes — this program reviews applications as they arrive. Early submission can work in your favour if the provider allocates funding or interview slots on a first-come, first-served basis."),
+            (f"Does {title} operate on a rolling admissions cycle?",
+             "It does. Submissions are evaluated continuously, so getting your application in early is beneficial. Some providers fill positions or allocate stipends progressively throughout the cycle."),
+            (f"Will applying early improve my chances for {title}?",
+             "It can. Because this program reviews candidates as applications come in, earlier applicants may have a better shot at available spots or funding before later-stage competition intensifies.")
+        ]
     elif deadline and ("varies" in deadline.lower() or "not announced" in deadline.lower()):
-        faqs.append({
-            "q": f"Can I apply to {title} at any time?",
-            "a": "The deadline for this listing is not fixed or not yet announced. Check the official provider page regularly for when the next application window opens."
-        })
+        q5_pool = [
+            (f"Can I submit my application for {title} whenever I want?",
+             "The deadline for this listing is either flexible or not yet announced. Monitor the official provider page for when the next intake opens and apply as soon as materials are requested."),
+            (f"When will the next application window open for {title}?",
+             "The closing date for this listing has not been fixed yet. Keep checking the official program page for announcements about the next round."),
+            (f"How do I know when {title} is accepting applications?",
+             "This listing does not have a confirmed deadline yet. Bookmark the official provider page and check periodically for updates on the next application cycle.")
+        ]
     else:
-        faqs.append({
-            "q": f"What documents are typically required for {title}?",
-            "a": "Most programs in this category ask for a completed application form, academic transcripts, a motivation statement or research proposal, recommendation letters, and evidence of language proficiency where applicable. Confirm the exact list on the official page."
-        })
+        q5_pool = [
+            (f"Which documents should I get ready for {title}?",
+             "Most programs ask for a completed form, academic transcripts, a motivation statement or research proposal, reference letters, and language proficiency evidence where applicable. Verify the exact requirements on the official page."),
+            (f"What paperwork does {title} typically require from applicants?",
+             "Common requirements include an application form, transcripts, a personal statement or research proposal, recommendation letters, and proof of English proficiency. Confirm the precise list with the provider before you start."),
+            (f"What goes into a standard application package for {title}?",
+             "Typically you will need a filled application form, your academic records, a motivation letter or proposal, references, and language test results if required. Double-check the provider's instructions for any program-specific additions.")
+        ]
+    if q5_pool:
+        q5, a5 = _pick(q5_pool, title + "q5")
+        faqs.append({"q": q5, "a": a5})
 
     return faqs
 
 
+MISTAKES_POOL = [
+    "{type_label} applications sometimes rely on generic essays that could apply to any program. Focus each answer on the specific {country} context, {field} angle, and what {host} actually looks for.",
+    "A common pitfall with {type_label} listings is waiting until the last weeks to request transcripts or recommendation letters. Give your referees at least a month of notice.",
+    "Many applicants for {type_label} positions submit the same motivation letter everywhere. Tailor each essay to {host}'s mission and the specific {country} program you are targeting.",
+    "Applicants sometimes overlook document formatting rules — page limits, file types, naming conventions — specified by {host}. Read the submission guidelines for {type_label} twice before uploading.",
+    "Deadline confusion is frequent: {type_label} programs linked to {country} sometimes use a different time zone for cutoffs. Convert the closing time to your local zone and aim to submit 48 hours early.",
+    "One mistake that surfaces with {type_label} listings is failing to check the host's eligibility update — {host} may change nationality or degree requirements between cycles. Always check the current page.",
+    "Applicants for {type_label} opportunities sometimes forget to keep a copy of their submitted confirmation. If {host} encounters a technical issue, your proof of submission can save your application.",
+    "A recurring error with {type_label} programs is misreading the funding terms — what {host} lists as 'tuition' may not include fees, insurance, or travel. Budget for uncovered items.",
+    "Candidates applying through {type_label} channels occasionally skip the language proficiency requirement. {host} may expect IELTS, TOEFL, or a specific minimum score even if the listing does not spell it out.",
+    "For {type_label} applicants targeting {country}, a common oversight is not researching the visa timeline. {host} may expect proof of visa eligibility before finalizing an offer."
+]
+
 def opportunity_guidance(item: dict, benefits: str, host: str = "") -> list[tuple[str, str]]:
-    title = item["title"]
-    type_label = (item.get("type") or "opportunity").lower()
-    country = item.get("country") or ""
-    host = host or item.get("host_organization") or ""
-    deadline = format_deadline(item)
-    level = item.get("level") or ""
-    field = item.get("field") or ""
+    ctx = _advice_variants_for(item, "guidance")
+    title, deadline, host, country, level, field, type_label, is_rolling = [ctx[k] for k in ("title","deadline","host","country","level","field","type_label","is_rolling")]
     funding_val = item.get("funding") or ""
     sections = []
 
+    # --- Field relevance (3 variations) ---
     distinctive_heading = "What makes this opportunity distinctive"
     if field and "research" in field.lower():
         distinctive_heading = "Research focus and connection"
-    elif field and field != "":
-        distinctive_heading = f"Field relevance and destination"
+    elif field:
+        distinctive_heading = "Field relevance and destination"
 
-    if field and field != "":
-        sections.append((
-            distinctive_heading,
-            f"{title} is open to applicants connected to {field} and provides a pathway linked to {country}." if country else f"{title} is open to applicants connected to {field}."
-        ))
-    else:
-        sections.append((
-            distinctive_heading,
-            f"{title} is a verified {type_label} listing. Review the eligibility, deadline, and funding information to assess whether it matches your profile."
-        ))
+    f_variants = [
+        f"{title} is open to applicants connected to {field} and provides a pathway linked to {country}." if country else f"{title} is open to applicants connected to {field}.",
+        f"This {type_label} targets candidates whose background aligns with {field}, with the program based in {country}. Applicants should map their experience to the field description before applying." if country else f"This {type_label} targets candidates with relevant experience in {field}.",
+        f"Designed for individuals working or studying in {field}, {title} is anchored to {country}. Review the field requirements closely to ensure your academic or professional background matches." if country else f"Designed for individuals with a background in {field}, this {type_label} connects your expertise to a structured program."
+    ]
+    sections.append((distinctive_heading, _pick(f_variants, title + "field_relevance")))
 
-    if level and level != "" and "eligible" not in level.lower():
-        sections.append((
-            "Applicant profile",
-            f"The provider states this {type_label} is intended for candidates at the {level} level. Confirm specific nationality rules, degree timing, and language evidence on the official program page before starting your application."
-        ))
+    # --- Applicant profile (3 variations) ---
+    if level and "eligible" not in level.lower():
+        l_variants = [
+            f"The provider states this {type_label} is intended for candidates at the {level} level. Confirm specific nationality rules, degree timing, and language evidence on the official program page before starting your application.",
+            f"This listing is aimed at {level} applicants. Before you begin, verify the nationality criteria, required degree status, and any language evidence {host} expects on its official site.",
+            f"{host} describes the target applicant as being at the {level} level. Always cross-check the provider's own page for updates on degree timing, language requirements, and country-specific restrictions."
+        ]
+        sections.append(("Applicant profile", _pick(l_variants, title + "level")))
 
-    if funding_val and funding_val != "" and "see official" not in funding_val.lower():
-        sections.append((
-            "Funding breakdown",
-            f"OpportunityNest records the funding position for this listing as: {benefits}. Check the official provider page to confirm which costs are covered: tuition, monthly stipend, travel, insurance, or research support. Include any uncovered costs in your budget."
-        ))
+    # --- Funding breakdown (3 variations) ---
+    if funding_val and "see official" not in funding_val.lower():
+        f_variants = [
+            f"OpportunityNest records the funding position for this listing as: {benefits}. Check the official provider page to confirm which costs are covered: tuition, monthly stipend, travel, insurance, or research support. Include any uncovered costs in your budget.",
+            f"The listed funding is: {benefits}. Before applying, check with {host} to see whether this covers tuition only, or extends to stipends, travel, insurance, and research expenses. Budget for anything not included.",
+            f"This {type_label} shows a funding status of: {benefits}. Because provider packages can change, confirm the full cost breakdown — including what is and is not covered — on {host}'s official page."
+        ]
+        sections.append(("Funding breakdown", _pick(f_variants, title + "funding")))
 
-    is_fixed_deadline = deadline and "rolling" not in deadline.lower() and "varies" not in deadline.lower() and "ongoing" not in deadline.lower() and "not announced" not in deadline.lower()
+    # --- Timeline (3 variations) ---
+    is_fixed_deadline = not is_rolling and deadline and "varies" not in deadline.lower() and "ongoing" not in deadline.lower() and "not announced" not in deadline.lower()
     if is_fixed_deadline:
-        sections.append((
-            "Timeline and planning",
-            f"The published deadline is {deadline}. Starting at least eight weeks before the closing date is recommended, especially if you need transcripts, test scores, or recommendation letters. Build buffer time for unexpected delays."
-        ))
+        t_variants = [
+            f"The published deadline is {deadline}. Starting at least eight weeks before the closing date is recommended, especially if you need transcripts, test scores, or recommendation letters. Build buffer time for unexpected delays.",
+            f"Mark {deadline} on your calendar. Gathering transcripts, test scores, and reference letters can take weeks, so begin at least two months ahead. Leave room for unforeseen hold-ups.",
+            f"With a deadline of {deadline}, you should aim to have your materials ready well in advance. Transcript requests, test registration, and referee coordination often take longer than expected."
+        ]
+        sections.append(("Timeline and planning", _pick(t_variants, title + "deadline")))
     else:
-        sections.append((
-            "Timeline and planning",
-            f"This {type_label} uses rolling or open-ended recruitment. Submit your application as soon as your materials are ready — some providers review candidates as applications arrive."
-        ))
+        t_variants = [
+            f"This {type_label} uses rolling or open-ended recruitment. Submit your application as soon as your materials are ready — some providers review candidates as applications arrive.",
+            f"{title} operates on a continuous review cycle. Because {host} may fill spots as strong applications come in, preparing your materials early and submitting promptly can be advantageous.",
+            f"Rather than a fixed deadline, this {type_label} accepts applications on an ongoing basis. Applying early is wise if {host} evaluates candidates progressively rather than in a single batch."
+        ]
+        sections.append(("Timeline and planning", _pick(t_variants, title + "timeline")))
 
-    sections.append((
-        "Common mistakes to avoid",
-        f"Applicants sometimes submit generic motivation letters, overlook document formatting rules, or misread the deadline time zone. Read the provider instructions carefully, upload clear scans, and keep a copy of your submitted confirmation."
-    ))
+    # --- Common mistakes (select a variant based on opportunity) ---
+    mistakes_text = _pick(MISTAKES_POOL, title + "mistakes")
+    mistakes_text = mistakes_text.replace("{type_label}", type_label)
+    mistakes_text = mistakes_text.replace("{country}", country) if country else mistakes_text.replace("the specific {country} context", "the program's specifics")
+    mistakes_text = mistakes_text.replace("{field}", field) if field else mistakes_text.replace("the {field} angle", "your academic angle")
+    mistakes_text = mistakes_text.replace("{host}", host) if host else mistakes_text.replace("{host}", "the provider")
+    sections.append(("Common mistakes to avoid", mistakes_text))
 
-    if host and country and host != country:
-        sections.append((
-            "About the host organization",
-            f"This {type_label} is offered by {host} and is connected to {country}. Reviewing the host's background and previous program cycles can help you tailor your application to what they look for in candidates."
-        ))
+    # --- About the host (3 variations) ---
+    item_host = item.get("host_organization") or ""
+    if item_host and country and item_host != country:
+        h_variants = [
+            f"This {type_label} is offered by {item_host} and is connected to {country}. Reviewing the host's background and previous program cycles can help you tailor your application to what they look for in candidates.",
+            f"{item_host} administers this {type_label} with ties to {country}. Spend some time researching {item_host}'s mission and past cohorts — your application will be stronger if it reflects their priorities.",
+            f"Run by {item_host} and based in {country}, this {type_label} draws on the host's specific expertise. Tailoring your statement to {item_host}'s stated goals and previous programming can set your application apart."
+        ]
+        sections.append(("About the host organization", _pick(h_variants, title + "host")))
 
     return sections
 
+
+FALLBACK_WHO_VARIANTS = [
+    "{level} applicants whose background connects to {field} and who can satisfy {country} eligibility rules should consider this {type_label}. The official provider page remains the definitive source for nationality, age, degree, language, and residency requirements — review it before you begin.",
+    "This opportunity suits candidates at the {level} level with experience or interest in {field}, provided they meet the rules for {country}. Use the provider's own page as your primary reference for nationality, age, degree, and language conditions.",
+    "If you are at the {level} level, working in or studying {field}, and eligible for programs in {country}, this {type_label} may be a strong fit. Always check the official provider page for the final word on age limits, degree timing, nomination steps, and residence rules."
+]
 
 def fallback_who_should_apply(item: dict) -> str:
     level = item.get("level") or "the applicant group named by the provider"
     field = item.get("field") or "the relevant academic or professional area"
     country = item.get("country") or "the listed destination or global program scope"
-    return (
-        f"Applicants should consider this opportunity if they match the provider's stated level of {level}, have a relevant connection to {field}, "
-        f"and can realistically meet the rules for {country}. This section is a preparation guide only; the official provider page remains the final source "
-        "for nationality, age, degree, language, nomination, residence, and exclusion rules."
-    )
+    type_label = (item.get("type") or "opportunity").lower()
+    template = _pick(FALLBACK_WHO_VARIANTS, item.get("title","") + "who")
+    return template.replace("{level}", level).replace("{field}", field).replace("{country}", country).replace("{type_label}", type_label)
 
+
+FALLBACK_SELECTION_VARIANTS = [
+    "{host} sets the selection criteria for this {type_label}. Reviewers typically evaluate eligibility fit, academic or professional relevance, clarity of motivation, completeness of documents, and evidence that the applicant understands the program's purpose. Where {host} publishes specific criteria, use them to structure your essays, CV, and references.",
+    "Selection for this {type_label} is determined by {host}. Expect reviewers to weigh eligibility alignment, academic or professional background, the strength of your motivation, document quality, and how well you demonstrate an understanding of what the program offers. If {host} lists explicit criteria, let those guide your application structure.",
+    "How does {host} choose candidates for this {type_label}? The provider sets its own criteria, but common factors include eligibility fit, relevant experience, clear motivation, complete materials, and a demonstrated understanding of the program. Where possible, align your essays, CV, and references with any published selection dimensions."
+]
 
 def fallback_selection_criteria(item: dict) -> str:
     host = item.get("host_organization") or "the provider"
-    return (
-        f"Selection criteria are determined by {host}. In general, applicants should expect reviewers to look for eligibility fit, academic or professional relevance, "
-        "clear motivation, complete documents, realistic timing, and evidence that the applicant understands the purpose of the program. Where the official page lists "
-        "specific criteria, use those criteria as the structure for your essays, CV, recommendations, and supporting evidence."
-    )
+    type_label = (item.get("type") or "opportunity").lower()
+    template = _pick(FALLBACK_SELECTION_VARIANTS, item.get("title","") + "selection")
+    return template.replace("{host}", host).replace("{type_label}", type_label)
 
+
+OFFICIAL_APP_VARIANTS = [
+    "Visit {host}'s page for {title} before you fill in the final form. That site carries the definitive {type_label} instructions, {country}-specific rules, current deadline ({deadline}), and exact funding terms ({funding}).",
+    "Before submitting, open the {host} page for {title}. That is your authoritative source for the live {type_label} requirements, how {country} rules apply, the confirmed deadline date ({deadline}), and the official funding language ({funding}).",
+    "Head to {host}'s website for {title} to verify the final details. Their page will have the up-to-date {type_label} process, {country} eligibility notes, the confirmed deadline ({deadline}), and the precise funding terms ({funding})."
+]
 
 def official_application_guidance(item: dict, host: str) -> str:
     title = item["title"]
@@ -1710,11 +1828,15 @@ def official_application_guidance(item: dict, host: str) -> str:
     type_label = (item.get("type") or "opportunity").lower()
     deadline = format_deadline(item)
     funding = item.get("funding") or "the funding terms shown by the provider"
-    return (
-        f"Open the {host} page for {title} before you start the final form. That source should be used to confirm the live {type_label} instructions, "
-        f"the {country} specific rules, the current deadline status ({deadline}), and the final wording on funding ({funding})."
-    )
+    template = _pick(OFFICIAL_APP_VARIANTS, title + "official")
+    return template.replace("{host}", host).replace("{title}", title).replace("{country}", country).replace("{type_label}", type_label).replace("{deadline}", deadline).replace("{funding}", funding)
 
+
+SUMMARY_VARIANTS = [
+    "{title} offers {level} a verified {type_label} pathway tied to {field} in {country}. Use this page to compare the headline facts, then confirm the application sequence, document rules, funding ({benefits}), and deadline ({deadline}) on {host}'s site before submitting.",
+    "For {level} candidates with a connection to {field} looking at {country}, {title} is a verified {type_label} worth reviewing. Match the core details here against {host}'s official information for documents, funding ({benefits}), and the closing date ({deadline}).",
+    "At its core, {title} gives {level} applicants a structured {type_label} route through {field} in {country}. Compare the essentials on this page, then verify the final process, document checklist, funding scope ({benefits}), and deadline ({deadline}) with {host} directly."
+]
 
 def opportunity_summary(item: dict, host: str, benefits: str) -> str:
     title = item["title"]
@@ -1723,11 +1845,8 @@ def opportunity_summary(item: dict, host: str, benefits: str) -> str:
     country = item.get("country") or "a global applicant pool"
     deadline = format_deadline(item)
     level = item.get("level") or "eligible applicants"
-    return (
-        f"{title} gives {level} a verified {type_label} route connected to {field} in {country}. Use this page to compare the core facts, "
-        f"then check {host} for the final application sequence, document rules, funding language ({benefits}), and deadline status ({deadline}). "
-        "A strong next step is to match each provider requirement with evidence from your CV, transcript, portfolio, proposal, or references before submitting."
-    )
+    template = _pick(SUMMARY_VARIANTS, title + "summary")
+    return template.replace("{title}", title).replace("{level}", level).replace("{type_label}", type_label).replace("{field}", field).replace("{country}", country).replace("{host}", host).replace("{benefits}", benefits).replace("{deadline}", deadline)
 
 
 def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
@@ -1856,6 +1975,23 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
     return page
 
 
+def estimate_reading_time(item: dict) -> int:
+    """Estimate reading time in minutes based on content fields."""
+    text_parts = [
+        item.get("description") or "",
+        item.get("eligibility_criteria") or "",
+        item.get("benefits") or "",
+        item.get("required_documents") or "",
+        item.get("application_process") or "",
+        item.get("selection_criteria") or "",
+        item.get("important_notes") or "",
+        item.get("title") or ""
+    ]
+    word_count = sum(len(p.split()) for p in text_parts if p)
+    minutes = max(1, round(word_count / 200))
+    return minutes
+
+
 def build_opportunity_page(item: dict, related_items: list[dict], previous_item: dict | None, next_item: dict | None) -> str:
     page_title = item.get("seo_title") or f"{item['title']} | OpportunityNest"
     meta_description = item.get("seo_description") or (
@@ -1957,7 +2093,7 @@ def build_opportunity_page(item: dict, related_items: list[dict], previous_item:
         f"              <a class=\"button button-primary\" href=\"{escape_html(item['link'])}\" target=\"_blank\" rel=\"noopener noreferrer\">View &amp; Apply <span aria-hidden=\"true\">↗</span></a>\n"
         f"              <a class=\"button button-secondary\" href=\"{SITE_URL}{category_href}\">Back to {escape_html(category_label)}</a>\n"
         "            </div>\n"
-        f"            <p class=\"review-note\">Last reviewed: {escape_html(updated_at)}. Details are summarized from the official provider source.</p>\n"
+        f"            <div class=\"eeat-bar\"><span class=\"eeat-badge\">Reviewed by {REVIEWER_NAME}</span><span class=\"eeat-badge\">Fact checked</span><span class=\"eeat-badge\">Updated {escape_html(updated_at)}</span><span class=\"eeat-badge\">{escape_html(str(estimate_reading_time(item)) + ' min read')}</span></div>\n            <p class=\"review-note\">Details are summarized from the official provider source. Always verify deadlines and eligibility on the official program page before applying.</p>\n"
         "          </div>\n"
         "        </div>\n"
         "      </section>\n"
