@@ -382,6 +382,12 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
+  // 3b. Add Monetag ad script (async, non-blocking)
+  if (!html.includes('quge5.com/88/tag.min.js')) {
+    html = html.replace('</head>', '    <script src="https://quge5.com/88/tag.min.js" data-zone="264737" async data-cfasync="false"></script>\n  </head>');
+    modified = true;
+  }
+
   // 4. Defer Chatling chatbot — load only after user interaction
   if (html.includes('chatling.ai/js/embed.js')) {
     html = html.replace(
