@@ -1,14 +1,9 @@
-// ─── Logo injection ──────────────────────────────────────
-// Replace the "ON" text brand-mark with the SVG logo on every page.
-// Determine the correct relative path based on current page location.
 (function injectLogo() {
-  const marks = document.querySelectorAll(".brand-mark");
+  var marks = document.querySelectorAll(".brand-mark");
   if (!marks.length) return;
-
-  // Use an absolute asset path so the logo also works on nested generated pages.
-  marks.forEach((el) => {
+  marks.forEach(function (el) {
     el.textContent = "";
-    const img = document.createElement("img");
+    var img = document.createElement("img");
     img.src = "/logo.svg";
     img.alt = "";
     img.width = 44;
@@ -17,10 +12,8 @@
     img.setAttribute("decoding", "async");
     el.appendChild(img);
   });
-
-  // Prefer the SVG favicon in modern browsers (falls back to existing .ico)
   if (!document.querySelector('link[type="image/svg+xml"]')) {
-    const svgFav = document.createElement("link");
+    var svgFav = document.createElement("link");
     svgFav.rel = "icon";
     svgFav.type = "image/svg+xml";
     svgFav.href = "/favicon.svg";
@@ -28,8 +21,7 @@
   }
 })();
 
-// ─── SVG Icons ────────────────────────────────────────────
-const ICONS = {
+var S = {
   globe: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
   cap: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
   briefcase: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
@@ -40,699 +32,460 @@ const ICONS = {
   book: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
   lightbulb: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
   fileText: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
-  dollarSign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+  dollarSign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
+  chevron: '<svg class="nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
 };
 
-// ─── Navigation architecture ──────────────────────────────
-const navToggle = document.querySelector(".nav-toggle");
-const navMenu = document.querySelector("#nav-menu");
-const MOBILE_NAV_BREAKPOINT = 767;
-
-const megaMenuData = {
-  "Study Abroad": [
-    {
-      title: "Top Destinations",
-      icon: ICONS.globe,
-      links: [
-        ["Study in UK", "/study-in-uk/"],
-        ["Study in USA", "/study-in-usa/"],
-        ["Study in Canada", "/study-in-canada/"],
-        ["Study in Australia", "/study-in-australia/"],
-        ["Study in Germany", "/study-in-germany/"],
-        ["Study in Europe", "/study-in-europe/"]
-      ]
-    }
-  ],
-  Scholarships: [
-    {
-      title: "Scholarship Types",
-      icon: ICONS.cap,
-      links: [
-        ["Fully Funded Scholarships", "/fully-funded-scholarships/"],
-        ["Undergraduate Scholarships", "/undergraduate-scholarships/"],
-        ["Master's Scholarships", "/masters-scholarships/"],
-        ["PhD Scholarships", "/phd-scholarships/"],
-        ["Government Scholarships", "/government-scholarships/"]
-      ]
-    }
-  ],
-  Internships: [
-    {
-      title: "Internship Types",
-      icon: ICONS.briefcase,
-      links: [
-        ["Paid Internships", "/paid-internships/"],
-        ["Remote Internships", "/remote-internships/"],
-        ["Summer Internships", "/summer-internships/"],
-        ["International Internships", "/international-internships/"]
-      ]
-    }
-  ],
-  Fellowships: [
-    {
-      title: "Fellowship Types",
-      icon: ICONS.award,
-      links: [
-        ["Fully Funded Fellowships", "/fully-funded-fellowships/"],
-        ["Research Fellowships", "/research-fellowships/"],
-        ["Leadership Fellowships", "/leadership-fellowships/"]
-      ]
-    }
-  ],
-  Competitions: [
-    {
-      title: "Competition Types",
-      icon: ICONS.trophy,
-      links: [
-        ["Programming Competitions", "/programming-competitions/"],
-        ["AI Competitions", "/ai-competitions/"],
-        ["Business Competitions", "/business-competitions/"],
-        ["Essay Competitions", "/essay-competitions/"]
-      ]
-    }
-  ],
-  "Youth Programs": [
-    {
-      title: "Program Types",
-      icon: ICONS.users,
-      links: [
-        ["Leadership Programs", "/leadership-programs/"],
-        ["Volunteer Programs", "/volunteer-programs/"],
-        ["Exchange Programs", "/exchange-programs/"],
-        ["Cultural Programs", "/cultural-programs/"],
-        ["Leadership Camps", "/leadership-camps/"],
-        ["Global Conferences", "/global-conferences/"]
-      ]
-    },
-    {
-      title: "Explore More",
-      icon: ICONS.compass,
-      links: [
-        ["Youth Programs Feed", "/youth-programs/"],
-        ["Research Opportunities", "/research-opportunities/"],
-        ["Conferences", "/conferences/"],
-        ["Grants", "/grants/"]
-      ]
-    }
-  ],
-  Blog: [
-    {
-      title: "Scholarship Advice",
-      icon: ICONS.book,
-      links: [
-        ["Fully Funded Scholarships", "/blog/top-fully-funded-scholarships.html"],
-        ["Scholarship Interview Tips", "/blog/how-to-ace-scholarship-interview.html"],
-        ["Winning Scholarship Essays", "/blog/how-to-write-winning-scholarship-essay.html"],
-        ["Scholarships Without IELTS", "/guides/scholarships-without-ielts.html"]
-      ]
-    },
-    {
-      title: "Application Help",
-      icon: ICONS.lightbulb,
-      links: [
-        ["Statement of Purpose", "/guides/how-to-write-sop.html"],
-        ["Personal Statement", "/guides/personal-statement.html"],
-        ["Motivation Letter", "/guides/motivation-letter.html"],
-        ["CV Writing", "/guides/cv-writing.html"],
-        ["Application Checklist", "/guides/application-checklist.html"]
-      ]
-    }
-  ],
-  "Resource Center": [
-    {
-      title: "Application Guides",
-      icon: ICONS.fileText,
-      links: [
-        ["How to Write an SOP", "/guides/how-to-write-sop.html"],
-        ["SOP Examples", "/guides/sop-examples.html"],
-        ["Personal Statement", "/guides/personal-statement.html"],
-        ["Motivation Letter", "/guides/motivation-letter.html"],
-        ["Cover Letter Guide", "/guides/cover-letter.html"],
-        ["CV Writing Guide", "/guides/cv-writing.html"]
-      ]
-    },
-    {
-      title: "Scholarship Guides",
-      icon: ICONS.cap,
-      links: [
-        ["Fully Funded Scholarships", "/blog/top-fully-funded-scholarships.html"],
-        ["Without IELTS", "/guides/scholarships-without-ielts.html"],
-        ["Masters Scholarships", "/guides/masters-scholarships.html"],
-        ["PhD Scholarships", "/guides/phd-scholarships.html"],
-        ["Government Scholarships", "/guides/government-scholarships.html"],
-        ["University Scholarships", "/guides/university-scholarships.html"]
-      ]
-    },
-    {
-      title: "Internship Guides",
-      icon: ICONS.briefcase,
-      links: [
-        ["How to Get an Internship", "/guides/how-to-get-internship.html"],
-        ["Application Guide", "/guides/internship-application.html"],
-        ["Internship Resume", "/guides/internship-resume.html"],
-        ["Interview Questions", "/guides/internship-interview.html"],
-        ["Remote Internships", "/guides/remote-internships.html"],
-        ["Paid Internships", "/guides/paid-internships.html"]
-      ]
-    },
-    {
-      title: "Study Abroad",
-      icon: ICONS.globe,
-      links: [
-        ["Study in USA", "/guides/study-in-usa.html"],
-        ["Study in Canada", "/guides/study-in-canada.html"],
-        ["Study in UK", "/guides/study-in-uk.html"],
-        ["Study in Germany", "/guides/study-in-germany.html"],
-        ["Study in Australia", "/guides/study-in-australia.html"],
-        ["Student Visa Guide", "/guides/student-visa.html"]
-      ]
-    },
-    {
-      title: "Career Resources",
-      icon: ICONS.book,
-      links: [
-        ["Career Planning", "/guides/career-planning.html"],
-        ["LinkedIn Optimization", "/guides/linkedin-profile.html"],
-        ["Networking Guide", "/guides/networking.html"],
-        ["Online Certifications", "/guides/online-certifications.html"],
-        ["Best Skills for Students", "/guides/best-skills.html"],
-        ["Research Opportunities", "/guides/research-opportunities.html"]
-      ]
-    },
-    {
-      title: "Tests and Funding",
-      icon: ICONS.dollarSign,
-      links: [
-        ["IELTS Guide", "/guides/ielts-guide.html"],
-        ["TOEFL Guide", "/guides/toefl-guide.html"],
-        ["GRE Guide", "/guides/gre-guide.html"],
-        ["GMAT Guide", "/guides/gmat-guide.html"],
-        ["Fellowships", "/fellowships/"],
-        ["Grants", "/guides/grants.html"]
-      ]
-    }
-  ]
-};
-
-const navItems = [
-  { label: "Study Abroad", href: "/study-in-uk/", sections: megaMenuData["Study Abroad"] },
-  { label: "Scholarships", href: "/scholarships/", sections: megaMenuData.Scholarships },
-  { label: "Internships", href: "/internships/", sections: megaMenuData.Internships },
-  { label: "Fellowships", href: "/fellowships/", sections: megaMenuData.Fellowships },
-  { label: "Competitions", href: "/competitions.html", sections: megaMenuData.Competitions },
-  { label: "Youth Programs", href: "/youth-programs/", sections: megaMenuData["Youth Programs"] },
-  { label: "Blog", href: "/blog/", sections: megaMenuData.Blog },
-  { label: "Resource Center", href: "/guides/application-checklist.html", sections: megaMenuData["Resource Center"] }
+var NAV_ITEMS = [
+  { label: "Scholarships", href: "/scholarships/", columns: [
+    { title: "Browse by Country", icon: S.globe, links: [["USA","/scholarships/usa/"],["Canada","/scholarships/canada/"],["UK","/scholarships/united-kingdom/"],["Germany","/scholarships/germany/"],["Australia","/scholarships/australia/"]] },
+    { title: "Browse by Level", icon: S.cap, links: [["Bachelor","/undergraduate-scholarships/"],["Master","/masters-scholarships/"],["PhD","/phd-scholarships/"],["Postdoctoral","/postdoctoral-scholarships/"]] },
+    { title: "Browse by Funding", icon: S.dollarSign, links: [["Fully Funded","/fully-funded-scholarships/"],["Partial","/partially-funded-scholarships/"],["Merit Based","/merit-scholarships/"]] },
+    { title: "Trending", icon: S.trophy, links: [["Latest","/scholarships/"],["Deadlines Soon","/scholarships/"],["Popular","/scholarships/"]] }
+  ]},
+  { label: "Internships", href: "/internships/", columns: [
+    { title: "Browse by Type", icon: S.briefcase, links: [["Paid","/paid-internships/"],["Remote","/remote-internships/"],["Summer","/summer-internships/"],["International","/international-internships/"]] },
+    { title: "Top Countries", icon: S.globe, links: [["USA","/internships/united-states/"],["UK","/internships/united-kingdom/"],["Canada","/internships/canada/"],["Germany","/internships/germany/"],["Switzerland","/internships/switzerland/"]] },
+    { title: "Categories", icon: S.cap, links: [["Engineering","/internships/"],["IT & Tech","/internships/"],["Business","/internships/"],["Research","/internships/"]] }
+  ]},
+  { label: "Fellowships", href: "/fellowships/", columns: [
+    { title: "Fellowship Types", icon: S.award, links: [["Fully Funded","/fully-funded-fellowships/"],["Research","/research-fellowships/"],["Leadership","/leadership-fellowships/"]] },
+    { title: "Popular Programs", icon: S.trophy, links: [["Fulbright","/fellowships/"],["DAAD","/fellowships/"],["Rhodes","/fellowships/"],["Chevening","/fellowships/"]] }
+  ]},
+  { label: "Competitions", href: "/competitions/", columns: [
+    { title: "Competition Types", icon: S.trophy, links: [["Programming","/programming-competitions/"],["AI","/ai-competitions/"],["Business","/business-competitions/"],["Essay","/essay-competitions/"]] }
+  ]},
+  { label: "Youth Programs", href: "/youth-programs/", columns: [
+    { title: "Program Types", icon: S.users, links: [["Leadership","/leadership-programs/"],["Volunteer","/volunteer-programs/"],["Exchange","/exchange-programs/"],["Conferences","/conferences/"]] },
+    { title: "Explore More", icon: S.compass, links: [["Grants","/grants/"],["Research","/research-opportunities/"]] }
+  ]},
+  { label: "Blog", href: "/blog/", columns: [
+    { title: "Scholarship Advice", icon: S.book, links: [["Fully Funded","/blog/top-fully-funded-scholarships.html"],["Interview Tips","/blog/how-to-ace-scholarship-interview.html"],["Essay Guide","/blog/how-to-write-winning-scholarship-essay.html"],["No IELTS","/guides/scholarships-without-ielts.html"]] },
+    { title: "Application Help", icon: S.lightbulb, links: [["SOP Guide","/guides/how-to-write-sop.html"],["Personal Statement","/guides/personal-statement.html"],["CV Writing","/guides/cv-writing.html"],["Checklist","/guides/application-checklist.html"]] }
+  ]},
+  { label: "Resources", href: "/guides/application-checklist.html", columns: [
+    { title: "Application Guides", icon: S.fileText, links: [["How to Write an SOP","/guides/how-to-write-sop.html"],["SOP Examples","/guides/sop-examples.html"],["Personal Statement","/guides/personal-statement.html"],["CV Writing","/guides/cv-writing.html"],["Cover Letter","/guides/cover-letter.html"]] },
+    { title: "Scholarship Guides", icon: S.cap, links: [["Fully Funded","/blog/top-fully-funded-scholarships.html"],["Without IELTS","/guides/scholarships-without-ielts.html"],["Masters","/guides/masters-scholarships.html"],["PhD","/guides/phd-scholarships.html"]] },
+    { title: "Study Abroad", icon: S.globe, links: [["USA","/guides/study-in-usa.html"],["UK","/guides/study-in-uk.html"],["Canada","/guides/study-in-canada.html"],["Germany","/guides/study-in-germany.html"],["Australia","/guides/study-in-australia.html"]] },
+    { title: "Test Prep", icon: S.dollarSign, links: [["IELTS","/guides/ielts-guide.html"],["TOEFL","/guides/toefl-guide.html"],["GRE","/guides/gre-guide.html"],["GMAT","/guides/gmat-guide.html"]] }
+  ]}
 ];
 
-const isMobileNav = () => window.matchMedia(`(max-width: ${MOBILE_NAV_BREAKPOINT}px)`).matches;
+var navToggle = document.querySelector(".nav-toggle");
+var navMenu = document.querySelector("#nav-menu");
+var MOBILE_BP = 767;
+var TABLET_BP = 1024;
+var isMobile = function () { return window.matchMedia("(max-width: " + MOBILE_BP + "px)").matches; };
+var isTablet = function () { return window.matchMedia("(min-width: " + (MOBILE_BP + 1) + "px) and (max-width: " + TABLET_BP + "px)").matches; };
+var isDesktop = function () { return window.matchMedia("(min-width: " + (TABLET_BP + 1) + "px)").matches; };
 
-const createMegaColumn = ({ title, icon, links }) => {
-  const column = document.createElement("section");
-  column.className = "mega-column";
-
-  const heading = document.createElement("h3");
-  const iconSpan = document.createElement("span");
-  iconSpan.className = "mega-column-icon";
+function createCol(col) {
+  var div = document.createElement("div");
+  div.className = "mega-col";
+  var heading = document.createElement("div");
+  heading.className = "mega-col-heading";
+  var iconSpan = document.createElement("span");
+  iconSpan.className = "mega-col-icon";
   iconSpan.setAttribute("aria-hidden", "true");
-  iconSpan.innerHTML = icon;
-  heading.append(iconSpan, ` ${title}`);
-  column.appendChild(heading);
-
-  const list = document.createElement("ul");
-  for (let i = 0; i < links.length; i++) {
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = links[i][1];
-    link.textContent = links[i][0];
-    item.appendChild(link);
-    list.appendChild(item);
+  iconSpan.innerHTML = col.icon;
+  heading.appendChild(iconSpan);
+  var titleSpan = document.createElement("span");
+  titleSpan.className = "mega-col-title";
+  titleSpan.textContent = col.title;
+  heading.appendChild(titleSpan);
+  var chev = document.createElement("span");
+  chev.className = "mega-col-chevron";
+  chev.setAttribute("aria-hidden", "true");
+  chev.innerHTML = S.chevron;
+  heading.appendChild(chev);
+  div.appendChild(heading);
+  var list = document.createElement("ul");
+  list.className = "mega-col-list";
+  for (var i = 0; i < col.links.length; i++) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = col.links[i][1];
+    a.textContent = col.links[i][0];
+    li.appendChild(a);
+    list.appendChild(li);
   }
-  column.appendChild(list);
-  return column;
-};
+  div.appendChild(list);
+  return div;
+}
 
-const createMegaItem = ({ label, href, sections }) => {
-  const item = document.createElement("div");
-  item.className = "nav-item has-mega";
+function createNavItem(item) {
+  var wrapper = document.createElement("div");
+  wrapper.className = "nav-item";
 
-  const trigger = document.createElement("a");
-  trigger.href = href;
-  trigger.className = "nav-link mega-trigger";
+  var trigger = document.createElement("a");
+  trigger.href = item.href;
+  trigger.className = "nav-link";
   trigger.setAttribute("aria-haspopup", "true");
   trigger.setAttribute("aria-expanded", "false");
-  trigger.setAttribute("aria-label", `${label} menu`);
+  trigger.setAttribute("aria-label", item.label + " menu");
+  trigger.textContent = item.label;
+  var tmp = document.createElement("span");
+  tmp.innerHTML = S.chevron;
+  trigger.appendChild(tmp.firstElementChild);
 
-  const triggerLabel = document.createElement("span");
-  triggerLabel.textContent = label;
+  wrapper.appendChild(trigger);
 
-  const caret = document.createElement("span");
-  caret.className = "nav-caret";
-  caret.setAttribute("aria-hidden", "true");
+  var mega = document.createElement("div");
+  mega.className = "mega";
+  mega.setAttribute("role", "group");
+  mega.setAttribute("aria-label", item.label + " links");
 
-  trigger.append(triggerLabel, caret);
+  var inner = document.createElement("div");
+  inner.className = "mega-inner";
 
-  const dropdown = document.createElement("div");
-  dropdown.className = "mega-menu";
-  dropdown.setAttribute("role", "group");
-  dropdown.setAttribute("aria-label", `${label} links`);
-  dropdown.setAttribute("data-cols", String(sections.length));
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < sections.length; i++) {
-    frag.appendChild(createMegaColumn(sections[i]));
+  for (var i = 0; i < item.columns.length; i++) {
+    inner.appendChild(createCol(item.columns[i]));
   }
-  dropdown.appendChild(frag);
+  mega.appendChild(inner);
+  wrapper.appendChild(mega);
 
-  item.append(trigger, dropdown);
-  return item;
-};
+  return wrapper;
+}
 
-const buildNavigation = () => {
+function buildNav() {
   if (!navMenu) return;
-
   navMenu.textContent = "";
   navMenu.dataset.navBuilt = "true";
 
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < navItems.length; i++) {
-    frag.appendChild(createMegaItem(navItems[i]));
+  var frag = document.createDocumentFragment();
+  for (var i = 0; i < NAV_ITEMS.length; i++) {
+    frag.appendChild(createNavItem(NAV_ITEMS[i]));
   }
 
-  const cta = document.createElement("a");
+  frag.appendChild(createSearchMobile());
+
+  var cta = document.createElement("a");
   cta.href = "/scholarships/";
   cta.className = "button button-primary nav-cta";
   cta.textContent = "Explore Opportunities";
   frag.appendChild(cta);
 
   navMenu.appendChild(frag);
-};
+}
 
-const closeMegaMenu = (item) => {
+function createSearchMobile() {
+  var wrap = document.createElement("div");
+  wrap.className = "nav-search-mobile";
+  var form = document.createElement("form");
+  form.className = "nav-search-form-mobile";
+  form.setAttribute("role", "search");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var q = form.querySelector("input").value.trim();
+    if (q) window.location.href = "/scholarships/?q=" + encodeURIComponent(q);
+  });
+  var input = document.createElement("input");
+  input.type = "search";
+  input.placeholder = "Search scholarships...";
+  input.setAttribute("aria-label", "Search opportunities");
+  form.appendChild(input);
+  wrap.appendChild(form);
+  return wrap;
+}
+
+var docClickListener;
+var hoverTimer = null;
+
+function clearHoverTimer() {
+  if (hoverTimer) {
+    clearTimeout(hoverTimer);
+    hoverTimer = null;
+  }
+}
+
+function closeAllMegas(except) {
+  if (!navMenu) return;
+  var items = navMenu.querySelectorAll(".nav-item.is-open");
+  for (var i = 0; i < items.length; i++) {
+    if (items[i] !== except) closeMega(items[i]);
+  }
+}
+
+function closeMega(item) {
   if (!item) return;
   item.classList.remove("is-open");
-  item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "false");
+  var trig = item.querySelector(".nav-link");
+  if (trig) trig.setAttribute("aria-expanded", "false");
+}
 
-  const dropdown = item.querySelector(".mega-menu");
-  if (dropdown) {
-    dropdown.classList.remove("mega-menu-fixed");
-    dropdown.style.top = "";
-    dropdown.style.left = "";
-    dropdown.style.right = "";
-  }
-
-  document.body.style.removeProperty("--dropdown-offset");
-};
-
-const closeAllMegaMenus = (exceptItem = null) => {
-  navMenu?.querySelectorAll(".nav-item.has-mega.is-open").forEach((item) => {
-    if (item !== exceptItem) closeMegaMenu(item);
-  });
-};
-
-const openMegaMenu = (item) => {
+function openMega(item) {
   if (!item) return;
-  closeAllMegaMenus(item);
+  closeAllMegas(item);
+  item.classList.add("is-open");
+  var trig = item.querySelector(".nav-link");
+  if (trig) trig.setAttribute("aria-expanded", "true");
+  if (!isMobile()) positionMega(item);
+}
 
-  const dropdown = item.querySelector(".mega-menu");
-  if (!dropdown) return;
-
-  if (!isMobileNav()) {
-    const header = document.querySelector(".site-header");
-    const headerHeight = header ? header.offsetHeight : 72;
-    const trigger = item.querySelector(".mega-trigger");
-
-    // Read dropdown height BEFORE opening (it has layout even when hidden)
-    // and push content down so hero content never overlaps the dropdown
-    const dropdownHeight = dropdown.offsetHeight;
-    document.body.style.setProperty("--dropdown-offset", `${dropdownHeight}px`);
-
-    // Now open the dropdown
-    item.classList.add("is-open");
-    item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
-
-    // Position dropdown in RAF — batch layout reads
-    requestAnimationFrame(() => {
-      if (!trigger) return;
-      const triggerRect = trigger.getBoundingClientRect();
-
-      dropdown.classList.add("mega-menu-fixed");
-      dropdown.style.top = `${headerHeight}px`;
-      dropdown.style.left = `${triggerRect.left}px`;
-      dropdown.style.right = "auto";
-
-      // Prevent right-edge overflow
-      const dropdownRect = dropdown.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      if (dropdownRect.right > viewportWidth) {
-        dropdown.style.left = "auto";
-        dropdown.style.right = "16px";
-      }
-    });
-  } else {
-    // Mobile: open normally — CSS handles layout naturally inside the drawer
-    item.classList.add("is-open");
-    item.querySelector(".mega-trigger")?.setAttribute("aria-expanded", "true");
-    dropdown.classList.remove("mega-menu-fixed");
-    dropdown.style.top = "";
-    dropdown.style.left = "";
-    dropdown.style.right = "";
-    document.body.style.removeProperty("--dropdown-offset");
+function positionMega(item) {
+  var mega = item.querySelector(".mega");
+  if (!mega) return;
+  mega.style.left = "";
+  var nav = item.closest(".nav");
+  if (!nav) return;
+  var navRect = nav.getBoundingClientRect();
+  var itemRect = item.getBoundingClientRect();
+  var megaWidth = mega.offsetWidth;
+  var itemCenter = (itemRect.left + itemRect.width / 2) - navRect.left;
+  var left = Math.round(itemCenter - megaWidth / 2);
+  var megaViewLeft = navRect.left + left;
+  var megaViewRight = megaViewLeft + megaWidth;
+  var vw = window.innerWidth;
+  var pad = 16;
+  if (megaViewRight > vw - pad) {
+    left -= (megaViewRight - vw + pad);
   }
-};
+  if (megaViewLeft < pad) {
+    left += (pad - megaViewLeft);
+  }
+  var maxLeft = navRect.width - megaWidth - pad;
+  if (left > maxLeft) left = maxLeft;
+  if (left < pad) left = pad;
+  mega.style.left = left + "px";
+  mega.style.transform = "none";
+}
 
-const closeNav = () => {
+function closeNav() {
   if (!navToggle || !navMenu) return;
   navToggle.setAttribute("aria-expanded", "false");
+  navToggle.classList.remove("is-active");
   navMenu.classList.remove("is-open");
   document.body.classList.remove("nav-open");
-  closeAllMegaMenus();
-};
+  closeAllMegas();
+}
 
-const setupNavigationInteractions = () => {
+function initMobileAccordion() {
+  if (!navMenu || !isMobile()) return;
+  navMenu.querySelectorAll(".mega-col-heading").forEach(function (h) {
+    h.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var col = h.closest(".mega-col");
+      if (col) col.classList.toggle("is-open");
+    });
+  });
+}
+
+function positionAllMegas() {
+  if (isMobile()) return;
+  navMenu.querySelectorAll(".nav-item.is-open").forEach(function (item) {
+    positionMega(item);
+  });
+}
+
+function setupInteractions() {
   if (!navMenu) return;
 
-  let hoverTimeout;
-  const HOVER_DELAY = 200;
-
-  // Handle both dynamically built nav-items and static mega-items
-  navMenu.querySelectorAll(".nav-item.has-mega, .mega-item").forEach((item) => {
-    const trigger = item.querySelector(".mega-trigger");
+  navMenu.querySelectorAll(".nav-item").forEach(function (item) {
+    var trigger = item.querySelector(".nav-link");
     if (!trigger) return;
 
-    item.addEventListener("pointerenter", () => {
-      if (!isMobileNav()) {
-        clearTimeout(hoverTimeout);
-        openMegaMenu(item);
+    item.addEventListener("pointerenter", function () {
+      clearHoverTimer();
+      if (!isMobile()) openMega(item);
+    });
+    item.addEventListener("pointerleave", function (e) {
+      if (!isMobile()) {
+        clearHoverTimer();
+        hoverTimer = setTimeout(function () {
+          closeMega(item);
+        }, 250);
       }
     });
 
-    item.addEventListener("pointerleave", () => {
-      if (!isMobileNav()) {
-        clearTimeout(hoverTimeout);
-        hoverTimeout = setTimeout(() => closeMegaMenu(item), HOVER_DELAY);
-      }
+    var mega = item.querySelector(".mega");
+    if (mega) {
+      mega.addEventListener("pointerenter", clearHoverTimer);
+      mega.addEventListener("pointerleave", function () {
+        clearHoverTimer();
+        hoverTimer = setTimeout(function () {
+          closeMega(item);
+        }, 250);
+      });
+    }
+
+    item.addEventListener("focusin", function () {
+      if (!isMobile()) openMega(item);
+    });
+    item.addEventListener("focusout", function (e) {
+      if (!item.contains(e.relatedTarget)) closeMega(item);
     });
 
-    item.addEventListener("focusin", () => {
-      if (!isMobileNav()) {
-        clearTimeout(hoverTimeout);
-        openMegaMenu(item);
-      }
-    });
-
-    item.addEventListener("focusout", (event) => {
-      if (!item.contains(event.relatedTarget)) {
-        clearTimeout(hoverTimeout);
-        closeMegaMenu(item);
-      }
-    });
-
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (item.classList.contains("is-open")) {
-        closeMegaMenu(item);
+    trigger.addEventListener("click", function (e) {
+      if (isMobile()) {
+        e.preventDefault();
+        if (item.classList.contains("is-open")) {
+          closeMega(item);
+        } else {
+          openMega(item);
+          var firstCol = item.querySelector(".mega-col-heading");
+          if (firstCol) setTimeout(function () { firstCol.focus(); }, 50);
+        }
         return;
       }
-      openMegaMenu(item);
-    });
-
-    // Keyboard navigation
-    trigger.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        if (item.classList.contains("is-open")) {
-          closeMegaMenu(item);
-        } else {
-          openMegaMenu(item);
-          // Focus first link in dropdown
-          const firstLink = item.querySelector(".mega-menu a");
-          if (firstLink) firstLink.focus();
-        }
-      }
-      if (event.key === "Escape") {
-        closeMegaMenu(item);
-        trigger.focus();
+      e.preventDefault();
+      if (item.classList.contains("is-open")) {
+        closeMega(item);
+      } else {
+        openMega(item);
       }
     });
 
-    // Trap focus within dropdown when open
-    const dropdown = item.querySelector(".mega-menu");
-    if (dropdown) {
-      dropdown.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closeMegaMenu(item);
-          trigger.focus();
-        }
-        if (event.key === "Tab") {
-          const focusableElements = dropdown.querySelectorAll("a");
-          const firstElement = focusableElements[0];
-          const lastElement = focusableElements[focusableElements.length - 1];
+    trigger.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (item.classList.contains("is-open")) { closeMega(item); }
+        else { openMega(item); var fl = item.querySelector(".mega a"); if (fl) fl.focus(); }
+      }
+      if (e.key === "Escape") { closeMega(item); trigger.focus(); }
+    });
 
-          if (event.shiftKey && document.activeElement === firstElement) {
-            event.preventDefault();
-            lastElement.focus();
-          } else if (!event.shiftKey && document.activeElement === lastElement) {
-            event.preventDefault();
-            firstElement.focus();
-          }
+    if (mega) {
+      mega.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { closeMega(item); trigger.focus(); }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          var links = mega.querySelectorAll("a");
+          var idx = Array.prototype.indexOf.call(links, document.activeElement);
+          if (idx > -1 && idx < links.length - 1) links[idx + 1].focus();
+          else if (links.length) links[0].focus();
+        }
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          var links = mega.querySelectorAll("a");
+          var idx = Array.prototype.indexOf.call(links, document.activeElement);
+          if (idx > 0) links[idx - 1].focus();
+          else trigger.focus();
+        }
+        if (e.key === "Tab") {
+          var fE = mega.querySelectorAll("a");
+          var f = fE[0], l = fE[fE.length - 1];
+          if (e.shiftKey && document.activeElement === f) { e.preventDefault(); l.focus(); }
+          else if (!e.shiftKey && document.activeElement === l) { e.preventDefault(); f.focus(); }
         }
       });
     }
   });
 
-  navMenu.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) return;
-    const link = event.target.closest("a");
+  navMenu.addEventListener("click", function (e) {
+    if (!(e.target instanceof Element)) return;
+    var link = e.target.closest("a");
     if (!link) return;
-
-    if (isMobileNav() && link.classList.contains("mega-trigger")) {
-      return;
-    }
-
+    if (isMobile() && link.classList.contains("nav-link")) return;
+    if (link.closest(".mega-col-heading")) return;
     closeNav();
   });
 
-  document.addEventListener("click", (event) => {
-    if (!navMenu || !(event.target instanceof Node)) return;
-    if (!navMenu.contains(event.target) && !navToggle?.contains(event.target)) {
-      closeAllMegaMenus();
+  if (docClickListener) document.removeEventListener("click", docClickListener);
+  docClickListener = function (e) {
+    if (!navMenu || !(e.target instanceof Node)) return;
+    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+      closeAllMegas();
     }
+  };
+  document.addEventListener("click", docClickListener);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { closeNav(); if (navToggle) navToggle.focus(); }
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeNav();
-      navToggle?.focus();
-    }
-  });
-
-  window.addEventListener("resize", () => {
-    if (!isMobileNav()) {
-      navMenu?.classList.remove("is-open");
-      document.body.classList.remove("nav-open");
-    }
-    closeAllMegaMenus();
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (!isMobile()) {
+        if (navMenu) navMenu.classList.remove("is-open");
+        document.body.classList.remove("nav-open");
+        positionAllMegas();
+      }
+      closeAllMegas();
+    }, 100);
   }, { passive: true });
 
   if (navToggle && navMenu) {
-    navToggle.addEventListener("click", () => {
-      const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.addEventListener("click", function () {
+      var isOpen = navToggle.getAttribute("aria-expanded") === "true";
       navToggle.setAttribute("aria-expanded", String(!isOpen));
+      navToggle.classList.toggle("is-active", !isOpen);
       navMenu.classList.toggle("is-open", !isOpen);
       document.body.classList.toggle("nav-open", !isOpen);
-      if (isOpen) {
-        closeAllMegaMenus();
-      }
+      if (isOpen) closeAllMegas();
+      if (!isOpen) initMobileAccordion();
     });
   }
-};
 
-// ─── Dynamic type nav link injection ────────────────────────
-// Called by script.js / category.js after opportunities are loaded
-// to insert "Competitions" / "Youth Programs" links that only
-// appear when those opportunity types exist in the database.
-window.addDynamicNavLinks = (types = []) => {
+  initMobileAccordion();
+  if (!isMobile()) positionAllMegas();
+}
+
+window.addDynamicNavLinks = function (types) {
   if (!navMenu) return;
-  // Remove any previously injected links
-  navMenu.querySelectorAll("[data-dynamic-type-link]").forEach((link) => link.remove());
-  const links = [];
-  const cta = navMenu.querySelector(".nav-cta");
-  links.forEach(({ type, label }) => {
-    const matchingType = types.find((t) => t.trim().toLowerCase() === type.toLowerCase());
-    if (!matchingType) return;
-    const link = document.createElement("a");
-    link.href = `/scholarships/`;
-    link.className = "nav-link";
-    link.textContent = label;
-    link.dataset.dynamicTypeLink = "true";
-    navMenu.insertBefore(link, cta);
-  });
+  navMenu.querySelectorAll("[data-dynamic]").forEach(function (l) { l.remove(); });
 };
 
 if (navMenu) {
   window.closeNav = closeNav;
-
-  let navBuilt = false;
+  var navBuilt = false;
   function initNav() {
     if (navBuilt) return;
     navBuilt = true;
-    buildNavigation();
-    setupNavigationInteractions();
-    if (window.__opportunityTypes) {
-      window.addDynamicNavLinks(window.__opportunityTypes);
-    }
+    buildNav();
+    setupInteractions();
+    if (window.__opportunityTypes) window.addDynamicNavLinks(window.__opportunityTypes);
   }
-
-  // Build nav on first interaction if idle callback hasn't fired yet
-  navMenu.addEventListener('pointerenter', initNav, { once: true });
-  navMenu.addEventListener('touchstart', initNav, { once: true });
-
-  // Defer mega menu construction to browser idle time — avoids blocking first paint
-  if (typeof requestIdleCallback !== 'undefined') {
+  navMenu.addEventListener("pointerenter", initNav, { once: true });
+  navMenu.addEventListener("touchstart", initNav, { once: true });
+  if (typeof requestIdleCallback !== "undefined") {
     requestIdleCallback(initNav, { timeout: 2000 });
   } else {
     setTimeout(initNav, 100);
   }
 }
 
-// ─── Cookie Consent (GDPR / Google Consent Mode v2) — deferred ──────
-// Runs after critical rendering to avoid blocking TBT
 (function cookieConsent() {
-  if (typeof requestIdleCallback !== 'undefined') {
-    requestIdleCallback(initCookieConsent, { timeout: 3000 });
+  if (typeof requestIdleCallback !== "undefined") {
+    requestIdleCallback(initCC, { timeout: 3000 });
   } else {
-    setTimeout(initCookieConsent, 2000);
+    setTimeout(initCC, 2000);
   }
-  function initCookieConsent() {
-  var saved = localStorage.getItem("on_consent");
-  if (saved === "accepted" || saved === "rejected") return;
-
-  var defaults = {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied'
-  };
-
-  function applyConsent(values) {
-    if (typeof gtag !== 'function') return;
-    gtag('consent', 'update', values);
-  }
-
-  function saveAndClose(values, label) {
-    applyConsent(values);
-    localStorage.setItem("on_consent", label);
-    banner.classList.remove("is-visible");
-    setTimeout(function () { banner.remove(); }, 350);
-  }
-
-  var banner = document.createElement("div");
-  banner.className = "cookie-consent";
-  banner.setAttribute("role", "dialog");
-  banner.setAttribute("aria-label", "Cookie consent");
-  banner.innerHTML =
-    '<div class="container">' +
-      '<p>We use cookies and similar technologies to personalise content, serve ads, and analyse traffic. You can accept all, reject all, or manage your preferences.</p>' +
-      '<div class="cookie-consent-actions">' +
-        '<button class="button button-secondary" data-action="reject">Reject All</button>' +
-        '<button class="button button-secondary" data-action="prefs">Manage Preferences</button>' +
-        '<button class="button button-primary" data-action="accept">Accept All</button>' +
-      '</div>' +
-    '</div>';
-
-  document.body.appendChild(banner);
-  requestAnimationFrame(function () { banner.classList.add("is-visible"); });
-
-  banner.querySelector('[data-action="accept"]').addEventListener("click", function () {
-    saveAndClose({
-      ad_storage: 'granted',
-      ad_user_data: 'granted',
-      ad_personalization: 'granted',
-      analytics_storage: 'granted'
-    }, 'accepted');
-  });
-
-  banner.querySelector('[data-action="reject"]').addEventListener("click", function () {
-    saveAndClose({
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    }, 'rejected');
-  });
-
-  banner.querySelector('[data-action="prefs"]').addEventListener("click", function () {
-    var backdrop = document.createElement("div");
-    backdrop.className = "consent-backdrop";
-    backdrop.setAttribute("role", "dialog");
-    backdrop.setAttribute("aria-modal", "true");
-    backdrop.setAttribute("aria-label", "Privacy preferences");
-    backdrop.innerHTML =
-      '<div class="consent-modal">' +
-        '<h2>Privacy Preferences</h2>' +
-        '<p>Choose which cookies and tracking technologies you allow.</p>' +
-        '<div class="consent-option">' +
-          '<label>Essential <small>Required for basic site functionality. Always active.</small></label>' +
-          '<span class="badge badge-essential">Always Active</span>' +
-        '</div>' +
-        '<div class="consent-option">' +
-          '<label for="consent-analytics">Analytics <small>Help us understand how visitors use the site.</small></label>' +
-          '<input type="checkbox" id="consent-analytics" checked>' +
-        '</div>' +
-        '<div class="consent-option">' +
-          '<label for="consent-ads">Advertising <small>Personalised ads and measurement. Required for AdSense revenue.</small></label>' +
-          '<input type="checkbox" id="consent-ads" checked>' +
-        '</div>' +
-        '<div class="consent-modal-actions">' +
-          '<button class="button button-secondary" data-prefs-action="reject">Reject All</button>' +
-          '<button class="button button-primary" data-prefs-action="save">Save Preferences</button>' +
-          '<button class="button button-primary" data-prefs-action="accept">Accept All</button>' +
-        '</div>' +
-      '</div>';
-
-    document.body.appendChild(backdrop);
-    requestAnimationFrame(function () { backdrop.classList.add("is-visible"); });
-
-    backdrop.addEventListener("click", function (e) {
-      if (e.target === backdrop) {
-        backdrop.classList.remove("is-visible");
-        setTimeout(function () { backdrop.remove(); }, 250);
-      }
+  function initCC() {
+    var saved = localStorage.getItem("on_consent");
+    if (saved === "accepted" || saved === "rejected") return;
+    var defaults = { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" };
+    function apply(v) { if (typeof gtag === "function") gtag("consent", "update", v); }
+    function save(v, label) { apply(v); localStorage.setItem("on_consent", label); banner.classList.remove("is-visible"); setTimeout(function () { banner.remove(); }, 350); }
+    var banner = document.createElement("div");
+    banner.className = "cookie-consent";
+    banner.setAttribute("role", "dialog");
+    banner.setAttribute("aria-label", "Cookie consent");
+    banner.innerHTML = '<div class="container"><p>We use cookies to personalise content, serve ads, and analyse traffic. You can accept all, reject all, or manage your preferences.</p><div class="cookie-consent-actions"><button class="button button-secondary" data-action="reject">Reject All</button><button class="button button-secondary" data-action="prefs">Manage Preferences</button><button class="button button-primary" data-action="accept">Accept All</button></div></div>';
+    document.body.appendChild(banner);
+    requestAnimationFrame(function () { banner.classList.add("is-visible"); });
+    banner.querySelector('[data-action="accept"]').addEventListener("click", function () { save({ ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", analytics_storage: "granted" }, "accepted"); });
+    banner.querySelector('[data-action="reject"]').addEventListener("click", function () { save({ ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" }, "rejected"); });
+    banner.querySelector('[data-action="prefs"]').addEventListener("click", function () {
+      var bd = document.createElement("div");
+      bd.className = "consent-backdrop";
+      bd.setAttribute("role", "dialog");
+      bd.setAttribute("aria-modal", "true");
+      bd.setAttribute("aria-label", "Privacy preferences");
+      bd.innerHTML = '<div class="consent-modal"><h2>Privacy Preferences</h2><p>Choose which cookies and tracking technologies you allow.</p><div class="consent-option"><label>Essential <small>Required for basic functionality. Always active.</small></label><span class="badge badge-essential">Always Active</span></div><div class="consent-option"><label for="consent-analytics">Analytics <small>Help us understand how visitors use the site.</small></label><input type="checkbox" id="consent-analytics" checked></div><div class="consent-option"><label for="consent-ads">Advertising <small>Personalised ads and measurement.</small></label><input type="checkbox" id="consent-ads" checked></div><div class="consent-modal-actions"><button class="button button-secondary" data-prefs-action="reject">Reject All</button><button class="button button-primary" data-prefs-action="save">Save Preferences</button><button class="button button-primary" data-prefs-action="accept">Accept All</button></div></div>';
+      document.body.appendChild(bd);
+      requestAnimationFrame(function () { bd.classList.add("is-visible"); });
+      bd.addEventListener("click", function (e) { if (e.target === bd) { bd.classList.remove("is-visible"); setTimeout(function () { bd.remove(); }, 250); } });
+      bd.querySelector('[data-prefs-action="accept"]').addEventListener("click", function () { bd.remove(); save({ ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", analytics_storage: "granted" }, "accepted"); });
+      bd.querySelector('[data-prefs-action="reject"]').addEventListener("click", function () { bd.remove(); save({ ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" }, "rejected"); });
+      bd.querySelector('[data-prefs-action="save"]').addEventListener("click", function () {
+        var a = document.getElementById("consent-analytics").checked;
+        var ad = document.getElementById("consent-ads").checked;
+        bd.remove();
+        save({ ad_storage: ad ? "granted" : "denied", ad_user_data: ad ? "granted" : "denied", ad_personalization: ad ? "granted" : "denied", analytics_storage: a ? "granted" : "denied" }, a || ad ? "custom" : "rejected");
+      });
     });
-
-    backdrop.querySelector('[data-prefs-action="accept"]').addEventListener("click", function () {
-      backdrop.remove();
-      saveAndClose({
-        ad_storage: 'granted',
-        ad_user_data: 'granted',
-        ad_personalization: 'granted',
-        analytics_storage: 'granted'
-      }, 'accepted');
-    });
-
-    backdrop.querySelector('[data-prefs-action="reject"]').addEventListener("click", function () {
-      backdrop.remove();
-      saveAndClose({
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied'
-      }, 'rejected');
-    });
-
-    backdrop.querySelector('[data-prefs-action="save"]').addEventListener("click", function () {
-      var analytics = document.getElementById("consent-analytics").checked;
-      var ads = document.getElementById("consent-ads").checked;
-      backdrop.remove();
-      saveAndClose({
-        ad_storage: ads ? 'granted' : 'denied',
-        ad_user_data: ads ? 'granted' : 'denied',
-        ad_personalization: ads ? 'granted' : 'denied',
-        analytics_storage: analytics ? 'granted' : 'denied'
-      }, analytics || ads ? 'custom' : 'rejected');
-    });
-  });
   }
 })();
-
-

@@ -35,7 +35,7 @@ function head(title, desc, canonical, schema) {
 const NAV = `<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" role="banner" aria-label="Primary navigation">
 <nav class="nav container">
-<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span><span>OpportunityNest.org</span></a>
+<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ON</span></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Toggle navigation</span><span></span><span></span><span></span></button>
 <div class="nav-menu" id="nav-menu">
 <a href="/#opportunities">Opportunities</a><a href="/scholarships/">Scholarships</a><a href="/internships/">Internships</a><a href="/fellowships/">Fellowships</a><a href="/competitions.html">Competitions</a><a href="/?type=Youth+Program#opportunities">Youth Programs</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
