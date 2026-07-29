@@ -583,9 +583,14 @@ for (const htmlPath of htmlFiles) {
     }
   }
 
-  const searchActionTarget = 'https://www.opportunitynest.org/?q={search_term_string}#opportunities';
-  if (html.includes(searchActionTarget)) {
-    html = html.split(searchActionTarget).join('https://www.opportunitynest.org/scholarships/?q={search_term_string}');
+  const searchWithHash = 'https://www.opportunitynest.org/?q={search_term_string}#opportunities';
+  const searchWithoutHash = 'https://www.opportunitynest.org/?q={search_term_string}"';
+  const scholarshipsSearch = 'https://www.opportunitynest.org/scholarships/?q={search_term_string}"';
+  if (html.includes(searchWithHash)) {
+    html = html.split(searchWithHash).join('https://www.opportunitynest.org/scholarships/?q={search_term_string}');
+    modified = true;
+  } else if (html.includes(searchWithoutHash) && !html.includes(scholarshipsSearch)) {
+    html = html.split(searchWithoutHash).join(scholarshipsSearch);
     modified = true;
   }
 
