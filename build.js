@@ -164,7 +164,7 @@ console.log("\nUpdating HTML files...");
 const htmlFiles = getAllHtmlFiles(ROOT);
 let updatedCount = 0;
 
-const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'monetag.com'];
+const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'auqot.com', 'monetag.com'];
 const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
