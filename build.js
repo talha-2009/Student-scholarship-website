@@ -164,6 +164,7 @@ console.log("\nUpdating HTML files...");
 const htmlFiles = getAllHtmlFiles(ROOT);
 let updatedCount = 0;
 
+const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'monetag.com'];
 const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
@@ -171,6 +172,7 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
+  '<link rel="preconnect" href="https://monetag.com" crossorigin>',
   '<link rel="dns-prefetch" href="https://chatling.ai">'
 ].join("\n    ");
 
@@ -392,8 +394,10 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 3b. Add Monetag ad script (async, non-blocking)
-  if (!html.includes('quge5.com/88/tag.min.js')) {
+  // 3b. Add Monetag ad script (async, non-blocking) — check any known delivery domain
+  const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'monetag.com'];
+  const hasMonetagTag = MONETAG_DOMAINS.some(d => html.includes(`${d}/88/tag.min.js`));
+  if (!hasMonetagTag) {
     html = html.replace('</head>', '    <script src="https://quge5.com/88/tag.min.js" data-zone="264737" async data-cfasync="false"></script>\n  </head>');
     modified = true;
   }

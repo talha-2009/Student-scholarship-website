@@ -70,7 +70,7 @@ const renderDetail = (item) => {
     adEl.setAttribute('aria-label', 'Advertisement');
     adEl.innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4182963907868663" data-ad-slot="3000000001" data-ad-format="auto" data-full-width-responsive="true"></ins>';
     relatedDiv.parentNode.insertBefore(adEl, relatedDiv);
-    if (window.adsbygoogle) { ON.pushAd('.ad-container ins.adsbygoogle'); }
+    ON.pushAd('.ad-container ins.adsbygoogle');
   }
   
   // Load related opportunities

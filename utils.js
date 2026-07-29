@@ -401,11 +401,13 @@ window.ON = window.OpportunityNest;
 
   ON.pushAd = (selector) => {
     try {
-      const el = document.querySelector(selector);
-      if (el && !el.dataset.pushed) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        el.dataset.pushed = "true";
-      }
+      const els = document.querySelectorAll(selector);
+      els.forEach((el) => {
+        if (!el.dataset.pushed) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          el.dataset.pushed = "true";
+        }
+      });
     } catch (_) {}
   };
 
