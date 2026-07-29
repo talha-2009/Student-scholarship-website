@@ -173,6 +173,7 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
   '<link rel="preconnect" href="https://monetag.com" crossorigin>',
+  '<link rel="dns-prefetch" href="https://auqot.com">',
   '<link rel="dns-prefetch" href="https://chatling.ai">'
 ].join("\n    ");
 
@@ -395,8 +396,8 @@ for (const htmlPath of htmlFiles) {
   }
 
   // 3b. Add Monetag ad script (async, non-blocking) — check any known delivery domain
-  const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'monetag.com'];
-  const hasMonetagTag = MONETAG_DOMAINS.some(d => html.includes(`${d}/88/tag.min.js`));
+const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'auqot.com', 'monetag.com'];
+  const hasMonetagTag = MONETAG_DOMAINS.some(d => html.includes(`${d}/88/tag.min.js`) || html.includes(`${d}/pfe/current/tag.min.js`));
   if (!hasMonetagTag) {
     html = html.replace('</head>', '    <script src="https://quge5.com/88/tag.min.js" data-zone="264737" async data-cfasync="false"></script>\n  </head>');
     modified = true;
