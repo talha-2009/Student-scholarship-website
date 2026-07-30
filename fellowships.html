@@ -217,7 +217,9 @@
       <section class="section-pad live-opportunities">
         <div class="container">
           <div class="related-links"><p><strong>Top country pages:</strong></p><ul><li><a href="/fellowships/austria/">Austria Fellowship</a></li><li><a href="/fellowships/canada/">Canada Fellowship</a></li><li><a href="/fellowships/china/">China Fellowship</a></li><li><a href="/fellowships/france/">France Fellowship</a></li><li><a href="/fellowships/germany/">Germany Fellowship</a></li><li><a href="/fellowships/global/">Global Fellowship</a></li></ul></div>
-          <div class="opportunity-results grid three"><article class="live-opportunity-card compact-card">
+          <form class="opportunity-controls" id="opportunity-controls" role="search"><label class="sr-only" for="live-search">Search fellowships</label><input id="live-search" name="search" type="search" placeholder="Search by title, field, country, funding..." autocomplete="off"><label class="sr-only" for="country-filter">Filter by country</label><select id="country-filter" name="country" autocomplete="off"><option value="">All countries</option></select><label class="sr-only" for="funding-filter">Filter by funding</label><select id="funding-filter" name="funding" autocomplete="off"><option value="">All funding</option></select><label class="sr-only" for="sort-filter">Sort results</label><select id="sort-filter" name="sort" autocomplete="off"><option value="deadline">Sort by deadline</option><option value="title">Sort by title</option><option value="newest">Sort by newest</option></select><button class="button button-secondary clear-filters" type="button" id="clear-filters">Clear Filters</button></form>
+          <div class="status-message" id="opportunity-status" role="status"></div>
+          <div class="opportunity-results grid three" id="opportunity-grid"><article class="live-opportunity-card compact-card">
       
       <div class="opportunity-card-top">
         <p class="card-kicker">Fellowship - 🇦🇹 Austria</p>
@@ -410,6 +412,7 @@
         <a class="button button-primary" href="https://en.unesco.org/careers/associateexpert" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
       </div>
     </article></div>
+          <nav class="pagination" id="pagination" aria-label="Opportunity pagination"></nav>
           <div class="final-panel">
             <h2>What to look for when browsing fellowships</h2>
             <p>Review the eligibility career stage, the scope of the proposed work, the award value, and whether a host institution endorsement is needed.</p>
@@ -447,7 +450,10 @@
         <p>&copy; 2026 OpportunityNest.org. All rights reserved.</p>
       </div>
     </footer>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+      <script src="/utils.js" defer></script>
       <script src="/nav.js" defer></script>
+      <script src="/category.js" defer></script>
     <script>
       window.chtlConfig = {
         chatbotId: "9241558149"

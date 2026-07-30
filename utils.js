@@ -282,6 +282,39 @@ window.ON = window.OpportunityNest;
     return text(a.title).localeCompare(text(b.title));
   };
 
+  ON.sortOpportunities = (items = [], { query = "", sortBy = "deadline" } = {}) => {
+    const q = lower(query);
+    return items
+      .map((item) => {
+        let score = 0;
+        if (q) {
+          const nTitle = lower(item.title);
+          const nCountry = lower(item.country);
+          const nType = lower(item.type);
+          const nField = lower(item.field);
+          const nOrg = lower(item.organization);
+          const nFunding = lower(item.funding);
+          const nLevel = lower(item.level);
+          const nDesc = lower(item.description);
+          if (nTitle === q) score += 100;
+          if (nTitle.includes(q)) score += 50;
+          if (nCountry.includes(q)) score += 30;
+          if (nType.includes(q)) score += 30;
+          if (nField.includes(q)) score += 20;
+          if (nOrg.includes(q)) score += 20;
+          if (nFunding.includes(q)) score += 15;
+          if (nLevel.includes(q)) score += 10;
+          if (nDesc.includes(q)) score += 5;
+        }
+        return { item, score };
+      })
+      .sort((a, b) => {
+        if (q && a.score !== b.score) return b.score - a.score;
+        return ON.compareOpportunities(a.item, b.item, sortBy);
+      })
+      .map(({ item }) => item);
+  };
+
   ON.paginate = (items = [], currentPage = 1, pageSize = ON.PAGE_SIZE) => {
     const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
     const page = Math.min(Math.max(1, currentPage), pageCount);
@@ -600,7 +633,17 @@ window.ON = window.OpportunityNest;
     try {
       const rows = await ON.fetchOpportunityRows();
       const related = rows
-        .filter((row) => row.id !== item.id && row.country === item.country && row.type === item.type)
+        .filter((row) => row.id !== item.id)
+        .map((row) => ({
+          ...row,
+          _relScore:
+            (row.country === item.country ? 10 : 0) +
+            (row.type === item.type ? 10 : 0) +
+            (row.field === item.field ? 5 : 0) +
+            (lower(row.funding).includes(lower(item.funding || "").split(" ")[0]) ? 3 : 0)
+        }))
+        .filter((row) => row._relScore >= 10)
+        .sort((a, b) => b._relScore - a._relScore)
         .slice(0, 4);
       if (!related.length) return;
       container.innerHTML = `<h2>Related opportunities</h2><div class="related-grid">${related.map(ON.renderOpportunityCard).join("")}</div>`;

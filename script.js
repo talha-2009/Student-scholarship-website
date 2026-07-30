@@ -165,16 +165,20 @@ const renderOpportunities = () => {
     country: countryFilter?.value || "",
     type: categoryValue,
     funding: fundingValue
-  }).sort((a, b) => ON.compareOpportunities(a, b, sortFilter?.value || "deadline"));
+  });
+  const sorted = ON.sortOpportunities(filtered, {
+    query: liveSearch?.value || "",
+    sortBy: sortFilter?.value || "deadline"
+  });
 
-  if (!filtered.length) {
+  if (!sorted.length) {
     opportunityGrid.innerHTML = `<div class="empty-state"><p>No opportunities match your current filters.</p><button class="button button-secondary" onclick="clearFilters()">Clear Filters</button></div>`;
     ON.renderPagination(pagination, 0, 1, () => {});
     setOpportunityStatus("No matching opportunities found.");
     return;
   }
 
-  const { page, pageCount, items } = ON.paginate(filtered, currentPage);
+  const { page, pageCount, items } = ON.paginate(sorted, currentPage);
   currentPage = page;
 
   // Progressive enhancement: update existing cards in-place, append new ones
@@ -228,7 +232,7 @@ const renderOpportunities = () => {
     opportunityGrid.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  setOpportunityStatus(`${filtered.length} opportunities found. Showing page ${currentPage} of ${pageCount}.`);
+  setOpportunityStatus(`${sorted.length} opportunities found. Showing page ${currentPage} of ${pageCount}.`);
   updateUrl();
 };
 
