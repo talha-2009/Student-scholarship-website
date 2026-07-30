@@ -34,7 +34,6 @@ var S = {
   fileText: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
   dollarSign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
   search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
-  searchSm: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
   chevron: '<svg class="nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
 };
 
@@ -306,23 +305,27 @@ function positionMega(item) {
   mega.style.transform = "none";
 }
 
+var navOverlay = null;
 function closeNav() {
   if (!navToggle || !navMenu) return;
   navToggle.setAttribute("aria-expanded", "false");
   navToggle.classList.remove("is-active");
   navMenu.classList.remove("is-open");
+  if (navOverlay) navOverlay.classList.remove("is-visible");
   document.body.classList.remove("nav-open");
   closeAllMegas();
 }
 
+var accordionReady = false;
 function initMobileAccordion() {
-  if (!navMenu || !isMobile()) return;
-  navMenu.querySelectorAll(".mega-col-heading").forEach(function (h) {
-    h.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var col = h.closest(".mega-col");
-      if (col) col.classList.toggle("is-open");
-    });
+  if (!navMenu || !isMobile() || accordionReady) return;
+  accordionReady = true;
+  navMenu.addEventListener("click", function (e) {
+    var heading = e.target.closest(".mega-col-heading");
+    if (!heading) return;
+    e.stopPropagation();
+    var col = heading.closest(".mega-col");
+    if (col) col.classList.toggle("is-open");
   });
 }
 
@@ -457,358 +460,73 @@ function setupInteractions() {
         if (navMenu) navMenu.classList.remove("is-open");
         document.body.classList.remove("nav-open");
         positionAllMegas();
-        closeMobileDrawer();
       }
       closeAllMegas();
     }, 100);
   }, { passive: true });
 
+  if (!navOverlay) {
+    navOverlay = document.createElement("div");
+    navOverlay.className = "nav-overlay";
+    navOverlay.setAttribute("aria-hidden", "true");
+    navOverlay.addEventListener("click", closeNav);
+    navOverlay.addEventListener("touchstart", function (e) {
+      if (e.target === navOverlay) closeNav();
+    }, { passive: true });
+    document.body.appendChild(navOverlay);
+  }
+
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", function () {
-      if (isMobile()) {
-        var drawer = document.getElementById("mobile-drawer");
-        if (drawer) {
-          if (drawer.classList.contains("is-open")) {
-            closeMobileDrawer();
-          } else {
-            openMobileDrawer();
-          }
-        }
-        return;
-      }
       var isOpen = navToggle.getAttribute("aria-expanded") === "true";
       navToggle.setAttribute("aria-expanded", String(!isOpen));
       navToggle.classList.toggle("is-active", !isOpen);
       navMenu.classList.toggle("is-open", !isOpen);
+      if (navOverlay) navOverlay.classList.toggle("is-visible", !isOpen);
       document.body.classList.toggle("nav-open", !isOpen);
       if (isOpen) closeAllMegas();
       if (!isOpen) initMobileAccordion();
     });
   }
 
-  initMobileAccordion();
-  if (!isMobile()) positionAllMegas();
-}
-
-/* ─── Mobile Navigation ─────────────────────────────── */
-function getNavIcon(label) {
-  var m = {
-    Scholarships: "\uD83C\uDF93",
-    Internships: "\uD83D\uDCBC",
-    Fellowships: "\uD83C\uDFC6",
-    Competitions: "\uD83C\uDFC6",
-    "Youth Programs": "\uD83C\uDF0D",
-    Blog: "\uD83D\uDCDD",
-    Resources: "\uD83D\uDCDA"
-  };
-  return m[label] || "\uD83D\uDCCD";
-}
-
-function buildMobileNav() {
-  if (document.getElementById("mobile-drawer")) return;
-  var svgSearch = S.search;
-
-  var drawer = document.createElement("div");
-  drawer.className = "mobile-drawer";
-  drawer.id = "mobile-drawer";
-  drawer.setAttribute("role", "dialog");
-  drawer.setAttribute("aria-modal", "true");
-  drawer.setAttribute("aria-label", "Navigation menu");
-
-  var dHead = document.createElement("div");
-  dHead.className = "mobile-drawer-header";
-  var brand = document.createElement("a");
-  brand.className = "brand";
-  brand.href = "/";
-  brand.setAttribute("aria-label", "OpportunityNest.org home");
-  var mark = document.createElement("span");
-  mark.className = "brand-mark";
-  mark.textContent = "ON";
-  brand.appendChild(mark);
-  dHead.appendChild(brand);
-  var closeBtn = document.createElement("button");
-  closeBtn.className = "mobile-drawer-close";
-  closeBtn.setAttribute("aria-label", "Close navigation");
-  closeBtn.textContent = "\u00D7";
-  dHead.appendChild(closeBtn);
-  drawer.appendChild(dHead);
-
-  var dSearch = document.createElement("div");
-  dSearch.className = "mobile-drawer-search";
-  var sForm = document.createElement("form");
-  sForm.setAttribute("role", "search");
-  sForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var q = sForm.querySelector("input").value.trim();
-    if (q) window.location.href = "/scholarships/?q=" + encodeURIComponent(q);
-  });
-  var sIcon = document.createElement("span");
-  sIcon.className = "search-icon-embed";
-  sIcon.innerHTML = svgSearch;
-  sForm.appendChild(sIcon);
-  var sInput = document.createElement("input");
-  sInput.type = "search";
-  sInput.placeholder = "Search scholarships...";
-  sInput.setAttribute("aria-label", "Search opportunities");
-  sForm.appendChild(sInput);
-  dSearch.appendChild(sForm);
-  drawer.appendChild(dSearch);
-
-  var dBody = document.createElement("nav");
-  dBody.className = "mobile-drawer-body";
-  dBody.setAttribute("aria-label", "Mobile navigation");
-  var list = document.createElement("ul");
-
-  var homeLi = document.createElement("li");
-  var homeA = document.createElement("a");
-  homeA.className = "mobile-nav-item";
-  homeA.href = "/";
-  homeA.innerHTML = '<span class="mobile-nav-item-icon">\uD83C\uDFE0</span> Home';
-  homeLi.appendChild(homeA);
-  list.appendChild(homeLi);
-
-  for (var i = 0; i < NAV_ITEMS.length; i++) {
-    var it = NAV_ITEMS[i];
-    var li = document.createElement("li");
-    var icon = getNavIcon(it.label);
-
-    if (it.columns && it.columns.length) {
-      var btn = document.createElement("button");
-      btn.className = "mobile-nav-item";
-      btn.setAttribute("aria-expanded", "false");
-      btn.setAttribute("aria-label", it.label + " menu");
-      btn.innerHTML = '<span class="mobile-nav-item-icon">' + icon + "</span> " + it.label + ' <span class="mobile-nav-item-chevron">\u25BC</span>';
-
-      var sub = document.createElement("div");
-      sub.className = "mobile-submenu";
-      var subList = document.createElement("ul");
-
-      if (it.featured && it.featured.length) {
-        for (var f = 0; f < it.featured.length; f++) {
-          var fLi = document.createElement("li");
-          var fA = document.createElement("a");
-          fA.href = it.featured[f][1];
-          fA.innerHTML = '<span class="featured-link-star">\u2B50</span> <span class="featured-link-text">' + it.featured[f][0] + '</span> <span class="featured-link-badge">Featured Guide</span>';
-          fLi.appendChild(fA);
-          subList.appendChild(fLi);
-        }
-      }
-
-      for (var c = 0; c < it.columns.length; c++) {
-        var col = it.columns[c];
-        for (var l = 0; l < col.links.length; l++) {
-          var sLi = document.createElement("li");
-          var sA = document.createElement("a");
-          sA.href = col.links[l][1];
-          sA.textContent = col.links[l][0];
-          sLi.appendChild(sA);
-          subList.appendChild(sLi);
-        }
-      }
-
-      sub.appendChild(subList);
-      li.appendChild(btn);
-      li.appendChild(sub);
-    } else {
-      var a = document.createElement("a");
-      a.className = "mobile-nav-item";
-      a.href = it.href;
-      a.innerHTML = '<span class="mobile-nav-item-icon">' + icon + "</span> " + it.label;
-      li.appendChild(a);
-    }
-    list.appendChild(li);
-  }
-
-  dBody.appendChild(list);
-  drawer.appendChild(dBody);
-
-  var dFoot = document.createElement("div");
-  dFoot.className = "mobile-drawer-footer";
-  var cta = document.createElement("a");
-  cta.href = "/scholarships/";
-  cta.className = "button button-primary";
-  cta.textContent = "\uD83D\uDE80 Explore Opportunities";
-  dFoot.appendChild(cta);
-  drawer.appendChild(dFoot);
-
-  var overlay = document.createElement("div");
-  overlay.className = "mobile-overlay";
-  overlay.id = "mobile-overlay";
-
-  var bNav = document.createElement("nav");
-  bNav.className = "mobile-bottom-nav";
-  bNav.setAttribute("aria-label", "Quick navigation");
-  var bItems = [
-    ["\uD83C\uDFE0", "Home", "/"],
-    ["\uD83D\uDD0D", "Search", null],
-    ["\uD83C\uDF93", "Scholarships", "/scholarships/"],
-    ["\uD83D\uDCDD", "Blog", "/blog/"],
-    ["\uD83D\uDE80", "Explore", "/scholarships/"]
-  ];
-  for (var b = 0; b < bItems.length; b++) {
-    var bA = document.createElement("a");
-    bA.setAttribute("aria-label", bItems[b][1]);
-    if (bItems[b][2]) bA.href = bItems[b][2];
-    bA.innerHTML = '<span class="bottom-nav-icon">' + bItems[b][0] + "</span>" + bItems[b][1];
-    if (b === 1) {
-      bA.addEventListener("click", function (e) { e.preventDefault(); openMobileSearch(); });
-    }
-    bNav.appendChild(bA);
-  }
-
-  var sOverlay = document.createElement("div");
-  sOverlay.className = "mobile-search-overlay";
-  sOverlay.id = "mobile-search-overlay";
-  sOverlay.setAttribute("role", "dialog");
-  sOverlay.setAttribute("aria-modal", "true");
-  sOverlay.setAttribute("aria-label", "Search");
-  var sHead = document.createElement("div");
-  sHead.className = "mobile-search-overlay-header";
-  var backIcon = document.createElement("span");
-  backIcon.className = "search-back-icon";
-  backIcon.innerHTML = svgSearch;
-  sHead.appendChild(backIcon);
-  var soInput = document.createElement("input");
-  soInput.type = "search";
-  soInput.placeholder = "Search scholarships, guides...";
-  soInput.setAttribute("aria-label", "Search");
-  sHead.appendChild(soInput);
-  var soClose = document.createElement("button");
-  soClose.className = "mobile-search-overlay-close";
-  soClose.setAttribute("aria-label", "Close search");
-  soClose.textContent = "\u00D7";
-  sHead.appendChild(soClose);
-  sOverlay.appendChild(sHead);
-  var sBody = document.createElement("div");
-  sBody.className = "mobile-search-overlay-body";
-  sBody.innerHTML = '<div class="mobile-search-suggestions"><h3>Popular searches</h3><ul><li><a href="/scholarships/?q=fully+funded"><span class="suggestion-icon">\uD83C\uDFC6</span> Fully Funded Scholarships</a></li><li><a href="/scholarships/?q=masters"><span class="suggestion-icon">\uD83C\uDF93</span> Masters Scholarships</a></li><li><a href="/scholarships/?q=USA"><span class="suggestion-icon">\uD83C\uDDFA\uD83C\uDDF8</span> Study in USA</a></li><li><a href="/internships/"><span class="suggestion-icon">\uD83D\uDCBC</span> Paid Internships</a></li><li><a href="/scholarships/?q=fully+funded+without+ielts"><span class="suggestion-icon">\uD83C\uDDFB\uD83C\uDDF3</span> No IELTS Scholarships</a></li></ul></div>';
-  sOverlay.appendChild(sBody);
-
-  var headerEl = document.querySelector(".site-header");
-  var container = headerEl ? headerEl.parentNode : document.body;
-  container.appendChild(drawer);
-  container.appendChild(overlay);
-  container.appendChild(bNav);
-  container.appendChild(sOverlay);
-
-  setupMobileNav(drawer, overlay, bNav, sOverlay, soInput, closeBtn);
-  setupHeaderShrink();
-}
-
-var mobileDrawerOpen = false;
-
-function openMobileDrawer() {
-  var drawer = document.getElementById("mobile-drawer");
-  var overlay = document.getElementById("mobile-overlay");
-  if (!drawer) return;
-  mobileDrawerOpen = true;
-  drawer.classList.add("is-open");
-  overlay.classList.add("is-visible");
-  document.body.classList.add("mobile-nav-open");
-  var cb = drawer.querySelector(".mobile-drawer-close");
-  if (cb) cb.focus();
-  var toggle = document.querySelector(".nav-toggle");
-  if (toggle) toggle.setAttribute("aria-expanded", "true");
-}
-
-function closeMobileDrawer() {
-  var drawer = document.getElementById("mobile-drawer");
-  var overlay = document.getElementById("mobile-overlay");
-  if (!drawer) return;
-  mobileDrawerOpen = false;
-  drawer.classList.remove("is-open");
-  overlay.classList.remove("is-visible");
-  document.body.classList.remove("mobile-nav-open");
-  var toggle = document.querySelector(".nav-toggle");
-  if (toggle) { toggle.focus(); toggle.setAttribute("aria-expanded", "false"); }
-}
-
-function openMobileSearch() {
-  var sOverlay = document.getElementById("mobile-search-overlay");
-  if (!sOverlay) return;
-  sOverlay.classList.add("is-visible");
-  var inp = sOverlay.querySelector("input");
-  if (inp) setTimeout(function () { inp.focus(); }, 120);
-  closeMobileDrawer();
-}
-
-function closeMobileSearch() {
-  var sOverlay = document.getElementById("mobile-search-overlay");
-  if (!sOverlay) return;
-  sOverlay.classList.remove("is-visible");
-}
-
-function setupMobileNav(drawer, overlay, bNav, sOverlay, searchInput, closeBtn) {
-  closeBtn.addEventListener("click", closeMobileDrawer);
-  overlay.addEventListener("click", closeMobileDrawer);
-
-  drawer.querySelectorAll("a").forEach(function (a) {
-    a.addEventListener("click", function () { setTimeout(closeMobileDrawer, 80); });
-  });
-
-  drawer.querySelectorAll(".mobile-nav-item[aria-expanded]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var expanded = this.getAttribute("aria-expanded") === "true";
-      drawer.querySelectorAll(".mobile-nav-item[aria-expanded]").forEach(function (other) {
-        if (other !== btn) {
-          other.setAttribute("aria-expanded", "false");
-          if (other.nextElementSibling) other.nextElementSibling.classList.remove("is-open");
-        }
-      });
-      this.setAttribute("aria-expanded", String(!expanded));
-      if (this.nextElementSibling) this.nextElementSibling.classList.toggle("is-open");
-    });
-  });
-
-  var startX = 0, isDragging = false;
-  drawer.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; isDragging = true; }, { passive: true });
-  drawer.addEventListener("touchmove", function (e) {
-    if (!isDragging) return;
-    var diff = e.touches[0].clientX - startX;
-    if (diff > 0) drawer.style.transform = "translateX(" + Math.round(diff * 0.85) + "px)";
-  }, { passive: true });
-  drawer.addEventListener("touchend", function (e) {
-    isDragging = false;
-    drawer.style.transform = "";
-    if (e.changedTouches[0].clientX - startX > 70) closeMobileDrawer();
-  }, { passive: true });
-
-  var dsForm = drawer.querySelector(".mobile-drawer-search form");
-  if (dsForm) {
-    dsForm.querySelector("input").addEventListener("focus", function (e) { e.preventDefault(); openMobileSearch(); });
-  }
-
-  searchInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      var q = this.value.trim();
-      if (q) window.location.href = "/scholarships/?q=" + encodeURIComponent(q);
-    }
-  });
-
-  var soCloseBtn = sOverlay.querySelector(".mobile-search-overlay-close");
-  if (soCloseBtn) soCloseBtn.addEventListener("click", closeMobileSearch);
-
-  var searchTrigger = document.querySelector(".mobile-search-trigger");
-  if (searchTrigger) {
-    searchTrigger.addEventListener("click", function (e) { e.preventDefault(); openMobileSearch(); });
-  }
-}
-
-function setupHeaderShrink() {
-  var header = document.querySelector(".site-header");
-  if (!header) return;
   var ticking = false;
-  function onScroll() {
+  var headerEl = document.querySelector(".site-header");
+  function handleScroll() {
+    if (!headerEl || isDesktop()) return;
+    if (window.scrollY > 40) {
+      headerEl.classList.add("scrolled");
+    } else {
+      headerEl.classList.remove("scrolled");
+    }
+  }
+  window.addEventListener("scroll", function () {
     if (!ticking) {
-      requestAnimationFrame(function () {
-        header.classList.toggle("is-scrolled", window.scrollY > 40);
-        ticking = false;
-      });
+      requestAnimationFrame(function () { ticking = false; handleScroll(); });
       ticking = true;
     }
-  }
-  window.addEventListener("scroll", onScroll, { passive: true });
+  }, { passive: true });
+
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var isSwiping = false;
+  navMenu.addEventListener("touchstart", function (e) {
+    var t = e.changedTouches[0];
+    touchStartX = t.screenX;
+    touchStartY = t.screenY;
+    isSwiping = true;
+  }, { passive: true });
+  navMenu.addEventListener("touchmove", function (e) {
+    if (!isSwiping) return;
+    var t = e.changedTouches[0];
+    var dx = t.screenX - touchStartX;
+    var dy = t.screenY - touchStartY;
+    if (Math.abs(dy) > Math.abs(dx) * 1.5) { isSwiping = false; return; }
+    if (dx > 70) { isSwiping = false; closeNav(); }
+  }, { passive: true });
+  navMenu.addEventListener("touchend", function () { isSwiping = false; }, { passive: true });
+
+  initMobileAccordion();
+  if (!isMobile()) positionAllMegas();
 }
 
 window.addDynamicNavLinks = function (types) {
@@ -823,7 +541,6 @@ if (navMenu) {
     if (navBuilt) return;
     navBuilt = true;
     buildNav();
-    buildMobileNav();
     setupInteractions();
     if (window.__opportunityTypes) window.addDynamicNavLinks(window.__opportunityTypes);
   }
