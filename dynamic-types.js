@@ -21,7 +21,7 @@ const typeRouteMap = {
   Scholarship: "/scholarships/",
   Internship: "/internships/",
   Fellowship: "/fellowships/",
-  Competition: "/competitions.html",
+  Competition: "/competitions/",
   "Exchange Program": "/exchange-programs/",
   "Research Grant": "/grants/",
   "Youth Program": "/youth-programs/",

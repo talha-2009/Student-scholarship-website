@@ -65,7 +65,7 @@ window.ON = window.OpportunityNest;
     Scholarship: "/scholarships/",
     Internship: "/internships/",
     Fellowship: "/fellowships/",
-    Competition: "/competitions.html",
+    Competition: "/competitions/",
     "Exchange Program": "/exchange-programs/",
     "Research Grant": "/grants/",
     "Youth Program": "/youth-programs/",
@@ -215,7 +215,7 @@ window.ON = window.OpportunityNest;
     if (opportunityRowsPromise) return opportunityRowsPromise;
     opportunityRowsPromise = (async () => {
       const fields = "id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at";
-      const cacheKey = `opportunitynest:opportunities:${fields}`;
+      const cacheKey = "opportunitynest:opportunities:all";
       try {
         const cached = sessionStorage.getItem(cacheKey);
         if (cached) {
@@ -223,19 +223,24 @@ window.ON = window.OpportunityNest;
           if (Date.now() - parsed.savedAt < 600000 && Array.isArray(parsed.rows)) return parsed.rows;
         }
       } catch (_) {}
-      const url = `${ON.SUPABASE_URL}/rest/v1/opportunities?select=${encodeURIComponent(fields)}&order=deadline.asc`;
-      const response = await fetch(url, {
-        headers: {
-          apikey: ON.SUPABASE_PUBLISHABLE_KEY,
-          Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}`
-        }
-      });
-      if (!response.ok) throw new Error(`Opportunity request failed with status ${response.status}.`);
-      const rows = (await response.json()).map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
       try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({ savedAt: Date.now(), rows }));
-      } catch (_) {}
-      return rows;
+        const oppUrl = `${ON.SUPABASE_URL}/rest/v1/opportunities?select=${encodeURIComponent(fields)}&order=deadline.asc`;
+        const [oppRes, intRes] = await Promise.all([
+          fetch(oppUrl, { headers: { apikey: ON.SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}` } }),
+          fetch(`${ON.SUPABASE_URL}/rest/v1/internships?select=id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,logo_url,featured,created_at&order=created_at.desc`, { headers: { apikey: ON.SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}` } })
+        ]);
+        if (!oppRes.ok && !intRes.ok) throw new Error("Failed to fetch opportunities and internships.");
+        const oppRows = oppRes.ok ? (await oppRes.json()) : [];
+        const intRows = intRes.ok ? (await intRes.json()) : [];
+        const normalizedOpps = oppRows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
+        const normalizedInts = intRows.map(ON.mapInternshipToOpportunity).filter(ON.isActiveOpportunity);
+        const all = [...normalizedOpps, ...normalizedInts];
+        try { sessionStorage.setItem(cacheKey, JSON.stringify({ savedAt: Date.now(), rows: all })); } catch (_) {}
+        return all;
+      } catch (fetchError) {
+        opportunityRowsPromise = null;
+        throw fetchError;
+      }
     })();
     return opportunityRowsPromise;
   };
@@ -327,10 +332,47 @@ window.ON = window.OpportunityNest;
       container.innerHTML = "";
       return;
     }
-    container.innerHTML = Array.from({ length: pageCount }, (_, index) => {
-      const page = index + 1;
-      return `<button type="button" class="pagination-button${page === currentPage ? " is-active" : ""}" data-page="${page}" aria-current="${page === currentPage ? "page" : "false"}">${page}</button>`;
-    }).join("");
+    
+    let buttons = [];
+    
+    // Previous button
+    if (currentPage > 1) {
+      buttons.push(`<button type="button" class="pagination-button pagination-button--prev" data-page="${currentPage - 1}" aria-label="Go to previous page">Previous</button>`);
+    }
+    
+    // Page numbers (show max 5 pages with ellipsis for large page counts)
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+    
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    if (startPage > 1) {
+      buttons.push(`<button type="button" class="pagination-button" data-page="1" aria-label="Go to page 1">1</button>`);
+      if (startPage > 2) {
+        buttons.push(`<span class="pagination-ellipsis" aria-hidden="true">...</span>`);
+      }
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(`<button type="button" class="pagination-button${i === currentPage ? " is-active" : ""}" data-page="${i}" aria-label="Go to page ${i}" aria-current="${i === currentPage ? "page" : "false"}">${i}</button>`);
+    }
+    
+    if (endPage < pageCount) {
+      if (endPage < pageCount - 1) {
+        buttons.push(`<span class="pagination-ellipsis" aria-hidden="true">...</span>`);
+      }
+      buttons.push(`<button type="button" class="pagination-button" data-page="${pageCount}" aria-label="Go to page ${pageCount}">${pageCount}</button>`);
+    }
+    
+    // Next button
+    if (currentPage < pageCount) {
+      buttons.push(`<button type="button" class="pagination-button pagination-button--next" data-page="${currentPage + 1}" aria-label="Go to next page">Next</button>`);
+    }
+    
+    container.innerHTML = buttons.join("");
     container.querySelectorAll("[data-page]").forEach((button) => {
       button.addEventListener("click", () => onPageChange(Number(button.dataset.page)));
     });

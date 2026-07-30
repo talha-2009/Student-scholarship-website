@@ -1594,6 +1594,15 @@ dd {
   color: white;
 }
 
+.pagination-info {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .featured-internships {
   background: var(--bg);
 }
