@@ -164,7 +164,6 @@ console.log("\nUpdating HTML files...");
 const htmlFiles = getAllHtmlFiles(ROOT);
 let updatedCount = 0;
 
-const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'auqot.com', 'diwu8.com', 'dawac.com', 'monetag.com'];
 const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
   '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>',
@@ -172,8 +171,6 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
-  '<link rel="preconnect" href="https://monetag.com" crossorigin>',
-  '<link rel="dns-prefetch" href="https://auqot.com">',
   '<link rel="dns-prefetch" href="https://chatling.ai">'
 ].join("\n    ");
 
@@ -389,21 +386,7 @@ for (const htmlPath of htmlFiles) {
     modified = true;
   }
 
-  // 3. Add Monetag verification meta tag
-  if (!html.includes('name="monetag"')) {
-    html = html.replace('</head>', '    <meta name="monetag" content="8aca6e41b32c4da95a713300fdf33197">\n  </head>');
-    modified = true;
-  }
-
-  // 3b. Add Monetag ad script (async, non-blocking) — check any known delivery domain
-const MONETAG_DOMAINS = ['quge5.com', 'aqu5es.com', '3nbf4.com', '6opo.com', 'uaugot.com', 'ekhay.com', 'b3mny.com', 'auqot.com', 'diwu8.com', 'dawac.com', 'monetag.com'];
-  const hasMonetagTag = MONETAG_DOMAINS.some(d => html.includes(`${d}/88/tag.min.js`) || html.includes(`${d}/pfe/current/tag.min.js`));
-  if (!hasMonetagTag) {
-    html = html.replace('</head>', '    <script src="https://quge5.com/88/tag.min.js" data-zone="264737" async data-cfasync="false"></script>\n  </head>');
-    modified = true;
-  }
-
-  // 4. Defer Chatling chatbot — load only after user interaction
+  // 3. Defer Chatling chatbot — load only after user interaction
   if (html.includes('chatling.ai/js/embed.js')) {
     html = html.replace(
       /<script[^>]*src="https:\/\/chatling\.ai\/js\/embed\.js"[^>]*><\/script>/,
