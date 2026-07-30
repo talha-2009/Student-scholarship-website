@@ -63,7 +63,7 @@ var NAV_ITEMS = [
   { label: "Blog", href: "/blog/", columns: [
     { title: "Scholarship Advice", icon: S.book, links: [["Fully Funded","/blog/top-fully-funded-scholarships.html"],["Interview Tips","/blog/how-to-ace-scholarship-interview.html"],["Essay Guide","/blog/how-to-write-winning-scholarship-essay.html"],["No IELTS","/guides/scholarships-without-ielts.html"]] },
     { title: "Application Help", icon: S.lightbulb, links: [["SOP Guide","/guides/how-to-write-sop.html"],["Personal Statement","/guides/personal-statement.html"],["CV Writing","/guides/cv-writing.html"],["Checklist","/guides/application-checklist.html"]] }
-  ], featured: [["\u2B50 Study in Australia Without IELTS","/guides/australia-scholarships-without-ielts-2026.html"]] },
+  ], featured: [["Study in Australia Without IELTS","/guides/australia-scholarships-without-ielts-2026.html"]] },
   { label: "Resources", href: "/guides/application-checklist.html", columns: [
     { title: "Application Guides", icon: S.fileText, links: [["How to Write an SOP","/guides/how-to-write-sop.html"],["SOP Examples","/guides/sop-examples.html"],["Personal Statement","/guides/personal-statement.html"],["CV Writing","/guides/cv-writing.html"],["Cover Letter","/guides/cover-letter.html"]] },
     { title: "Scholarship Guides", icon: S.cap, links: [["Fully Funded","/blog/top-fully-funded-scholarships.html"],["Without IELTS","/guides/scholarships-without-ielts.html"],["Masters","/guides/masters-scholarships.html"],["PhD","/guides/phd-scholarships.html"]] },
@@ -139,11 +139,6 @@ function createNavItem(item) {
   var inner = document.createElement("div");
   inner.className = "mega-inner";
 
-  for (var i = 0; i < item.columns.length; i++) {
-    inner.appendChild(createCol(item.columns[i]));
-  }
-  mega.appendChild(inner);
-
   if (item.featured && item.featured.length) {
     var featDiv = document.createElement("div");
     featDiv.className = "mega-featured";
@@ -152,8 +147,28 @@ function createNavItem(item) {
       var fli = document.createElement("li");
       var fa = document.createElement("a");
       fa.href = item.featured[f][1];
-      fa.textContent = item.featured[f][0];
       fa.className = "featured-link";
+
+      var starSpan = document.createElement("span");
+      starSpan.className = "featured-link-star";
+      starSpan.textContent = "\u2B50";
+      fa.appendChild(starSpan);
+
+      var textSpan = document.createElement("span");
+      textSpan.className = "featured-link-text";
+      textSpan.textContent = item.featured[f][0];
+      fa.appendChild(textSpan);
+
+      var flagSpan = document.createElement("span");
+      flagSpan.className = "featured-link-flag";
+      flagSpan.textContent = "\uD83C\uDDE6\uD83C\uDDFA";
+      fa.appendChild(flagSpan);
+
+      var badgeSpan = document.createElement("span");
+      badgeSpan.className = "featured-link-badge";
+      badgeSpan.textContent = "Featured Guide";
+      fa.appendChild(badgeSpan);
+
       fli.appendChild(fa);
       featList.appendChild(fli);
     }
@@ -161,6 +176,11 @@ function createNavItem(item) {
     inner.appendChild(featDiv);
   }
 
+  for (var i = 0; i < item.columns.length; i++) {
+    inner.appendChild(createCol(item.columns[i]));
+  }
+
+  mega.appendChild(inner);
   wrapper.appendChild(mega);
 
   return wrapper;
