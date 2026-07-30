@@ -46,15 +46,6 @@ function findStaticFiles(dir, results = []) {
   return results;
 }
 
-// Copy service worker file specifically
-function copyServiceWorker() {
-  const swSrc = join(ROOT, "sw.js");
-  const swDest = join(DIST, "sw.js");
-  if (existsSync(swSrc)) {
-    writeFileSync(swDest, readFileSync(swSrc, "utf8"), "utf8");
-    console.log("  sw.js → dist/sw.js");
-  }
-}
 
 // Clean dist
 import { rmSync } from "fs";
@@ -629,8 +620,6 @@ for (const filePath of staticFiles) {
 }
 console.log(`  Copied ${staticFiles.length} static files\n`);
 
-// Copy service worker
-copyServiceWorker();
 
 // ─── Step 5: Auto-generate sitemap.xml ────────────────────────────
 console.log("Generating sitemap.xml...");
