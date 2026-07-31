@@ -37,5 +37,6 @@ components/
 lib/
 next-env.d.ts
 next.config.js
+next.config.mjs
 tsconfig.json
 public/
