@@ -322,14 +322,26 @@ function applySeoOverrides(html, relativePath) {
 
 function normalizeCrawlerText(html) {
   return html
-    .replace(/1"“3/g, "1-3")
-    .replace(/4"“9/g, "4-9")
-    .replace(/â†’/g, "->")
-    .replace(/â†—/g, "↗")
-    .replace(/‰¡/g, "Filter")
-    .replace(/†—/g, "Link")
-    .replace(/˜…/g, "Details")
-    .replace(/\?{4}\s*/g, "");
+    // Fix triple corrupted bullet separator (ΓÇó → •)
+    .replace(/\u0393\u00C7\u00F3/g, "\u2022")
+    // Fix remaining single corrupted bullet chars
+    .replace(/\u0393/g, "\u2022")
+    .replace(/\u00C7/g, "\u2022")
+    // Fix box-drawing artifact characters
+    .replace(/[\u252C\u2556\u2566\u2591]/g, "")
+    // Fix FFFD replacement chars → bullet (safe fallback)
+    .replace(/\uFFFD/g, "\u2022")
+    // Existing icon/arrow fixes
+    .replace(/\u2030\u00A1/g, "Filter")
+    .replace(/\u2020\u2014/g, "Link")
+    .replace(/\u02DC\u2026/g, "Details")
+    .replace(/\u00E2\u2020\u2019/g, "->")
+    .replace(/\u00E2\u2020\u2014/g, "\u2197")
+    // Remove 4+ consecutive bullets
+    .replace(/\u2022{4,}\s*/g, "\u2022")
+    // Fix corrupted en-dash ranges
+    .replace(/1\u201C\u201C3/g, "1-3")
+    .replace(/4\u201C\u201C9/g, "4-9");
 }
 
 for (const htmlPath of htmlFiles) {

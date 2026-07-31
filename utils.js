@@ -109,21 +109,29 @@ window.ON = window.OpportunityNest;
     return supabaseClient;
   };
 
+  ON.normalizeText = (value = "") =>
+    String(value ?? "")
+      .replace(/\u0393/g, "\u2022")
+      .replace(/\u00C7/g, "\u2022")
+      .replace(/[\u252C\u2556\u2566\u2591]/g, "")
+      .replace(/\uFFFD/g, "")
+      .replace(/[\\u201C\\u201D]/g, '"');
+
   ON.normalizeOpportunity = (row = {}) => ({
     id: row.id || "",
-    type: row.type || "",
-    funding: row.funding || "",
-    title: row.title || "Untitled opportunity",
-    country: row.country || "Global",
-    level: row.level || row.degree_level || "",
-    field: row.field || row.internship_type || "",
+    type: ON.normalizeText(row.type || ""),
+    funding: ON.normalizeText(row.funding || ""),
+    title: ON.normalizeText(row.title || "Untitled opportunity"),
+    country: ON.normalizeText(row.country || "Global"),
+    level: ON.normalizeText(row.level || row.degree_level || ""),
+    field: ON.normalizeText(row.field || row.internship_type || ""),
     deadline: row.deadline || "",
     deadline_status: row.deadline_status || "fixed",
-    description: row.description || "No description available.",
+    description: ON.normalizeText(row.description || "No description available."),
     link: ON.OFFICIAL_URL_OVERRIDES[row.link] || row.link || row.official_url || "#",
     created_at: row.created_at || "",
     slug: row.slug || ON.cleanSlug(`${row.title || ""} ${row.country || ""}`).slice(0, 95),
-    organization: row.organization || row.host_organization || "",
+    organization: ON.normalizeText(row.organization || row.host_organization || ""),
     logo_url: row.logo_url || "",
     isInternship: Boolean(row.isInternship)
   });
