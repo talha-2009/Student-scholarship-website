@@ -19,6 +19,7 @@ scripts/__pycache__/
 
 # Logs, archives, and artifacts
 *.log
+build_log.txt
 *.zip
 *.gz
 reports/
