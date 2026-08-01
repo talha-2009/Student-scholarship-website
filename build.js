@@ -756,5 +756,52 @@ function generateSitemap() {
 }
 const sitemapCount = generateSitemap();
 
+// ─── Optional: notify IndexNow (non-fatal) ─────────────────────────
+// If INDEXNOW_KEY is present in the environment, submit the sitemap URL to IndexNow.
+// This is intentionally non-fatal: any errors will be logged but won't fail the build.
+(async function notifyIndexNow() {
+  try {
+    const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
+    if (!INDEXNOW_KEY) return; // Not configured — skip
+
+    const DOMAIN = process.env.SITE_DOMAIN || process.env.NEXT_PUBLIC_SITE_DOMAIN || 'opportunitynest.org';
+    const sitemapUrl = `https://${DOMAIN}/sitemap.xml`;
+    const keyLocation = `https://${DOMAIN}/${INDEXNOW_KEY}.txt`;
+    const endpoint = 'https://api.indexnow.org/indexnow';
+
+    // Build payload for sitemap submission (single-entry urlList)
+    const payload = {
+      host: DOMAIN,
+      key: INDEXNOW_KEY,
+      keyLocation: keyLocation,
+      urlList: [sitemapUrl]
+    };
+
+    // Simple retry with exponential backoff
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 10000);
+        const resp = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timer);
+        const text = await resp.text();
+        console.log(`[IndexNow] sitemap submission attempt=${attempt} status=${resp.status} url=${sitemapUrl}`);
+        // Do not throw on non-2xx — just log
+        break;
+      } catch (err) {
+        console.warn(`[IndexNow] sitemap submission attempt=${attempt} failed: ${err && err.message ? err.message : err}`);
+        if (attempt < 3) await new Promise(r => setTimeout(r, 2 ** attempt * 1000));
+      }
+    }
+  } catch (err) {
+    console.warn('[IndexNow] unexpected error while attempting to notify IndexNow:', err && err.message ? err.message : err);
+  }
+})();
+
 // ─── Done ─────────────────────────────────────────────────────────
 console.log(`Build complete! Output → dist/ (${sitemapCount} URLs in sitemap)`);
