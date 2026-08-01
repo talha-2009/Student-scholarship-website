@@ -194,7 +194,7 @@ const renderOpportunities = () => {
         const title = card.querySelector('h3');
         if (title) title.textContent = item.title || "Opportunity";
         const desc = card.querySelector('p:not(.card-kicker)');
-        if (desc) desc.textContent = String(item.description || "").replace(/\s+/g, " ").slice(0, 180);
+        if (desc) desc.textContent = ON.cleanExcerpt(item.description);
         const fields = card.querySelectorAll('.card-overview li');
         if (fields.length >= 3) {
           fields[0].innerHTML = `<strong>Field:</strong> ${ON.escapeHtml(item.field || "Multiple fields")}`;
@@ -307,7 +307,7 @@ const renderFeaturedInternships = (items = []) => {
           </ul>
           <div class="card-actions">
             <a class="button button-secondary" href="${ON.escapeHtml(detailUrl)}">View Details</a>
-            <a class="button button-primary" href="${ON.escapeHtml(item.link || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">â†—</span></a>
+            <a class="button button-primary" href="${ON.escapeHtml(item.link || "#")}" target="_blank" rel="noopener noreferrer">Apply Now <span aria-hidden="true">↗</span></a>
           </div>
         </article>
       `;

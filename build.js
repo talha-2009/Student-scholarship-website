@@ -112,7 +112,7 @@ console.log(`  Total: ${(origCssSize/1024).toFixed(1)} KB → ${(Buffer.byteLeng
 
 // ─── Step 2: Minify JS ──────────────────────────────────────────
 const jsFiles = [
-  "nav.js", "utils.js", "script.js", "category.js",
+  "sanitize.js", "nav.js", "utils.js", "script.js", "category.js",
   "contact.js", "opportunity-detail.js", "internship-detail.js", "dynamic-types.js"
 ];
 const jsAssetMap = {};
@@ -410,7 +410,7 @@ for (const htmlPath of htmlFiles) {
 
   // 6. Ensure all JS scripts have defer (except inline scripts and Supabase)
   html = html.replace(
-    /(<script\s+src="[^"]*(?:nav|utils|script|category|contact|opportunity-detail|internship-detail|dynamic-types)\.[^"]*")\s*(?!defer|async|type=)/g,
+    /(<script\s+src="[^"]*(?:sanitize|nav|utils|script|category|contact|opportunity-detail|internship-detail|dynamic-types)\.[^"]*")\s*(?!defer|async|type=)/g,
     '$1 defer'
   );
   // Remove duplicate defer

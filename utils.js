@@ -86,6 +86,24 @@ window.ON = window.OpportunityNest;
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
 
+  // Rendering-only text sanitizer (sanitize.js). Fall back to a no-op if the
+  // sanitizer script is missing so the site never breaks on its absence.
+  if (typeof ON.decodeEntities !== "function") {
+    const identity = (value = "") => String(value ?? "");
+    ON.decodeEntities = identity;
+    ON.stripMarkdown = identity;
+    ON.stripHtml = identity;
+    ON.removeEscapeChars = identity;
+    ON.normalizeWhitespace = identity;
+    ON.fixEscapedQuotes = identity;
+    ON.fixCorruptedText = identity;
+    ON.cleanCountry = identity;
+    ON.sanitizeText = identity;
+    ON.cleanRichText = identity;
+    ON.cleanTitle = identity;
+    ON.cleanExcerpt = identity;
+  }
+
   ON.cleanSlug = (value = "") => {
     const slug = String(value || "")
       .normalize("NFKD")
@@ -119,19 +137,19 @@ window.ON = window.OpportunityNest;
 
   ON.normalizeOpportunity = (row = {}) => ({
     id: row.id || "",
-    type: ON.normalizeText(row.type || ""),
-    funding: ON.normalizeText(row.funding || ""),
-    title: ON.normalizeText(row.title || "Untitled opportunity"),
-    country: ON.normalizeText(row.country || "Global"),
-    level: ON.normalizeText(row.level || row.degree_level || ""),
-    field: ON.normalizeText(row.field || row.internship_type || ""),
+    type: ON.sanitizeText(ON.normalizeText(row.type || "")),
+    funding: ON.sanitizeText(ON.normalizeText(row.funding || "")),
+    title: ON.cleanTitle(ON.normalizeText(row.title || "Untitled opportunity")),
+    country: ON.cleanCountry(ON.normalizeText(row.country || "Global")),
+    level: ON.sanitizeText(ON.normalizeText(row.level || row.degree_level || "")),
+    field: ON.sanitizeText(ON.normalizeText(row.field || row.internship_type || "")),
     deadline: row.deadline || "",
     deadline_status: row.deadline_status || "fixed",
-    description: ON.normalizeText(row.description || "No description available."),
+    description: ON.cleanRichText(ON.normalizeText(row.description || "No description available.")),
     link: ON.OFFICIAL_URL_OVERRIDES[row.link] || row.link || row.official_url || "#",
     created_at: row.created_at || "",
     slug: row.slug || ON.cleanSlug(`${row.title || ""} ${row.country || ""}`).slice(0, 95),
-    organization: ON.normalizeText(row.organization || row.host_organization || ""),
+    organization: ON.sanitizeText(ON.normalizeText(row.organization || row.host_organization || "")),
     logo_url: row.logo_url || "",
     isInternship: Boolean(row.isInternship)
   });
@@ -215,7 +233,8 @@ window.ON = window.OpportunityNest;
   };
 
   ON.renderMarkdown = (value = "") => {
-    const blocks = String(value || "").split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
+    const raw = ON.cleanRichText(String(value || ""));
+    const blocks = raw.split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
     return blocks.map((block) => `<p>${ON.escapeHtml(block).replace(/\n/g, "<br>")}</p>`).join("");
   };
 
@@ -410,7 +429,7 @@ window.ON = window.OpportunityNest;
           <span class="deadline${urgencyClass}">${ON.escapeHtml(ON.formatDeadline(item))}</span>
         </div>
         <h3>${ON.escapeHtml(item.title || "Opportunity")}</h3>
-        <p>${ON.escapeHtml(String(item.description || "").replace(/\s+/g, " ").slice(0, 180))}</p>
+        <p>${ON.escapeHtml(ON.cleanExcerpt(item.description))}</p>
         <ul class="card-overview compact-overview">
           <li><strong>Field:</strong> ${ON.escapeHtml(item.field || "Multiple fields")}</li>
           <li><strong>Level:</strong> ${ON.escapeHtml(item.level || "Eligible applicants")}</li>
