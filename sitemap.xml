@@ -2065,12 +2065,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.opportunitynest.org/scholarships-in-netherlands/</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.opportunitynest.org/scholarships-in-saudi-arabia/</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -2162,6 +2156,12 @@
   </url>
   <url>
     <loc>https://www.opportunitynest.org/study-in-japan/</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.opportunitynest.org/study-in-netherlands-for-international-students/</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

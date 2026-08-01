@@ -1,7 +1,7 @@
 ---
 title: "Scholarships in the Netherlands 2026 — Fully Funded & University Awards for International Students"
 meta_description: "Complete 2026 guide to Scholarships in the Netherlands: fully funded awards, university scholarships, deadlines, eligibility, application timelines, visa guidance, tuition & living costs, and direct links to official providers for international (including Pakistani) students."
-canonical: "https://www.opportunitynest.org/scholarships-in-netherlands/"
+canonical: "https://www.opportunitynest.org/study-in-netherlands-for-international-students/"
 og_image: "https://www.opportunitynest.org/og-image-netherlands-2026.png"
 twitter_card: "summary_large_image"
 last_modified: "2026-08-01"
@@ -399,7 +399,7 @@ A: Many programs require IELTS or equivalent, but some institutions accept TOEFL
 
 - [ ] Single H1 present
 - [ ] Title and meta description optimized and present in CMS metadata fields
-- [ ] Canonical set to https://www.opportunitynest.org/scholarships-in-netherlands/
+- [ ] Canonical set to https://www.opportunitynest.org/study-in-netherlands-for-international-students/
 - [ ] OG/Twitter meta filled and og:image absolute URL
 - [ ] All internal links verified (15–25 contextual links inserted)
 
@@ -432,7 +432,7 @@ A: Many programs require IELTS or equivalent, but some institutions accept TOEFL
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "url": "https://www.opportunitynest.org/scholarships-in-netherlands/",
+  "url": "https://www.opportunitynest.org/study-in-netherlands-for-international-students/",
   "numberOfItems": 1,
   "itemListElement": [
     {

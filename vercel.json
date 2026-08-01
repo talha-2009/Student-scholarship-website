@@ -4,6 +4,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
+    { "source": "/scholarships-in-netherlands", "destination": "/study-in-netherlands-for-international-students/", "permanent": true },
+    { "source": "/scholarships-in-netherlands/", "destination": "/study-in-netherlands-for-international-students/", "permanent": true },
+    { "source": "/scholarships-in-netherlands/index.html", "destination": "/study-in-netherlands-for-international-students/", "permanent": true },
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/exchange-program.html", "destination": "/", "permanent": true },
     { "source": "/usa", "destination": "/country/united-states/", "permanent": true },
