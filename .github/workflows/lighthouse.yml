@@ -55,3 +55,56 @@ jobs:
         if: always()
         run: |
           echo "Stopping server (job end will clear processes)"
+
+  baseline:
+    name: Baseline (main) Lighthouse run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production assets (main)
+        run: node build.js
+
+      - name: Start static server (main)
+        run: npx http-server ./dist -p 5001 -c-1 & sleep 2
+
+      - name: Run Lighthouse (mobile) baseline
+        run: |
+          npx -y lighthouse http://localhost:5001 \
+            --output=json --output-path=./lighthouse-baseline-mobile.json \
+            --emulated-form-factor=mobile \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox"
+
+      - name: Run Lighthouse (desktop) baseline
+        run: |
+          npx -y lighthouse http://localhost:5001 \
+            --output=json --output-path=./lighthouse-baseline-desktop.json \
+            --emulated-form-factor=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox"
+
+      - name: Upload Baseline Lighthouse artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-baseline
+          path: |
+            ./lighthouse-baseline-mobile.json
+            ./lighthouse-baseline-desktop.json
+
+      - name: Stop static server (main)
+        if: always()
+        run: |
+          echo "Stopping baseline server (job end will clear processes)"
