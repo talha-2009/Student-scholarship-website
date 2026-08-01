@@ -58,14 +58,18 @@ The Netherlands is a popular destination for international students owing to its
 
 This guide focuses on verified opportunities, how to evaluate coverage (tuition, stipend, travel, insurance), and how to prepare applications that align with provider selection criteria. Internal links throughout point to relevant OpportunityNest collections and guides — verify each link in your CMS before publishing.
 
+**Target keywords & search intent (editorial notes):** Scholarships in Netherlands; Scholarships in Netherlands for International Students; Fully Funded Scholarships in Netherlands; Scholarships in Netherlands for Pakistani Students; Netherlands Scholarships 2026; Study in Netherlands with Scholarship; Holland Scholarship; Erasmus Scholarship Netherlands; Masters Scholarships Netherlands; Undergraduate Scholarships Netherlands; PhD Scholarships Netherlands; Tuition Fees Netherlands; Cost of Living Netherlands; Netherlands Student Visa; Study in Netherlands Requirements; Universities in Netherlands; Study in Netherlands Without IELTS; Netherlands Scholarships Deadline.
+
+These keyword phrases are used naturally across the page to satisfy informational and high-intent transactional queries. Avoid keyword stuffing — keep phrasing natural and user-focused.
+
 ---
 
 ## Scholarship comparison (summary table) <a id="comparison"></a>
 
 | Scholarship | Type | Level | Typical coverage | Typical deadline | Provider |
 |---|---:|---|---|---|---|
-| Leiden University Excellence Scholarship (LEXS) | University | Master's | Partial tuition + stipend | Feb 1 (example) | Leiden University |
-| Holland Scholarship | National/University | Undergrad / Master's | One-off grant (≈€5,000) | Varies by university | Participating Dutch universities |
+| [Leiden University Excellence Scholarship (LEXS)](/opportunity/leiden-university-excellence-scholarship-netherlands/) | University | Master's | Partial tuition + stipend | 01 Feb (example) | [Leiden University](https://www.universiteitleiden.nl) |
+| [Holland Scholarship](https://studyinholland.nl/) | National/University | Undergrad / Master's | One-off grant (≈€5,000) | Varies by university | Participating Dutch universities |
 | Erasmus Mundus Joint Master’s | EU consortium | Joint Master's | Full tuition + stipend (varies) | Varies by consortium | Consortia / Universities |
 | University PhD fellowships | University / Research grants | PhD | Salary (employment contract) | Varies | Individual universities |
 
@@ -100,7 +104,7 @@ Many Dutch scholarships accept applicants from Pakistan; eligibility is usually 
 - Confirm whether transcripts require apostille or embassy attestation for Dutch authorities.
 - Check scholarship and visa timelines early — obtaining attested documents and reference letters can take several weeks.
 
-**Internal link**: For Pakistan-focused guidance, link to: `/study-in-netherlands-from-pakistan/` (verify path exists in your CMS).
+**Internal link**: For Pakistan-focused guidance, see [Study in the Netherlands from Pakistan](/study-in-netherlands-from-pakistan/) (verify path exists in your CMS).
 
 ---
 
@@ -157,7 +161,7 @@ Erasmus Mundus Joint Master’s are joint programmes across multiple European in
 
 **Expanded steps**
 
-1. Shortlist programmes that match your level and field (use filters on OpportunityNest and university pages).
+1. Shortlist programmes that match your level and field (use filters on our [Scholarships directory](/scholarships/) and the official university pages).
 2. Confirm eligibility for each scholarship and any nomination procedures.
 3. Request certified/translated transcripts and official references early (6–8 weeks).
 4. Draft a motivation letter tailored to the selection criteria; provide concrete evidence and measurable achievements.
@@ -202,7 +206,7 @@ Use this timeline as a template and adapt to specific scholarship deadlines:
 
 Typical eligibility elements:
 
-- Recognized bachelor’s degree for entry into a master’s programe.
+- Recognized bachelor’s degree for entry into a master’s programme.
 - Minimum academic performance (GPA or grade equivalence).
 - English proficiency (IELTS/TOEFL) unless waived.
 - References (academic or professional), CV, motivation letter, and research proposal where applicable.
@@ -265,7 +269,7 @@ Key steps for non-EEA students:
 3. Arrange health insurance and any required biometric data.
 4. Check IND processing times: https://ind.nl/en
 
-**Internal link**: Add a contextual link to the OpportunityNest visa guide: `/netherlands-visa-guide/`.
+**Internal link**: See our visa guidance at [Netherlands student visa guide](/netherlands-visa-guide/) for step-by-step instructions.
 
 ---
 
@@ -362,6 +366,8 @@ A: Many programs require IELTS or equivalent, but some institutions accept TOEFL
 - [ ] Canonical set to https://www.opportunitynest.org/scholarships-in-netherlands/
 - [ ] OG/Twitter meta filled and og:image absolute URL
 - [ ] All internal links verified (15–25 contextual links inserted)
+
+**Related OpportunityNest resources (contextual links):** [Scholarships](/scholarships/), [Fully Funded Scholarships](/fully-funded-scholarships/), [Master's Scholarships](/masters-scholarships/), [Undergraduate Scholarships](/undergraduate-scholarships/), [PhD Scholarships](/phd-scholarships/), [Scholarships without IELTS](/scholarships-without-ielts/), [Application checklist](/guides/application-checklist.html), [Cost of living Netherlands](/cost-of-living-netherlands/), [Netherlands visa guide](/netherlands-visa-guide/), [University scholarships](/university-scholarships/), [Erasmus scholarships](/erasmus-scholarships/), [Verification process](/verification-process/), [FAQ](/faq/), [Subscribe for alerts](/subscribe/), [Research scholarships](/research-scholarships/)
 - [ ] All external links point to authoritative provider pages
 - [ ] Images have width & height attributes, LCP hero is preloaded where appropriate
 - [ ] FAQ JSON-LD validated in staging (Rich Results Test)
