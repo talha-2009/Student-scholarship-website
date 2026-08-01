@@ -1,0 +1,57 @@
+name: Lighthouse CI (PR)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lighthouse:
+    name: Run Lighthouse (mobile + desktop)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production assets
+        run: node build.js
+
+      - name: Start static server
+        run: npx http-server ./dist -p 5000 -c-1 & sleep 2
+
+      - name: Run Lighthouse (mobile)
+        run: |
+          npx -y lighthouse http://localhost:5000 \
+            --output=json --output-path=./lighthouse-mobile.json \
+            --emulated-form-factor=mobile \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox"
+
+      - name: Run Lighthouse (desktop)
+        run: |
+          npx -y lighthouse http://localhost:5000 \
+            --output=json --output-path=./lighthouse-desktop.json \
+            --emulated-form-factor=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox"
+
+      - name: Upload Lighthouse artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: |
+            ./lighthouse-mobile.json
+            ./lighthouse-desktop.json
+
+      - name: Stop static server
+        if: always()
+        run: |
+          echo "Stopping server (job end will clear processes)"
