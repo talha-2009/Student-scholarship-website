@@ -25,7 +25,7 @@ function hashContent(content) {
 function getAllHtmlFiles(dir, results = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
-    if (entry.isDirectory() && !["node_modules", "dist", "scripts", ".git", ".vercel"].includes(entry.name)) {
+    if (entry.isDirectory() && !["node_modules", "dist", "scripts", ".git", ".vercel", ".next", ".github", ".agents", "brand-kit", "reports", "supabase", "tests", "app", "components", "lib", "public", "data"].includes(entry.name)) {
       getAllHtmlFiles(full, results);
     } else if (entry.isFile() && extname(entry.name) === ".html") {
       results.push(full);
@@ -37,7 +37,7 @@ function findStaticFiles(dir, results = []) {
   const exts = [".svg", ".png", ".jpg", ".jpeg", ".webp", ".avif", ".ico", ".json", ".txt", ".xml", ".rtf", ".pdf"];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
-    if (entry.isDirectory() && !["node_modules", "dist", "scripts", ".git", ".vercel"].includes(entry.name)) {
+    if (entry.isDirectory() && !["node_modules", "dist", "scripts", ".git", ".vercel", ".next", ".github", ".agents", "brand-kit", "reports", "supabase", "tests", "app", "components", "lib", "public"].includes(entry.name)) {
       findStaticFiles(full, results);
     } else if (entry.isFile() && exts.includes(extname(entry.name)) && !["package.json", "package-lock.json", "vercel.json"].includes(entry.name)) {
       results.push(full);
@@ -153,6 +153,15 @@ const NEW_FOOTER = `<footer class="site-footer" role="contentinfo"> <div class="
 console.log("\nUpdating HTML files...");
 
 const htmlFiles = getAllHtmlFiles(ROOT);
+// Leftover template/backup pages that must never be deployed
+const JUNK_HTML = new Set([
+  "category.html",
+  "internship-detail.html",
+  "nav-dropdown-backup.html",
+  "exchange-program.html",
+  "preview.html",
+]);
+const htmlFilesFiltered = htmlFiles.filter((p) => !JUNK_HTML.has(relative(ROOT, p).replace(/\\/g, "/").toLowerCase()));
 let updatedCount = 0;
 
 const RESOURCE_HINTS = [
@@ -344,7 +353,7 @@ function normalizeCrawlerText(html) {
     .replace(/4\u201C\u201C9/g, "4-9");
 }
 
-for (const htmlPath of htmlFiles) {
+for (const htmlPath of htmlFilesFiltered) {
   let html = readFileSync(htmlPath, "utf8");
   const relativePath = relative(ROOT, htmlPath).replace(/\\/g, "/");
   let modified = false;
@@ -607,6 +616,12 @@ for (const htmlPath of htmlFiles) {
     '$1/$2'
   );
 
+  // 9e. Ensure every page has an explicit robots directive (default index, follow)
+  if (!/name=["']robots["']\s+content=["'][^"']+["']/i.test(html) && !/name=["']robots["']/i.test(html)) {
+    html = html.replace(/<\/head>/i, '    <meta name="robots" content="index, follow">\n  </head>');
+    modified = true;
+  }
+
   const normalizedHtml = normalizeCrawlerText(html);
   if (normalizedHtml !== html) {
     html = normalizedHtml;
@@ -688,6 +703,7 @@ function generateSitemap() {
   // Pages to exclude from sitemap
   const excludePatterns = ["404.html","preview.html","nav-dropdown-backup.html","exchange-program.html",
     "category.html","internship-detail.html","opportunity-detail.html",
+    "guides/study-in-japan.html","guides/study-in-italy.html",
     "node_modules","dist",".next",".git","brand-kit","/partial-scholarships/"];
 
   function shouldExclude(relPath) {
