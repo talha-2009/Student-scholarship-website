@@ -12,6 +12,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync
 import { join, relative, extname, dirname } from "path";
 import { createHash } from "crypto";
 import { fileURLToPath } from "url";
+import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const ROOT = dirname(__filename);
@@ -637,7 +638,23 @@ console.log(`  Copied ${staticFiles.length} static files\n`);
 console.log("Generating sitemap.xml...");
 function generateSitemap() {
   const BASE = "https://www.opportunitynest.org";
-  const today = new Date().toISOString().split("T")[0];
+
+  // Determine lastmod for a file: prefer git commit date (ISO), fallback to file mtime
+  function getLastModForFile(filePath) {
+    try {
+      // Use git commit date in ISO 8601 (committer/committed date)
+      const out = execSync(`git log -1 --format=%cI -- "${filePath.replace(/"/g, '\\"')}"`, { cwd: ROOT, stdio: ['ignore','pipe','ignore'] }).toString().trim();
+      if (out) return out.split('T')[0];
+    } catch (e) {
+      // git may not be available in some environments; fall back
+    }
+    try {
+      const mtime = statSync(filePath).mtime.toISOString().split('T')[0];
+      return mtime;
+    } catch (e) {
+      return new Date().toISOString().split('T')[0];
+    }
+  }
 
   // Priority map: assign priority based on path patterns
   function getPriority(relPath, isDirIndex) {
@@ -651,7 +668,6 @@ function generateSitemap() {
     if (["about.html","contact.html","faq.html"].includes(p)) return "0.7";
     if (["privacy.html","terms.html","disclaimer.html"].includes(p)) return "0.5";
     if (["editorial-policy.html","fact-checking-policy.html","verification-process.html"].includes(p)) return "0.6";
-    // Category pages
     const categories = ["fully-funded-scholarships","partially-funded-scholarships","undergraduate-scholarships",
       "masters-scholarships","phd-scholarships","postdoctoral-scholarships","high-school-scholarships",
       "government-scholarships","merit-scholarships","paid-internships","remote-internships","summer-internships",
@@ -671,21 +687,15 @@ function generateSitemap() {
     return "weekly";
   }
 
-  // Convert file path to clean URL
   function toCleanUrl(relPath) {
     let url = relPath.replace(/\\/g, "/");
-    // Remove index.html
     if (url.endsWith("/index.html")) { url = url.slice(0, -10); }
-    // Remove .html extension for non-root pages
     else if (url.endsWith(".html")) { url = url.slice(0, -5); }
-    // Root index.html -> /
     if (url === "index.html" || url === "") return BASE + "/";
-    // Ensure no double slashes
     if (url.endsWith("/")) url = url.slice(0, -1);
     return BASE + "/" + url + "/";
   }
 
-  // Pages to exclude from sitemap
   const excludePatterns = ["404.html","preview.html","nav-dropdown-backup.html","exchange-program.html",
     "category.html","internship-detail.html","opportunity-detail.html",
     "node_modules","dist",".next",".git","brand-kit","/partial-scholarships/"];
@@ -697,15 +707,12 @@ function generateSitemap() {
     return excludePatterns.some(pat => p.includes(pat));
   }
 
-  // Collect all HTML files excluding noindex/private pages
   const allHtml = getAllHtmlFiles(ROOT);
   const sitemapUrls = [];
 
   for (const filePath of allHtml) {
     const relPath = relative(ROOT, filePath).replace(/\\/g, "/");
     if (shouldExclude(relPath)) continue;
-
-    // Check if contains noindex
     const content = readFileSync(filePath, "utf8");
     if (/noindex/i.test(content)) continue;
 
@@ -714,7 +721,10 @@ function generateSitemap() {
     const priority = getPriority(relPath);
     const changefreq = getChangefreq(relPath);
 
-    sitemapUrls.push({ loc: cleanUrl, changefreq, priority, lastmod: today });
+    // Compute lastmod from git (preferred) or file mtime
+    const lastmod = getLastModForFile(filePath);
+
+    sitemapUrls.push({ loc: cleanUrl, changefreq, priority, lastmod });
   }
 
   // Deduplicate by URL
@@ -731,8 +741,17 @@ function generateSitemap() {
   }
   xml += `</urlset>\n`;
 
-  writeFileSync(join(ROOT, "sitemap.xml"), xml);
-  console.log(`  Generated sitemap with ${unique.length} URLs`);
+  // Only write sitemap.xml if content changed to avoid unnecessary churn
+  const outPath = join(ROOT, "sitemap.xml");
+  let existing = null;
+  try { existing = readFileSync(outPath, 'utf8'); } catch (e) { existing = null; }
+  if (existing !== xml) {
+    writeFileSync(outPath, xml, { encoding: 'utf8' });
+    console.log(`  Generated sitemap with ${unique.length} URLs`);
+  } else {
+    console.log(`  Sitemap unchanged (${unique.length} URLs)`);
+  }
+
   return unique.length;
 }
 const sitemapCount = generateSitemap();
