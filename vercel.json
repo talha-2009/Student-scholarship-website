@@ -16,12 +16,30 @@
     { "source": "/uk/", "destination": "/country/united-kingdom/", "permanent": true },
     { "source": "/united-kingdom", "destination": "/country/united-kingdom/", "permanent": true },
     { "source": "/united-kingdom/", "destination": "/country/united-kingdom/", "permanent": true },
+    { "source": "/about/", "destination": "/about.html", "permanent": true },
+    { "source": "/contact/", "destination": "/contact.html", "permanent": true },
+    { "source": "/faq/", "destination": "/faq.html", "permanent": true },
+    { "source": "/privacy/", "destination": "/privacy.html", "permanent": true },
+    { "source": "/terms/", "destination": "/terms.html", "permanent": true },
+    { "source": "/disclaimer/", "destination": "/disclaimer.html", "permanent": true },
+    { "source": "/scholarships/", "destination": "/scholarships.html", "permanent": true },
+    { "source": "/internships/", "destination": "/internships.html", "permanent": true },
+    { "source": "/fellowships/", "destination": "/fellowships.html", "permanent": true },
+    { "source": "/competitions/", "destination": "/competitions.html", "permanent": true },
     { "source": "/opportunity/:slug/index.html", "destination": "/opportunity/:slug/", "permanent": true },
     { "source": "/country/:slug/index.html", "destination": "/country/:slug/", "permanent": true },
     { "source": "/scholarships/:slug/index.html", "destination": "/scholarships/:slug/", "permanent": true },
     { "source": "/internships/:slug/index.html", "destination": "/internships/:slug/", "permanent": true },
     { "source": "/fellowships/:slug/index.html", "destination": "/fellowships/:slug/", "permanent": true },
     { "source": "/competitions/:slug/index.html", "destination": "/competitions/:slug/", "permanent": true },
+    { "source": "/blog/:slug/", "destination": "/blog/:slug.html", "permanent": true },
+    { "source": "/guides/:slug/", "destination": "/guides/:slug.html", "permanent": true },
+    { "source": "/guides/:slug", "destination": "/guides/:slug.html", "permanent": true },
+    { "source": "/country/:slug", "destination": "/country/:slug/", "permanent": true },
+    { "source": "/scholarships/:slug", "destination": "/scholarships/:slug/", "permanent": true },
+    { "source": "/internships/:slug", "destination": "/internships/:slug/", "permanent": true },
+    { "source": "/fellowships/:slug", "destination": "/fellowships/:slug/", "permanent": true },
+    { "source": "/competitions/:slug", "destination": "/competitions/:slug/", "permanent": true },
     {
       "source": "/:path(\\w+)/:rest(.*)",
       "has": [{ "type": "host", "value": "opportunitynest.org" }],
@@ -64,7 +82,6 @@
     { "source": "/verification-process/", "destination": "/verification-process.html" },
     { "source": "/thank-you/", "destination": "/thank-you.html" },
     { "source": "/cookie-policy/", "destination": "/privacy.html" },
-    { "source": "/nav-dropdown-backup/", "destination": "/nav-dropdown-backup.html" },
     { "source": "/blog/:slug/", "destination": "/blog/:slug.html" },
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" },
     { "source": "/guides/:slug/", "destination": "/guides/:slug.html" },
@@ -123,6 +140,18 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/nav-dropdown-backup.html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/nav-dropdown-backup/",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     },
     {

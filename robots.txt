@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /nav-dropdown-backup.html
+Disallow: /nav-dropdown-backup/
 
 Sitemap: https://www.opportunitynest.org/sitemap.xml
