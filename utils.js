@@ -198,9 +198,9 @@ window.ON = window.OpportunityNest;
   ON.getCountryFlagHtml = (country = "") => {
     const code = countryToFlagCode[country] || countryToFlagCode[country.replace(/^United\s+/, "").replace(/^U\.?\s*S\.?\s*A\.?\s*/, "USA").trim()];
     if (!code || code === "global") {
-      return `<img class="country-flag" src="/global.svg" alt="Global" width="20" height="20" loading="lazy" onerror="this.style.display='none'">`;
+      return `<img class="country-flag" src="/global.svg" alt="Global" width="20" height="20" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
     }
-    return `<img class="country-flag" src="${FLAG_CDN}${code}.svg" alt="Flag of ${ON.escapeHtml(country)}" width="20" height="15" loading="lazy" onerror="this.style.display='none'">`;
+    return `<img class="country-flag" src="${FLAG_CDN}${code}.svg" alt="Flag of ${ON.escapeHtml(country)}" width="20" height="15" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
   };
 
   ON.setStatus = (element, message, isError = false) => {
