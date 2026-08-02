@@ -154,16 +154,6 @@ window.ON = window.OpportunityNest;
     isInternship: Boolean(row.isInternship)
   });
 
-  ON.mapInternshipToOpportunity = (row = {}) =>
-    ON.normalizeOpportunity({
-      ...row,
-      type: "Internship",
-      level: row.degree_level || row.level,
-      field: row.internship_type || row.field,
-      link: row.official_url || row.link,
-      isInternship: true
-    });
-
   ON.assignOpportunitySlugs = (items = []) => {
     const counts = new Map();
     items.forEach((item) => {
@@ -252,16 +242,10 @@ window.ON = window.OpportunityNest;
       } catch (_) {}
       try {
         const oppUrl = `${ON.SUPABASE_URL}/rest/v1/opportunities?select=${encodeURIComponent(fields)}&order=deadline.asc`;
-        const [oppRes, intRes] = await Promise.all([
-          fetch(oppUrl, { headers: { apikey: ON.SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}` } }),
-          fetch(`${ON.SUPABASE_URL}/rest/v1/internships?select=id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,logo_url,featured,created_at&order=created_at.desc`, { headers: { apikey: ON.SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}` } })
-        ]);
-        if (!oppRes.ok && !intRes.ok) throw new Error("Failed to fetch opportunities and internships.");
-        const oppRows = oppRes.ok ? (await oppRes.json()) : [];
-        const intRows = intRes.ok ? (await intRes.json()) : [];
-        const normalizedOpps = oppRows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
-        const normalizedInts = intRows.map(ON.mapInternshipToOpportunity).filter(ON.isActiveOpportunity);
-        const all = [...normalizedOpps, ...normalizedInts];
+        const oppRes = await fetch(oppUrl, { headers: { apikey: ON.SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${ON.SUPABASE_PUBLISHABLE_KEY}` } });
+        if (!oppRes.ok) throw new Error("Failed to fetch opportunities.");
+        const oppRows = await oppRes.json();
+        const all = oppRows.map(ON.normalizeOpportunity).filter(ON.isActiveOpportunity);
         try { sessionStorage.setItem(cacheKey, JSON.stringify({ savedAt: Date.now(), rows: all })); } catch (_) {}
         return all;
       } catch (fetchError) {
@@ -499,18 +483,6 @@ window.ON = window.OpportunityNest;
       wrapper.appendChild(button);
     });
     container.appendChild(wrapper);
-  };
-
-  ON.pushAd = (selector) => {
-    try {
-      const els = document.querySelectorAll(selector);
-      els.forEach((el) => {
-        if (!el.dataset.pushed) {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-          el.dataset.pushed = "true";
-        }
-      });
-    } catch (_) {}
   };
 
   ON.generateSEOTitle = (item) => {

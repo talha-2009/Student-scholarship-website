@@ -54,17 +54,6 @@ const renderDetail = (item) => {
 
   detailContainer.innerHTML = ON.renderDetailContent(item, urgencyClass, "/internships/", "internship");
 
-  // Inject AdSense ad after main content (before related opportunities)
-  const relatedDiv = document.getElementById('related-opportunities');
-  if (relatedDiv) {
-    const adEl = document.createElement('div');
-    adEl.className = 'ad-container';
-    adEl.setAttribute('aria-label', 'Advertisement');
-    adEl.innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4182963907868663" data-ad-slot="3000000002" data-ad-format="auto" data-full-width-responsive="true"></ins>';
-    relatedDiv.parentNode.insertBefore(adEl, relatedDiv);
-    ON.pushAd('.ad-container ins.adsbygoogle');
-  }
-  
   // Load related opportunities
   ON.renderRelatedOpportunities(item);
 };
@@ -81,13 +70,14 @@ const loadInternshipDetail = async () => {
 
   try {
     const { data, error } = await ON.getSupabaseClient()
-      .from("internships")
-      .select("id,title,organization,country,city,internship_type,degree_level,duration,funding,deadline,official_url,description,logo_url,featured,created_at")
-      .eq("id", internshipId)
+      .from("opportunities")
+      .select("id,type,funding,title,country,level,field,deadline,deadline_status,description,link,slug,created_at")
+      .eq("type", "Internship")
+      .eq("slug", internshipId)
       .single();
 
     if (error) throw error;
-    renderDetail(ON.mapInternshipToOpportunity(data));
+    renderDetail(ON.normalizeOpportunity(data));
     setStatus("Internship details loaded.");
   } catch (error) {
     console.error("Internship detail fetch failed:", error);
