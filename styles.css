@@ -22,6 +22,43 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Adsterra native banner slot ─────────────────────────────── */
+/* Reserved height avoids CLS when the async ad fills the container. */
+.ad-slot {
+  position: relative;
+  margin: 40px auto;
+  max-width: 100%;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  clear: both;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.ad-slot::before {
+  content: "Advertisement";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ad-slot > div {
+  max-width: 100%;
+}
+@media (max-width: 640px) {
+  .ad-slot {
+    margin: 32px auto;
+    min-height: 250px;
+  }
+}
+
 body {
   margin: 0;
   background: var(--bg);

@@ -33,6 +33,62 @@ function getAllHtmlFiles(dir, results = []) {
   }
   return results;
 }
+
+// ─── Ad integration (Adsterra native banner) ─────────────────────
+// Single native banner slot per article page. Placed by the build so it is
+// part of the static HTML: async (non-render-blocking), one container, no
+// duplicate injection. The reserved container space limits CLS.
+const ADSTERRA_SNIPPET = `<aside class="ad-slot" aria-label="Advertisement"><script async="async" data-cfasync="false" src="https://pl30636632.effectivecpmnetwork.com/291097b0cba5a7a9883923ed2eeb3bc4/invoke.js"></script><div id="container-291097b0cba5a7a9883923ed2eeb3bc4"></div></aside>`;
+const ADSTERRA_CONTAINER_ID = "container-291097b0cba5a7a9883923ed2eeb3bc4";
+
+function isArticlePage(relativePath) {
+  const p = relativePath.replace(/\\/g, "/").toLowerCase();
+  if (p === "opportunity-detail.html") return false;
+  return p.startsWith("blog/") || p.startsWith("guides/") || p.startsWith("opportunity/");
+}
+
+function findAdInsertionPoint(html, relativePath) {
+  // Never inject past the end of the article body (footer boundary). The
+  // footer can contain paragraphs too, so the scan must stop at <footer>.
+  const footer = html.indexOf("<footer");
+  const contentEnd =
+    footer !== -1
+      ? footer
+      : Math.min(
+          ...["</article>", "</main>"]
+            .map((t) => html.indexOf(t))
+            .filter((i) => i !== -1),
+          html.length
+        );
+  // Long guides → place the ad just before the FAQ section (never inside it).
+  if (/^guides\//i.test(relativePath)) {
+    const faq = html.match(/<h2[^>]*>[\s\S]{0,80}?Frequently\s+Asked\s+Questions/i);
+    if (faq && faq.index < contentEnd) return faq.index;
+  }
+  // Blog / opportunity / guides without FAQ → after the 3rd paragraph that
+  // follows the H1 (skips breadcrumbs, meta line and eyebrow paragraphs).
+  const h1 = html.match(/<h1[^>]*>[\s\S]*?<\/h1>/);
+  if (h1) {
+    const from = h1.index + h1[0].length;
+    let idx = from, count = 0;
+    while (count < 3) {
+      const next = html.indexOf("</p>", idx);
+      if (next === -1 || next >= contentEnd) break;
+      idx = next + 4;
+      count++;
+    }
+    if (count === 3) return idx;
+  }
+  return -1;
+}
+
+function injectAd(html, relativePath) {
+  if (html.includes(ADSTERRA_CONTAINER_ID)) return html;
+  const at = findAdInsertionPoint(html, relativePath);
+  if (at < 0) return html;
+  return html.slice(0, at) + ADSTERRA_SNIPPET + html.slice(at);
+}
+
 function findStaticFiles(dir, results = []) {
   const exts = [".svg", ".png", ".jpg", ".jpeg", ".webp", ".avif", ".ico", ".json", ".txt", ".xml", ".rtf", ".pdf"];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -171,7 +227,8 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
-  '<link rel="dns-prefetch" href="https://chatling.ai">'
+  '<link rel="dns-prefetch" href="https://chatling.ai">',
+  '<link rel="dns-prefetch" href="https://pl30636632.effectivecpmnetwork.com">'
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;
@@ -620,6 +677,15 @@ for (const htmlPath of htmlFilesFiltered) {
   if (!/name=["']robots["']\s+content=["'][^"']+["']/i.test(html) && !/name=["']robots["']/i.test(html)) {
     html = html.replace(/<\/head>/i, '    <meta name="robots" content="index, follow">\n  </head>');
     modified = true;
+  }
+
+  // 10. Adsterra native banner — one slot per article page (blog, guides, opportunity)
+  if (isArticlePage(relativePath)) {
+    const withAd = injectAd(html, relativePath);
+    if (withAd !== html) {
+      html = withAd;
+      modified = true;
+    }
   }
 
   const normalizedHtml = normalizeCrawlerText(html);
