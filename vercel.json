@@ -9,6 +9,7 @@
     { "source": "/scholarships-in-netherlands/index.html", "destination": "/study-in-netherlands-for-international-students/", "permanent": true },
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/exchange-program.html", "destination": "/exchange-programs/", "permanent": true },
+    { "source": "/category.html", "destination": "/scholarships/", "permanent": true },
     { "source": "/exchange-program", "destination": "/exchange-programs/", "permanent": true },
     { "source": "/guides/study-in-japan", "destination": "/study-in-japan/", "permanent": true },
     { "source": "/guides/study-in-japan/", "destination": "/study-in-japan/", "permanent": true },
