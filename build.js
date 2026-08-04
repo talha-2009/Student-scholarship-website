@@ -228,7 +228,8 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
   '<link rel="dns-prefetch" href="https://chatling.ai">',
-  '<link rel="dns-prefetch" href="https://pl30636632.effectivecpmnetwork.com">'
+  '<link rel="dns-prefetch" href="https://pl30636632.effectivecpmnetwork.com">',
+  '<link rel="dns-prefetch" href="https://pl30672850.effectivecpmnetwork.com">'
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;
@@ -688,6 +689,12 @@ for (const htmlPath of htmlFilesFiltered) {
   if (!html.includes("on-consent-banner")) {
     const consentSnippet = `<div id="on-consent-banner" class="on-consent-banner" role="dialog" aria-modal="true" aria-label="Cookie consent"><div class="on-consent-inner"><p>We use cookies to personalise content and ads, provide social media features, and analyse our traffic. We also share information about your use of our site with our analytics and advertising partners. See our <a href="/privacy/">Privacy Policy</a> for details.</p><div class="on-consent-actions"><button type="button" id="on-consent-accept" class="on-consent-btn on-consent-accept">Accept all</button><button type="button" id="on-consent-reject" class="on-consent-btn on-consent-reject">Reject non-essential</button></div></div></div><script>(function(){var KEY="on_consent_v1",b=document.getElementById("on-consent-banner"),acc=document.getElementById("on-consent-accept"),rej=document.getElementById("on-consent-reject");function apply(v){window.dataLayer=window.dataLayer||[];function g(){window.dataLayer.push(arguments);}if(v==="accepted"){g("consent","update",{ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted",analytics_storage:"granted"});}else{g("consent","update",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:"denied"});}try{localStorage.setItem(KEY,v);}catch(e){}}try{var saved=localStorage.getItem(KEY);if(saved){apply(saved);if(b)b.parentNode.removeChild(b);}else{if(b){b.classList.add("visible");acc.onclick=function(){apply("accepted");b.parentNode.removeChild(b);};rej.onclick=function(){apply("rejected");b.parentNode.removeChild(b);};}}}catch(e){}})();<\/script>`;
     html = html.replace(/<\/body>/i, consentSnippet + "\n</body>");
+    modified = true;
+  }
+
+  // 9g. Adsterra ad script — injected above </body> on every page
+  if (!html.includes("8c1bf93c8c791f230745756dfb7de2d3.js")) {
+    html = html.replace(/<\/body>/i, '<script src="https://pl30672850.effectivecpmnetwork.com/8c/1b/f9/8c1bf93c8c791f230745756dfb7de2d3.js"></script>\n</body>');
     modified = true;
   }
 
