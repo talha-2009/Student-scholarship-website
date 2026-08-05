@@ -732,6 +732,21 @@ for (const filePath of staticFiles) {
 }
 console.log(`  Copied ${staticFiles.length} static files\n`);
 
+// Blog client-side bundles ship verbatim (not hashed) because
+// blog/index.html references /blog/blog-data.js and /blog/blog-render.js.
+const BLOG_JS_FILES = ["blog/blog-data.js", "blog/blog-render.js"];
+for (const rel of BLOG_JS_FILES) {
+  const srcPath = join(ROOT, rel);
+  const destPath = join(DIST, rel);
+  if (!existsSync(srcPath)) {
+    console.warn(`  Skipping missing blog JS: ${rel}`);
+    continue;
+  }
+  mkdirp(join(destPath, ".."));
+  cpSync(srcPath, destPath);
+}
+console.log(`  Copied ${BLOG_JS_FILES.length} blog JS files\n`);
+
 
 // ─── Step 5: Auto-generate sitemap.xml ────────────────────────────
 console.log("Generating sitemap.xml...");

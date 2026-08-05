@@ -1,13 +1,13 @@
 const BLOG_POSTS = [
   {
-    title: "Fully Funded Scholarships for Pakistani Students 2026",
+    title: "Fully Funded Scholarships for Pakistani Students (2027 Complete Guide)",
     url: "/blog/fully-funded-scholarships-for-pakistani-students.html",
-    excerpt: "Complete guide to fully funded scholarships for Pakistani students. UK, USA, Germany, Canada, Australia, Turkey, China, Japan, South Korea & more. Includes IELTS-free options, deadlines & application tips.",
+    excerpt: "The definitive 2027 hub for Pakistani students: 100+ fully funded scholarships across 40+ countries, an interactive scholarship finder, IELTS-free options, document checklists, application timelines and a 50-question FAQ.",
     category: "Scholarship Guide",
     categoryClass: "scholarship-guide",
-    readTime: "18 min read",
-    date: "2026-07-23",
-    imgAlt: "Fully Funded Scholarships for Pakistani Students"
+    readTime: "30 min read",
+    date: "2026-08-04",
+    imgAlt: "Fully Funded Scholarships for Pakistani Students 2027 Complete Guide"
   },
   {
     title: "Top 10 Fully Funded Scholarships for International Students 2026",
