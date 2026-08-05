@@ -1195,6 +1195,7 @@ faqEl.innerHTML=faqs.map(function(f){
 return '<details><summary>'+esc(f[0])+'</summary><div><p>'+esc(f[1])+'</p></div></details>';
 }).join('');
 }
+})();
 
 /* Sticky TOC (desktop scrollspy + mobile accordion) */
 (function(){
@@ -1215,6 +1216,7 @@ current.link.classList.add('active');
 }
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 }
+})();
 
 /* Print + download checklist */
 var printBtn=document.getElementById('pk-print');
@@ -1230,7 +1232,7 @@ var html='<html><head><title>Scholarship Document Checklist</title><style>body{f
 items.forEach(function(b,i){
 html+='<div class="i"><input type="checkbox"'+(checked.indexOf(String(i))>-1?' checked':'')+'>'+b.textContent+'</div>';
 });
-html+='</body></html>';
+html+='<\/body></html>';
 var w=window.open('','_blank');
 if(w){w.document.write(html);w.document.close();w.focus();w.print();}
 });
