@@ -74,7 +74,7 @@
     { "source": "/fact-checking-policy/", "destination": "/fact-checking-policy.html" },
     { "source": "/verification-process/", "destination": "/verification-process.html" },
     { "source": "/thank-you/", "destination": "/thank-you.html" },
-    { "source": "/cookie-policy/", "destination": "/privacy.html" },
+    { "source": "/cookie-policy/", "destination": "/cookie-policy.html" },
     { "source": "/blog/:slug/", "destination": "/blog/:slug.html" },
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" },
     { "source": "/guides/:slug/", "destination": "/guides/:slug.html" },
