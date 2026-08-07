@@ -33,30 +33,7 @@
     { "source": "/internships/:slug/index.html", "destination": "/internships/:slug/", "permanent": true },
     { "source": "/fellowships/:slug/index.html", "destination": "/fellowships/:slug/", "permanent": true },
     { "source": "/competitions/:slug/index.html", "destination": "/competitions/:slug/", "permanent": true },
-    {
-      "source": "/:path(\\w+)/:rest(.*)",
-      "has": [{ "type": "host", "value": "opportunitynest.org" }],
-      "destination": "https://www.opportunitynest.org/:path/:rest",
-      "permanent": true
-    },
-    {
-      "source": "/:page(about|contact|faq|privacy|terms|disclaimer|thank-you|blog|guides|competitions|scholarships|internships|fellowships|country|opportunity|usa|uk|index|404|privacy-policy|terms-conditions|editorial-policy|fact-checking-policy|verification-process|cookie-policy|nav-dropdown-backup)/",
-      "has": [{ "type": "host", "value": "opportunitynest.org" }],
-      "destination": "https://www.opportunitynest.org/:page/",
-      "permanent": true
-    },
-    {
-      "source": "/:page(about|contact|faq|privacy|terms|disclaimer|thank-you|blog|guides|competitions|scholarships|internships|fellowships|country|opportunity|usa|uk|index|404|privacy-policy|terms-conditions|editorial-policy|fact-checking-policy|verification-process|cookie-policy|nav-dropdown-backup)",
-      "has": [{ "type": "host", "value": "opportunitynest.org" }],
-      "destination": "https://www.opportunitynest.org/:page",
-      "permanent": true
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "opportunitynest.org" }],
-      "destination": "https://www.opportunitynest.org/",
-      "permanent": true
-    }
+    { "source": "/nav-dropdown-backup", "destination": "/nav-dropdown-backup.html", "permanent": true }
   ],
   "rewrites": [
     { "source": "/opportunity/:slug/", "destination": "/opportunity-detail.html" },
