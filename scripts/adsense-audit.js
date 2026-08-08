@@ -4,11 +4,12 @@
  * Checks every HTML page for technical SEO, content quality, links, schema,
  * trust pages, and policy signals. Writes a structured JSON report.
  */
-import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "fs";
-import { join, relative, extname } from "path";
+const { readFileSync, writeFileSync, readdirSync, statSync } = require("fs");
+const { join, relative, extname } = require("path");
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, "dist");
+const OUT = join(ROOT, "adsense-audit-output");
 const BASE = "https://www.opportunitynest.org";
 
 // ─── Collect HTML files ────────────────────────────────────────────
@@ -242,7 +243,8 @@ const report = {
   issuesBySeverity: { Critical: issues.filter(i=>i.severity==="Critical").length, High: issues.filter(i=>i.severity==="High").length, Medium: issues.filter(i=>i.severity==="Medium").length, Low: issues.filter(i=>i.severity==="Low").length, Info: issues.filter(i=>i.severity==="Info").length },
 };
 
-writeFileSync(join(ROOT, "reports", "adsense-audit.json"), JSON.stringify(report, null, 2));
+try { require("fs").mkdirSync(OUT, { recursive: true }); } catch (error) {}
+writeFileSync(join(OUT, `adsense-audit-${Date.now()}.json`), JSON.stringify(report, null, 2));
 console.log(`Pages scanned: ${pages.length}`);
 console.log(`Issues: Critical=${report.issuesBySeverity.Critical} High=${report.issuesBySeverity.High} Medium=${report.issuesBySeverity.Medium} Low=${report.issuesBySeverity.Low} Info=${report.issuesBySeverity.Info}`);
 console.log(`Trust pages present: ${Object.entries(trustPages).filter(([k,v])=>v).map(([k])=>k).join(", ") || "NONE"}`);

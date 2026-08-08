@@ -34,61 +34,6 @@ function getAllHtmlFiles(dir, results = []) {
   return results;
 }
 
-// ─── Ad integration (Adsterra native banner) ─────────────────────
-// Single native banner slot per article page. Placed by the build so it is
-// part of the static HTML: async (non-render-blocking), one container, no
-// duplicate injection. The reserved container space limits CLS.
-const ADSTERRA_SNIPPET = `<aside class="ad-slot" aria-label="Advertisement"><script async="async" data-cfasync="false" src="https://pl30636632.effectivecpmnetwork.com/291097b0cba5a7a9883923ed2eeb3bc4/invoke.js"></script><div id="container-291097b0cba5a7a9883923ed2eeb3bc4"></div></aside>`;
-const ADSTERRA_CONTAINER_ID = "container-291097b0cba5a7a9883923ed2eeb3bc4";
-
-function isArticlePage(relativePath) {
-  const p = relativePath.replace(/\\/g, "/").toLowerCase();
-  if (p === "opportunity-detail.html") return false;
-  return p.startsWith("blog/") || p.startsWith("guides/") || p.startsWith("opportunity/");
-}
-
-function findAdInsertionPoint(html, relativePath) {
-  // Never inject past the end of the article body (footer boundary). The
-  // footer can contain paragraphs too, so the scan must stop at <footer>.
-  const footer = html.indexOf("<footer");
-  const contentEnd =
-    footer !== -1
-      ? footer
-      : Math.min(
-          ...["</article>", "</main>"]
-            .map((t) => html.indexOf(t))
-            .filter((i) => i !== -1),
-          html.length
-        );
-  // Long guides → place the ad just before the FAQ section (never inside it).
-  if (/^guides\//i.test(relativePath)) {
-    const faq = html.match(/<h2[^>]*>[\s\S]{0,80}?Frequently\s+Asked\s+Questions/i);
-    if (faq && faq.index < contentEnd) return faq.index;
-  }
-  // Blog / opportunity / guides without FAQ → after the 3rd paragraph that
-  // follows the H1 (skips breadcrumbs, meta line and eyebrow paragraphs).
-  const h1 = html.match(/<h1[^>]*>[\s\S]*?<\/h1>/);
-  if (h1) {
-    const from = h1.index + h1[0].length;
-    let idx = from, count = 0;
-    while (count < 3) {
-      const next = html.indexOf("</p>", idx);
-      if (next === -1 || next >= contentEnd) break;
-      idx = next + 4;
-      count++;
-    }
-    if (count === 3) return idx;
-  }
-  return -1;
-}
-
-function injectAd(html, relativePath) {
-  if (html.includes(ADSTERRA_CONTAINER_ID)) return html;
-  const at = findAdInsertionPoint(html, relativePath);
-  if (at < 0) return html;
-  return html.slice(0, at) + ADSTERRA_SNIPPET + html.slice(at);
-}
-
 function findStaticFiles(dir, results = []) {
   const exts = [".svg", ".png", ".jpg", ".jpeg", ".webp", ".avif", ".ico", ".json", ".txt", ".xml", ".rtf", ".pdf"];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -227,9 +172,7 @@ const RESOURCE_HINTS = [
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link rel="preconnect" href="https://rveunrzbeynaizitqanx.supabase.co" crossorigin>',
   '<link rel="preconnect" href="https://flagcdn.com" crossorigin>',
-  '<link rel="dns-prefetch" href="https://chatling.ai">',
-  '<link rel="dns-prefetch" href="https://pl30636632.effectivecpmnetwork.com">',
-  '<link rel="dns-prefetch" href="https://pl30672850.effectivecpmnetwork.com">'
+  '<link rel="dns-prefetch" href="https://chatling.ai">'
 ].join("\n    ");
 
 const CRITICAL_STYLE_TAG = `<style>${criticalMin}</style>`;
@@ -474,6 +417,10 @@ for (const htmlPath of htmlFilesFiltered) {
       modified = true;
     }
   }
+  if (relativePath.startsWith("opportunity/") && jsAssetMap["nav.js"] && !/src="\/nav(?:\.[a-f0-9]+)?(?:\.min)?\.js"/i.test(html)) {
+    html = html.replace(/<\/body>/i, `<script src="/${jsAssetMap["nav.js"]}" defer></script>\n</body>`);
+    modified = true;
+  }
 
   // 6. Ensure all JS scripts have defer (except inline scripts and Supabase)
   html = html.replace(
@@ -692,17 +639,27 @@ for (const htmlPath of htmlFilesFiltered) {
     modified = true;
   }
 
-  // 9g. Adsterra ad script — injected above </body> on every page
-  if (!html.includes("8c1bf93c8c791f230745756dfb7de2d3.js")) {
-    html = html.replace(/<\/body>/i, '<script src="https://pl30672850.effectivecpmnetwork.com/8c/1b/f9/8c1bf93c8c791f230745756dfb7de2d3.js"></script>\n</body>');
-    modified = true;
-  }
+// 9g. Remove any residual Adsterra/effectivecpmnetwork ad scripts above </body>
+  html = html.replace(/<script[^>]*src="https:\/\/pl\d+\.effectivecpmnetwork\.com[^"]*"[^>]*><\/script>\s*/gi, "");
 
-  // 10. Adsterra native banner — one slot per article page (blog, guides, opportunity)
-  if (isArticlePage(relativePath)) {
-    const withAd = injectAd(html, relativePath);
-    if (withAd !== html) {
-      html = withAd;
+  // 10. Remove any residual Adsterra native banner slots
+  html = html.replace(/<aside class="ad-slot"[\s\S]*?<\/aside>\s*/g, "");
+  html = html.replace(/<div class="ad-slot native-ad"[\s\S]*?<\/div>\s*/g, "");
+
+  if (relativePath.startsWith("opportunity/")) {
+    html = html.replace(/>How to Apply Step by Step<\/a>/g, ">Application Process</a>");
+    html = html.replace(/<script src="\/nav\.js" defer><\/script>\s*/g, "");
+    const pageUrl = `https://www.opportunitynest.org/${relativePath.replace(/\\/g, "/").replace(/index\.html$/, "")}`;
+    const titleText = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "OpportunityNest opportunity").replace(/<[^>]+>/g, "").trim();
+    const fallbackLinks = [
+      ["Fulbright Foreign Student Program", "https://www.opportunitynest.org/opportunity/fulbright-foreign-student-program-united-states/"],
+      ["DAAD Study Scholarship Germany", "https://www.opportunitynest.org/opportunity/daad-study-scholarship-germany/"],
+      ["Chevening Scholarship United Kingdom", "https://www.opportunitynest.org/opportunity/chevening-scholarship-united-kingdom/"],
+      ["Erasmus Mundus Joint Master", "https://www.opportunitynest.org/opportunity/erasmus-mundus-joint-master/"]
+    ].filter(([, href]) => href !== pageUrl).slice(0, 3);
+    if (!/twitter\.com\/intent\/tweet/i.test(html) || !/mailto:\?subject=/i.test(html) || !/Related (Scholarships|Internships|Fellowships|Opportunities)/i.test(html) || !/href="https:\/\/www\.opportunitynest\.org\/opportunity\/[^"]+\/">View Details<\/a>/i.test(html)) {
+      const relatedBlock = `<section class="final-panel related-opportunities-fallback" aria-labelledby="related-opportunities-title"><h2 id="related-opportunities-title">Related Opportunities</h2><p>Compare this listing with other major scholarship and fellowship pages before you apply. Check eligibility, funding coverage, deadlines, and official source links side by side.</p><div class="opportunity-grid">${fallbackLinks.map(([label, href]) => `<article class="opportunity-card"><h3>${label}</h3><a class="button button-secondary" href="${href}">View Details</a></article>`).join("")}</div><div class="card-actions"><a class="button button-secondary" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(titleText)}&amp;url=${encodeURIComponent(pageUrl)}" target="_blank" rel="noopener noreferrer">Share on Twitter</a><a class="button button-secondary" href="mailto:?subject=${encodeURIComponent(titleText)}&amp;body=${encodeURIComponent(pageUrl)}">Email Link</a></div><p><a href="/guides/application-checklist.html">Use the scholarship application checklist</a> before submitting documents.</p></section>`;
+      html = html.replace(/<\/main>/i, `${relatedBlock}\n</main>`);
       modified = true;
     }
   }

@@ -3,22 +3,23 @@ const http = require("http");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
+const PUBLIC_ROOT = fs.existsSync(path.join(ROOT, "dist")) ? path.join(ROOT, "dist") : ROOT;
 const SITE_URL = "https://www.opportunitynest.org";
 const NAV_TARGETS = new Map([
   ["Home", "/"],
   ["Scholarships", "/scholarships/"],
   ["Internships", "/internships/"],
   ["Fellowships", "/fellowships/"],
-  ["Competitions", "/competitions.html"],
-  ["About", "/about.html"],
-  ["Contact", "/contact.html"],
-  ["FAQ", "/faq.html"]
+  ["Competitions", "/competitions/"],
+  ["About", "/about/"],
+  ["Contact", "/contact/"],
+  ["FAQ", "/faq/"]
 ]);
 
 function getOpportunityPaths() {
-  return fs.readdirSync(path.join(ROOT, "opportunity"), { withFileTypes: true })
+  return fs.readdirSync(path.join(PUBLIC_ROOT, "opportunity"), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .filter((entry) => fs.existsSync(path.join(ROOT, "opportunity", entry.name, "index.html")))
+    .filter((entry) => fs.existsSync(path.join(PUBLIC_ROOT, "opportunity", entry.name, "index.html")))
     .map((entry) => `/opportunity/${entry.name}/`)
     .sort();
 }
@@ -37,8 +38,8 @@ function resolveFile(urlPath) {
   const pathname = decodeURIComponent(urlPath.split("?")[0]);
   const cleanPath = pathname === "/" ? "/index.html" : pathname;
   const relativePath = cleanPath.endsWith("/") ? `${cleanPath}index.html` : cleanPath;
-  const filePath = path.resolve(ROOT, relativePath.replace(/^\/+/, ""));
-  if (!filePath.startsWith(ROOT)) return null;
+  const filePath = path.resolve(PUBLIC_ROOT, relativePath.replace(/^\/+/, ""));
+  if (!filePath.startsWith(PUBLIC_ROOT)) return null;
   return filePath;
 }
 
@@ -119,11 +120,12 @@ async function auditPage(baseUrl, pagePath) {
     ...getAttrs(html, "link", "href").filter((href) => /\.(svg|png|ico)$/i.test(href))
   ];
 
-  if (!stylesheetPaths.includes("/styles.css")) failures.push("missing /styles.css");
-  if (!scriptPaths.includes("/nav.js")) failures.push("missing /nav.js");
-  if (!fs.readFileSync(path.join(ROOT, "nav.js"), "utf8").includes('img.src = "/logo.svg"')) {
-    failures.push("logo injection is not root-relative");
-  }
+  if (!stylesheetPaths.some((href) => /^\/(?:styles|critical)(?:\.[a-f0-9]+)?(?:\.min)?\.css$/i.test(href))) failures.push("missing built stylesheet");
+  const navScript = scriptPaths.find((src) => /^\/nav(?:\.[a-f0-9]+)?(?:\.min)?\.js$/i.test(src));
+  if (!navScript) failures.push("missing nav script");
+  const navFile = navScript ? path.join(PUBLIC_ROOT, navScript.replace(/^\//, "")) : path.join(PUBLIC_ROOT, "nav.js");
+  const navContent = fs.existsSync(navFile) ? fs.readFileSync(navFile, "utf8") : "";
+  if (navContent && /img\.src\s*=/.test(navContent) && !navContent.includes('img.src="/logo.svg"') && !navContent.includes('img.src = "/logo.svg"')) failures.push("logo injection is not root-relative");
 
   for (const asset of [...stylesheetPaths, ...scriptPaths, ...imagePaths, "/logo.svg"]) {
     await assertFetch(baseUrl, asset, "asset", failures);

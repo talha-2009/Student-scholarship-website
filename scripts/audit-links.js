@@ -89,9 +89,12 @@ function resolveInternalLink(href, filePath) {
       return path.join(baseDir, 'index.html');
     }
     
-    // If it ends with /, try index.html
+    // If it ends with /, try index.html, then fall back to the
+    // sibling .html file (Vercel clean-URL rewrite: /about/ -> about.html).
     if (absolutePath.endsWith('/') || absolutePath.endsWith('\\')) {
-      return path.join(absolutePath, 'index.html');
+      const dirIndex = path.join(absolutePath, 'index.html');
+      if (checkFileExists(dirIndex)) return dirIndex;
+      return absolutePath.replace(/[\/\\]$/, '') + '.html';
     }
     
     // If it doesn't have an extension, prefer clean-route directories, then .html.

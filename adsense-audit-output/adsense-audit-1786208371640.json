@@ -1,0 +1,2889 @@
+{
+  "generatedAt": "2026-08-08T16:59:31.638Z",
+  "totalPages": 390,
+  "trustPages": {
+    "about": true,
+    "contact": true,
+    "privacy": true,
+    "terms": true,
+    "disclaimer": true,
+    "editorial-policy": true,
+    "fact-checking-policy": true,
+    "verification-process": true,
+    "cookie-policy": true
+  },
+  "exposedSecrets": [],
+  "issues": [
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "404.html",
+      "description": "Page is noindex (noindex, nofollow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Low",
+      "category": "Schema",
+      "path": "404.html",
+      "description": "No structured data (JSON-LD)",
+      "whyAdSense": "Structured data improves eligibility for rich results and AI visibility.",
+      "fix": "Add appropriate schema (Article/BreadcrumbList/FAQ/Organization)."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "404.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/chevening-vs-commonwealth.html",
+      "description": "Title too long (84 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/fully-funded-scholarships-for-pakistani-students.html",
+      "description": "Meta description too long (238 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "blog/fully-funded-scholarships-for-pakistani-students.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/how-to-ace-scholarship-interview.html",
+      "description": "Title too long (82 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/how-to-ace-scholarship-interview.html",
+      "description": "Meta description too long (183 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/how-to-write-winning-scholarship-essay.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "blog/index.html",
+      "description": "Article is thin: ~39 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/study-abroad-on-a-budget.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/study-abroad-on-a-budget.html",
+      "description": "Meta description too long (174 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/top-fully-funded-scholarships.html",
+      "description": "Title too long (82 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "blog/top-fully-funded-scholarships.html",
+      "description": "Meta description too long (172 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "blog/top-fully-funded-scholarships.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "contact.html",
+      "description": "Meta description too long (174 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "contact.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Schema",
+      "path": "cookie-policy.html",
+      "description": "No structured data (JSON-LD)",
+      "whyAdSense": "Structured data improves eligibility for rich results and AI visibility.",
+      "fix": "Add appropriate schema (Article/BreadcrumbList/FAQ/Organization)."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/australia/index.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/austria/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/canada/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/china/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/france/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/germany/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/global/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "country/global-commonwealth-nations/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Medium",
+      "category": "Content",
+      "path": "country/global-commonwealth-nations/index.html",
+      "description": "Listing page has little intro text (~107 words)",
+      "whyAdSense": "Pure link-list pages are considered thin/low-value.",
+      "fix": "Add 200-400 words of unique editorial intro."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "country/global-eu-consortium/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Medium",
+      "category": "Content",
+      "path": "country/global-eu-consortium/index.html",
+      "description": "Listing page has little intro text (~106 words)",
+      "whyAdSense": "Pure link-list pages are considered thin/low-value.",
+      "fix": "Add 200-400 words of unique editorial intro."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "country/global-eu-partner-countries/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Medium",
+      "category": "Content",
+      "path": "country/global-eu-partner-countries/index.html",
+      "description": "Listing page has little intro text (~113 words)",
+      "whyAdSense": "Pure link-list pages are considered thin/low-value.",
+      "fix": "Add 200-400 words of unique editorial intro."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/india/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/ireland/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/japan/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/netherlands/index.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/new-zealand/index.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "country/rotating-global/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Medium",
+      "category": "Content",
+      "path": "country/rotating-global/index.html",
+      "description": "Listing page has little intro text (~126 words)",
+      "whyAdSense": "Pure link-list pages are considered thin/low-value.",
+      "fix": "Add 200-400 words of unique editorial intro."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/saudi-arabia/index.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/singapore/index.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/south-africa/index.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/south-korea/index.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/switzerland/index.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/thailand/index.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/turkey/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/united-kingdom/index.html",
+      "description": "Title too long (81 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "country/united-states/index.html",
+      "description": "Title too long (80 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "daad-scholarships/index.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "daad-scholarships/index.html",
+      "description": "Meta description too long (200 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "daad-scholarships/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "erasmus-mundus/index.html",
+      "description": "Meta description too long (194 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "erasmus-mundus/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "erasmus-programme-countries/index.html",
+      "description": "Meta description too long (214 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "erasmus-programme-countries/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "exchange-programs/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "faq.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "faq.html",
+      "description": "Meta description too long (167 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "fellowships-in-australia/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "fully-funded-scholarships/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "fully-funded-scholarships/index.html",
+      "description": "Meta description too long (177 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "geneva-challenge-2026/index.html",
+      "description": "Title too long (86 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "geneva-challenge-2026/index.html",
+      "description": "Meta description too long (204 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "geneva-challenge-2026/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "grants/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/act-guide.html",
+      "description": "Article is thin: ~306 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/application-checklist.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/application-checklist.html",
+      "description": "Article is thin: ~783 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/ats-resume.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/australia-scholarships-without-ielts-2026.html",
+      "description": "Meta description too long (166 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/best-skills.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/best-skills.html",
+      "description": "Article is thin: ~449 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/career-planning.html",
+      "description": "Title too long (83 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/career-planning.html",
+      "description": "Article is thin: ~501 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/conferences.html",
+      "description": "Title too long (85 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/conferences.html",
+      "description": "Article is thin: ~392 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/cover-letter.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/cv-writing.html",
+      "description": "Meta description too long (180 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/duolingo-english-test.html",
+      "description": "Title too long (88 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/duolingo-english-test.html",
+      "description": "Article is thin: ~397 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/email-professors.html",
+      "description": "Title too long (85 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/exchange-programs.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/exchange-programs.html",
+      "description": "Article is thin: ~346 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/fully-funded-scholarships-for-pakistani-students-without-ielts.html",
+      "description": "Meta description too long (221 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/fully-funded-scholarships.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/fully-funded-scholarships.html",
+      "description": "Article is thin: ~572 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/german-motivation-letter-for-ausbildung.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/gmat-guide.html",
+      "description": "Article is thin: ~315 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/government-scholarships.html",
+      "description": "Title too long (84 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/government-scholarships.html",
+      "description": "Article is thin: ~650 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/grants.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/grants.html",
+      "description": "Article is thin: ~379 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/gre-guide.html",
+      "description": "Title too long (82 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/gre-guide.html",
+      "description": "Article is thin: ~380 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/how-to-get-internship.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/how-to-get-internship.html",
+      "description": "Article is thin: ~662 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/how-to-write-sop.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/ielts-guide.html",
+      "description": "Article is thin: ~485 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/internship-application.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/internship-application.html",
+      "description": "Article is thin: ~481 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/internship-cover-letter.html",
+      "description": "Title too long (80 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/internship-cover-letter.html",
+      "description": "Article is thin: ~576 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/internship-interview.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/internship-interview.html",
+      "description": "Article is thin: ~483 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/internship-resume.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/internship-resume.html",
+      "description": "Article is thin: ~422 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/linkedin-profile.html",
+      "description": "Article is thin: ~436 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/masters-scholarships.html",
+      "description": "Title too long (82 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/masters-scholarships.html",
+      "description": "Article is thin: ~671 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/motivation-letter-examples.html",
+      "description": "Meta description too long (215 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/motivation-letter-examples.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/motivation-letter.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/networking.html",
+      "description": "Title too long (86 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/networking.html",
+      "description": "Article is thin: ~468 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/online-certifications.html",
+      "description": "Title too long (80 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/online-certifications.html",
+      "description": "Article is thin: ~421 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/paid-internships.html",
+      "description": "Title too long (85 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/paid-internships.html",
+      "description": "Article is thin: ~553 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/personal-statement.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/personal-statement.html",
+      "description": "Meta description too long (187 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/phd-scholarships.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/phd-scholarships.html",
+      "description": "Article is thin: ~656 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/recommendation-letter.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/remote-internships.html",
+      "description": "Title too long (89 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/remote-internships.html",
+      "description": "Article is thin: ~574 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/research-opportunities.html",
+      "description": "Title too long (86 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/research-opportunities.html",
+      "description": "Article is thin: ~437 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/resume-templates.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/sat-guide.html",
+      "description": "Article is thin: ~324 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/scholarship-deadlines.html",
+      "description": "Article is thin: ~645 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/scholarship-essay.html",
+      "description": "Title too long (82 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/scholarship-essay.html",
+      "description": "Meta description too long (169 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/scholarship-essay.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/scholarship-interview-questions.html",
+      "description": "Meta description too long (186 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/scholarship-interview.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/scholarship-interview.html",
+      "description": "Article is thin: ~751 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/scholarships-without-ielts.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/scholarships-without-ielts.html",
+      "description": "Article is thin: ~692 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/sop-examples.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/sop-examples.html",
+      "description": "Meta description too long (171 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/sop-examples.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/student-visa.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/student-visa.html",
+      "description": "Article is thin: ~600 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-australia.html",
+      "description": "Title too long (91 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-australia.html",
+      "description": "Meta description too long (177 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/study-in-australia.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-canada.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-germany.html",
+      "description": "Title too long (77 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-italy.html",
+      "description": "Title too long (80 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-italy.html",
+      "description": "Meta description too long (223 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-japan.html",
+      "description": "Title too long (80 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-japan.html",
+      "description": "Meta description too long (184 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-south-korea.html",
+      "description": "Title too long (81 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-turkey.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-turkey.html",
+      "description": "Meta description too long (193 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-uk.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/study-in-usa.html",
+      "description": "Title too long (77 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/summer-internships.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/summer-internships.html",
+      "description": "Article is thin: ~449 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/toefl-guide.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/toefl-guide.html",
+      "description": "Article is thin: ~414 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/undergraduate-scholarships-in-switzerland.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/undergraduate-scholarships-in-switzerland.html",
+      "description": "Meta description too long (189 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/undergraduate-scholarships.html",
+      "description": "Title too long (87 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/undergraduate-scholarships.html",
+      "description": "Article is thin: ~655 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/university-admissions.html",
+      "description": "Article is thin: ~461 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/university-scholarships.html",
+      "description": "Title too long (83 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/university-scholarships.html",
+      "description": "Article is thin: ~541 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/volunteer-programs.html",
+      "description": "Title too long (81 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "guides/volunteer-programs.html",
+      "description": "Article is thin: ~362 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "guides/what-do-you-need-for-an-internship.html",
+      "description": "Meta description too long (196 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "guides/what-do-you-need-for-an-internship.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "hackathons/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "internships-in-australia/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "internships-in-south-korea/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "kaust-postdoctoral-fellowship/index.html",
+      "description": "Meta description too long (203 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "kaust-postdoctoral-fellowship/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "masters-scholarships/index.html",
+      "description": "Meta description too long (167 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "masters-scholarships/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/adb-japan-scholarship-program/index.html",
+      "description": "Meta description too long (186 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "opportunity/adb-japan-scholarship-program/index.html",
+      "description": "Article is thin: ~629 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/adb-japan-scholarship-program/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/aiesec-global-talent-global/index.html",
+      "description": "Meta description too long (173 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/aiesec-global-volunteer/index.html",
+      "description": "Meta description too long (173 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/anu-phd-scholarship-australia/index.html",
+      "description": "Meta description too long (175 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/asian-institute-of-technology-scholarship-thailand/index.html",
+      "description": "Title too long (79 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/asian-institute-of-technology-scholarship-thailand/index.html",
+      "description": "Meta description too long (211 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/astar-research-attachment-programme-arap-singapore/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/astar-research-attachment-programme-arap-singapore/index.html",
+      "description": "Meta description too long (211 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/astar-research-attachment-programme-arap-singapore/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/bmw-group-change-maker-fellowship-germany/index.html",
+      "description": "Meta description too long (270 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/bmw-group-change-maker-fellowship-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/cambridge-summer-school-programme/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/cern-administrative-student-programme-switzerland/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/cern-technical-student-programme-switzerland/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/chevening-scholarship-united-kingdom/index.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/chevening-scholarship-united-kingdom/index.html",
+      "description": "Meta description too long (272 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/clarendon-fund-scholarships-oxford/index.html",
+      "description": "Meta description too long (223 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/commonwealth-distance-learning-scholarships-2027/index.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/commonwealth-distance-learning-scholarships-2027/index.html",
+      "description": "Meta description too long (211 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "opportunity/commonwealth-distance-learning-scholarships-2027/index.html",
+      "description": "Article is thin: ~690 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/commonwealth-global-youth-ambassador/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/commonwealth-phd-scholarship-least-developed-countries-united-kingdom/index.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/commonwealth-phd-scholarship-least-developed-countries-united-kingdom/index.html",
+      "description": "Meta description too long (219 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/commonwealth-phd-scholarship-least-developed-countries-united-kingdom/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/daad-binational-doctoral-grant/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-epos-development-related-postgraduate-courses-germany/index.html",
+      "description": "Meta description too long (272 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/daad-epos-development-related-postgraduate-courses-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-helmut-schmidt-programme-public-policy-and-good-governance-germany/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-helmut-schmidt-programme-public-policy-and-good-governance-germany/index.html",
+      "description": "Meta description too long (173 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/daad-helmut-schmidt-programme-public-policy-and-good-governance-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-research-grants-for-doctoral-candidates-and-young-academics-germany/index.html",
+      "description": "Meta description too long (196 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/daad-research-grants-for-doctoral-candidates-and-young-academics-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-stem-study-scholarship-germany/index.html",
+      "description": "Meta description too long (287 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-study-scholarship-germany/index.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-study-scholarship-germany/index.html",
+      "description": "Meta description too long (247 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/daad-wise-research-internship-germany/index.html",
+      "description": "Meta description too long (221 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/deutschlandstipendium-germany/index.html",
+      "description": "Meta description too long (267 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/duke-of-edinburgh-international-award/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/ellison-undergraduate-scholars-program-united-kingdom/index.html",
+      "description": "Meta description too long (178 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/erasmus-mundus-joint-master/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/eth-zurich-excellence-scholarship-and-opportunity-programme-switzerland/index.html",
+      "description": "Meta description too long (167 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/eth-zurich-excellence-scholarship-and-opportunity-programme-switzerland/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/france-excellence-eiffel-scholarship-programme/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/france-excellence-eiffel-scholarship-programme/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/franz-werfel-fellowship-austria/index.html",
+      "description": "Meta description too long (180 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/fulbright-canada-all-disciplines-scholar-award-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/fulbright-canada-traditional-student-award-canada/index.html",
+      "description": "Meta description too long (168 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/fulbright-flta-program/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/fulbright-foreign-student-program-united-states/index.html",
+      "description": "Meta description too long (255 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/fulbright-nehru-masters-fellowship/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/global-korea-scholarship-gks-south-korea/index.html",
+      "description": "Meta description too long (229 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/global-ugrad-exchange-program/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/global-undergraduate-awards/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/great-scholarships-united-kingdom/index.html",
+      "description": "Meta description too long (239 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/heinrich-bll-foundation-scholarship-germany/index.html",
+      "description": "Meta description too long (180 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/hubert-h-humphrey-fellowship-program-united-states/index.html",
+      "description": "Meta description too long (225 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/hubert-h-humphrey-fellowship-program-united-states/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/iaeste-internship-programme-global/index.html",
+      "description": "Meta description too long (204 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/imu-simons-research-fellowship-program-for-developing-countries-global/index.html",
+      "description": "Meta description too long (251 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/imu-simons-research-fellowship-program-for-developing-countries-global/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/international-chemistry-olympiad/index.html",
+      "description": "Title too long (78 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/jjwbgsp-scholarship/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/joint-japan-world-bank-graduate-scholarship/index.html",
+      "description": "Meta description too long (207 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "opportunity/joint-japan-world-bank-graduate-scholarship/index.html",
+      "description": "Article is thin: ~680 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/joint-japan-world-bank-graduate-scholarship/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/kaust-global-fellowship-program-saudi-arabia/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/knight-hennessy-scholars-program-united-states/index.html",
+      "description": "Meta description too long (193 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/knight-hennessy-scholars-program-united-states/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/konrad-adenauer-stiftung-kas-international-scholarship-programme-germany/index.html",
+      "description": "Meta description too long (182 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/konrad-adenauer-stiftung-kas-international-scholarship-programme-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/leiden-university-excellence-scholarship-netherlands/index.html",
+      "description": "Meta description too long (173 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/marshall-scholarship-united-kingdom/index.html",
+      "description": "Meta description too long (182 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/mastercard-foundation-scholars-program-global/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/mastercard-foundation-scholars-program-global/index.html",
+      "description": "Meta description too long (221 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/max-planck-school-matter-to-life-uro-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/mccall-macbain-scholarship-canada/index.html",
+      "description": "Meta description too long (257 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/mext-japanese-government-scholarship-japan/index.html",
+      "description": "Meta description too long (248 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/microsoft-explore-internship-program/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/mit-research-science-institute/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/monash-graduate-scholarship-research-training-program-australia/index.html",
+      "description": "Meta description too long (197 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/monash-graduate-scholarship-research-training-program-australia/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/national-geographic-explorer-grant/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/nsf-graduate-research-fellowship-program/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/oecd-crp-research-fellowship-france/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/oist-research-internship-program-japan/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/peace-corps-volunteer-program/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/pierre-elliott-trudeau-foundation-doctoral-scholarship-canada/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/pierre-elliott-trudeau-foundation-doctoral-scholarship-canada/index.html",
+      "description": "Meta description too long (174 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/pierre-elliott-trudeau-foundation-doctoral-scholarship-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/rhodes-scholarship-united-kingdom/index.html",
+      "description": "Meta description too long (212 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/richard-plaschka-fellowship-austria/index.html",
+      "description": "Meta description too long (173 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/rise-germany-internship-germany/index.html",
+      "description": "Meta description too long (255 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/rise-professional-internship-germany/index.html",
+      "description": "Meta description too long (266 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/rosa-luxemburg-stiftung-scholarship-germany/index.html",
+      "description": "Meta description too long (187 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/schwarzman-scholars-program-china/index.html",
+      "description": "Title too long (77 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/schwarzman-scholars-program-china/index.html",
+      "description": "Meta description too long (202 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/schwarzman-scholars-program-china/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/ssrc-just-tech-fellowship-united-states/index.html",
+      "description": "Title too long (92 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/ssrc-just-tech-fellowship-united-states/index.html",
+      "description": "Meta description too long (205 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/swiss-government-excellence-scholarships-2027/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/teagasc-walsh-scholars-programme-ireland/index.html",
+      "description": "Meta description too long (196 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/the-geneva-challenge-advancing-development-goals-contest-switzerland/index.html",
+      "description": "Meta description too long (194 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/the-geneva-challenge-advancing-development-goals-contest-switzerland/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/turkiye-burslari-turkey-government-scholarships/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/turkiye-burslari-turkey-government-scholarships/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/uestc-chinese-government-scholarship-china/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/uestc-chinese-government-scholarship-china/index.html",
+      "description": "Meta description too long (218 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/unctad-internship-programme-switzerland/index.html",
+      "description": "Meta description too long (251 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/undp-internship-programme-global/index.html",
+      "description": "Title too long (73 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/undp-internship-programme-global/index.html",
+      "description": "Meta description too long (268 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/unesco-internship-programme-2027/index.html",
+      "description": "Meta description too long (197 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Content",
+      "path": "opportunity/unesco-internship-programme-2027/index.html",
+      "description": "Article is thin: ~632 words in main content",
+      "whyAdSense": "AdSense reviewers flag articles under ~800 words as low-value/thin content.",
+      "fix": "Expand with eligibility, benefits, application steps, FAQ."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/unesco-japan-prize-esd/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/unicef-internship-programme-global/index.html",
+      "description": "Meta description too long (167 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/unido-internship-programme-austria/index.html",
+      "description": "Meta description too long (266 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/united-nations-internship-programme-global/index.html",
+      "description": "Meta description too long (272 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-british-columbia-international-scholars-program-canada/index.html",
+      "description": "Meta description too long (207 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/university-of-british-columbia-international-scholars-program-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-melbourne-graduate-scholarship-australia/index.html",
+      "description": "Title too long (77 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-melbourne-graduate-scholarship-australia/index.html",
+      "description": "Meta description too long (278 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-sydney-international-scholarships-australia/index.html",
+      "description": "Title too long (77 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-sydney-international-scholarships-australia/index.html",
+      "description": "Meta description too long (260 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-toronto-lester-b-pearson-international-scholarship-canada/index.html",
+      "description": "Meta description too long (260 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/university-of-toronto-lester-b-pearson-international-scholarship-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-western-australia-global-excellence-scholarship-australia/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/university-of-western-australia-global-excellence-scholarship-australia/index.html",
+      "description": "Meta description too long (227 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/university-of-western-australia-global-excellence-scholarship-australia/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/urban-studies-foundation-international-fellowships-global/index.html",
+      "description": "Meta description too long (212 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/urban-studies-foundation-international-fellowships-global/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/us-commercial-service-germany-internship-germany/index.html",
+      "description": "Meta description too long (268 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/vanier-canada-graduate-scholarships/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/wef-global-shapers-community/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/weidenfeld-hoffmann-scholarships-and-leadership-programme-united-kingdom/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/weidenfeld-hoffmann-scholarships-and-leadership-programme-united-kingdom/index.html",
+      "description": "Meta description too long (206 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/weidenfeld-hoffmann-scholarships-and-leadership-programme-united-kingdom/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/world-food-programme-internship-programme-global/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/yenching-scholarship-yenching-academy-of-peking-university-china/index.html",
+      "description": "Meta description too long (204 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "opportunity/yenching-scholarship-yenching-academy-of-peking-university-china/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity/yseali-academic-fellows-program/index.html",
+      "description": "Title too long (76 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "High",
+      "category": "Technical",
+      "path": "opportunity-detail.html",
+      "description": "Missing canonical tag",
+      "whyAdSense": "Without a canonical, Google may pick a duplicate URL variant.",
+      "fix": "Add self-referencing canonical."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "opportunity-detail.html",
+      "description": "Missing og:url",
+      "whyAdSense": "Weakens social sharing consistency.",
+      "fix": "Add og:url matching canonical."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "paid-internships/index.html",
+      "description": "Meta description too long (170 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "phd-scholarships/index.html",
+      "description": "Title too long (72 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "photography-competitions/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "programming-competitions/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "robotics-competitions/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships/index.html",
+      "description": "Meta description too long (172 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-australia/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-china/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships-in-germany/index.html",
+      "description": "Meta description too long (170 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-japan/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships-in-malaysia/index.html",
+      "description": "Title too long (71 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships-in-saudi-arabia/index.html",
+      "description": "Title too long (75 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships-in-south-korea/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "scholarships-in-switzerland/index.html",
+      "description": "Title too long (74 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-uk/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "scholarships-in-usa/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Indexability",
+      "path": "startup-competitions/index.html",
+      "description": "Page is noindex (noindex,follow)",
+      "whyAdSense": "Noindex pages won't appear in Google — confirm this is intentional.",
+      "fix": "Remove noindex if the page should be indexed."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-australia/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-canada/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-europe/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-germany/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "study-in-italy/index.html",
+      "description": "Title too long (87 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "study-in-italy/index.html",
+      "description": "Meta description too long (207 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-italy/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "study-in-japan/index.html",
+      "description": "Title too long (87 chars)",
+      "whyAdSense": "Titles get truncated in SERPs, reducing CTR and trust.",
+      "fix": "Keep titles under ~60-65 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "study-in-japan/index.html",
+      "description": "Meta description too long (203 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-japan/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-netherlands-for-international-students/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-uk/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "study-in-usa/index.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "terms.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Info",
+      "category": "Content",
+      "path": "thank-you.html",
+      "description": "H1 and title differ",
+      "whyAdSense": "Not a violation, but consistency helps.",
+      "fix": "Optionally align H1 with title keywords."
+    },
+    {
+      "severity": "Low",
+      "category": "Technical",
+      "path": "undergraduate-scholarships/index.html",
+      "description": "Meta description too long (170 chars)",
+      "whyAdSense": "Descriptions get cut off in SERPs.",
+      "fix": "Trim to ~160 chars."
+    },
+    {
+      "severity": "Low",
+      "category": "Content",
+      "path": "workshops/index.html",
+      "description": "H1 is very short: \"Workshops\"",
+      "whyAdSense": "Weak heading does not convey page value.",
+      "fix": "Write a descriptive H1."
+    }
+  ],
+  "issuesBySeverity": {
+    "Critical": 0,
+    "High": 43,
+    "Medium": 4,
+    "Low": 225,
+    "Info": 86
+  }
+}
